@@ -13,7 +13,7 @@ Paths below are relative to this README. Files produced during installation or a
 ```bash
 $ virtualenv --python=python3 ../venv
 $ source ../venv/bin/activate
-$ pip install -r requirements.txt
+(venv)$ pip install -r requirements.txt
 ```
 
 ### Configure settings
@@ -34,13 +34,13 @@ The application's authentication is API-driven. However, to make use of Django's
 ### Initialise database
 
 ```bash
-$ ./apimanager/manage.py migrate
+(venv)$ ./apimanager/manage.py migrate
 ```
 
 ### Run the app
 
 ```bash
-$ ./apimanager/manage.py runserver
+(venv)$ ./apimanager/manage.py runserver
 ```
 
 The application should be available at `http://localhost:8000`
@@ -65,7 +65,7 @@ STATIC_ROOT = '<directory to place static files in>'
 The app's static files, e.g. Javasript, CSS and images need to be collected and made available to a webserver. Run
 
 ```bash
-$ ./apimanager/manage.py collectstatic
+(venv)$ ./apimanager/manage.py collectstatic
 ```
 
 ### Web application server
@@ -73,7 +73,7 @@ $ ./apimanager/manage.py collectstatic
 Instead of Django's built-in runserver, you need a proper web application server to run the app, e.g. `gunicorn`. It should have been installed already as a dependency and you use the provided `gunicorn.conf.py`. Run it like
 
 ```bash
-$ cd apimanager/ && gunicorn --config ../gunicorn.conf.py apimanager.wsgi 
+(venv)$ cd apimanager/ && gunicorn --config ../gunicorn.conf.py apimanager.wsgi 
 ```
 
 - `gunicorn` does not start successfully when omitting the directory change and using `apimanager.apimanager.wsgi` as program.
