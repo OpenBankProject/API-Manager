@@ -23,8 +23,8 @@ Edit `apimanager/apimanager/local_settings.py`:
 ```python
 SECRET_KEY = '<random string>'
 OAUTH_API = '<your API root>' # e.g. https://api.openbankproject.com
-OAUTH_CLIENT_KEY = 'key you got from the API'
-OAUTH_CLIENT_SECRET = 'secret you got from the API'
+OAUTH_CLIENT_KEY = '<key you got from the API>'
+OAUTH_CLIENT_SECRET = '<secret you got from the API>'
 DATABASES['default']['NAME'] = '<filename to use for database>' # default is 'db.sqlite3' in parent directory of git checkout
 ```
 
