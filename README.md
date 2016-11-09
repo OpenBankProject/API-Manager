@@ -21,11 +21,15 @@ $ source ../venv/bin/activate
 Edit `apimanager/apimanager/local_settings.py`:
 
 ```python
+# Used internally by Django, can be anything of your choice
 SECRET_KEY = '<random string>'
-OAUTH_API = '<your API root>' # e.g. https://api.openbankproject.com
-OAUTH_CLIENT_KEY = '<key you got from the API>'
-OAUTH_CLIENT_SECRET = '<secret you got from the API>'
-DATABASES['default']['NAME'] = '<filename to use for database>' # default is 'db.sqlite3' in parent directory of git checkout
+# API hostname, e.g. https://api.openbankproject.com
+OAUTH_API = '<hostname>'
+# Consumer key + secret to authenticate the _app_ against the API
+OAUTH_CLIENT_KEY = '<key>'
+OAUTH_CLIENT_SECRET = '<secret>'
+# Database filename, default is `db.sqlite3` in parent directory of git checkout
+DATABASES['default']['NAME'] = '<filename to use for database>'
 ```
 
 The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
@@ -55,14 +59,17 @@ Execute the same steps as for development, but do not run the app.
 Edit `apimanager/apimanager/local_settings.py` for additional changes:
 
 ```python
+# Disable debug (or not if the app is not working properly)
 DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '<your hostname here>']
-STATIC_ROOT = '<directory to place static files in>'
+# Hosts allowed to access the app
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '<your public hostname here>']
+# Directory to place static files in, defaults to `static-collected` in git checkout's parent directory
+STATIC_ROOT = '<dirname>'
 ```
 
 ### Static files
 
-The app's static files, e.g. Javasript, CSS and images need to be collected and made available to a webserver. Run
+The app's static files, e.g. Javascript, CSS and images need to be collected and made available to a webserver. Run
 
 ```bash
 (venv)$ ./apimanager/manage.py collectstatic
@@ -78,6 +85,7 @@ Instead of Django's built-in runserver, you need a proper web application server
 
 - `gunicorn` does not start successfully when omitting the directory change and using `apimanager.apimanager.wsgi` as program.
 - The user running  `gunicorn` needs to have write access to the _directory_ containing the database, as well as the database file itself.
+- The app's output is logged to `gunicorn`'s error logfile (see config for location)
 
 
 ### Process control
