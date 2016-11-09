@@ -5,13 +5,14 @@ A Django project to manage the Open Bank Project API via API Calls
 
 ## Installation (development)
 
-Paths are relative to this README.
+It is assumed that the git checkout resides inside a project directory, e.g. `/var/www/apimanager` and `/var/www/apimanager/API-Manager`.
+Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout in the project directory, except for Django's local settings. 
 
 ### Install dependencies
 
 ```bash
-$ virtualenv --python=python3 venv
-$ source venv/bin/activate
+$ virtualenv --python=python3 ../venv
+$ source ../venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
@@ -21,10 +22,10 @@ Edit `apimanager/apimanager/local_settings.py`:
 
 ```python
 SECRET_KEY = '<random string>'
-OAUTH_API = '<your API root, e.g. https://api.openbankproject.com>'
+OAUTH_API = '<your API root>' # e.g. https://api.openbankproject.com
 OAUTH_CLIENT_KEY = 'key you got from the API'
 OAUTH_CLIENT_SECRET = 'secret you got from the API'
-DATABASES['default']['NAME'] = '<Filename to use for database>' # default is 'db.sqlite3' in parent directory of git checkout
+DATABASES['default']['NAME'] = '<filename to use for database>' # default is 'db.sqlite3' in parent directory of git checkout
 ```
 
 The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
@@ -35,7 +36,6 @@ The application's authentication is API-driven. However, to make use of Django's
 ```bash
 $ ./apimanager/manage.py migrate
 ```
-
 
 ### Run the app
 
@@ -57,7 +57,7 @@ Edit `apimanager/apimanager/local_settings.py` for additional changes:
 ```python
 DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '<your hostname here>']
-STATIC_ROOT = '<Directory to place static files in>'
+STATIC_ROOT = '<directory to place static files in>'
 ```
 
 ### Static files
@@ -76,7 +76,9 @@ Instead of Django's built-in runserver, you need a proper web application server
 $ cd apimanager/ && gunicorn --config ../gunicorn.conf.py apimanager.wsgi 
 ```
 
-For some reason, the process does not start successfully when omitting the directory change and using `apimanager.apimanager.wsgi` as program.
+- `gunicorn` does not start successfully when omitting the directory change and using `apimanager.apimanager.wsgi` as program.
+- The user running  `gunicorn` needs to have write access to the _directory_ containing the database, as well as the database file itself.
+
 
 ### Process control
 
@@ -95,9 +97,14 @@ Finally, use a webserver like `nginx` or `apache` as a frontend. It serves stati
 ```
 
 
+## Management
+
+The app should tell you if your logged in user does not have the proper role to execute the management functionality you need. Please use a super_admin_user at API Explorer's `/#2_0_0-addEntitlement` to rectify that. If your user even cannot do that, set the property `super_admin_user_ids` in the API configuration accordingly.
+
+
 ## Final words
 
-As usual, be aware of file permission issues!
+Be aware of file permission issues!
 
 Have fun,
  TESOBE
