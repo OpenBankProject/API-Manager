@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+
+{% block page_title %}{{ block.super }} / Consumers{% endblock page_title %}
+
+{% block content %}
+<div class="consumers">
+	<h1>Consumers</h1>
+
+	<div class="btn-group" role="group" id="filter-time" aria-label="filter-time">
+		<a href="?time=minute&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_minute %} active{% endif %}">Last Minute</a>
+	  <a href="?time=hour&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_hour %} active{% endif %}">Last Hour</a>
+	  <a href="?time=day&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_day %} active{% endif %}">Last Day</a>
+	  <a href="?time=week&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_week %} active{% endif %}">Last Week</a>
+	  <a href="?time=month&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_month %} active{% endif %}">Last Month</a>
+	  <a href="?time=year&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_year %} active{% endif %}">Last Year</a>
+	  <a href="?time=all&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_all %} active{% endif %}">All</a>
+	</div>
+
+	<div class="btn-group pull-right" id="filter-enabled" role="group" aria-label="filter-enabled">
+		<a href="?enabled=true&apptype={{ request.GET.apptype }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_true %} active{% endif %}">Enabled</a>
+		<a href="?enabled=false&apptype={{ request.GET.apptype }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_false %} active{% endif %}">Disabled</a>
+		<a href="?enabled=all&apptype={{ request.GET.apptype }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_all %} active{% endif %}">All</a>
+	</div>
+
+	<div class="btn-group pull-right" id="filter-apptype" role="group" aria-label="filter-apptype">
+		<a href="?apptype=web&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_apptype_web %} active{% endif %}">Web</a>
+		<a href="?apptype=mobile&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_apptype_mobile %} active{% endif %}">Mobile</a>
+		<a href="?apptype=all&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_apptype_all %} active{% endif %}">All</a>
+	</div>
+
+
+	<table class="table table-hover" id="consumer-list">
+		<thead>
+			<th>Name</th>
+			<th>Developer Email</th>
+			<th>Created</th>
+			<th>Action</th>
+		</thead>
+		<tbody>
+		{% for consumer in consumers %}
+		<tr class="consumer-row {% if consumer.enabled %}consumer-enabled{% else %}consumer-disabled{% endif %}" data-consumer-id="{{ consumer.id }}">
+				<td class="select">{{ consumer.name }}</td>
+				<td class="select">{{ consumer.developerEmail }}</td>
+				<td class="select">{{ consumer.created|naturaltime }}</td>
+				<td>{% if consumer.enabled %}<a class="btn btn-sm btn-primary btn-red" href="{% url 'consumers-disable' consumer.id %}?{{ request.GET.urlencode }}" role="button">Disable</a>{% else %}<a class="btn btn-sm btn-primary btn-green" href="{% url 'consumers-enable' consumer.id %}?{{ request.GET.urlencode }}" role="button">Enable</a>{% endif %}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="modal fade" id="consumer-detail" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 id="consumer-detail-name"></h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						<strong>Developer Email</strong><br />
+						<span id="consumer-detail-developerEmail"></span>
+					</p>
+
+					<p>
+						<strong>Created</strong><br />
+						<span id="consumer-detail-created"></span>
+					</p>
+
+					<p>
+						<strong>Description</strong><br />
+						<div class="well" id="consumer-detail-description"></div>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a id="consumer-detail-enable" class="btn btn-primary btn-red" href="" role="button">UNKNOWN</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+</div>
+{% endblock content %}
+
+
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'consumers/js/consumers.js' %}"></script>
+	<script type="text/javascript">
+	CONSUMERS = {{ consumers_json|safe }};
+	CONSUMERS_ENABLE = "{% url 'consumers-enable' 0 %}?{{ request.GET.urlencode }}";
+	CONSUMERS_DISABLE = "{% url 'consumers-disable' 0 %}?{{ request.GET.urlencode }}";
+	</script>
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'consumers/css/consumers.css' %}" rel="stylesheet">
+{% endblock extracss %}

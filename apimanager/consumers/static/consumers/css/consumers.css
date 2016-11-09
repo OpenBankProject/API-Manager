@@ -1,0 +1,23 @@
+.consumers #consumer-list  {
+	margin-top: 20px;
+}
+
+.consumers .consumer-row {
+	cursor: pointer;
+}
+
+.consumers .consumer-enabled {
+	background-color: rgba(0, 255, 0, 0.1);
+}
+
+.consumers .consumer-disabled {
+	background-color: rgba(255, 0, 0, 0.1);
+}
+
+.consumers .table > tbody > tr.active > td {
+	background-color: #fff;
+}
+
+.consumers #filter-enabled {
+	margin-left: 10px;
+}

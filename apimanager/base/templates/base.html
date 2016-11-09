@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="OBP API Manager"	>
+		<meta name="author" content="TESOBE, Sebastian Henschel">
+		<title>{% block page_title %}OBP API Manager{% endblock page_title %}</title>
+		<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/base.css' %}" rel="stylesheet">
+		{% block extracss %}{% endblock extracss %}
+	</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'home' %}"><img src="https://static.openbankproject.com/images/OBP/favicon.png" alt="brand" /></a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					{% url "consumers-index" as consumers_index_url %}
+					<li{% ifequal request.path consumers_index_url %} class="active" {% endifequal %}><a href="{{ consumers_index_url }}">Consumers</a></li>
+					{% comment %}
+					{% url "users-index" as users_index_url %}
+					<li{% ifequal request.path users_index_url %} class="active" {% endifequal %}><a href="{{ users_index_url }}">Users</a></li>
+					{% url "api-calls-grouped" as api_calls_grouped_url %}
+					<li{% ifequal request.path api_calls_grouped_url %} class="active" {% endifequal %}><a href="{{ api_calls_grouped_url }}">API Calls Grouped</a></li>
+					{% url "api-calls-list" as api_calls_list_url %}
+					<li{% ifequal request.path api_calls_list_url %} class="active" {% endifequal %}><a href="{{ api_calls_list_url }}">API Calls List</a></li>
+					{% url "api-config-index" as api_config_index_url %}
+					<li{% ifequal request.path api_config_index_url %} class="active" {% endifequal %}><a href="{{ api_config_index_url }}">API Config</a></li>
+					{% endcomment %}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+{% if user.is_authenticated %}
+<p class="navbar-btn"><a href="{% url 'oauth-logout' %}" class="btn btn-default">Logout {{ API_USERNAME }}</a></p>
+{% endif %}
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+{% if messages %}
+	<div class="container messages">
+	{% for message in messages %}
+	<div class="alert alert-dismissible{% ifequal message.tags "error" %} alert-danger{% else %}{% ifequal message.tags "debug" %} alert-info{% else %} alert-{{ message.tags }}{% endifequal %}{% endifequal %}" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>	
+			{{ message }}
+		</div>
+	{% endfor %}
+	</div>
+{% endif %}
+
+	<div class="container">
+{% block content %}{% endblock content %}
+	</div>
+
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">
+				<a title="API ROOT" href="{{ API_ROOT }}">API ROOT: {{ API_ROOT }}</a> |
+				<a title="Open Bank Project" href="https://openbankproject.com">Open Bank Project</a> |
+				Powered by <a title="TESOBE" href="http://tesobe.com">TESOBE</a> |
+				<small>Copyright &copy; 2016</small>
+			</p>
+		</div>
+	</footer>
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/base.js' %}"></script>
+{% block extrajs %}{% endblock extrajs %}
+</body>
+</html>

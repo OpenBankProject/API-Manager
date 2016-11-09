@@ -1,0 +1,97 @@
+html {
+	position: relative;
+	min-height: 100%;
+	background-color: #fff;
+}
+
+body {
+	background-color: #fff;
+	padding-top: 70px;
+	margin-bottom: 60px; /* footer height */
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #333;
+}
+.footer p {
+	margin-top: 25px;
+	font-size: 10px;
+	text-align: center;
+	color: #aaa;
+}
+.footer a:link, .footer a:visited {
+	color: #ddd;
+}
+.footer a:hover, .footer a:focus {
+	color: #fff;
+}
+
+.navbar-brand img {
+	width: 20px;
+	height: 20px;
+}
+
+
+.navbar-default {
+	background-color: #53c4ef;
+	border: none;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:visited {
+	color: #555;
+	background-color: #fff;
+	border: none;
+}
+
+.navbar-default .navbar-nav > li > a:link, .navbar-default .navbar-nav > li > a:visited {
+	color: #000;
+}
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+	color: #03749f;
+}
+
+.btn-primary {
+	background-color: #53c4ef;
+	border-color: #33a4cf;
+}
+
+.btn-primary:hover {
+	background-color: #33a4cf;
+	border-color: #33a4cf;
+}
+
+.btn-green {
+	background-color: #0c0;
+	border-color: #0b0;
+}
+.btn-green:hover {
+	background-color: #0b0;
+	border-color: #0b0;
+}
+.btn-red {
+	background-color: #f00;
+	border-color: #d00;
+}
+.btn-red:hover {
+	background-color: #d00;
+	border-color: #d00;
+}
+
+
+.messages {
+	margin-top: 30px;
+}
+
+
+.home #login, .home #intro {
+	margin-top: 30px;
+}
+
+.home .text-center {
+	margin-top: 80px;
+}

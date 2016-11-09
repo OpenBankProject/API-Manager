@@ -1,0 +1,4 @@
+*.swp
+__pycache__/
+
+apimanager/apimanager/local_settings.py

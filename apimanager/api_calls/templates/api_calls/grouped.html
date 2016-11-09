@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="api-calls">
+	<h1>API Calls grouped by Scala Function</h1>
+
+
+	<div class="alert alert-warning">
+		There is no live data here!
+	</div>
+
+
+	<div class="btn-group" role="group" id="filter-time" aria-label="filter-time">
+		<a href="?time=minute" class="btn btn-default{% if active_time_minute %} active{% endif %}">Last Minute</a>
+	  <a href="?time=hour" class="btn btn-default{% if active_time_hour %} active{% endif %}">Last Hour</a>
+	  <a href="?time=day" class="btn btn-default{% if active_time_day %} active{% endif %}">Last Day</a>
+	  <a href="?time=week" class="btn btn-default{% if active_time_week %} active{% endif %}">Last Week</a>
+	  <a href="?time=month" class="btn btn-default{% if active_time_month %} active{% endif %}">Last Month</a>
+	  <a href="?time=year" class="btn btn-default{% if active_time_year %} active{% endif %}">Last Year</a>
+	  <a href="?time=all" class="btn btn-default{% if active_time_all %} active{% endif %}">All</a>
+	</div>
+
+	<canvas id="call-graph"></canvas>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'api_calls/js/grouped.js' %}"></script>
+	<script type="text/javascript">
+	CALLS_LABELS = {{ calls.labels|safe }};
+	CALLS_VALUES = {{ calls.values|safe }};
+	</script>
+{% endblock extrajs %}
+
+{% block extracss %}
+		<link href="{% static 'api_calls/css/api_calls.css' %}" rel="stylesheet">
+{% endblock extracss %}

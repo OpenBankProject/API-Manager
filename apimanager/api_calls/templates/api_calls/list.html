@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+
+{% block content %}
+<div class="api-calls">
+	<h1>API Calls List</h1>
+
+	<div class="alert alert-warning">
+		There is no live data here!
+	</div>
+
+
+	<div class="btn-group" role="group" id="filter-time" aria-label="filter-time">
+		<a href="?time=minute&code={{ request.GET.code }}" class="btn btn-default{% if active_time_minute %} active{% endif %}">Last Minute</a>
+	  <a href="?time=hour&code={{ request.GET.code }}" class="btn btn-default{% if active_time_hour %} active{% endif %}">Last Hour</a>
+	  <a href="?time=day&code={{ request.GET.code }}" class="btn btn-default{% if active_time_day %} active{% endif %}">Last Day</a>
+	  <a href="?time=week&code={{ request.GET.code }}" class="btn btn-default{% if active_time_week %} active{% endif %}">Last Week</a>
+	  <a href="?time=month&code={{ request.GET.code }}" class="btn btn-default{% if active_time_month %} active{% endif %}">Last Month</a>
+	  <a href="?time=year&code={{ request.GET.code }}" class="btn btn-default{% if active_time_year %} active{% endif %}">Last Year</a>
+	  <a href="?time=all&code={{ request.GET.code }}" class="btn btn-default{% if active_time_all %} active{% endif %}">All</a>
+	</div>
+
+
+	<div class="btn-group pull-right">
+		<button type="button" class="btn btn-default dropdown-toggle" id="filter-code" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		{{ active_code }} <span class="caret"></span>
+  		</button>
+		<ul class="dropdown-menu">
+			<li><a href="?code=all&time={{ request.GET.time }}">All</a></li>
+			<li role="separator" class="divider"></li>
+		{% for code in codes %}
+			<li><a href="?code={{ code }}&time={{ request.GET.time }}">{{ code }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+
+
+	<table class="table table-striped" id="call-list">
+		<thead>
+		</thead>
+		<tbody>
+		{% for call in calls %}
+			<tr>
+				<td>{{ call.method }}</td>
+				<td>{{ call.url }}</td>
+				<td>{{ call.code }}</td>
+				<td>{{ call.user }}</td>
+				<td>{{ call.when|naturaltime }}</td>
+				<td>took {{ call.duration }}ms</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+{% endblock %}
+
+{% block extracss %}
+		<link href="{% static 'api_calls/css/api_calls.css' %}" rel="stylesheet">
+{% endblock extracss %}

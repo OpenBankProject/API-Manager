@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+
+{% block content %}
+<div class="users">
+	<h1>Users</h1>
+
+	<div class="alert alert-warning">
+		The only live data here is the role names!
+	</div>
+
+	<div class="btn-group" role="group" id="filter-time" aria-label="filter-time">
+		<a href="?time=minute&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_minute %} active{% endif %}">Last Minute</a>
+	  <a href="?time=hour&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_hour %} active{% endif %}">Last Hour</a>
+	  <a href="?time=day&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_day %} active{% endif %}">Last Day</a>
+	  <a href="?time=week&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_week %} active{% endif %}">Last Week</a>
+	  <a href="?time=month&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_month %} active{% endif %}">Last Month</a>
+	  <a href="?time=year&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_year %} active{% endif %}">Last Year</a>
+	  <a href="?time=all&role_name={{ request.GET.role_name }}" class="btn btn-default{% if active_time_all %} active{% endif %}">All</a>
+	</div>
+
+
+	<div class="btn-group pull-right">
+		<button type="button" class="btn btn-default dropdown-toggle" id="filter-entitlement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		{{ active_role_name }} <span class="caret"></span>
+  		</button>
+		<ul class="dropdown-menu">
+			<li><a href="?role_name=all&time={{ request.GET.time }}">All</a></li>
+			<li role="separator" class="divider"></li>
+		{% for role_name in role_names %}
+			<li><a href="?role_name={{ role_name }}&time={{ request.GET.time }}">{{ role_name }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+
+
+	<table class="table" id="user-list">
+		<thead>
+		</thead>
+		<tbody>
+		{% for user in users %}
+			<tr class="user-row" data-user-id="{{ user.id }}">
+				<td>{{ user.name_ }}</td>
+				<td>{% if user.is_super_admin %}Super Admin{% endif %}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.last_login|naturaltime }}</td>
+				<td>{{ user.whatever }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+
+	<div id="user-detail">
+		<h2>Details</h2>
+
+		<form class="form-inline">
+			<input type="hidden" name="id" id="user-detail-id" value="" />
+
+			<table class="table">
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="user-detail-name"></td>
+						<td id="user-detail-is-super-admin"></td>
+						<td id="user-detail-email"></td>
+						<td id="user-detail-last-login"></td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			<div class="form-group" id="entitlement-template">
+				<input type="checkbox" class="form-control" name="" id="" aria-label="active" disabled="disabled" />
+				<label for="user-detail-entitlement" class="control-label"></label>
+			</div>
+
+		</form>
+	</div>
+
+
+</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'users/js/users.js' %}"></script>
+	<script type="text/javascript">
+	USERS = {{ users_json|safe }};
+	</script>
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'users/css/users.css' %}" rel="stylesheet">
+{% endblock extracss %}

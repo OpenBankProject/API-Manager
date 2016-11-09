@@ -1,0 +1,21 @@
+.users #user-list {
+	margin-top: 20px;
+}
+
+.users #user-detail {
+	display: none;
+}
+
+
+.users #entitlement-template {
+	display: none;
+}
+
+.users .form-inline .form-group {
+	display: block;
+}
+
+
+.user-row.active {
+	background-color: #ddd;
+}
