@@ -6,14 +6,14 @@
 
 	<div id="intro">
 		<p>
-		This app gives you access to management functionality for the sandbox at <a href="{{ OAUTH_API }}">{{ OAUTH_API }}</a> if the authenticated user has the required permissions, e.g. being a super admin. Currently, you can see consumers, users, calls (list and grouped in a bar chart) and configuration of the sandbox.
+		This app gives you access to management functionality for the sandbox at <a href="{{ OAUTH_API }}">{{ OAUTH_API }}</a>. If the authenticated user has the required permissions, e.g. being a super admin, you can enable or disable consumers. You have to <a href="{{ OAUTH_API }}/user_mgt/sign_up" title="Register at {{ OAUTH_API }}">register</a> an account before being able to proceed.
 		</p>
 	</div>
 
 
 {% if not user.is_authenticated %}
 	<div id="login">
-		Please authorise against {{ OAUTH_API }}: <a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed</a>
+		Please authenticate against {{ OAUTH_API }}: <a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed</a>
 	</div>
 {% endif %}
 

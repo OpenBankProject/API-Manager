@@ -1,6 +1,8 @@
 # API Manager
 
-A Django project to manage the Open Bank Project API via API Calls
+This is a Django project to manage the Open Bank Project API via API Calls.
+
+To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
 
 
 ## Installation (development)
