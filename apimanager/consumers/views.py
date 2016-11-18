@@ -62,6 +62,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context.update({
             'consumers': filtered,
+            'consumers_num': len(filtered),
             'consumers_json': json.dumps(filtered, default=json_serial),
         })
         return context
