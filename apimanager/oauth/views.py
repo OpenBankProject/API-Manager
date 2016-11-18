@@ -25,8 +25,8 @@ class InitiateView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         callback_uri = self.get_callback_uri(self.request)
         api = OAuth1Session(
-            settings.OAUTH_CLIENT_KEY,
-            client_secret=settings.OAUTH_CLIENT_SECRET,
+            settings.OAUTH_CONSUMER_KEY,
+            client_secret=settings.OAUTH_CONSUMER_SECRET,
             callback_uri=callback_uri,
         )
 
@@ -59,8 +59,8 @@ class AuthorizeView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         api = OAuth1Session(
-            settings.OAUTH_CLIENT_KEY,
-            settings.OAUTH_CLIENT_SECRET,
+            settings.OAUTH_CONSUMER_KEY,
+            settings.OAUTH_CONSUMER_SECRET,
             resource_owner_key=self.request.session['oauth_token'],
             resource_owner_secret=self.request.session['oauth_secret']
         )

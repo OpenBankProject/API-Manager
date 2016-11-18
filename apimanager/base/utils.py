@@ -46,8 +46,8 @@ def api_call(request, method='GET', urlpath='', payload=None):
     api_log(logging.INFO, '{} {}'.format(method, url))
     if not hasattr(request, 'api'):
         request.api = OAuth1Session(
-            settings.OAUTH_CLIENT_KEY,
-            client_secret=settings.OAUTH_CLIENT_SECRET,
+            settings.OAUTH_CONSUMER_KEY,
+            client_secret=settings.OAUTH_CONSUMER_SECRET,
             resource_owner_key=request.session['oauth_token'],
             resource_owner_secret=request.session['oauth_secret']
         )

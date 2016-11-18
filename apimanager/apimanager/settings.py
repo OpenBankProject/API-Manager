@@ -170,8 +170,8 @@ OAUTH_API_BASE_PATH = '/obp/v2.1.0'
 
 
 # Set OAuth client key/secret in apimanager/local_settings.py
-OAUTH_CLIENT_KEY = None
-OAUTH_CLIENT_SECRET = None
+OAUTH_CONSUMER_KEY = None
+OAUTH_CONSUMER_SECRET = None
 
 # Local settings can override anything in here
 try:
@@ -179,7 +179,7 @@ try:
 except:
     pass
 
-if not OAUTH_CLIENT_KEY:
-    raise ImproperlyConfigured('Missing settings for OAUTH_CLIENT_KEY')
-if not OAUTH_CLIENT_SECRET:
-    raise ImproperlyConfigured('Missing settings for OAUTH_CLIENT_SECRET')
+if not OAUTH_CONSUMER_KEY:
+    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
+if not OAUTH_CONSUMER_SECRET:
+    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_SECRET')
