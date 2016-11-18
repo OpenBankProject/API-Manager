@@ -1,0 +1,7 @@
+<a href="?time=minute&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_minute %} active{% endif %}">Last Minute</a>
+<a href="?time=hour&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_hour %} active{% endif %}">Last Hour</a>
+<a href="?time=day&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_day %} active{% endif %}">Last Day</a>
+<a href="?time=week&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_week %} active{% endif %}">Last Week</a>
+<a href="?time=month&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_month %} active{% endif %}">Last Month</a>
+<a href="?time=year&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_year %} active{% endif %}">Last Year</a>
+<a href="?time=all&apptype={{ request.GET.apptype }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_time_all %} active{% endif %}">All</a>
