@@ -80,7 +80,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
             else:
                 user['entitlements'] = entitlements['list']
         context.update({
-            'user': user,
+            'apiuser': user,
         })
         return context
 
