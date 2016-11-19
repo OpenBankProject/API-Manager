@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+
+{% block page_title %}{{ block.super }} / {{ consumer.name }}{% endblock page_title %}
+
+{% block content %}
+<div id="consumers-detail">
+	<h1>Consumer {{ consumer.name }}</h1>
+
+	<div id="consumers-detail-id">
+		<strong>ID</strong><br />
+		<span>{{ consumer.id }}</span>
+	</div>
+
+
+	<div id="consumers-detail-developerEmail">
+		<strong>Developer Email</strong><br />
+		<span>{{ consumer.developerEmail }}</span>
+	</div>
+
+	<div id="consumers-detail-created">
+		<strong>Created</strong><br />
+		<span>{{ consumer.created|naturaltime }}</span>
+	</div>
+
+	<div id="consumers-detail-description">
+		<strong>Description</strong><br />
+		<div class="well">{{ consumer.description }}</div>
+	</div>
+
+	<div id="consumers-detail-enable">
+		{% if consumer.enabled %}
+			{% url 'consumers-disable' consumer.id as url_action %}
+		{% else %}
+			{% url 'consumers-enable' consumer.id as url_action %}
+		{% endif %}
+		<form action="{{ url_action }}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="next" value="{{ request.path }}" />
+			<div class="form-group">
+			{% if consumer.enabled %}
+				<button type="submit" class="btn btn-primary btn-red">Disable</a>
+			{% else %}
+				<button type="submit" class="btn btn-primary btn-green">Enable</a>
+			{% endif %}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'consumers/js/consumers.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'consumers/css/consumers.css' %}" rel="stylesheet">
+{% endblock extracss %}

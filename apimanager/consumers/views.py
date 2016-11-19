@@ -18,7 +18,7 @@ class FilterAppType(BaseFilter):
     filter_type = 'apptype'
 
     def _apply(self, data, filter_value):
-        filtered = [x for x in data if x['appType'].lower() == filter_value]
+        filtered = [x for x in data if x['appType'] == filter_value]
         return filtered
 
 
@@ -62,8 +62,33 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context.update({
             'consumers': filtered,
-            'consumers_num': len(filtered),
             'consumers_json': json.dumps(filtered, default=json_serial),
+            'statistics': {
+                'consumers_num': len(filtered),
+            },
+        })
+        return context
+
+
+
+class DetailView(LoginRequiredMixin, TemplateView):
+    template_name = "consumers/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
+        consumer = api_get(self.request, urlpath)
+        
+        if not isinstance(consumer, dict):
+            messages.error(self.request, consumer)
+        elif 'error' in consumer:
+            messages.error(self.request, consumer['error'])
+        else:
+            consumer['created'] = datetime.strptime(
+                consumer['created'], settings.API_DATETIMEFORMAT)
+
+        context.update({
+            'consumer': consumer,
         })
         return context
 
@@ -78,9 +103,11 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
             messages.error(self.request, result['error'])
         else:
             messages.success(self.request, self.success)
+        urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()
-        url = '{}?{}'.format(reverse('consumers-index'), query)
-        return url
+        redirect_url = '{}?{}'.format(urlpath, query)
+        return redirect_url
+
 
 
 class EnableView(EnableDisableView):
