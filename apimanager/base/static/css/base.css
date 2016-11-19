@@ -10,7 +10,7 @@ body {
 	margin-bottom: 60px; /* footer height */
 }
 
-.footer {
+footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
@@ -18,18 +18,19 @@ body {
 	height: 60px;
 	background-color: #333;
 }
-.footer p {
+footer p {
 	margin-top: 25px;
 	font-size: 10px;
 	text-align: center;
 	color: #aaa;
 }
-.footer a:link, .footer a:visited {
+footer a:link, .footer a:visited {
 	color: #ddd;
 }
-.footer a:hover, .footer a:focus {
+footer a:hover, .footer a:focus {
 	color: #fff;
 }
+
 
 .navbar-brand img {
 	width: 20px;
@@ -49,10 +50,17 @@ body {
 }
 
 .navbar-default .navbar-nav > li > a:link, .navbar-default .navbar-nav > li > a:visited {
-	color: #000;
+	color: #fff;
 }
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
-	color: #03749f;
+	color: #eee;
+}
+
+.navbar-default .navbar-toggle {
+	border-color: #fff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
 }
 
 .btn-primary {

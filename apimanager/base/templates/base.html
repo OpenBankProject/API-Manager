@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="OBP API Manager"	>
 		<meta name="author" content="TESOBE, Sebastian Henschel">
-		<title>{% block page_title %}OBP API Manager{% endblock page_title %}</title>
+		<title>{% block page_title %}API Manager{% endblock page_title %}</title>
 		<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
 		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 		<link href="{% static 'css/base.css' %}" rel="stylesheet">
@@ -29,9 +29,9 @@
 				<ul class="nav navbar-nav">
 					{% url "consumers-index" as consumers_index_url %}
 					<li{% ifequal request.path consumers_index_url %} class="active" {% endifequal %}><a href="{{ consumers_index_url }}">Consumers</a></li>
-					{% comment %}
 					{% url "users-index" as users_index_url %}
 					<li{% ifequal request.path users_index_url %} class="active" {% endifequal %}><a href="{{ users_index_url }}">Users</a></li>
+					{% comment %}
 					{% url "api-calls-grouped" as api_calls_grouped_url %}
 					<li{% ifequal request.path api_calls_grouped_url %} class="active" {% endifequal %}><a href="{{ api_calls_grouped_url }}">API Calls Grouped</a></li>
 					{% url "api-calls-list" as api_calls_list_url %}
@@ -66,7 +66,7 @@
 {% block content %}{% endblock content %}
 	</div>
 
-	<footer class="footer">
+	<footer>
 		<div class="container">
 			<p class="text-muted">
 				<a title="API ROOT" href="{{ API_ROOT }}">API ROOT: {{ API_ROOT }}</a> |

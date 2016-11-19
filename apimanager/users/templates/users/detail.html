@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / {{ user.username }}{% endblock page_title %}
+
+{% block content %}
+<div id="users-detail">
+	<h1>User {{ user.username }}</h1>
+
+	<div id="users-detail-user_id">
+		<strong>User ID</strong><br />
+		<span>{{ user.user_id }}</span>
+	</div>
+
+	<div id="users-detail-email">
+		<strong>Email</strong><br />
+		<span>{{ user.email }}</span>
+	</div>
+
+{% if user.user_id %}
+	<div id="users-detail-entitlements">
+		<h2>Add Entitlement</h2>
+		<form class="form-inline" action="{% url 'users-add-entitlement' user.user_id %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="user_email" value="{{ user.email }}" />
+			<div class="form-group">
+				<label for="users-detail-entitlement-role_name">Role name</label> <input type="text" class="form-control" name="role_name" id="users-detail-entitlements-role_name" aria-label="active" />
+			</div>
+			<div class="form-group">
+				<label for="users-detail-entitlement-bank_id">Bank Id</label> <input type="text" class="form-control" name="bank_id" id="users-detail-entitlement-bank_id" aria-label="active" placeholder="Empty if not bank-specific"/>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-green">Add</a>
+			</div>
+		</form>
+
+		<h2>Entitlements</h2>
+		<table class="table table-striped">
+			<tbody>
+			{% for entitlement in user.entitlements %}
+				<tr>
+					<td>{{ entitlement.role_name }}</td>
+					<td>
+					{# SuperAdmin has no entitlement_id! #}
+					{% if entitlement.entitlement_id %}
+						<form action="{% url 'users-delete-entitlement' user.user_id entitlement.entitlement_id %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="user_email" value="{{ user.email }}" />
+							<input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
+							<button type="submit" class="btn btn-primary btn-red">Delete</button>
+						</form>
+					{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'users/js/users.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'users/css/users.css' %}" rel="stylesheet">
+{% endblock extracss %}

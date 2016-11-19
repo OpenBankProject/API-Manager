@@ -7,88 +7,120 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import TemplateView, RedirectView, View
 
-from base.filters import filter_time
-from base.utils import json_serial, api_get
+from base.filters import BaseFilter
+from base.utils import api_get, api_post, api_delete
 
 
-APIUSER = [
-    {
-        'id': 1,
-        'email': 'sebastian@tesobe.com',
-        'name_': 'Sebastian Henschel',
-        'userid_': 'zyzop',
-        #'userid_': '05c98d97-5d6d-46b5-a880-2da0a45019c8',
-        'last_login': '2016-09-07 12:34:47',
-        'whatever': 'dfasdfsd',
-    },
-    {
-        'id': 2,
-        'email': 'robert.x.0.gh@example.com',
-        'name_': 'Robert X.0.GH',
-        'userid_': 'ff3f94f9-bbd6-4cd9-ab78-3701e961eb58',
-        'last_login': '2016-08-10 16:34:47',
-        'whatever': 'ijkjkljljk',
-    },
-]
+class FilterRoleName(BaseFilter):
+    filter_type = 'role_name'
+
+    def _apply(self, data, filter_value):
+        filtered = [x for x in data if filter_value in [e['role_name'] for e in x['entitlements']['list']]]
+        return filtered
+
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "users/index.html"
 
-    def filter_role_name(self, context, data):
-        context['active_role_name'] = 'All'
-        if not 'role_name' in self.request.GET:
-            return data
-        role_name = self.request.GET['role_name']
-        if not role_name or role_name.lower() == 'all':
-            return data
-
-        filtered = []
-        for user in data:
-            for entitlement in user['entitlements']:
-                if role_name == entitlement['role_name']:
-                    filtered.append(user)
-                    break
-
-        if filtered:
-            context['active_role_name'] = role_name
-        return filtered
-
-    def scrub(self, data):
-        for user in data:
-            user['last_login'] = datetime.strptime(user['last_login'], '%Y-%m-%d %H:%M:%S')
-        return data
-
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        filtered = deepcopy(APIUSER)
         role_names = []
+        filtered = []
+        urlpath = '/users'
+        users = api_get(self.request, urlpath)
 
-        for user in filtered:
-            urlpath = '/users/{}/entitlements'.format(user['userid_'])
-            entitlements = api_get(self.request, urlpath)
-            if 'error' in entitlements:
-                messages.error(self.request, entitlements['error'])
-                break
-            else:
-                user['entitlements'] = []
-                for entitlement in entitlements['list']:
-                    user['entitlements'].append(entitlement)
-                    if entitlement['role_name'] == 'SuperAdmin':
-                        user['is_super_admin'] = True
+        if not isinstance(users, dict):
+            messages.error(self.request, users)
+        elif 'error' in users:
+            messages.error(self.request, users['error'])
+        else:
+            for user in users['users']:
+                for entitlement in user['entitlements']['list']:
                     role_names.append(entitlement['role_name'])
-        role_names = list(set(role_names))
-        role_names.sort()
+            role_names = list(set(role_names))
+            role_names.sort()
+            filtered = FilterRoleName(context, self.request.GET)\
+                .apply(users['users'])
 
-        filtered = self.filter_role_name(context, filtered)
-        filtered = filter_time(self.request, context, filtered, 'last_login')
-        filtered = self.scrub(filtered)
 
         context.update({
             'role_names': role_names,
+            'statistics': {
+                'users_num': len(filtered),
+            },
             'users': filtered,
-            'users_json': json.dumps(filtered, default=json_serial),
         })
         return context
+
+
+
+class DetailView(LoginRequiredMixin, TemplateView):
+    template_name = 'users/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        # NOTE: assuming there is just one user with that email address
+        # The API actually needs a 'get user by id'
+        urlpath = '/users/{}'.format(kwargs['user_email'])
+        users = api_get(self.request, urlpath)
+        user = {}
+        if 'error' in users:
+            messages.error(self.request, users['error'])
+        elif len(users['users']) > 0:
+            user = users['users'][0]
+            urlpath = '/users/{}/entitlements'.format(user['user_id'])
+            entitlements = api_get(self.request, urlpath)
+            if 'error' in entitlements:
+                messages.error(self.request, entitlements['error'])
+            else:
+                user['entitlements'] = entitlements['list']
+        context.update({
+            'user': user,
+        })
+        return context
+
+
+
+class AddEntitlementView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        urlpath = '/users/{}/entitlements'.format(kwargs['user_id'])
+        payload = {
+            'bank_id': request.POST['bank_id'],
+            'role_name': request.POST['role_name'],
+        }
+        entitlement = api_post(request, urlpath, payload=payload)
+        if not isinstance(entitlement, dict):
+            messages.error(request, entitlement)
+        elif 'error' in entitlement:
+            messages.error(request, entitlement['error'])
+        else:
+            msg = 'Entitlement with role {} has been added.'.format(
+                entitlement['role_name'])
+            messages.success(request, msg)
+        redirect_url = reverse('users-detail', kwargs={
+            'user_email': request.POST['user_email'],
+        })
+        return HttpResponseRedirect(redirect_url)
+
+
+
+class DeleteEntitlementView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        urlpath = '/users/{}/entitlement/{}'.format(
+            kwargs['user_id'], kwargs['entitlement_id'])
+        result = api_delete(request, urlpath)
+        if 'error' in result:
+            messages.error(request, result['error'])
+        else:
+            msg = 'Entitlement with role {} has been deleted.'.format(
+                request.POST['role_name'])
+            messages.success(request, msg)
+        redirect_url = reverse('users-detail', kwargs={
+            'user_email': request.POST['user_email'],
+        })
+        return HttpResponseRedirect(redirect_url)

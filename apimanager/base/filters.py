@@ -15,15 +15,18 @@ class BaseFilter(object):
     def apply(self, data):
         filter_all = 'active_{}_all'.format(self.filter_type)
         self.context[filter_all] = True
+        filter_active_value = 'active_{}'.format(self.filter_type)
+        self.context[filter_active_value] = 'All'
 
         if not self.filter_type in self.request_get:
             return data
 
-        filter_value = self.request_get[self.filter_type].lower()
-        if not filter_value or filter_value == 'all':
+        filter_value = self.request_get[self.filter_type]
+        if not filter_value or filter_value == 'All':
             return data
 
         self.context[filter_all] = False
+        self.context[filter_active_value] = filter_value
         filter_active = 'active_{}_{}'.format(self.filter_type, filter_value)
         self.context[filter_active] = True
         return self._apply(data, filter_value)

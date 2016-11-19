@@ -33,12 +33,17 @@ def api_get(request, urlpath=''):
     return api_call(request, 'GET', urlpath)
 
 
+def api_delete(request, urlpath):
+    return api_call(request, 'DELETE', urlpath)
+
+
 def api_post(request, urlpath, payload):
     return api_call(request, 'POST', urlpath, payload)
 
 
 def api_put(request, urlpath, payload):
     return api_call(request, 'PUT', urlpath, payload)
+
 
 
 def api_call(request, method='GET', urlpath='', payload=None):
@@ -62,6 +67,8 @@ def api_call(request, method='GET', urlpath='', payload=None):
     if response.status_code in [404, 500]:
         msg = 'Ran into a {}: {}'.format(response.status_code, response.text)
         api_log(logging.ERROR, msg)
+        data = response.text
+    elif response.status_code in [204]:
         data = response.text
     else:
         data = response.json()
