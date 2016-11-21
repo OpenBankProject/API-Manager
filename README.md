@@ -9,6 +9,35 @@ To use this app, you need to authenticate against a sandbox where you have to ha
 
 It is assumed that the git checkout resides inside a project directory, e.g. `/var/www/apimanager` and `/var/www/apimanager/API-Manager`.
 Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout in the project directory, except for Django's local settings. 
+The directory tree might look like:
+
+```bash
+$ tree -L 2 apimanager/
+apimanager/
+├── API-Manager
+│   ├── apimanager
+│   ├── gunicorn.conf.py
+│   ├── LICENSE
+│   ├── nginx.apimanager.conf
+│   ├── NOTICE
+│   ├── README.md
+│   ├── requirements.txt
+│   └── supervisor.apimanager.conf
+├── db.sqlite3
+├── logs [error opening dir]
+├── static-collected
+│   ├── admin
+│   ├── consumers
+│   ├── css
+│   ├── img
+│   ├── js
+│   └── users
+└── venv
+    ├── bin
+    └── lib
+
+13 directories, 8 files
+```
 
 ### Install dependencies
 
@@ -109,7 +138,7 @@ Finally, use a webserver like `nginx` or `apache` as a frontend. It serves stati
 
 ## Management
 
-The app should tell you if your logged in user does not have the proper role to execute the management functionality you need. Please use a super_admin_user at API Explorer's `/#2_0_0-addEntitlement` to rectify that. If your user even cannot do that, set the property `super_admin_user_ids` in the API configuration accordingly.
+The app should tell you if your logged in user does not have the proper role to execute the management functionality you need. Please use a Super Admin user to login and set roles at `/users` to rectify that. To become Super Admin, set the property `super_admin_user_ids` in the API properties file accordingly.
 
 
 ## Final words
