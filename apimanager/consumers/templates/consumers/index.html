@@ -51,10 +51,11 @@
 					<td class="select">{{ consumer.developerEmail }}</td>
 					<td class="select">{{ consumer.created|naturaltime }}</td>
 					<td>
-						<div class="btn-group" role="group" aria-label="actions">
-							{% if consumer.enabled %}<a class="btn btn-primary btn-red" href="{% url 'consumers-disable' consumer.id %}?{{ request.GET.urlencode }}" role="button">Disable</a>{% else %}<a class="btn btn-primary btn-green" href="{% url 'consumers-enable' consumer.id %}?{{ request.GET.urlencode }}" role="button">Enable</a>{% endif %}
-							<a href="{{ url_detail }}" class="btn btn-primary">View</a>
-						</div>
+						<form action="{% if consumer.enabled %}{% url 'consumers-disable' consumer.id %}{% else %}{% url 'consumers-enable' consumer.id %}{% endif %}?{{ request.GET.urlencode }}" method="post">
+							{% csrf_token %}
+							{% if consumer.enabled %}<button class="btn btn-primary btn-red">Disable</button>{% else %}<button class="btn btn-primary btn-green">Enable</button>{% endif %}
+							<a href="{{ url_detail }}" class="btn btn-primary" role="button">View</a>
+						</form>
 					</td>
 				</tr>
 			{% endfor %}
