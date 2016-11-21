@@ -47,6 +47,24 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 consumer['created'], settings.API_DATETIMEFORMAT)
         return consumers
 
+
+    def compile_statistics(self, consumers):
+        """Compiles a set of statistical values for the given consumers"""
+        unique_developer_email = {}
+        unique_name = {}
+        for consumer in consumers:
+            unique_developer_email[consumer['developerEmail']] = True
+            unique_name[consumer['name']] = True
+        unique_developer_email = unique_developer_email.keys()
+        unique_name = unique_name.keys()
+        statistics = {
+            'consumers_num': len(consumers),
+            'unique_developerEmail_num': len(unique_developer_email),
+            'unique_name_num': len(unique_name),
+        }
+        return statistics
+
+
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         consumers = []
@@ -66,9 +84,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context.update({
             'consumers': consumers,
-            'statistics': {
-                'consumers_num': len(consumers),
-            },
+            'statistics': self.compile_statistics(consumers),
         })
         return context
 
