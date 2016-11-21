@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""
+URLs for OAuth 1 app
+"""
+
 from django.conf.urls import url
 
 from .views import InitiateView, AuthorizeView, LogoutView

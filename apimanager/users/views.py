@@ -1,30 +1,32 @@
 # -*- coding: utf-8 -*-
+"""
+Views of users app
+"""
 
-import json
-from copy import deepcopy
-from datetime import datetime
-
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import TemplateView, RedirectView, View
+from django.views.generic import TemplateView, View
 
 from base.filters import BaseFilter
 from base.api import api, APIError
 
 
 class FilterRoleName(BaseFilter):
+    """Filter users by role names"""
     filter_type = 'role_name'
 
     def _apply(self, data, filter_value):
-        filtered = [x for x in data if filter_value in [e['role_name'] for e in x['entitlements']['list']]]
+        filtered = [x for x in data if filter_value in [
+            e['role_name'] for e in x['entitlements']['list']
+        ]]
         return filtered
 
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
+    """Index view for users"""
     template_name = "users/index.html"
 
     def get_context_data(self, **kwargs):
@@ -56,6 +58,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 class DetailView(LoginRequiredMixin, TemplateView):
+    """Detail view for a user"""
     template_name = 'users/detail.html'
 
     def get_context_data(self, **kwargs):
@@ -86,7 +89,10 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
 
 class AddEntitlementView(LoginRequiredMixin, View):
+    """View to add an entitlement by role name (and bank ID)"""
+
     def post(self, request, *args, **kwargs):
+        """Posts entitlement data to API"""
         try:
             urlpath = '/users/{}/entitlements'.format(kwargs['user_id'])
             payload = {
@@ -108,7 +114,10 @@ class AddEntitlementView(LoginRequiredMixin, View):
 
 
 class DeleteEntitlementView(LoginRequiredMixin, View):
+    """View to delete an entitlement"""
+
     def post(self, request, *args, **kwargs):
+        """Deletes entitlement from API"""
         try:
             urlpath = '/users/{}/entitlement/{}'.format(
                 kwargs['user_id'], kwargs['entitlement_id'])

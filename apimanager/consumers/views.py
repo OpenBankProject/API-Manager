@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-import json
-from copy import deepcopy
+"""
+Views of consumers app
+"""
+
 from datetime import datetime
 
 from django.conf import settings
@@ -11,11 +13,11 @@ from django.views.generic import TemplateView, RedirectView
 
 from base.api import api, APIError
 from base.filters import BaseFilter, FilterTime
-from base.utils import json_serial
 
 
 
 class FilterAppType(BaseFilter):
+    """Filter consumers by application type"""
     filter_type = 'apptype'
 
     def _apply(self, data, filter_value):
@@ -24,6 +26,7 @@ class FilterAppType(BaseFilter):
 
 
 class FilterEnabled(BaseFilter):
+    """Filter consumers by enabled state"""
     filter_type = 'enabled'
 
     def _apply(self, data, filter_value):
@@ -34,9 +37,11 @@ class FilterEnabled(BaseFilter):
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
+    """Index view for consumers"""
     template_name = "consumers/index.html"
 
     def scrub(self, consumers):
+        """Scrubs data in the given consumers to adher to certain formats"""
         for consumer in consumers:
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
@@ -70,6 +75,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 class DetailView(LoginRequiredMixin, TemplateView):
+    """Detail view for a consumer"""
     template_name = "consumers/detail.html"
 
     def get_context_data(self, **kwargs):
@@ -91,7 +97,11 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
 
 class EnableDisableView(LoginRequiredMixin, RedirectView):
-    def get_redirect_url(self,*args, **kwargs):
+    """View to enable or disable a consumer"""
+    enabled = False
+    success = None
+
+    def get_redirect_url(self, *args, **kwargs):
         try:
             urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
             payload = {'enabled': self.enabled}
@@ -108,10 +118,12 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
 
 
 class EnableView(EnableDisableView):
+    """View to enable a consumer"""
     enabled = True
     success = "Consumer has been enabled."
 
 
 class DisableView(EnableDisableView):
+    """View to disable a consumer"""
     enabled = False
     success = "Consumer has been disabled."

@@ -1,18 +1,34 @@
 # -*- coding: utf-8 -*-
+"""
+Base filters
+"""
 
 from datetime import datetime, timedelta
 
 from django.conf import settings
 
+
+
 class BaseFilter(object):
+    """Base for custom filter classes"""
+    filter_type = None
+
     def __init__(self, context, request_get):
         self.context = context
         self.request_get = request_get
 
     def _apply(self, data, filter_value):
+        """
+        Actual application of filter
+        Needs to be implemented by child class!
+        """
         raise AttributeError('Not implemented yet!')
 
     def apply(self, data):
+        """
+        Apply filter to given data
+        Also setup of context variables for templates
+        """
         filter_all = 'active_{}_all'.format(self.filter_type)
         self.context[filter_all] = True
         filter_active_value = 'active_{}'.format(self.filter_type)
@@ -34,6 +50,7 @@ class BaseFilter(object):
 
 
 class FilterTime(BaseFilter):
+    """Filter items by datetime"""
     filter_type = 'time'
 
     def __init__(self, context, request_get, time_fieldname):

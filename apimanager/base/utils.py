@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Base utilities
+"""
 
 from datetime import datetime
 from django.contrib.humanize.templatetags.humanize import naturaltime
+
 
 
 def json_serial(obj):

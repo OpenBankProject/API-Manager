@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'oauth',
     'consumers',
     'users',
-#    'api_calls',
-#    'api_config',
+    #'api_calls',
+    #'api_config',
 ]
 
 MIDDLEWARE = [
@@ -176,7 +176,7 @@ OAUTH_CONSUMER_SECRET = None
 # Local settings can override anything in here
 try:
     from apimanager.local_settings import *
-except:
+except ImportError:
     pass
 
 if not OAUTH_CONSUMER_KEY:

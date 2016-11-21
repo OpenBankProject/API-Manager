@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""
+URLs for users app
+"""
+
 from django.conf.urls import url
 
 from .views import IndexView, DetailView, AddEntitlementView, DeleteEntitlementView
