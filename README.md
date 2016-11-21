@@ -57,8 +57,8 @@ SECRET_KEY = '<random string>'
 # API hostname, e.g. https://api.openbankproject.com
 OAUTH_API = '<hostname>'
 # Consumer key + secret to authenticate the _app_ against the API
-OAUTH_CLIENT_KEY = '<key>'
-OAUTH_CLIENT_SECRET = '<secret>'
+OAUTH_CONSUMER_KEY = '<key>'
+OAUTH_CONSUMER_SECRET = '<secret>'
 # Database filename, default is `db.sqlite3` in parent directory of git checkout
 DATABASES['default']['NAME'] = '<filename to use for database>'
 ```
