@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView, View
 
 from base.filters import BaseFilter
-from base.utils import api_get, api_post, api_delete
+from base.api import api
 
 
 class FilterRoleName(BaseFilter):
@@ -32,7 +32,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         role_names = []
         filtered = []
         urlpath = '/users'
-        users = api_get(self.request, urlpath)
+        users = api.get(self.request, urlpath)
 
         if not isinstance(users, dict):
             messages.error(self.request, users)
@@ -67,14 +67,14 @@ class DetailView(LoginRequiredMixin, TemplateView):
         # NOTE: assuming there is just one user with that email address
         # The API actually needs a 'get user by id'
         urlpath = '/users/{}'.format(kwargs['user_email'])
-        users = api_get(self.request, urlpath)
+        users = api.get(self.request, urlpath)
         user = {}
         if 'error' in users:
             messages.error(self.request, users['error'])
         elif len(users['users']) > 0:
             user = users['users'][0]
             urlpath = '/users/{}/entitlements'.format(user['user_id'])
-            entitlements = api_get(self.request, urlpath)
+            entitlements = api.get(self.request, urlpath)
             if 'error' in entitlements:
                 messages.error(self.request, entitlements['error'])
             else:
@@ -93,7 +93,7 @@ class AddEntitlementView(LoginRequiredMixin, View):
             'bank_id': request.POST['bank_id'],
             'role_name': request.POST['role_name'],
         }
-        entitlement = api_post(request, urlpath, payload=payload)
+        entitlement = api.post(request, urlpath, payload=payload)
         if not isinstance(entitlement, dict):
             messages.error(request, entitlement)
         elif 'error' in entitlement:
@@ -113,7 +113,7 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         urlpath = '/users/{}/entitlement/{}'.format(
             kwargs['user_id'], kwargs['entitlement_id'])
-        result = api_delete(request, urlpath)
+        result = api.delete(request, urlpath)
         if 'error' in result:
             messages.error(request, result['error'])
         else:

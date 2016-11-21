@@ -10,7 +10,7 @@ from django.views.generic import RedirectView
 
 from requests_oauthlib import OAuth1Session
 
-from base.utils import api_get
+from base.api import api
 
 
 class InitiateView(RedirectView):
@@ -48,7 +48,7 @@ class InitiateView(RedirectView):
 class AuthorizeView(RedirectView):
     def login_to_django(self):
         # Kind of faking it to establish if a user is authenticated later on
-        data = api_get(self.request, '/users/current')
+        data = api.get(self.request, '/users/current')
         userid = data['user_id'] or data['email']
         username = hashlib.sha256(userid.encode('utf-8')).hexdigest()
         password = username

@@ -2,7 +2,7 @@
 
 from django.conf import settings
 
-from base.utils import api_get
+from base.api import api
 
 
 def api_root(request):
@@ -10,7 +10,7 @@ def api_root(request):
 
 def api_username(request):
     if request.user.is_authenticated:
-        data = api_get(request, '/users/current')
+        data = api.get(request, '/users/current')
         api_username = data['username']
     else:
         api_username = 'not authenticated'

@@ -9,8 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 
+from base.api import api
 from base.filters import BaseFilter, FilterTime
-from base.utils import json_serial, api_get, api_put, api_post
+from base.utils import json_serial
 
 
 
@@ -45,7 +46,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         filtered = []
         urlpath = '/management/consumers'
-        consumers = api_get(self.request, urlpath)
+        consumers = api.get(self.request, urlpath)
 
         if not isinstance(consumers, dict):
             messages.error(self.request, consumers)
@@ -77,7 +78,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
-        consumer = api_get(self.request, urlpath)
+        consumer = api.get(self.request, urlpath)
         
         if not isinstance(consumer, dict):
             messages.error(self.request, consumer)
@@ -98,7 +99,7 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self,*args, **kwargs):
         urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
         payload = {'enabled': self.enabled}
-        result = api_put(self.request, urlpath, payload)
+        result = api.put(self.request, urlpath, payload)
         if 'error' in result:
             messages.error(self.request, result['error'])
         else:
