@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 
-from base.api import api
+from base.api import api, APIError
 from base.filters import BaseFilter, FilterTime
 from base.utils import json_serial
 
@@ -36,36 +36,32 @@ class FilterEnabled(BaseFilter):
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "consumers/index.html"
 
-    def scrub(self, data):
-        for consumer in data:
+    def scrub(self, consumers):
+        for consumer in consumers:
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
-        return data
+        return consumers
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        filtered = []
-        urlpath = '/management/consumers'
-        consumers = api.get(self.request, urlpath)
 
-        if not isinstance(consumers, dict):
-            messages.error(self.request, consumers)
-        elif 'error' in consumers:
-            messages.error(self.request, consumers['error'])
-        else:
-            filtered = FilterEnabled(context, self.request.GET)\
+        try:
+            urlpath = '/management/consumers'
+            consumers = api.get(self.request, urlpath)
+            consumers = FilterEnabled(context, self.request.GET)\
                 .apply(consumers['list'])
-            filtered = FilterAppType(context, self.request.GET)\
-                .apply(filtered)
-            filtered = FilterTime(context, self.request.GET, 'created')\
-                .apply(filtered)
-            filtered = self.scrub(filtered)
+            consumers = FilterAppType(context, self.request.GET)\
+                .apply(consumers)
+            consumers = FilterTime(context, self.request.GET, 'created')\
+                .apply(consumers)
+            consumers = self.scrub(consumers)
+        except APIError as err:
+            messages.error(self.request, err)
 
         context.update({
-            'consumers': filtered,
-            'consumers_json': json.dumps(filtered, default=json_serial),
+            'consumers': consumers,
             'statistics': {
-                'consumers_num': len(filtered),
+                'consumers_num': len(consumers),
             },
         })
         return context
@@ -77,16 +73,14 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
-        consumer = api.get(self.request, urlpath)
-        
-        if not isinstance(consumer, dict):
-            messages.error(self.request, consumer)
-        elif 'error' in consumer:
-            messages.error(self.request, consumer['error'])
-        else:
+
+        try:
+            urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
+            consumer = api.get(self.request, urlpath)
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
+        except APIError as err:
+            messages.error(self.request, err)
 
         context.update({
             'consumer': consumer,
@@ -97,13 +91,14 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
 class EnableDisableView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self,*args, **kwargs):
-        urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
-        payload = {'enabled': self.enabled}
-        result = api.put(self.request, urlpath, payload)
-        if 'error' in result:
-            messages.error(self.request, result['error'])
-        else:
+        try:
+            urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
+            payload = {'enabled': self.enabled}
+            api.put(self.request, urlpath, payload)
             messages.success(self.request, self.success)
+        except APIError as err:
+            messages.error(self.request, err)
+
         urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()
         redirect_url = '{}?{}'.format(urlpath, query)

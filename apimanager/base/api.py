@@ -7,8 +7,16 @@ from requests_oauthlib import OAuth1Session
 
 from django.conf import settings
 
+
+
 DATE_FORMAT = '%d/%b/%Y %H:%M:%S'
 LOGGER = logging.getLogger(__name__)
+
+
+
+class APIError(Exception):
+    pass
+
 
 
 class API(object):
@@ -35,6 +43,23 @@ class API(object):
         return self.call(request, 'PUT', urlpath, payload)
 
 
+    def handle_response(self, response):
+        prefix = 'APIError'
+        if response.status_code in [404, 500]:
+            msg = '{} {}: {}'.format(
+                prefix, response.status_code, response.text)
+            self.log(logging.ERROR, msg)
+            raise APIError(msg)
+        elif response.status_code in [204]:
+            return response.text
+        else:
+            data = response.json()
+            if 'error' in data:
+                msg = '{} {}'.format(prefix, data['error'])
+                raise APIError(msg)
+            return data
+
+
     def call(self, request, method='GET', urlpath='', payload=None):
         url = settings.OAUTH_API + settings.OAUTH_API_BASE_PATH + urlpath
         self.log(logging.INFO, '{} {}'.format(method, url))
@@ -53,15 +78,7 @@ class API(object):
         time_end = time.time()
         elapsed = int((time_end - time_start) * 1000)
         self.log(logging.INFO, 'Took {} ms'.format(elapsed))
-        if response.status_code in [404, 500]:
-            msg = 'Ran into a {}: {}'.format(response.status_code, response.text)
-            self.log(logging.ERROR, msg)
-            data = response.text
-        elif response.status_code in [204]:
-            data = response.text
-        else:
-            data = response.json()
-        return data
+        return self.handle_response(response)
 
 
 api = API()
