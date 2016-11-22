@@ -7,8 +7,8 @@ To use this app, you need to authenticate against a sandbox where you have to ha
 
 ## Installation (development)
 
-It is assumed that the git checkout resides inside a project directory, e.g. `/var/www/apimanager` and `/var/www/apimanager/API-Manager`.
-Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout in the project directory, except for Django's local settings. 
+It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-Manager`.
+Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
 The directory tree might look like:
 
 ```bash
@@ -59,7 +59,7 @@ OAUTH_API = '<hostname>'
 # Consumer key + secret to authenticate the _app_ against the API
 OAUTH_CONSUMER_KEY = '<key>'
 OAUTH_CONSUMER_SECRET = '<secret>'
-# Database filename, default is `db.sqlite3` in parent directory of git checkout
+# Database filename, default is `../db.sqlite3` relative to this file
 DATABASES['default']['NAME'] = '<filename to use for database>'
 ```
 
@@ -90,12 +90,22 @@ Execute the same steps as for development, but do not run the app.
 Edit `apimanager/apimanager/local_settings.py` for additional changes:
 
 ```python
-# Disable debug (or not if the app is not working properly)
+# Disable debug
 DEBUG = False
 # Hosts allowed to access the app
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '<your public hostname here>']
-# Directory to place static files in, defaults to `static-collected` in git checkout's parent directory
+# Directory to place static files in, defaults to `../static-collected` relative to this file
 STATIC_ROOT = '<dirname>'
+# Admins to send e.g. error emails to
+ADMINS = [
+        ('Admin', 'admin@example.com')
+]
+# Emails are sent from this address
+SERVER_EMAIL = 'apimanager@example.com'
+# Emails are sent to this host
+EMAIL_HOST = 'mail.example.com'
+# Enable email security
+EMAIL_TLS = True
 ```
 
 ### Static files
@@ -105,6 +115,8 @@ The app's static files, e.g. Javascript, CSS and images need to be collected and
 ```bash
 (venv)$ ./apimanager/manage.py collectstatic
 ```
+
+The output will show where they are collected to (`settings.STATIC_ROOT`).
 
 ### Web application server
 
@@ -116,7 +128,7 @@ Instead of Django's built-in runserver, you need a proper web application server
 
 - `gunicorn` does not start successfully when omitting the directory change and using `apimanager.apimanager.wsgi` as program.
 - The user running  `gunicorn` needs to have write access to the _directory_ containing the database, as well as the database file itself.
-- The app's output is logged to `gunicorn`'s error logfile (see config for location)
+- The app's output is logged to `gunicorn`'s error logfile (see `gunicorn.conf.py` for location)
 
 
 ### Process control
