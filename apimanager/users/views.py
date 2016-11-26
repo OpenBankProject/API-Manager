@@ -96,8 +96,8 @@ class AddEntitlementView(LoginRequiredMixin, View):
         try:
             urlpath = '/users/{}/entitlements'.format(kwargs['user_id'])
             payload = {
-                'bank_id': request.POST['bank_id'],
-                'role_name': request.POST['role_name'],
+                'bank_id': request.POST.get('bank_id', ''),
+                'role_name': request.POST.get('role_name', ''),
             }
             entitlement = api.post(request, urlpath, payload=payload)
             msg = 'Entitlement with role {} has been added.'.format(
@@ -106,9 +106,7 @@ class AddEntitlementView(LoginRequiredMixin, View):
         except APIError as err:
             messages.error(request, err)
 
-        redirect_url = reverse('users-detail', kwargs={
-            'user_email': request.POST['user_email'],
-        })
+        redirect_url = request.POST.get('next', reverse('users-index'))
         return HttpResponseRedirect(redirect_url)
 
 
@@ -123,12 +121,10 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
                 kwargs['user_id'], kwargs['entitlement_id'])
             api.delete(request, urlpath)
             msg = 'Entitlement with role {} has been deleted.'.format(
-                request.POST['role_name'])
+                request.POST.get('role_name', '<undefined>'))
             messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
 
-        redirect_url = reverse('users-detail', kwargs={
-            'user_email': request.POST['user_email'],
-        })
+        redirect_url = request.POST.get('next', reverse('users-index'))
         return HttpResponseRedirect(redirect_url)

@@ -22,7 +22,7 @@
 		<h2>Add Entitlement</h2>
 		<form class="form-inline" action="{% url 'users-add-entitlement' apiuser.user_id %}" method="post">
 			{% csrf_token %}
-			<input type="hidden" name="user_email" value="{{ apiuser.email }}" />
+			<input type="hidden" name="next" value="{{ request.path }}" />
 			<div class="form-group">
 				<label for="users-detail-entitlement-role_name">Role name</label> <input type="text" class="form-control" name="role_name" id="users-detail-entitlements-role_name" aria-label="active" />
 			</div>
@@ -45,7 +45,7 @@
 					{% if entitlement.entitlement_id %}
 						<form action="{% url 'users-delete-entitlement' apiuser.user_id entitlement.entitlement_id %}" method="post">
 							{% csrf_token %}
-							<input type="hidden" name="user_email" value="{{ apiuser.email }}" />
+							<input type="hidden" name="next" value="{{ request.path }}" />
 							<input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
 							<button type="submit" class="btn btn-primary btn-red">Delete</button>
 						</form>
