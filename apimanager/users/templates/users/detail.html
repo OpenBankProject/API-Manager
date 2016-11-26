@@ -35,26 +35,34 @@
 		</form>
 
 		<h2>Entitlements</h2>
-		<table class="table table-striped">
-			<tbody>
-			{% for entitlement in apiuser.entitlements %}
-				<tr>
-					<td>{{ entitlement.role_name }}</td>
-					<td>
-					{# SuperAdmin has no entitlement_id! #}
-					{% if entitlement.entitlement_id %}
-						<form action="{% url 'users-delete-entitlement' apiuser.user_id entitlement.entitlement_id %}" method="post">
-							{% csrf_token %}
-							<input type="hidden" name="next" value="{{ request.path }}" />
-							<input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
-							<button type="submit" class="btn btn-primary btn-red">Delete</button>
-						</form>
-					{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<th>Role name</th>
+					<th>Bank Id</th>
+					<th>Action</th>
+				</thead>
+				<tbody>
+				{% for entitlement in apiuser.entitlements %}
+					<tr>
+						<td>{{ entitlement.role_name }}</td>
+						<td>{{ entitlement.bank_id }}</td>
+						<td>
+						{# SuperAdmin has no entitlement_id! #}
+						{% if entitlement.entitlement_id %}
+							<form action="{% url 'users-delete-entitlement' apiuser.user_id entitlement.entitlement_id %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="next" value="{{ request.path }}" />
+								<input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
+								<button type="submit" class="btn btn-primary btn-red">Delete</button>
+							</form>
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {% endif %}
 </div>
