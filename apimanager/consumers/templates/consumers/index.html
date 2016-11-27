@@ -44,7 +44,7 @@
 	<div class="table-responsive">
 		<table class="table table-hover" id="consumer-list">
 			<thead>
-				<th>#</th>
+				<th>Id</th>
 				<th>Name</th>
 				<th>Developer Email</th>
 				<th>Created</th>
@@ -54,7 +54,7 @@
 			{% for consumer in consumers %}
 			<tr class="consumer-row {% if consumer.enabled %}consumer-enabled{% else %}consumer-disabled{% endif %}" data-consumer-id="{{ consumer.id }}">
 				{% url 'consumers-detail' consumer.id as url_detail %}
-				<td>{{ forloop.counter }}</td>
+				<td>{{ consumer.id }}</td>
 				<td class="select"><a href="{{ url_detail }}">{{ consumer.name }}</a></td>
 					<td class="select">{{ consumer.developerEmail }}</td>
 					<td class="select">{{ consumer.created|naturaltime }}</td>
