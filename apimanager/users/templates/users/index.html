@@ -8,18 +8,30 @@
 	<h1>Users</h1>
 
 	<div id="filter-role" class="filter">
-		Role:
 		<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				{{ active_role_name }} <span class="caret"></span>
+				{% if active_role_name_all %}All Roles{% else %}{{ active_role_name }}{% endif %} <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a href="?role_name=All">All</a></li>
+				<li><a href="?email={{ active_email }}&role_name=All">All Roles</a></li>
 				<li role="separator" class="divider"></li>
 			{% for role_name in role_names %}
-				<li><a href="?role_name={{ role_name }}">{{ role_name }}</a></li>
+			<li><a href="?email={{ active_email }}&role_name={{ role_name }}">{{ role_name }}</a></li>
 			{% endfor %}
 			</ul>
+		</div>
+	</div>
+
+	<div id="filter-email" class="filter">
+		<div class="btn-group">
+			<form action="" method="get">
+				<input type="hidden"  name="role_name" value="{{ active_role_name }}" />
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+
+					<input type="text" class="form-control" size="30" name="email" placeholder="Enter email address ..." value="{% if not active_email_all %}{{ active_email }}{% endif %}" />
+				</div>
+			</form>
 		</div>
 	</div>
 

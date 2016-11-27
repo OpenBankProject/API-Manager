@@ -25,6 +25,15 @@ class FilterRoleName(BaseFilter):
 
 
 
+class FilterEmail(BaseFilter):
+    """Filter users by email address"""
+    filter_type = 'email'
+
+    def _apply(self, data, filter_value):
+        filtered = [x for x in data if x['email'].find(filter_value) != -1]
+        return filtered
+
+
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
@@ -43,6 +52,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
             role_names.sort()
             users = FilterRoleName(context, self.request.GET)\
                 .apply(users['users'])
+            users = FilterEmail(context, self.request.GET)\
+                .apply(users)
         except APIError as err:
             messages.error(self.request, err)
 
