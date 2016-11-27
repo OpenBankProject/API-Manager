@@ -31,17 +31,15 @@
 	<div class="table-responsive">
 		<table class="table table-hover" id="users-list">
 			<thead>
-				<th>#</th>
-				<th>User ID</th>
+				<th>User Id</th>
 				<th>Username</th>
 				<th>Email</th>
 				<th>Action</th>
 			</thead>
 			<tbody>
 			{% for user in users %}
+				{% url 'users-detail' user.email as url_users_detail %}
 				<tr data-user-id="{{ user.user_id }}">
-					{% url 'users-detail' user.email as url_users_detail %}
-					<td>{{ forloop.counter }}</td>
 					<td><a href="{{ url_users_detail }}">{{ user.user_id }}</td>
 					<td>{{ user.username }}</td>
 					<td>{{ user.email }}</td>
