@@ -7,17 +7,20 @@
 <div id="users">
 	<h1>Users</h1>
 
-	<div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" id="filter-entitlement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    		{{ active_role_name }} <span class="caret"></span>
-  		</button>
-		<ul class="dropdown-menu">
-			<li><a href="">All</a></li>
-			<li role="separator" class="divider"></li>
-		{% for role_name in role_names %}
-			<li><a href="?role_name={{ role_name }}">{{ role_name }}</a></li>
-		{% endfor %}
-		</ul>
+	<div id="filter-role" class="filter">
+		Role:
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{{ active_role_name }} <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="">All</a></li>
+				<li role="separator" class="divider"></li>
+			{% for role_name in role_names %}
+				<li><a href="?role_name={{ role_name }}">{{ role_name }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
 	</div>
 
 	<h2>Statistics</h2>

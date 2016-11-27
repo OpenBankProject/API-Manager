@@ -7,25 +7,31 @@
 <div id="consumers">
 	<h1>Consumers</h1>
 
-	<div class="btn-group hidden-xs filter-time" role="group" aria-label="filter-time">
-		{% include "consumers/includes/filter_time.html" %}
-	</div>
-	<div class="btn-group-vertical visible-xs filter-time" role="group" aria-label="filter-time">
-		{% include "consumers/includes/filter_time.html" %}
-	</div>
-
-	<div class="btn-group hidden-sm hidden-xs pull-right filter-enabled" role="group" aria-label="filter-enabled">
-		{% include "consumers/includes/filter_enabled.html" %}
-	</div>
-	<div class="btn-group-vertical visible-sm visible-xs filter-enabled" role="group" aria-label="filter-enabled">
-		{% include "consumers/includes/filter_enabled.html" %}
+	<div id="filter-time" class="filter">
+		<div class="btn-group hidden-xs filter-time" role="group" aria-label="filter-time">
+			{% include "consumers/includes/filter_time.html" %}
+		</div>
+		<div class="btn-group-vertical visible-xs filter-time" role="group" aria-label="filter-time">
+			{% include "consumers/includes/filter_time.html" %}
+		</div>
 	</div>
 
-	<div class="btn-group hidden-sm hidden-xs pull-right filter-apptype" role="group" aria-label="filter-apptype">
-		{% include "consumers/includes/filter_apptype.html" %}
+	<div id="filter-enabled" class="filter">
+		<div class="btn-group hidden-sm hidden-xs pull-right filter-enabled" role="group" aria-label="filter-enabled">
+			{% include "consumers/includes/filter_enabled.html" %}
+		</div>
+		<div class="btn-group-vertical visible-sm visible-xs filter-enabled" role="group" aria-label="filter-enabled">
+			{% include "consumers/includes/filter_enabled.html" %}
+		</div>
 	</div>
-	<div class="btn-group-vertical visible-sm visible-xs filter-apptype" role="group" aria-label="filter-apptype">
-		{% include "consumers/includes/filter_apptype.html" %}
+
+	<div id="filter-apptype" class="filter">
+		<div class="btn-group hidden-sm hidden-xs pull-right filter-apptype" role="group" aria-label="filter-apptype">
+			{% include "consumers/includes/filter_apptype.html" %}
+		</div>
+		<div class="btn-group-vertical visible-sm visible-xs filter-apptype" role="group" aria-label="filter-apptype">
+			{% include "consumers/includes/filter_apptype.html" %}
+		</div>
 	</div>
 
 	<h2>Statistics</h2>

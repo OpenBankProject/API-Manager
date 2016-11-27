@@ -104,3 +104,7 @@ footer a:hover, .footer a:focus {
 .home .text-center {
 	margin-top: 80px;
 }
+
+div.filter {
+	display: inline;
+}
