@@ -9,17 +9,17 @@
 
 	<div id="consumers-detail-id">
 		<strong>ID</strong><br />
-		<span>{{ consumer.id }}</span>
+		<span>{{ consumer.consumer_id }}</span>
 	</div>
 
-	<div id="consumers-detail-apptype">
+	<div id="consumers-detail-app-type">
 		<strong>App Type</strong><br />
 		<span>{{ consumer.appType }}</span>
 	</div>
 
-	<div id="consumers-detail-developerEmail">
+	<div id="consumers-detail-developer-email">
 		<strong>Developer Email</strong><br />
-		<span>{{ consumer.developerEmail }}</span>
+		<span>{{ consumer.developer_email }}</span>
 	</div>
 
 	<div id="consumers-detail-created">
@@ -34,9 +34,9 @@
 
 	<div id="consumers-detail-enable">
 		{% if consumer.enabled %}
-			{% url 'consumers-disable' consumer.id as url_action %}
+			{% url 'consumers-disable' consumer.consumer_id as url_action %}
 		{% else %}
-			{% url 'consumers-enable' consumer.id as url_action %}
+			{% url 'consumers-enable' consumer.consumer_id as url_action %}
 		{% endif %}
 		<form action="{{ url_action }}" method="post">
 			{% csrf_token %}

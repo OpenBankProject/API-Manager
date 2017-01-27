@@ -18,7 +18,7 @@ from base.filters import BaseFilter, FilterTime
 
 class FilterAppType(BaseFilter):
     """Filter consumers by application type"""
-    filter_type = 'apptype'
+    filter_type = 'app_type'
 
     def _apply(self, data, filter_value):
         filtered = [x for x in data if x['appType'] == filter_value]
@@ -53,13 +53,13 @@ class IndexView(LoginRequiredMixin, TemplateView):
         unique_developer_email = {}
         unique_name = {}
         for consumer in consumers:
-            unique_developer_email[consumer['developerEmail']] = True
-            unique_name[consumer['name']] = True
+            unique_developer_email[consumer['developer_email']] = True
+            unique_name[consumer['app_name']] = True
         unique_developer_email = unique_developer_email.keys()
         unique_name = unique_name.keys()
         statistics = {
             'consumers_num': len(consumers),
-            'unique_developerEmail_num': len(unique_developer_email),
+            'unique_developer_email_num': len(unique_developer_email),
             'unique_name_num': len(unique_name),
         }
         return statistics
