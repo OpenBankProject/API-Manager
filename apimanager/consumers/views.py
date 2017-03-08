@@ -82,8 +82,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             messages.error(self.request, err)
 
+        sorted_consumers = sorted(
+            consumers, key=lambda consumer: consumer['created'], reverse=True)
         context.update({
-            'consumers': consumers,
+            'consumers': sorted_consumers,
             'statistics': self.compile_statistics(consumers),
         })
         return context
