@@ -2,10 +2,6 @@
 	margin-top: 20px;
 }
 
-#consumers .btn-group.filter-enabled {
-	margin-left: 10px;
-}
-
 #consumers .btn-group-vertical.filter-enabled,
 #consumers .btn-group-vertical.filter-apptype {
 	margin-top: 10px;
