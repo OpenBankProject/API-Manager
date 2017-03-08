@@ -21,7 +21,7 @@ class FilterAppType(BaseFilter):
     filter_type = 'app_type'
 
     def _apply(self, data, filter_value):
-        filtered = [x for x in data if x['appType'] == filter_value]
+        filtered = [x for x in data if x['app_type'] == filter_value]
         return filtered
 
 
