@@ -75,6 +75,13 @@
 					</form>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="5" class="noborder">
+					<div class="well">
+						{{ consumer.description|truncatechars:80 }}
+					</div>
+				</td>
+			</tr>
 			{% endfor %}
 			</tbody>
 		</table>
