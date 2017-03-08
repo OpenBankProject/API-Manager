@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'oauth',
     'consumers',
     'users',
+    'metrics',
     #'api_calls',
     #'api_config',
 ]

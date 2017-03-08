@@ -28,9 +28,11 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					{% url "consumers-index" as consumers_index_url %}
-					<li{% if consumers_index_url in request.path  %} class="active" {% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
+					<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
 					{% url "users-index" as users_index_url %}
-					<li{% if users_index_url in request.path  %} class="active" {% endif %}><a href="{{ users_index_url }}">Users</a></li>
+					<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">Users</a></li>
+					{% url "metrics-index" as metrics_index_url %}
+					<li{% if metrics_index_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_index_url }}">Metrics</a></li>
 					{% comment %}
 					{% url "api-calls-grouped" as api_calls_grouped_url %}
 					<li{% ifequal request.path api_calls_grouped_url %} class="active" {% endifequal %}><a href="{{ api_calls_grouped_url }}">API Calls Grouped</a></li>

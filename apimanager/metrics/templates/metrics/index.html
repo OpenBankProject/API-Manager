@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Metrics{% endblock page_title %}
+
+{% block content %}
+<div id="metrics">
+	<h1>Metrics</h1>
+
+	<h2>Filter</h2>
+	<form action="" method="GET">
+		<div class="row">
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="from_start_date">From Start Date</label>
+					<input type="date" class="form-control" id="from_start_date" name="from_start_date" value="{{ request.GET.from_start_date }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="to_start_date">To Start Date</label>
+					<input type="date" class="form-control" id="to_start_date" name="to_start_date" value="{{ request.GET.to_start_date }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="limit">Limit</label>
+					<input type="number" class="form-control" id="limit" name="limit" min="1" value="{{ request.GET.limit|default:200 }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="offset">Offset</label>
+					<input type="number" class="form-control" id="offset" name="offset" min="0" value="{{ request.GET.offset|default:0 }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="consumer_id">Consumer ID</label>
+					<input type="text" class="form-control" id="consumer_id" name="consumer_id" value="{{ request.GET.consumer_id }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="user_id">User ID</label>
+					<input type="text" class="form-control" id="user_id" name="user_id" value="{{ request.GET.user_id }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="anon">Anonymous</label>
+					{% with request.GET.anon as anon %}
+					<select id="anon" name="anon" class="form-control">
+						<option value="true"{% if anon == 'true' %} selected="selected"{% endif %}>Yes</option>
+						<option value="false"{% if anon == 'false' %} selected="selected"{% endif %}>No</option>
+						<option value=""{% if not anon %} selected="selected"{% endif %}>Anonymous and Non-Anonymous</option>
+					</select>
+					{% endwith %}
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-3">
+				<div class="form-group">
+					<label for="app_name">App Name</label>
+					<input type="text" class="form-control" id="app_name" name="app_name" value="{{ request.GET.app_name }}" />
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="verb">Verb</label>
+					<input type="text" class="form-control" id="verb" name="verb" value="{{ request.GET.verb }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-10">
+				<div class="form-group">
+					<label for="url">URL</label>
+					<input type="text" class="form-control" id="url" name="url" value="{{ request.GET.url }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="implemented_by_partial_function">Implemented By Partial Function</label>
+					<input type="text" class="form-control" id="implemented_by_partial_function" name="implemented_by_partial_function" value="{{ request.GET.implemented_by_partial_function }}" />
+				</div>
+			</div>
+
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="implemented_in_version">Implemented In Version</label>
+					<input type="text" class="form-control" id="implemented_in_version" name="implemented_in_version" value="{{ request.GET.implemented_in_version }}" />
+				</div>
+			</div>
+		</div>
+
+
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form>
+
+	<div class="table-responsive">
+		<table class="table table-hover" id="metrics-list">
+			<thead>
+			<tr>
+				<th>#</th>
+				<th>Verb</th>
+				<th>URL</th>
+				<th>Date</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for metric in metrics %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ metric.verb }}</td>
+					<td>
+						{{ metric.url }}
+					</td>
+					<td>{{ metric.date|date:"Y-m-d H:m:s" }}</td>
+				</tr>
+				<tr>
+					<td colspan="5" class="noborder">
+						<ul>
+							<li>User Name: {{ metric.user_name }}</li>
+							<li>User ID: {{ metric.user_id }}</li>
+							<li>Developer Email: {{ metric.developer_email }}</li>
+							<li>App Name: {{ metric.app_name }}</li>
+							<li>Consumer ID: {{ metric.consumer_id }}</li>
+							<li>Implemented by Partial Function: {{ metric.implemented_by_partial_function }}</li>
+							<li>Implemented In Version: {{ metric.implemented_in_version }}</li>
+						</ul>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'metrics/js/metrics.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
+{% endblock extracss %}

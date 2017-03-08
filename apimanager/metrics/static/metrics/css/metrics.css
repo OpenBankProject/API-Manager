@@ -1,0 +1,15 @@
+#metrics form {
+	margin-bottom: 10px;
+}
+
+#metrics #metrics-list {
+	margin-top: 20px;
+}
+ 
+#metrics #metrics-list ul {
+	margin-left: -25px;
+}
+
+#metrics .noborder {
+	border: none;
+}
