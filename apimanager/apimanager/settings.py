@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'consumers',
     'users',
     'metrics',
-    #'api_calls',
     #'api_config',
 ]
 

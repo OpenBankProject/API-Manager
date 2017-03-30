@@ -14,6 +14,5 @@ urlpatterns = [
     url(r'^consumers/', include('consumers.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^metrics/', include('metrics.urls')),
-    #url(r'^api_calls/', include('api_calls.urls')),
     #url(r'^api_config/', include('api_config.urls')),
 ]
