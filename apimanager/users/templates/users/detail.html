@@ -17,6 +17,17 @@
 		<span>{{ apiuser.email }}</span>
 	</div>
 
+	<div id="users-detail-provider">
+		<strong>Provider</strong><br />
+		<span>{{ apiuser.provider }}</span>
+	</div>
+
+	<div id="users-detail-provider_id">
+		<strong>Provider ID</strong><br />
+		<span>{{ apiuser.provider_id }}</span>
+	</div>
+
+
 {% if apiuser.user_id %}
 	<div id="users-detail-entitlements">
 		<h2>Add Entitlement</h2>

@@ -1,3 +1,7 @@
 #users #users-list {
 	margin-top: 20px;
 }
+
+#users-detail div {
+	margin: 5px 0;
+}
