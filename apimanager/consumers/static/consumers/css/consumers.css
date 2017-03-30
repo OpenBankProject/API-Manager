@@ -14,3 +14,7 @@
 #consumers .noborder {
 	border: none;
 }
+
+#consumers .filter a {
+	font-size: 12px;
+}
