@@ -7,63 +7,104 @@
 <div id="consumers-detail">
 	<h1>Consumer {{ consumer.app_name }}</h1>
 
-	<div id="consumers-detail-consumer_id">
-		<strong>ID</strong><br />
-		<span>{{ consumer.consumer_id }}</span>
-	</div>
-
-	<div id="consumers-detail-app_name">
-		<strong>App Name</strong><br />
-		<span>{{ consumer.app_name }}</span>
-	</div>
-
-	<div id="consumers-detail-app_type">
-		<strong>App Type</strong><br />
-		<span>{{ consumer.app_type }}</span>
-	</div>
-
-	<div id="consumers-detail-developer_email">
-		<strong>Developer Email</strong><br />
-		<span>{{ consumer.developer_email }}</span>
-	</div>
-
-	<div id="consumers-detail-created">
-		<strong>Created</strong><br />
-		<span>{{ consumer.created|naturaltime }}</span>
-	</div>
-
-	<div id="consumers-detail-created_by_user_id">
-		<strong>Created By User ID</strong><br />
-		<span>{{ consumer.created_by_user_id }}</span>
-	</div>
-
-	<div id="consumers-detail-redirect_url">
-		<strong>Redirect URL</strong><br />
-		<span>{{ consumer.redirect_url }}</span>
-	</div>
-
-	<div id="consumers-detail-description">
-		<strong>Description</strong><br />
-		<div class="well">{{ consumer.description }}</div>
-	</div>
-
-	<div id="consumers-detail-enable">
-		{% if consumer.enabled %}
-			{% url 'consumers-disable' consumer.consumer_id as url_action %}
-		{% else %}
-			{% url 'consumers-enable' consumer.consumer_id as url_action %}
-		{% endif %}
-		<form action="{{ url_action }}" method="post">
-			{% csrf_token %}
-			<input type="hidden" name="next" value="{{ request.path }}" />
-			<div class="form-group">
-			{% if consumer.enabled %}
-				<button type="submit" class="btn btn-primary btn-red">Disable</a>
-			{% else %}
-				<button type="submit" class="btn btn-primary btn-green">Enable</a>
-			{% endif %}
+	<div class="row">
+		<div class="col-xs-12">
+			<div id="consumers-detail-consumer_id">
+				<strong>ID</strong><br />
+				<span>{{ consumer.consumer_id }}</span>
 			</div>
-		</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-app_name">
+				<strong>App Name</strong><br />
+				<span>{{ consumer.app_name }}</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-app_type">
+				<strong>App Type</strong><br />
+				<span>{{ consumer.app_type }}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-developer_email">
+				<strong>Developer Email</strong><br />
+				<span>{{ consumer.developer_email }}</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-user_email">
+				<strong>User Email</strong><br />
+				{% with consumer.created_by_user.email as user_email %}
+				<span><a href="{% url 'users-detail' user_email %}">{{ user_email }}</a></span>
+				{% endwith %}
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-created">
+				<strong>Created</strong><br />
+				<span>{{ consumer.created|naturaltime }}</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div id="consumers-detail-created_by_user_id">
+				<strong>Created By User ID</strong><br />
+				<span>{{ consumer.created_by_user_id }}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div id="consumers-detail-redirect_url">
+				<strong>Redirect URL</strong><br />
+				<span>{{ consumer.redirect_url }}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div id="consumers-detail-description">
+				<strong>Description</strong><br />
+				<div class="well">{{ consumer.description }}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div id="consumers-detail-enable">
+				{% if consumer.enabled %}
+					{% url 'consumers-disable' consumer.consumer_id as url_action %}
+				{% else %}
+					{% url 'consumers-enable' consumer.consumer_id as url_action %}
+				{% endif %}
+				<form action="{{ url_action }}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ request.path }}" />
+					<div class="form-group">
+					{% if consumer.enabled %}
+						<button type="submit" class="btn btn-primary btn-red">Disable</a>
+					{% else %}
+						<button type="submit" class="btn btn-primary btn-green">Enable</a>
+					{% endif %}
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
