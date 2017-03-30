@@ -54,7 +54,7 @@
 			<thead>
 				<th>ID</th>
 				<th>Name</th>
-				<th>Developer Email</th>
+				<th>Description</th>
 				<th>Created</th>
 				<th>Action</th>
 			</thead>
@@ -65,21 +65,14 @@
 				{% url 'consumers-detail' consumer.consumer_id as url_detail %}
 				<td>{{ consumer.consumer_id }}</td>
 				<td class="select"><a href="{{ url_detail }}">{{ consumer.app_name }}</a></td>
-				<td class="select">{{ consumer.developer_email }}</td>
+				<td class="select">{{ consumer.description|truncatechars:80 }}</td>
 				<td class="select">{{ consumer.created|naturaltime }}</td>
-				<td>
+				<td class="actions">
 					<form action="{% if consumer.enabled %}{% url 'consumers-disable' consumer.consumer_id %}{% else %}{% url 'consumers-enable' consumer.consumer_id %}{% endif %}?{{ request.GET.urlencode }}" method="post">
 						{% csrf_token %}
 						{% if consumer.enabled %}<button class="btn btn-primary btn-red">Disable</button>{% else %}<button class="btn btn-primary btn-green">Enable</button>{% endif %}
 							<a href="{{ url_detail }}" class="btn btn-primary" role="button">View</a>
 					</form>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5" class="noborder">
-					<div class="well">
-						{{ consumer.description|truncatechars:80 }}
-					</div>
 				</td>
 			</tr>
 			{% endfor %}

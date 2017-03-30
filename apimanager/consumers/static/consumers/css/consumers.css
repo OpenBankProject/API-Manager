@@ -18,3 +18,7 @@
 #consumers .filter a {
 	font-size: 12px;
 }
+
+#consumers .actions .btn {
+	margin-bottom: 2px;
+}
