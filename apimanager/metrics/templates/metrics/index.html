@@ -80,7 +80,14 @@
 			<div class="col-xs-2">
 				<div class="form-group">
 					<label for="verb">Verb</label>
-					<input type="text" class="form-control" id="verb" name="verb" value="{{ request.GET.verb }}" />
+                    <select class="form-control" id="verb" name="verb">
+                        <option value=""{% if request.GET.verb.lower == '' %} selected="selected"{% endif %}>Any</option>
+                        <option value="DELETE"{% if request.GET.verb.lower == 'delete' %} selected="selected"{% endif %}>DELETE</option>
+                        <option value="GET"{% if request.GET.verb.lower == 'get' %} selected="selected"{% endif %}>GET</option>
+                        <option value="POST"{% if request.GET.verb.lower == 'post' %} selected="selected"{% endif %}>POST</option>
+                        <option value="PUT"{% if request.GET.verb.lower == 'put' %} selected="selected"{% endif %}>PUT</option>
+
+                    </select>
 				</div>
 			</div>
 
