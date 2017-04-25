@@ -100,17 +100,26 @@
 		</div>
 
 		<div class="row">
-			<div class="col-xs-6">
+			<div class="col-xs-7">
 				<div class="form-group">
 					<label for="implemented_by_partial_function">Implemented By Partial Function</label>
 					<input type="text" class="form-control" id="implemented_by_partial_function" name="implemented_by_partial_function" value="{{ request.GET.implemented_by_partial_function }}" />
 				</div>
 			</div>
 
-			<div class="col-xs-6">
+			<div class="col-xs-5">
 				<div class="form-group">
 					<label for="implemented_in_version">Implemented In Version</label>
-					<input type="text" class="form-control" id="implemented_in_version" name="implemented_in_version" value="{{ request.GET.implemented_in_version }}" />
+                    <select class="form-control" id="implemented_in_version" name="implemented_in_version">
+                        <option value=""{% if request.GET.implemented_in_version.lower == '' %} selected="selected"{% endif %}>Any</option>
+                        <option value="v1.2"{% if request.GET.implemented_in_version.lower == 'v1.2' %} selected="selected"{% endif %}>v1.2</option>
+                        <option value="v1.2.1"{% if request.GET.implemented_in_version.lower == 'v1.2.1' %} selected="selected"{% endif %}>v1.2.1</option>
+                        <option value="v1.3.0"{% if request.GET.implemented_in_version.lower == 'v1.3.0' %} selected="selected"{% endif %}>v1.3.0</option>
+                        <option value="v1.4.0"{% if request.GET.implemented_in_version.lower == 'v1.4.0' %} selected="selected"{% endif %}>v1.4.0</option>
+                        <option value="v2.0.0"{% if request.GET.implemented_in_version.lower == 'v2.0.0' %} selected="selected"{% endif %}>v2.0.0</option>
+                        <option value="v2.1.0"{% if request.GET.implemented_in_version.lower == 'v2.1.0' %} selected="selected"{% endif %}>v2.1.0</option>
+                        <option value="v2.2.0"{% if request.GET.implemented_in_version.lower == 'v2.2.0' %} selected="selected"{% endif %}>v2.2.0</option>
+                    </select>
 				</div>
 			</div>
 		</div>
