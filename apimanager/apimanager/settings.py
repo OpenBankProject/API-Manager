@@ -181,7 +181,7 @@ OAUTH_API = 'http://127.0.0.1:8080'
 OAUTH_TOKEN_PATH = '/oauth/initiate'
 OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
-OAUTH_API_BASE_PATH = '/obp/v2.1.0'
+OAUTH_API_BASE_PATH = '/obp/v2.2.0'
 
 
 
