@@ -76,8 +76,8 @@ class AuthorizeView(RedirectView):
         session = OAuth1Session(
             settings.OAUTH_CONSUMER_KEY,
             settings.OAUTH_CONSUMER_SECRET,
-            resource_owner_key=self.request.session['oauth_token'],
-            resource_owner_secret=self.request.session['oauth_secret']
+            resource_owner_key=self.request.session.get('oauth_token'),
+            resource_owner_secret=self.request.session.get('oauth_secret')
         )
         session.parse_authorization_response(self.request.build_absolute_uri())
         url = settings.OAUTH_API + settings.OAUTH_ACCESS_TOKEN_PATH
