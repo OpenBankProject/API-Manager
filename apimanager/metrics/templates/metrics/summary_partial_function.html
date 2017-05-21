@@ -1,0 +1,13 @@
+{% extends 'metrics/index.html' %}
+{% load static %}
+
+{% block nav_tabs %}
+	<li><a href="{% url 'metrics-index' %}?{{ request.GET.urlencode }}">List</a></li>
+	<li class="active"><a href="{% url 'metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">Summary by Partial Function</a></li>
+{% endblock nav_tabs %}
+
+{% block tab_content %}
+  <div class="tab-pane active">
+	<canvas id="barchart" width="1000" height="500"></canvas>
+  </div>
+{% endblock tab_content %}

@@ -3,6 +3,10 @@
 Views of metrics app
 """
 
+import json
+import math
+import random
+
 from datetime import datetime
 
 from django.conf import settings
@@ -11,6 +15,43 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from base.api import api, APIError
+
+
+
+def get_random_color():
+    r = int(math.floor(random.random() * 255))
+    b = int(math.floor(random.random() * 255))
+    g = int(math.floor(random.random() * 255))
+    return 'rgba({}, {}, {}, 0.2)'.format(r, g, b)
+
+
+
+def get_barchart_data(metrics, fieldname):
+    """
+    Gets bar chart data compatible with Chart.js from the field with given
+    fieldname in given metrics
+    """
+    border_color = 'rgba(0, 0, 0, 1)'
+    data = {
+        'labels': [],
+        'data': [],
+        'backgroundColor': [],
+        'borderColor': [],
+    }
+    items = {}
+    for metric in metrics:
+        if not metric[fieldname]:
+            continue
+        if metric[fieldname] in items:
+            items[metric[fieldname]] += 1
+        else:
+            items[metric[fieldname]] = 1
+    for item in items:
+        data['labels'].append(item)
+        data['data'].append(items[item])
+        data['backgroundColor'].append(get_random_color())
+        data['borderColor'].append(border_color)
+    return data
 
 
 
@@ -52,5 +93,22 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context.update({
             'metrics': metrics,
+            'barchart_data': json.dumps({})
+        })
+        return context
+
+
+
+class SummaryPartialFunctionView(IndexView):
+    template_name = "metrics/summary_partial_function.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SummaryPartialFunctionView, self).get_context_data(
+            **kwargs)
+        barchart_data = json.dumps(get_barchart_data(
+            context['metrics'], 'implemented_by_partial_function'))
+
+        context.update({
+            'barchart_data': barchart_data,
         })
         return context
