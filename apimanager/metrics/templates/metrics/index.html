@@ -137,6 +137,7 @@
 				<th>Verb</th>
 				<th>URL</th>
 				<th>Date</th>
+				<th>Details</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -148,9 +149,7 @@
 						{{ metric.url }}
 					</td>
 					<td>{{ metric.date|date:"Y-m-d H:m:s" }}</td>
-				</tr>
-				<tr>
-					<td colspan="5" class="noborder">
+					<td>
 						<ul>
 							<li>User Name: {{ metric.user_name }}</li>
 							<li>User ID: {{ metric.user_id }}</li>
