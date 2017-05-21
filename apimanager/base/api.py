@@ -9,9 +9,12 @@ from base.api import api
 from datetime import datetime
 import logging
 import time
+
+from requests.exceptions import ConnectionError
 from requests_oauthlib import OAuth1Session
 
 from django.conf import settings
+from django.contrib.auth import logout
 
 
 
@@ -57,21 +60,43 @@ class API(object):
         return self.call(request, 'PUT', urlpath, payload)
 
 
-    def handle_response(self, response):
+    def handle_response_404(self, response, prefix):
+        # Stripping HTML body ...
+        if response.text.find('body'):
+            msg = response.text.split('<body>')[1].split('</body>')[0]
+        msg = '{} {}: {}'.format(
+            prefix, response.status_code, msg)
+        log(logging.ERROR, msg)
+        raise APIError(msg)
+
+
+    def handle_response_500(self, response, prefix):
+        msg = '{} {}: {}'.format(
+            prefix, response.status_code, response.text)
+        log(logging.ERROR, msg)
+        raise APIError(msg)
+
+
+    def handle_response_error(self, request, prefix, error):
+        if 'Invalid or expired access token' in error:
+            logout(request)
+        msg = '{} {}'.format(prefix, error)
+        raise APIError(msg)
+
+
+    def handle_response(self, request, response):
         """Handles the response, e.g. errors or conversion to JSON"""
         prefix = 'APIError'
-        if response.status_code in [404, 500]:
-            msg = '{} {}: {}'.format(
-                prefix, response.status_code, response.text)
-            log(logging.ERROR, msg)
-            raise APIError(msg)
+        if response.status_code == 404:
+            self.handle_response_404(response, prefix)
+        elif response.status_code == 500:
+            self.handle_response_500(response, prefix)
         elif response.status_code in [204]:
             return response.text
         else:
             data = response.json()
             if 'error' in data:
-                msg = '{} {}'.format(prefix, data['error'])
-                raise APIError(msg)
+                self.handle_response_error(request, prefix, data['error'])
             return data
 
 
@@ -87,12 +112,15 @@ class API(object):
                 resource_owner_secret=request.session['oauth_secret']
             )
         time_start = time.time()
-        if payload:
-            response = request.api.request(method, url, json=payload)
-        else:
-            response = request.api.request(method, url)
+        try:
+            if payload:
+                response = request.api.request(method, url, json=payload)
+            else:
+                response = request.api.request(method, url)
+        except ConnectionError as err:
+            raise APIError(err)
         time_end = time.time()
         elapsed = int((time_end - time_start) * 1000)
         log(logging.INFO, 'Took {} ms'.format(elapsed))
-        return self.handle_response(response)
+        return self.handle_response(request, response)
 api = API()

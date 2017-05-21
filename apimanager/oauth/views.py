@@ -13,6 +13,7 @@ from django.urls import reverse
 from django.views.generic import RedirectView
 
 from requests_oauthlib import OAuth1Session
+from requests_oauthlib.oauth1_session import TokenRequestDenied
 
 from base.api import api
 
@@ -43,7 +44,7 @@ class InitiateView(RedirectView):
         try:
             url = settings.OAUTH_API + settings.OAUTH_TOKEN_PATH
             response = session.fetch_request_token(url)
-        except ValueError as err:
+        except (ValueError, TokenRequestDenied) as err:
             messages.error(self.request, err)
             return reverse('home')
 
@@ -81,7 +82,10 @@ class AuthorizeView(RedirectView):
         )
         session.parse_authorization_response(self.request.build_absolute_uri())
         url = settings.OAUTH_API + settings.OAUTH_ACCESS_TOKEN_PATH
-        response = session.fetch_access_token(url)
+        try:
+            response = session.fetch_access_token(url)
+        except TokenRequestDenied as err:
+            messages.error(self.request, err)
 
         self.request.session['oauth_token'] = response.get('oauth_token')
         self.request.session['oauth_secret'] = response.get('oauth_token_secret')
