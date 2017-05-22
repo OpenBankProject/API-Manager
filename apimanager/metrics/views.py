@@ -4,9 +4,8 @@ Views of metrics app
 """
 
 import json
-import math
+import hashlib
 import operator
-import random
 
 from datetime import datetime
 
@@ -19,11 +18,12 @@ from base.api import api, APIError
 
 
 
-def get_random_color():
-    r = int(math.floor(random.random() * 255))
-    b = int(math.floor(random.random() * 255))
-    g = int(math.floor(random.random() * 255))
-    return 'rgba({}, {}, {}, 0.2)'.format(r, g, b)
+def get_random_color(to_hash):
+    hashed = str(int(hashlib.md5(to_hash.encode('utf-8')).hexdigest(), 16))
+    r = int(hashed[0:3]) % 255
+    b = int(hashed[3:6]) % 255
+    g = int(hashed[6:9]) % 255
+    return 'rgba({}, {}, {}, 0.3)'.format(r, g, b)
 
 
 
@@ -52,7 +52,7 @@ def get_barchart_data(metrics, fieldname):
     for item in sorted_items:
         data['labels'].append(item[0])
         data['data'].append(item[1])
-        data['backgroundColor'].append(get_random_color())
+        data['backgroundColor'].append(get_random_color(item[0]))
         data['borderColor'].append(border_color)
     return data
 
