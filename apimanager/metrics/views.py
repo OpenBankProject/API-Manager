@@ -5,6 +5,7 @@ Views of metrics app
 
 import json
 import math
+import operator
 import random
 
 from datetime import datetime
@@ -46,9 +47,11 @@ def get_barchart_data(metrics, fieldname):
             items[metric[fieldname]] += 1
         else:
             items[metric[fieldname]] = 1
-    for item in items:
-        data['labels'].append(item)
-        data['data'].append(items[item])
+    sorted_items = sorted(
+            items.items(), key=operator.itemgetter(1), reverse=True)
+    for item in sorted_items:
+        data['labels'].append(item[0])
+        data['data'].append(item[1])
         data['backgroundColor'].append(get_random_color())
         data['borderColor'].append(border_color)
     return data
