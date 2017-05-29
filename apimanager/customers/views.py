@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from base.api import api, APIError
+from base.api_helper import get_bank_id_choices, get_user_id_choices
 
 from .forms import CreateCustomerForm, DATETIME_INPUT_FORMAT
 
@@ -22,31 +23,11 @@ class CreateView(LoginRequiredMixin, FormView):
     template_name = 'customers/create.html'
     success_url = reverse_lazy('customers-create')
 
-    def get_bank_id_choices(self):
-        choices = [('', 'Choose ...')]
-        try:
-            result = api.get(self.request, '/banks')
-            for bank in result['banks']:
-                choices.append((bank['id'], bank['short_name']))
-        except APIError as err:
-            messages.error(err)
-        return choices
-
-    def get_user_id_choices(self):
-        choices = [('', 'Choose ...')]
-        try:
-            result = api.get(self.request, '/users')
-            for user in result['users']:
-                choices.append((user['user_id'], user['username']))
-        except APIError as err:
-            messages.error(err)
-        return choices
-
     def get_form(self, *args, **kwargs):
         form = super(CreateView, self).get_form(*args, **kwargs)
         fields = form.fields
-        fields['bank_id'].choices = self.get_bank_id_choices()
-        fields['user_id'].choices = self.get_user_id_choices()
+        fields['bank_id'].choices = get_bank_id_choices(self.request)
+        fields['user_id'].choices = get_user_id_choices(self.request)
         fields['last_ok_date'].initial =\
             datetime.datetime.now().strftime(DATETIME_INPUT_FORMAT)
         return form
