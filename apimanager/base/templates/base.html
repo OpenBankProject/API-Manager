@@ -31,6 +31,8 @@
 					<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
 					{% url "users-index" as users_index_url %}
 					<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">Users</a></li>
+					{% url "customers-create" as customers_create_url %}
+					<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
 					{% url "metrics-index" as metrics_index_url %}
 					<li{% if metrics_index_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_index_url }}">Metrics</a></li>
 					{% comment %}

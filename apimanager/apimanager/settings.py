@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'oauth',
     'consumers',
     'users',
+    'customers',
     'metrics',
     #'api_config',
 ]
@@ -164,6 +165,14 @@ LOGGING = {
             'level': 'INFO',
         },
         'users': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'customers': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'metrics': {
             'handlers': ['console'],
             'level': 'INFO',
         },

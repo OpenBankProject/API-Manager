@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^oauth/', include('oauth.urls')),
     url(r'^consumers/', include('consumers.urls')),
     url(r'^users/', include('users.urls')),
+    url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     #url(r'^api_config/', include('api_config.urls')),
 ]
