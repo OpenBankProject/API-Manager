@@ -31,18 +31,28 @@
 {% if apiuser.user_id %}
 	<div id="users-detail-entitlements">
 		<h2>Add Entitlement</h2>
-		<form class="form-inline" action="{% url 'users-add-entitlement' apiuser.user_id %}" method="post">
+		<form class="form-inline" action="" method="post">
 			{% csrf_token %}
-			<input type="hidden" name="next" value="{{ request.path }}" />
-			<div class="form-group">
-				<label for="users-detail-entitlement-role_name">Role name</label> <input type="text" class="form-control" name="role_name" id="users-detail-entitlements-role_name" aria-label="active" />
-			</div>
-			<div class="form-group">
-				<label for="users-detail-entitlement-bank_id">Bank Id</label> <input type="text" class="form-control" name="bank_id" id="users-detail-entitlement-bank_id" aria-label="active" placeholder="Empty if not bank-specific"/>
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-green">Add</a>
-			</div>
+            {{ form.user_id }}
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lg-4">
+        			<div class="form-group">
+                        {{ form.role_name.label_tag}}
+                        {{ form.role_name }}
+        			</div>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-lg-2">
+        			<div class="form-group">
+        				{{ form.bank_id.label_tag }}
+                        {{ form.bank_id }}
+        			</div>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-lg-6">
+        			<div class="form-group">
+        				<button type="submit" class="btn btn-primary btn-green">Add</a>
+        			</div>
+                </div>
+            </div>
 		</form>
 
 		<h2>Entitlements</h2>
@@ -54,7 +64,7 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
-				{% for entitlement in apiuser.entitlements %}
+				{% for entitlement in apiuser.entitlements.list %}
 					<tr>
 						<td>{{ entitlement.role_name }}</td>
 						<td>{{ entitlement.bank_id }}</td>
