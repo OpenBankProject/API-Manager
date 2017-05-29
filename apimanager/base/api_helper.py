@@ -9,12 +9,12 @@ from .api import api, APIError
 
 
 def get_bank_id_choices(request):
-    """Gets a list of bank ids and short_names as used by form choices"""
+    """Gets a list of bank ids and bank ids as used by form choices"""
     choices = [('', 'Choose ...')]
     try:
         result = api.get(request, '/banks')
         for bank in result['banks']:
-            choices.append((bank['id'], bank['short_name']))
+            choices.append((bank['id'], bank['id']))
     except APIError as err:
         messages.error(request, err)
     return choices
