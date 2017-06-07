@@ -36,10 +36,6 @@ class CreateView(LoginRequiredMixin, FormView):
         try:
             data = form.cleaned_data
             urlpath = '/banks/{}/customers'.format(data['bank_id'])
-            if data['dob_of_dependants']:
-                dob_of_dependants = data['dob_of_dependants'].split(',')
-            else:
-                dob_of_dependants = []
             payload = {
                 'user_id': data['user_id'],
                 'customer_number': data['customer_number'],
@@ -48,14 +44,12 @@ class CreateView(LoginRequiredMixin, FormView):
                 'email': data['email'],
                 'face_image': {
                     'url': data['face_image_url'],
-                    'date':
-                        data['face_image_date'].strftime(DATETIME_INPUT_FORMAT),
+                    'date': data['face_image_date'],
                 },
-                'date_of_birth':
-                    data['date_of_birth'].strftime(DATETIME_INPUT_FORMAT),
+                'date_of_birth': data['date_of_birth'],
                 'relationship_status': data['relationship_status'],
                 'dependants': data['dependants'],
-                'dob_of_dependants': dob_of_dependants,
+                'dob_of_dependants': data['dob_of_dependants'],
                 'credit_rating': {
                     'rating': data['credit_rating_rating'],
                     'source': data['credit_rating_source'],

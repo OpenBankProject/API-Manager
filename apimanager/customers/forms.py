@@ -70,7 +70,7 @@ class CreateCustomerForm(forms.Form):
         label='Face Image URL',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'https://static.openbankproject.com/images/OBP/favicon.png',
+                'placeholder': 'https://static.openbankproject.com/images/OBP/favicon.png',  # noqa
                 'class': 'form-control',
             }
         ),
@@ -85,7 +85,7 @@ class CreateCustomerForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=True,
+        required=False,
     )
     date_of_birth = forms.DateTimeField(
         label='Date of Birth',
@@ -214,3 +214,24 @@ class CreateCustomerForm(forms.Form):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(CreateCustomerForm, self).__init__(*args, **kwargs)
+
+    def clean_face_image_date(self):
+        data = self.cleaned_data['face_image_date']
+        if data:
+            return data.strftime(DATETIME_INPUT_FORMAT)
+        else:
+            return None
+
+    def clean_date_of_birth(self):
+        data = self.cleaned_data['date_of_birth']
+        if data:
+            return data.strftime(DATETIME_INPUT_FORMAT)
+        else:
+            return None
+
+    def clean_dob_of_dependants(self):
+        data = self.cleaned_data['dob_of_dependants']
+        if data:
+            return data.split(',')
+        else:
+            return []
