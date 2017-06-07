@@ -17,10 +17,8 @@ from django.conf import settings
 from django.contrib.auth import logout
 
 
-
 DATE_FORMAT = '%d/%b/%Y %H:%M:%S'
 LOGGER = logging.getLogger(__name__)
-
 
 
 def log(level, message):
@@ -30,11 +28,9 @@ def log(level, message):
     LOGGER.log(level, msg)
 
 
-
 class APIError(Exception):
     """Exception class for API errors"""
     pass
-
 
 
 class API(object):
@@ -44,21 +40,17 @@ class API(object):
         """Gets data from the API"""
         return self.call(request, 'GET', urlpath)
 
-
     def delete(self, request, urlpath):
         """Deletes data from the API"""
         return self.call(request, 'DELETE', urlpath)
-
 
     def post(self, request, urlpath, payload):
         """Posts data to the API"""
         return self.call(request, 'POST', urlpath, payload)
 
-
     def put(self, request, urlpath, payload):
         """Puts data onto the API"""
         return self.call(request, 'PUT', urlpath, payload)
-
 
     def handle_response_404(self, response, prefix):
         # Stripping HTML body ...
@@ -69,20 +61,17 @@ class API(object):
         log(logging.ERROR, msg)
         raise APIError(msg)
 
-
     def handle_response_500(self, response, prefix):
         msg = '{} {}: {}'.format(
             prefix, response.status_code, response.text)
         log(logging.ERROR, msg)
         raise APIError(msg)
 
-
     def handle_response_error(self, request, prefix, error):
         if 'Invalid or expired access token' in error:
             logout(request)
         msg = '{} {}'.format(prefix, error)
         raise APIError(msg)
-
 
     def handle_response(self, request, response):
         """Handles the response, e.g. errors or conversion to JSON"""
@@ -99,11 +88,12 @@ class API(object):
                 self.handle_response_error(request, prefix, data['error'])
             return data
 
-
     def call(self, request, method='GET', urlpath='', payload=None):
         """Workhorse which actually calls the API"""
         url = settings.OAUTH_API + settings.OAUTH_API_BASE_PATH + urlpath
         log(logging.INFO, '{} {}'.format(method, url))
+        if payload:
+            log(logging.INFO, 'Payload: {}'.format(payload))
         if not hasattr(request, 'api'):
             request.api = OAuth1Session(
                 settings.OAUTH_CONSUMER_KEY,
