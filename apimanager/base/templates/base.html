@@ -43,7 +43,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 {% if user.is_authenticated %}
-<p class="navbar-btn"><a href="{% url 'oauth-logout' %}" class="btn btn-default">Logout {{ API_USERNAME }}</a></p>
+                    <p class="navbar-btn"><a href="{% url 'oauth-logout' %}" class="btn btn-default">Logout {{ API_USERNAME }}</a></p>
 {% endif %}
 					</li>
 				</ul>
@@ -55,7 +55,7 @@
 	<div class="container messages">
 	{% for message in messages %}
 	<div class="alert alert-dismissible{% ifequal message.tags "error" %} alert-danger{% else %}{% ifequal message.tags "debug" %} alert-info{% else %} alert-{{ message.tags }}{% endifequal %}{% endifequal %}" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>	
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			{{ message }}
 		</div>
 	{% endfor %}

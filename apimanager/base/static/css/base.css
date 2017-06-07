@@ -63,6 +63,14 @@ footer a:hover, .footer a:focus {
 .navbar-default .navbar-toggle .icon-bar {
 	background-color: #fff;
 }
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #33a4cf;
+}
+
+.navbar-btn {
+    margin-left: 15px;
+}
 
 .btn-primary {
 	background-color: #53c4ef;
