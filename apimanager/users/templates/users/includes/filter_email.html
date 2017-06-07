@@ -1,0 +1,12 @@
+<div id="filter-email" class="filter">
+    <div class="btn-group">
+        <form action="" method="get">
+            <input type="hidden"  name="role_name" value="{{ active_role_name }}" />
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+
+                <input type="text" class="form-control" size="30" name="email" placeholder="Enter email address ..." value="{% if not active_email_all %}{{ active_email }}{% endif %}" />
+            </div>
+        </form>
+    </div>
+</div>

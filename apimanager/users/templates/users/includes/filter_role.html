@@ -1,0 +1,14 @@
+<div id="filter-role" class="filter">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if active_role_name_all %}All Roles{% else %}{{ active_role_name }}{% endif %} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="?email={{ active_email }}&amp;role_name=All">All Roles</a></li>
+            <li role="separator" class="divider"></li>
+        {% for role_name in role_names %}
+        <li><a href="?email={{ active_email }}&amp;role_name={{ role_name }}">{{ role_name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>

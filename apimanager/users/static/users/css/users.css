@@ -2,6 +2,10 @@
 	margin-top: 20px;
 }
 
+#users #users-filters .col-xs-12 {
+    padding-top: 10px;
+}
+
 #users-detail div {
 	margin: 5px 0;
 }
