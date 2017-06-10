@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.http import urlquote
 from django.views.generic import FormView, TemplateView, View
 
 from base.filters import BaseFilter
@@ -107,8 +106,7 @@ class DetailView(LoginRequiredMixin, FormView):
         # The API needs a call 'get user by id'!
         user = {}
         try:
-            user_email = urlquote(self.kwargs['user_email'])
-            urlpath = '/users/{}'.format(user_email)
+            urlpath = '/users/{}'.format(self.kwargs['user_email'])
             users = api.get(self.request, urlpath)
             if len(users['users']) > 0:
                 user = users['users'][0]
