@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'users',
     'customers',
     'metrics',
-    #'api_config',
+    'config',
 ]
 
 MIDDLEWARE = [

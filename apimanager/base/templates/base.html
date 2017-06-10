@@ -35,10 +35,8 @@
 					<li{% if metrics_index_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_index_url }}">Metrics</a></li>
 					{% url "customers-create" as customers_create_url %}
 					<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
-					{% comment %}
-					{% url "api-config-index" as api_config_index_url %}
-					<li{% ifequal request.path api_config_index_url %} class="active" {% endifequal %}><a href="{{ api_config_index_url }}">API Config</a></li>
-					{% endcomment %}
+					{% url "config-index" as config_index_url %}
+					<li{% ifequal request.path config_index_url %} class="active" {% endifequal %}><a href="{{ config_index_url }}">Config</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
+
+{% block content %}
+<div id="config">
+	<h1>Config</h1>
+
+	<p>The configuration of the API</p>
+
+	<pre id="config-json">
+	</pre>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'config/js/config.js' %}"></script>
+	<script type="text/javascript">
+		ConfigJson = {{ config_json|safe }};
+	</script>
+{% endblock extrajs %}
+
+
+{% block extracss %}
+	<link href="{% static 'config/css/config.css' %}" rel="stylesheet">
+{% endblock extracss %}
