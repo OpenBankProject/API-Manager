@@ -85,6 +85,7 @@ class AuthorizeView(RedirectView):
         try:
             response = session.fetch_access_token(url)
         except TokenRequestDenied as err:
+            response = {}
             messages.error(self.request, err)
 
         self.request.session['oauth_token'] = response.get('oauth_token')
