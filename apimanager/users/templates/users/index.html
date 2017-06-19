@@ -39,7 +39,7 @@
 			</thead>
 			<tbody>
 			{% for user in users %}
-				{% url 'users-detail' user.email as url_users_detail %}
+				{% url 'users-detail' user.user_id as url_users_detail %}
 				<tr data-user-id="{{ user.user_id }}">
 					<td><a href="{{ url_users_detail }}">{{ user.user_id }}</td>
 					<td>{{ user.username }}</td>

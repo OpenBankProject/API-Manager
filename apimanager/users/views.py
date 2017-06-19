@@ -106,11 +106,9 @@ class DetailView(LoginRequiredMixin, FormView):
         # The API needs a call 'get user by id'!
         user = {}
         try:
-            urlpath = '/users/{}'.format(self.kwargs['user_email'])
-            users = api.get(self.request, urlpath)
-            if len(users['users']) > 0:
-                user = users['users'][0]
-                context['form'].fields['user_id'].initial = user['user_id']
+            urlpath = '/users/user_id/{}'.format(self.kwargs['user_id'])
+            user = api.get(self.request, urlpath)
+            context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
 

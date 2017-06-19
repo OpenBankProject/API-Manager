@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^$',
         IndexView.as_view(),
         name='users-index'),
-    url(r'^(?P<user_email>[\w\@\.\+-]+)$',
+    url(r'^user_id/(?P<user_id>[\w\@\.\+-]+)$',
         DetailView.as_view(),
         name='users-detail'),
     url(r'^(?P<user_id>[\w-]+)/entitlement/delete/(?P<entitlement_id>[\w-]+)$',
