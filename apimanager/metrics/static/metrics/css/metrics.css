@@ -2,10 +2,10 @@
 	margin-bottom: 10px;
 }
 
-#metrics #metrics-list {
-	margin-top: 20px;
+#metrics #metrics-data {
+    margin-top: 40px;
 }
- 
+
 #metrics #metrics-list ul {
 	margin-left: -25px;
 }

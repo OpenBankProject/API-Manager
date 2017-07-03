@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / API Metrics{% endblock page_title %}
+
+{% block content %}
+<div id="metrics">
+	<h1>API Metrics</h1>
+
+    <div id="metrics-filter">
+    	<h2>Filter</h2>
+    	<form action="{% url 'api-metrics' %}" method="get">
+    		{% if form.non_field_errors %}
+    		<div class="alert alert-danger">
+    			{{ form.non_field_errors }}
+    		</div>
+    		{% endif %}
+
+    		<div class="row">
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.start_date.errors %}<div class="alert alert-danger">{{ form.start_date.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.start_date.label_tag }}
+    					{{ form.start_date }}
+    				</div>
+    			</div>
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.end_date.errors %}<div class="alert alert-danger">{{ form.end_date.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.end_date.label_tag }}
+    					{{ form.end_date }}
+    				</div>
+    			</div>
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.limit.errors %}<div class="alert alert-danger">{{ form.limit.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.limit.label_tag }}
+    					{{ form.limit }}
+    				</div>
+    			</div>
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.offset.errors %}<div class="alert alert-danger">{{ form.offset.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.offset.label_tag }}
+    					{{ form.offset }}
+    				</div>
+    			</div>
+    		</div>
+
+    		<div class="row">
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.consumer_id.errors %}<div class="alert alert-danger">{{ form.consumer_id.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.consumer_id.label_tag }}
+    					{{ form.consumer_id }}
+    				</div>
+    			</div>
+
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.user_id.errors %}<div class="alert alert-danger">{{ form.user_id.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.user_id.label_tag }}
+    					{{ form.user_id }}
+    				</div>
+    			</div>
+
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.anon.errors %}<div class="alert alert-danger">{{ form.anon.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.anon.label_tag }}
+    					{{ form.anon }}
+    				</div>
+    			</div>
+
+    			<div class="col-xs-6 col-sm-3">
+    				{% if form.app_name.errors %}<div class="alert alert-danger">{{ form.app_name.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.app_name.label_tag }}
+    					{{ form.app_name }}
+    				</div>
+    			</div>
+
+    		</div>
+
+    		<div class="row">
+    			<div class="col-xs-2">
+    				{% if form.verb.errors %}<div class="alert alert-danger">{{ form.verb.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.verb.label_tag }}
+    					{{ form.verb }}
+    				</div>
+    			</div>
+
+    			<div class="col-xs-10">
+    				{% if form.url.errors %}<div class="alert alert-danger">{{ form.url.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.url.label_tag }}
+    					{{ form.url }}
+    				</div>
+    			</div>
+    		</div>
+
+    		<div class="row">
+    			<div class="col-xs-7">
+    				{% if form.implemented_by_partial_function.errors %}<div class="alert alert-danger">{{ form.implemented_by_partial_function.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.implemented_by_partial_function.label_tag }}
+    					{{ form.implemented_by_partial_function }}
+    				</div>
+    			</div>
+
+    			<div class="col-xs-5">
+    				{% if form.implemented_in_version.errors %}<div class="alert alert-danger">{{ form.implemented_in_version.errors }}</div>{% endif %}
+    				<div class="form-group">
+    					{{ form.implemented_in_version.label_tag }}
+    					{{ form.implemented_in_version }}
+    				</div>
+    			</div>
+    		</div>
+
+
+    		<button type="submit" class="btn btn-primary">Update filter</button>
+    	</form>
+    </div>
+
+    <div id="metrics-data">
+    	<ul class="nav nav-tabs">
+    	{% block nav_tabs %}
+    		<li class="active"><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">List</a></li>
+    		<li><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">Summary by Partial Function</a></li>
+    	{% endblock nav_tabs %}
+    	</ul>
+
+    	<div class="tab-content">
+    		{% block tab_content %}
+    		<div class="tab-pane active">
+    			<div class="table-responsive">
+    				<table class="table table-hover tablesorter">
+    					<thead>
+    					<tr>
+    						<th>#</th>
+    						<th>Verb</th>
+    						<th>URL</th>
+    						<th>Date</th>
+    						<th>Details</th>
+    					</tr>
+    					</thead>
+    					<tbody>
+    					{% for metric in metrics %}
+    						<tr>
+    							<td>{{ forloop.counter }}</td>
+    							<td>{{ metric.verb }}</td>
+    							<td>
+    								{{ metric.url }}
+    							</td>
+    							<td>{{ metric.date|date:"Y-m-d H:m:s" }}</td>
+    							<td>
+    								<ul>
+    									<li>User Name: {{ metric.user_name }}</li>
+    									<li>User ID: {{ metric.user_id }}</li>
+    									<li>Developer Email: {{ metric.developer_email }}</li>
+    									<li>App Name: {{ metric.app_name }}</li>
+    									<li>Consumer ID: {{ metric.consumer_id }}</li>
+    									<li>Implemented by Partial Function: {{ metric.implemented_by_partial_function }}</li>
+    									<li>Implemented In Version: {{ metric.implemented_in_version }}</li>
+    								</ul>
+    							</td>
+    						</tr>
+    					{% endfor %}
+    					</tbody>
+    				</table>
+    			</div>
+    		</div>
+    		{% endblock tab_content %}
+    	</div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extracss %}
+		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
+{% endblock extracss %}

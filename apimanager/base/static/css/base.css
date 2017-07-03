@@ -72,6 +72,10 @@ footer a:hover, .footer a:focus {
     margin-left: 15px;
 }
 
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:active {
+    background-color: #53c4ef;
+}
+
 .btn-primary {
 	background-color: #53c4ef;
 	border-color: #33a4cf;

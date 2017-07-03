@@ -12,10 +12,12 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import FormView, TemplateView
+from django.utils.http import urlquote
 
 from base.api import api, APIError
 
+from .forms import APIMetricsForm, ConnectorMetricsForm
 
 
 def get_random_color(to_hash):
@@ -24,7 +26,6 @@ def get_random_color(to_hash):
     b = int(hashed[3:6]) % 255
     g = int(hashed[6:9]) % 255
     return 'rgba({}, {}, {}, 0.3)'.format(r, g, b)
-
 
 
 def get_barchart_data(metrics, fieldname):
@@ -57,56 +58,97 @@ def get_barchart_data(metrics, fieldname):
     return data
 
 
+class MetricsView(LoginRequiredMixin, TemplateView):
+    """View for metrics (sort of abstract base class)"""
+    form_class = None
+    template_name = None
+    api_urlpath = None
 
-class IndexView(LoginRequiredMixin, TemplateView):
-    """Index view for metrics"""
-    template_name = "metrics/index.html"
+    def get_form(self):
+        """
+        Get bound form either from request.GET or initials
+        We need a bound form because we already send a request to the API
+        without user intervention on initial request
+        """
+        if self.request.GET:
+            data = self.request.GET
+        else:
+            fields = self.form_class.declared_fields
+            data = {}
+            for name, field in fields.items():
+                if field.initial:
+                    data[name] = field.initial
+        form = self.form_class(data)
+        return form
 
-    def scrub(self, metrics):
-        """Scrubs data in the given consumers to adher to certain formats"""
+    def to_django(self, metrics):
+        """
+        Convert metrics data from API to format understood by Django
+        - Make datetime out of string in field 'date'
+        """
         for metric in metrics:
             metric['date'] = datetime.strptime(
                 metric['date'], settings.API_DATETIMEFORMAT)
         return metrics
 
-
-    def get_params(self, request_get):
+    def to_api(self, cleaned_data):
         """
-        API treats empty parameters as actual values, so we have to filter
-        them out
+        Convert form data from Django to format understood by API
+        - API treats empty parameters as actual values, so we have to remove
+        them
+        - Need to convert datetimes into required format
         """
-        querydict = request_get.copy()
-        keys = list(querydict.keys())
-        for key in keys:
-            if not querydict[key]:
-                querydict.pop(key)
-        return querydict.urlencode()
+        params = []
+        for name, value in cleaned_data.items():
+            # Maybe we should define the API format as Django format to not
+            # have to convert in places like this?
+            if value.__class__.__name__ == 'datetime':
+                value = value.strftime(settings.API_DATEFORMAT)
+            if value:
+                # API does not like quoted data
+                params.append('{}={}'.format(name, value))
+        params = '&'.join(params)
+        return params
 
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
+    def get_metrics(self, cleaned_data):
+        """
+        Gets the metrics from the API, using given cleaned form data.
+        """
         metrics = []
-        params = self.get_params(self.request.GET)
+        params = self.to_api(cleaned_data)
+        urlpath = '{}?{}'.format(self.api_urlpath, params)
         try:
-            urlpath = '/management/metrics?{}'.format(params)
             metrics = api.get(self.request, urlpath)
-            metrics = self.scrub(metrics['metrics'])
+            metrics = self.to_django(metrics['metrics'])
         except APIError as err:
             messages.error(self.request, err)
+        return metrics
 
+    def get_context_data(self, **kwargs):
+        context = super(MetricsView, self).get_context_data(**kwargs)
+        metrics = []
+        form = self.get_form()
+        if form.is_valid():
+            metrics = self.get_metrics(form.cleaned_data)
         context.update({
             'metrics': metrics,
-            'barchart_data': json.dumps({})
+            'form': form,
         })
         return context
 
 
+class APIMetricsView(MetricsView):
+    """View for API metrics"""
+    form_class = APIMetricsForm
+    template_name = 'metrics/api.html'
+    api_urlpath = '/management/metrics'
 
-class SummaryPartialFunctionView(IndexView):
-    template_name = "metrics/summary_partial_function.html"
+
+class APISummaryPartialFunctionView(APIMetricsView):
+    template_name = 'metrics/api_summary_partial_function.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SummaryPartialFunctionView, self).get_context_data(
+        context = super(APISummaryPartialFunctionView, self).get_context_data(
             **kwargs)
         barchart_data = json.dumps(get_barchart_data(
             context['metrics'], 'implemented_by_partial_function'))
@@ -115,3 +157,10 @@ class SummaryPartialFunctionView(IndexView):
             'barchart_data': barchart_data,
         })
         return context
+
+
+class ConnectorMetricsView(MetricsView):
+    """View for connector metrics"""
+    form_class = ConnectorMetricsForm
+    template_name = 'metrics/connector.html'
+    api_urlpath = '/management/connector/metrics'

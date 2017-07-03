@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Connector Metrics{% endblock page_title %}
+
+{% block content %}
+<div id="metrics">
+	<h1>Connector Metrics</h1>
+
+	<div id="metrics-filter">
+		<h2>Filter</h2>
+		<form action="{% url 'connector-metrics' %}" method="get">
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				{{ form.non_field_errors }}
+			</div>
+			{% endif %}
+
+			<div class="row">
+				<div class="col-xs-6 col-sm-3">
+					{% if form.start_date.errors %}<div class="alert alert-danger">{{ form.start_date.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.start_date.label_tag }}
+						{{ form.start_date }}
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					{% if form.end_date.errors %}<div class="alert alert-danger">{{ form.end_date.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.end_date.label_tag }}
+						{{ form.end_date }}
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					{% if form.limit.errors %}<div class="alert alert-danger">{{ form.limit.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.limit.label_tag }}
+						{{ form.limit }}
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					{% if form.offset.errors %}<div class="alert alert-danger">{{ form.offset.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.offset.label_tag }}
+						{{ form.offset }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
+					{% if form.connector_name.errors %}<div class="alert alert-danger">{{ form.connector_name.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.connector_name.label_tag }}
+						{{ form.connector_name }}
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					{% if form.function_name.errors %}<div class="alert alert-danger">{{ form.function_name.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.function_name.label_tag }}
+						{{ form.function_name }}
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					{% if form.obp_api_request_id.errors %}<div class="alert alert-danger">{{ form.obp_api_request_id.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.obp_api_request_id.label_tag }}
+						{{ form.obp_api_request_id }}
+					</div>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Update filter</button>
+		</form>
+	</div>
+
+
+	<div id="metrics-data">
+		<div class="table-responsive">
+			<table class="table table-hover tablesorter">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th>Date</th>
+					<th>Connector Name</th>
+					<th>Function Name</th>
+					<th>OBP API Request ID</th>
+					<th>Duration (ms)</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for metric in metrics %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ metric.date|date:"Y-m-d H:m:s" }}</td>
+						<td>{{ metric.connector_name }}</td>
+						<td>{{ metric.function_name }}</td>
+						<td>{{ metric.obp_api_request_id }}</td>
+						<td>{{ metric.duration }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
+
+{% block extracss %}
+		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
+{% endblock extracss %}

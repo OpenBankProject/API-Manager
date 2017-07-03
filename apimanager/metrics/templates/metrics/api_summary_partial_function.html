@@ -1,0 +1,21 @@
+{% extends 'metrics/api.html' %}
+{% load static %}
+
+{% block nav_tabs %}
+	<li><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">List</a></li>
+	<li class="active"><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">Summary by Partial Function</a></li>
+{% endblock nav_tabs %}
+
+{% block tab_content %}
+  <div class="tab-pane active">
+	<canvas id="barchart" width="100%" height="50%"></canvas>
+  </div>
+{% endblock tab_content %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'metrics/js/Chart.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'metrics/js/metrics.js' %}"></script>
+	<script type="text/javascript">
+		const BarchartData = {{ barchart_data|safe }};
+	</script>
+{% endblock extrajs %}

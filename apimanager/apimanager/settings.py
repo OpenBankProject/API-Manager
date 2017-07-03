@@ -184,6 +184,7 @@ LOGIN_URL = reverse_lazy('home')
 
 
 API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATEFORMAT = '%Y-%m-%d'
 
 
 OAUTH_API = 'http://127.0.0.1:8080'
