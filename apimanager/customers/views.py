@@ -5,6 +5,7 @@ Views of customers app
 
 import datetime
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -14,7 +15,7 @@ from django.views.generic import FormView
 from base.api import api, APIError
 from base.api_helper import get_bank_id_choices, get_user_id_choices
 
-from .forms import CreateCustomerForm, DATETIME_INPUT_FORMAT
+from .forms import CreateCustomerForm
 
 
 class CreateView(LoginRequiredMixin, FormView):
@@ -29,7 +30,7 @@ class CreateView(LoginRequiredMixin, FormView):
         fields['bank_id'].choices = get_bank_id_choices(self.request)
         fields['user_id'].choices = get_user_id_choices(self.request)
         fields['last_ok_date'].initial =\
-            datetime.datetime.now().strftime(DATETIME_INPUT_FORMAT)
+            datetime.datetime.now().strftime(settings.API_DATETIMEFORMAT)
         return form
 
     def form_valid(self, form):
@@ -63,7 +64,7 @@ class CreateView(LoginRequiredMixin, FormView):
                 'employment_status': data['employment_status'],
                 'kyc_status': data['kyc_status'],
                 'last_ok_date':
-                    data['last_ok_date'].strftime(DATETIME_INPUT_FORMAT),
+                    data['last_ok_date'].strftime(settings.API_DATETIMEFORMAT),
             }
             result = api.post(self.request, urlpath, payload=payload)
         except APIError as err:

@@ -4,8 +4,7 @@ Forms of customers app
 """
 
 from django import forms
-
-DATETIME_INPUT_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+from django.conf import settings
 
 
 class CreateCustomerForm(forms.Form):
@@ -78,7 +77,7 @@ class CreateCustomerForm(forms.Form):
     )
     face_image_date = forms.DateTimeField(
         label='Face Image Date',
-        input_formats=[DATETIME_INPUT_FORMAT],
+        input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': '2013-01-22T00:08:00Z',
@@ -89,7 +88,7 @@ class CreateCustomerForm(forms.Form):
     )
     date_of_birth = forms.DateTimeField(
         label='Date of Birth',
-        input_formats=[DATETIME_INPUT_FORMAT],
+        input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': '2013-01-22T00:08:00Z',
@@ -201,7 +200,7 @@ class CreateCustomerForm(forms.Form):
     )
     last_ok_date = forms.DateTimeField(
         label='Last OK Date',
-        input_formats=[DATETIME_INPUT_FORMAT],
+        input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': '2013-01-22T00:08:00Z',
@@ -218,14 +217,14 @@ class CreateCustomerForm(forms.Form):
     def clean_face_image_date(self):
         data = self.cleaned_data['face_image_date']
         if data:
-            return data.strftime(DATETIME_INPUT_FORMAT)
+            return data.strftime(settings.API_DATETIMEFORMAT)
         else:
             return None
 
     def clean_date_of_birth(self):
         data = self.cleaned_data['date_of_birth']
         if data:
-            return data.strftime(DATETIME_INPUT_FORMAT)
+            return data.strftime(settings.API_DATETIMEFORMAT)
         else:
             return None
 
