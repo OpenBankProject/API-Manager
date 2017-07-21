@@ -43,9 +43,7 @@
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-user_email">
 				<strong>User Email</strong><br />
-				{% with consumer.created_by_user.email as user_email %}
-				<span><a href="{% url 'users-detail' user_email %}">{{ user_email }}</a></span>
-				{% endwith %}
+				<span><a href="{% url 'users-detail' consumer.created_by_user.user_id %}">{{ consumer.created_by_user.email }}</a></span>
 			</div>
 		</div>
 	</div>
