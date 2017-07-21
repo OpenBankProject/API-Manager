@@ -43,7 +43,7 @@
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-user_email">
 				<strong>User Email</strong><br />
-				<span><a href="{% url 'users-detail' consumer.created_by_user.user_id %}">{{ consumer.created_by_user.email }}</a></span>
+				<span>{% if consumer.created_by_user.user_id %}<a href="{% url 'users-detail' consumer.created_by_user.user_id %}">{{ consumer.created_by_user.email }}</a>{% else %}{{ consumer.created_by_user.email }}{% endif %}</span>
 			</div>
 		</div>
 	</div>
