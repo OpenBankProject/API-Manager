@@ -1,4 +1,4 @@
-Django==1.11
+Django==1.11.4
 oauthlib==2.0.0
 requests==2.11.1
 requests-oauthlib==0.6.2
