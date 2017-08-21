@@ -84,13 +84,12 @@ class AuthorizeView(RedirectView):
         url = settings.OAUTH_API + settings.OAUTH_ACCESS_TOKEN_PATH
         try:
             response = session.fetch_access_token(url)
+            self.request.session['oauth_token'] = response.get('oauth_token')
+            self.request.session['oauth_secret'] = response.get('oauth_token_secret')
+            self.request.session.modified = True
+            self.login_to_django()
         except TokenRequestDenied as err:
-            response = {}
             messages.error(self.request, err)
-
-        self.request.session['oauth_token'] = response.get('oauth_token')
-        self.request.session['oauth_secret'] = response.get('oauth_token_secret')
-        self.login_to_django()
         redirect_url = self.request.GET.get('next', reverse('consumers-index'))
         return redirect_url
 
