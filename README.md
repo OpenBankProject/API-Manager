@@ -120,7 +120,7 @@ The output will show where they are collected to (`settings.STATIC_ROOT`).
 
 ## Web application server
 
-Instead of Django's built-in runserver, you need a proper web application server to run the app, e.g. `gunicorn`. It should have been installed already as a dependency and you use the provided `gunicorn.conf.py`. Run it like
+Instead of Django's built-in runserver, you need a proper web application server to run the app, e.g. `gunicorn`. It should have been installed already as a dependency and you can use the provided `gunicorn.conf.py`. Run it like
 
 ```bash
 (venv)$ cd apimanager/ && gunicorn --config ../gunicorn.conf.py apimanager.wsgi 
@@ -137,7 +137,7 @@ If you do not want to start the web application server manually, but automatical
 
 ### systemd
 
-Stick the provided file `apimanager.service` into `/etc/systemd/system/`, edit it to suit your installation and start it (probably as root):
+Stick the provided file `apimanager.service` into `/etc/systemd/system/`, edit to suit your installation and start the appliation (probably as root):
 
 ```bash
 # /bin/systemctl start apimanager
@@ -158,7 +158,7 @@ If you need to edit the service file afterwards, it needs to be reloaded as well
 
 ### supervisor
 
-Stick the provided file `supervisor.apimanager.conf` into `/etc/supervisor/conf.d/`, edit it to suit your installation and reload supervisor (probably as root):
+Stick the provided file `supervisor.apimanager.conf` into `/etc/supervisor/conf.d/`, edit to suit your installation and restart supervisor (probably as root):
 
 ```bash
 # /bin/systemctl restart supervisor
