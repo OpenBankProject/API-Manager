@@ -137,7 +137,7 @@ If you do not want to start the web application server manually, but automatical
 
 ### systemd
 
-Stick the provided file `apimanager.service` into `/etc/systemd/system/`, edit to suit your installation and start the appliation (probably as root):
+Stick the provided file `apimanager.service` into `/etc/systemd/system/`, edit to suit your installation and start the application (probably as root):
 
 ```bash
 # /bin/systemctl start apimanager
