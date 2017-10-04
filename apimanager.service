@@ -1,0 +1,14 @@
+[Unit]
+Description=API Manager
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+SyslogIdentifier=API-Manager
+Restart=always
+WorkingDirectory=/var/www/apimanager/API-Manager/apimanager
+ExecStart=/var/www/apimanager/venv/bin/gunicorn --user deploy --group deploy --config /var/www/apimanager/API-Manager/gunicorn.conf.py apimanager.wsgi
+
+[Install]
+WantedBy=multi-user.target

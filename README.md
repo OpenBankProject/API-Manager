@@ -5,7 +5,7 @@ This is a Django project to manage the Open Bank Project API via API Calls.
 To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
 
 
-## Installation (development)
+# Installation (development)
 
 It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-Manager`.
 Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
@@ -39,7 +39,7 @@ apimanager/
 13 directories, 8 files
 ```
 
-### Install dependencies
+## Install dependencies
 
 ```bash
 $ virtualenv --python=python3 ../venv
@@ -47,7 +47,7 @@ $ source ../venv/bin/activate
 (venv)$ pip install -r requirements.txt
 ```
 
-### Configure settings
+## Configure settings
 
 Edit `apimanager/apimanager/local_settings.py`:
 
@@ -66,13 +66,13 @@ DATABASES['default']['NAME'] = '<filename to use for database>'
 The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
 
 
-### Initialise database
+## Initialise database
 
 ```bash
 (venv)$ ./apimanager/manage.py migrate
 ```
 
-### Run the app
+## Run the app
 
 ```bash
 (venv)$ ./apimanager/manage.py runserver
@@ -81,11 +81,11 @@ The application's authentication is API-driven. However, to make use of Django's
 The application should be available at `http://localhost:8000`
 
 
-## Installation (production)
+# Installation (production)
 
 Execute the same steps as for development, but do not run the app.
 
-### Settings
+## Settings
 
 Edit `apimanager/apimanager/local_settings.py` for additional changes:
 
@@ -108,7 +108,7 @@ EMAIL_HOST = 'mail.example.com'
 EMAIL_TLS = True
 ```
 
-### Static files
+## Static files
 
 The app's static files, e.g. Javascript, CSS and images need to be collected and made available to a webserver. Run
 
@@ -118,7 +118,7 @@ The app's static files, e.g. Javascript, CSS and images need to be collected and
 
 The output will show where they are collected to (`settings.STATIC_ROOT`).
 
-### Web application server
+## Web application server
 
 Instead of Django's built-in runserver, you need a proper web application server to run the app, e.g. `gunicorn`. It should have been installed already as a dependency and you use the provided `gunicorn.conf.py`. Run it like
 
@@ -131,15 +131,40 @@ Instead of Django's built-in runserver, you need a proper web application server
 - The app's output is logged to `gunicorn`'s error logfile (see `gunicorn.conf.py` for location)
 
 
-### Process control
+## Process control
 
-If you do not want to start the web application server manually, but automatically at boot and also want to restart automatically if it dies, a process control system like `supervisor` comes in handy. Stick the provided file `supervisor.apimanager.conf` into `/etc/supervisor/conf.d/`, edit it and reload supervisor (probably as root):
+If you do not want to start the web application server manually, but automatically at boot and also want to restart automatically if it dies, a process control system comes in handy. This package provides configuration files for systemd and supervisor.
+
+### systemd
+
+Stick the provided file `apimanager.service` into `/etc/systemd/service/`, edit it to suit your installation and start it (probably as root):
+
+```bash
+# /bin/systemctl start apimanager
+```
+
+If it works properly, you might want it to be started at boot:
+
+```bash
+# /bin/systemctl enable apimanager
+```
+
+If you need to edit the service file afterwards, it needs to be reloaded as well as the service
+```bash
+# /bin/systemctl daemon-reload
+# /bin/systemctl restart apimanager
+```
+
+
+### supervisor
+
+Stick the provided file `supervisor.apimanager.conf` into `/etc/supervisor/conf.d/`, edit it to suit your installation and reload supervisor (probably as root):
 
 ```bash
 # /bin/systemctl restart supervisor
 ```
 
-### Webserver
+## Webserver
 
 Finally, use a webserver like `nginx` or `apache` as a frontend. It serves static files from the directory where `collectstatic` puts them and acts as a reverse proxy for gunicorn. Stick the provided `nginx.apimanager.conf` into `/etc/nginx/sites-enabled/`, edit it and reload the webserver (probably as root):
 
@@ -148,14 +173,14 @@ Finally, use a webserver like `nginx` or `apache` as a frontend. It serves stati
 ```
 
 
-## Management
+# Management
 
 The app should tell you if your logged in user does not have the proper role to execute the management functionality you need. Please use a Super Admin user to login and set roles at `/users` to rectify that. To become Super Admin, set the property `super_admin_user_ids` in the API properties file accordingly.
 
 
-## Final words
+# Final words
 
-Be aware of file permission issues!
+Be aware of file permission issues and preconfigured paths to executables (system env versus virtual env)!
 
 Have fun,
  TESOBE
