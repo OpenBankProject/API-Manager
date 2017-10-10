@@ -16,6 +16,7 @@ $ tree -L 2 apimanager/
 apimanager/
 ├── API-Manager
 │   ├── apimanager
+│   ├── apimanager.service 
 │   ├── gunicorn.conf.py
 │   ├── LICENSE
 │   ├── nginx.apimanager.conf
@@ -35,8 +36,6 @@ apimanager/
 └── venv
     ├── bin
     └── lib
-
-13 directories, 8 files
 ```
 
 ## Install dependencies
@@ -60,7 +59,12 @@ OAUTH_API = '<hostname>'
 OAUTH_CONSUMER_KEY = '<key>'
 OAUTH_CONSUMER_SECRET = '<secret>'
 # Database filename, default is `../db.sqlite3` relative to this file
-DATABASES['default']['NAME'] = '<filename to use for database>'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'),
+    }
+}
 ```
 
 The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
@@ -87,7 +91,7 @@ Execute the same steps as for development, but do not run the app.
 
 ## Settings
 
-Edit `apimanager/apimanager/local_settings.py` for additional changes:
+Edit `apimanager/apimanager/local_settings.py` for _additional_ changes to the development settings above:
 
 ```python
 # Disable debug
