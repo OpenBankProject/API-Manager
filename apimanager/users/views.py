@@ -40,7 +40,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
 
-    def get_users_rolenames(self):
+    def get_users_rolenames(self, context):
         users = []
         try:
             urlpath = '/users'
@@ -65,11 +65,11 @@ class IndexView(LoginRequiredMixin, TemplateView):
             .apply(users['users'])
         users = FilterEmail(context, self.request.GET)\
             .apply(users)
-        return users
+        return users, role_names
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        users, role_names = self.get_users_rolenames()
+        users, role_names = self.get_users_rolenames(context)
         context.update({
             'role_names': role_names,
             'statistics': {
