@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>DirectLogin</h1>
+<form action="{% url 'directlogin' %}" method="post">
+	{% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+	{% csrf_token %}
+	<div class="form-group">
+		{% if form.username.errors %}<div class="alert alert-danger">{{ form.username.errors }}</div>{% endif %}
+		<label for="username">Username:</label>
+		{{ form.username }}
+	</div>
+	<div class="form-group">
+		{% if form.password.errors %}<div class="alert alert-danger">{{ form.password.errors }}</div>{% endif %}
+		<label for="password">Password:</label>
+		{{ form.password }}
+	</div>
+	<div class="form-group">
+		{% if form.consumer_key.errors %}<div class="alert alert-danger">{{ form.consumer_key.errors }}</div>{% endif %}
+		<label for="consumer-key">Consumer Key:</label>
+		{{ form.consumer_key }}
+	</div>
+	<button class="btn btn-primary">Login</button>
+</form>
+{% endblock content %}

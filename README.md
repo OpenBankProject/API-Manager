@@ -25,14 +25,8 @@ apimanager/
 │   ├── requirements.txt
 │   └── supervisor.apimanager.conf
 ├── db.sqlite3
-├── logs [error opening dir]
+├── logs
 ├── static-collected
-│   ├── admin
-│   ├── consumers
-│   ├── css
-│   ├── img
-│   ├── js
-│   └── users
 └── venv
     ├── bin
     └── lib
@@ -54,7 +48,7 @@ Edit `apimanager/apimanager/local_settings.py`:
 # Used internally by Django, can be anything of your choice
 SECRET_KEY = '<random string>'
 # API hostname, e.g. https://api.openbankproject.com
-OAUTH_API = '<hostname>'
+API_HOST = '<hostname>'
 # Consumer key + secret to authenticate the _app_ against the API
 OAUTH_CONSUMER_KEY = '<key>'
 OAUTH_CONSUMER_SECRET = '<secret>'

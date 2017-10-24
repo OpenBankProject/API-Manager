@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 
-from base.api import api, APIError
+from obp.api import API, APIError
 from base.filters import BaseFilter, FilterTime
 
 
@@ -68,10 +68,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         consumers = []
-
+        api = API(self.request.session.get('obp'))
         try:
             urlpath = '/management/consumers'
-            consumers = api.get(self.request, urlpath)
+            consumers = api.get(urlpath)
             consumers = FilterEnabled(context, self.request.GET)\
                 .apply(consumers['list'])
             consumers = FilterAppType(context, self.request.GET)\
@@ -98,10 +98,11 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
+        api = API(self.request.session.get('obp'))
 
         try:
             urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
-            consumer = api.get(self.request, urlpath)
+            consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
         except APIError as err:
@@ -120,10 +121,11 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
     success = None
 
     def get_redirect_url(self, *args, **kwargs):
+        api = API(self.request.session.get('obp'))
         try:
             urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
             payload = {'enabled': self.enabled}
-            api.put(self.request, urlpath, payload)
+            api.put(urlpath, payload)
             messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'base',
-    'oauth',
+    'obp',
     'consumers',
     'users',
     'customers',
@@ -187,13 +187,18 @@ API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
 API_DATEFORMAT = '%Y-%m-%d'
 
 
-OAUTH_API = 'http://127.0.0.1:8080'
+API_HOST = 'http://127.0.0.1:8080'
+API_BASE_PATH = '/obp/v3.0.0'
+# For some reason, swagger is not available at the latest API version
+API_SWAGGER_BASE_PATH = '/obp/v1.4.0'
+
+
+# Always save session$
+SESSION_SAVE_EVERY_REQUEST = True
+
 OAUTH_TOKEN_PATH = '/oauth/initiate'
 OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
-OAUTH_API_BASE_PATH = '/obp/v3.0.0'
-
-
 
 # Set OAuth client key/secret in apimanager/local_settings.py
 OAUTH_CONSUMER_KEY = None

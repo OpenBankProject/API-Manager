@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, TemplateView
 from django.utils.http import urlquote
 
-from base.api import api, APIError
+from obp.api import API, APIError
 
 from .forms import APIMetricsForm, ConnectorMetricsForm
 
@@ -117,8 +117,9 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         metrics = []
         params = self.to_api(cleaned_data)
         urlpath = '{}?{}'.format(self.api_urlpath, params)
+        api = API(self.request.session.get('obp'))
         try:
-            metrics = api.get(self.request, urlpath)
+            metrics = api.get(urlpath)
             metrics = self.to_django(metrics['metrics'])
         except APIError as err:
             messages.error(self.request, err)

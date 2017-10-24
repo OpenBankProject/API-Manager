@@ -10,8 +10,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from base.filters import BaseFilter
-from base.api import api, APIError
-from base.api_helper import get_bank_id_choices
+from obp.api import API, APIError
 
 from .forms import AddEntitlementForm
 
@@ -42,9 +41,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
     def get_users_rolenames(self, context):
         users = []
+        api = API(self.request.session.get('obp'))
         try:
             urlpath = '/users'
-            users = api.get(self.request, urlpath)
+            users = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
             return [], []
@@ -85,9 +85,13 @@ class DetailView(LoginRequiredMixin, FormView):
     form_class = AddEntitlementForm
     template_name = 'users/detail.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.api = API(request.session.get('obp'))
+        return super(DetailView, self).dispatch(request, *args,**kwargs)
+
     def get_form(self, *args, **kwargs):
         form = super(DetailView, self).get_form(*args, **kwargs)
-        form.fields['bank_id'].choices = get_bank_id_choices(self.request)
+        form.fields['bank_id'].choices = self.api.get_bank_id_choices()
         return form
 
     def form_valid(self, form):
@@ -99,7 +103,7 @@ class DetailView(LoginRequiredMixin, FormView):
                 'bank_id': data['bank_id'],
                 'role_name': data['role_name'],
             }
-            entitlement = api.post(self.request, urlpath, payload=payload)
+            entitlement = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
@@ -112,13 +116,12 @@ class DetailView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-
         # NOTE: assuming there is just one user with that email address
         # The API needs a call 'get user by id'!
         user = {}
         try:
             urlpath = '/users/user_id/{}'.format(self.kwargs['user_id'])
-            user = api.get(self.request, urlpath)
+            user = self.api.get(urlpath)
             context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
@@ -134,10 +137,11 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         """Deletes entitlement from API"""
+        api = API(self.request.session.get('obp'))
         try:
             urlpath = '/users/{}/entitlement/{}'.format(
                 kwargs['user_id'], kwargs['entitlement_id'])
-            api.delete(request, urlpath)
+            api.delete(urlpath)
             msg = 'Entitlement with role {} has been deleted.'.format(
                 request.POST.get('role_name', '<undefined>'))
             messages.success(request, msg)

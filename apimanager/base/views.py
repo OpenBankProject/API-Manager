@@ -13,5 +13,5 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['OAUTH_API'] = settings.OAUTH_API
+        context['API_HOST'] = settings.API_HOST
         return context

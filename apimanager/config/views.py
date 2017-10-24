@@ -9,9 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, TemplateView, View
 
-from base.api import api, APIError
-
-
+from obp.api import API, APIError
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -20,9 +18,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+        api = API(self.request.session.get('obp'))
         try:
             urlpath = '/config'
-            config = api.get(self.request, urlpath)
+            config = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
             config = {}

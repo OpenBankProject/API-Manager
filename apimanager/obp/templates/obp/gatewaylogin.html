@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>GatewayLogin</h1>
+<form action="{% url 'gatewaylogin' %}" method="post">
+	{% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+	{% csrf_token %}
+	<div class="form-group">
+		{% if form.username.errors %}<div class="alert alert-danger">{{ form.username.errors }}</div>{% endif %}
+		<label for="username">Username:</label>
+		{{ form.username }}
+	</div>
+	<div class="form-group">
+		{% if form.secret.errors %}<div class="alert alert-danger">{{ form.secret.errors }}</div>{% endif %}
+		<label for="secret">Secret:</label>
+		{{ form.secret }}
+	</div>
+	<button class="btn btn-primary">Login</button>
+</form>
+{% endblock content %}
