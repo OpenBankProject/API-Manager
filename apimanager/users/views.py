@@ -91,7 +91,10 @@ class DetailView(LoginRequiredMixin, FormView):
 
     def get_form(self, *args, **kwargs):
         form = super(DetailView, self).get_form(*args, **kwargs)
-        form.fields['bank_id'].choices = self.api.get_bank_id_choices()
+        try:
+            form.fields['bank_id'].choices = self.api.get_bank_id_choices()
+        except APIError as err:
+            messags.error(self.request, err)
         return form
 
     def form_valid(self, form):

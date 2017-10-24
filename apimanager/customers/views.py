@@ -30,8 +30,11 @@ class CreateView(LoginRequiredMixin, FormView):
     def get_form(self, *args, **kwargs):
         form = super(CreateView, self).get_form(*args, **kwargs)
         fields = form.fields
-        fields['bank_id'].choices = self.api.get_bank_id_choices()
-        fields['user_id'].choices = self.api.get_user_id_choices()
+        try:
+            fields['bank_id'].choices = self.api.get_bank_id_choices()
+            fields['user_id'].choices = self.api.get_user_id_choices()
+        except APIError as err:
+            messages.error(self.request, err)
         fields['last_ok_date'].initial =\
             datetime.datetime.now().strftime(settings.API_DATETIMEFORMAT)
         return form
