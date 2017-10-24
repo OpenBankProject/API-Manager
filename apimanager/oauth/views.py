@@ -90,7 +90,7 @@ class AuthorizeView(RedirectView):
             self.login_to_django()
         except TokenRequestDenied as err:
             messages.error(self.request, err)
-        redirect_url = self.request.GET.get('next', reverse('consumers-index'))
+        redirect_url = self.request.GET.get('next', reverse('home'))
         return redirect_url
 
 
