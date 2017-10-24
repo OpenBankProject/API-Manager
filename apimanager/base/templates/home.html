@@ -4,7 +4,7 @@
 <div class="home">
 	<h1>Welcome to API Manager</h1>
 
-	<div id="intro">
+	<div class="well" id="intro">
 		<p>
 		This app gives you access to management functionality for the sandbox at <a href="{{ OAUTH_API }}">{{ OAUTH_API }}</a>. You have to <a href="{{ OAUTH_API }}/user_mgt/sign_up" title="Register at {{ OAUTH_API }}">register</a> an account before being able to proceed. The logged-in user needs to have specific roles granted to use the functionality.
 		</p>
@@ -13,14 +13,20 @@
 
 {% if not user.is_authenticated %}
 	<div id="login">
-		Please authenticate against {{ OAUTH_API }}: <a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed</a>
+		<h2>Please authenticate</h2>
+		<p>
+			<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Initiate OAuth authentication with API</a>
+		</p>
 	</div>
 {% else %}
-	<p>Thanks for logging in. Please select one of the items in the navigation above.</p>
+	<div id="loggedin">
+		<h2>Thanks for logging in!</h2>
+		<p>Please select one of the items in the navigation above.</p>
+	</div>
 {% endif %}
 
 	<p class="text-center">
-	<a href="https://openbankproject.com"><img class="img-responsive" src="https://static.openbankproject.com/images/OBP/OBP_full_web.png" alt="OBP logo" /></a>
+		<a href="https://openbankproject.com"><img class="img-responsive" src="https://static.openbankproject.com/images/OBP/OBP_full_web.png" alt="OBP logo" /></a>
 	</p>
 </div>
 
