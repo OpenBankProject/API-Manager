@@ -25,14 +25,15 @@ class CreateView(LoginRequiredMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
-        return super(CreateView, self).dispatch(request, *args,**kwargs)
+        return super(CreateView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, *args, **kwargs):
         form = super(CreateView, self).get_form(*args, **kwargs)
+        # Cannot add api in constructor: super complains about unknown kwarg
+        form.api = self.api
         fields = form.fields
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
-            fields['user_id'].choices = self.api.get_user_id_choices()
         except APIError as err:
             messages.error(self.request, err)
         fields['last_ok_date'].initial =\
@@ -76,7 +77,7 @@ class CreateView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
-        msg = 'Customer number {} has been created successfully!'.format(
-            result['customer_number'])
+        msg = 'Customer number {} for user {} has been created successfully!'.format(  # noqa
+            result['customer_number'], data['username'])
         messages.success(self.request, msg)
         return super(CreateView, self).form_valid(form)

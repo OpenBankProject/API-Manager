@@ -6,6 +6,8 @@ Forms of customers app
 from django import forms
 from django.conf import settings
 
+from obp.api import APIError
+
 
 class CreateCustomerForm(forms.Form):
     bank_id = forms.ChoiceField(
@@ -17,20 +19,20 @@ class CreateCustomerForm(forms.Form):
         ),
         choices=[],
     )
-    user_id = forms.ChoiceField(
-        label='User',
-        widget=forms.Select(
+    username = forms.CharField(
+        label='Username',
+        widget=forms.TextInput(
             attrs={
+                'placeholder': 'The name of the user',
                 'class': 'form-control',
             }
         ),
-        choices=[],
     )
     customer_number = forms.CharField(
         label='Customer Number',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'new customer number, e.g. 687687678',
+                'placeholder': 'E.g. `007`',
                 'class': 'form-control',
             }
         ),
@@ -49,7 +51,7 @@ class CreateCustomerForm(forms.Form):
         label='Mobile Phone Number',
         widget=forms.TextInput(
             attrs={
-                'placeholder': '+49 123 456 78 90 12',
+                'placeholder': 'E.g. +49 123 456 78 90 12',
                 'class': 'form-control',
             }
         ),
@@ -59,7 +61,7 @@ class CreateCustomerForm(forms.Form):
         label='Email',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'person@example.com',
+                'placeholder': 'E.g. person@example.com',
                 'class': 'form-control',
             }
         ),
@@ -234,3 +236,15 @@ class CreateCustomerForm(forms.Form):
             return data.split(',')
         else:
             return []
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not hasattr(self, 'api'):
+            raise forms.ValidationError('No API object available')
+        try:
+            user = self.api.get('/users/username/{}'.format(username))
+        except APIError as err:
+            raise forms.ValidationError(err)
+        else:
+            self.cleaned_data['user_id'] = user['user_id']
+        return username
