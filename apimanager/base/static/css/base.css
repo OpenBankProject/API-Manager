@@ -113,8 +113,8 @@ footer a:hover, .footer a:focus {
 	margin-top: 30px;
 }
 
-.home .text-center {
-	margin-top: 80px;
+.home #logo-full {
+	margin: 80px auto;
 }
 
 div.filter {
