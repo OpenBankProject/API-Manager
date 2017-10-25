@@ -160,6 +160,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
+        'obp': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
         'consumers': {
             'handlers': ['console'],
             'level': 'INFO',
