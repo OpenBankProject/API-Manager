@@ -12,8 +12,7 @@ Paths below are relative to this README. Files produced during installation or a
 The directory tree might look like:
 
 ```bash
-$ tree -L 2 apimanager/
-apimanager/
+/var/www/apimanager/
 ├── API-Manager
 │   ├── apimanager
 │   ├── apimanager.service 
@@ -28,8 +27,6 @@ apimanager/
 ├── logs
 ├── static-collected
 └── venv
-    ├── bin
-    └── lib
 ```
 
 ## Install dependencies
@@ -42,7 +39,7 @@ $ source ../venv/bin/activate
 
 ## Configure settings
 
-Edit `apimanager/apimanager/local_settings.py`:
+Create and edit `apimanager/apimanager/local_settings.py`:
 
 ```python
 # Used internally by Django, can be anything of your choice
@@ -60,6 +57,8 @@ DATABASES = {
     }
 }
 ```
+
+Changes to this file will not be overwritten on updates. The settings there can override anything specified in `apimanager/apimanager/settings.py`.
 
 The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
 
