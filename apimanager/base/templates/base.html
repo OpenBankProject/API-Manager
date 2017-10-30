@@ -44,6 +44,11 @@
 					<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
 					{% url "config-index" as config_index_url %}
 					<li{% ifequal request.path config_index_url %} class="active" {% endifequal %}><a href="{{ config_index_url }}">Config</a></li>
+				{% if API_TESTER_URL %}
+					<li>
+						<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>
+					</li>
+				{% endif %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
