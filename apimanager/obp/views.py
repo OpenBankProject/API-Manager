@@ -107,7 +107,8 @@ class DirectLoginView(FormView, LoginToDjangoMixin):
 
     def get_success_url(self):
         messages.success(self.request, 'DirectLogin successful!')
-        return reverse('runtests-index')
+        redirect_url = self.request.GET.get('next', reverse('home'))
+        return redirect_url
 
     def form_valid(self, form):
         """
@@ -132,7 +133,8 @@ class GatewayLoginView(FormView, LoginToDjangoMixin):
 
     def get_success_url(self):
         messages.success(self.request, 'GatewayLogin successful!')
-        return reverse('runtests-index')
+        redirect_url = self.request.GET.get('next', reverse('home'))
+        return redirect_url
 
     def form_valid(self, form):
         """

@@ -201,6 +201,7 @@ API_SWAGGER_BASE_PATH = '/obp/v1.4.0'
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
 
+# Paths on API_HOST to OAuth
 OAUTH_TOKEN_PATH = '/oauth/initiate'
 OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
@@ -208,6 +209,12 @@ OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
 # Set OAuth client key/secret in apimanager/local_settings.py
 OAUTH_CONSUMER_KEY = None
 OAUTH_CONSUMER_SECRET = None
+
+# Path on API_HOST to DirectLogin
+DIRECTLOGIN_PATH = '/my/logins/direct'
+
+# Set to true if the API is connected to a core banking system
+GATEWAYLOGIN_HAS_CBS = False
 
 # Local settings can override anything in here
 try:

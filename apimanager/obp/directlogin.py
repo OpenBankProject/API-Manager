@@ -33,12 +33,12 @@ class DirectLoginAuthenticator(Authenticator):
         headers = {'Authorization': authorization}
 
         try:
-            response = requests.get(url, headers=headers)
+            response = requests.post(url, headers=headers)
         except requests.exceptions.ConnectionError as err:
             raise AuthenticatorError(err)
 
         result = response.json()
-        if response.status_code != 200:
+        if response.status_code != 201:
             raise AuthenticatorError(result['error'])
         else:
             self.token = result['token']

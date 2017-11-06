@@ -140,3 +140,11 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 	background-color: #e6e6e6;
 }
+
+
+.authentication-method {
+	display: none;
+}
+.authentication-method h3 {
+	margin-top: 0;
+}
