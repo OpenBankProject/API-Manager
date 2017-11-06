@@ -197,6 +197,8 @@ API_BASE_PATH = '/obp/v3.0.0'
 # For some reason, swagger is not available at the latest API version
 API_SWAGGER_BASE_PATH = '/obp/v1.4.0'
 
+# URL to API Tester if it is running on API_HOST
+API_TESTER_URL = ''
 
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
