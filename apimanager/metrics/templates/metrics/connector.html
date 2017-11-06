@@ -63,10 +63,10 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					{% if form.obp_api_request_id.errors %}<div class="alert alert-danger">{{ form.obp_api_request_id.errors }}</div>{% endif %}
+					{% if form.correlation_id.errors %}<div class="alert alert-danger">{{ form.correlation_id.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.obp_api_request_id.label_tag }}
-						{{ form.obp_api_request_id }}
+						{{ form.correlation_id.label_tag }}
+						{{ form.correlation_id }}
 					</div>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 					<th>Date</th>
 					<th>Connector Name</th>
 					<th>Function Name</th>
-					<th>OBP API Request ID</th>
+					<th>Correlation ID</th>
 					<th>Duration (ms)</th>
 				</tr>
 				</thead>
@@ -96,7 +96,7 @@
 						<td>{{ metric.date|date:"Y-m-d H:m:s" }}</td>
 						<td>{{ metric.connector_name }}</td>
 						<td>{{ metric.function_name }}</td>
-						<td>{{ metric.obp_api_request_id }}</td>
+						<td>{{ metric.correlation_id }}</td>
 						<td>{{ metric.duration }}</td>
 					</tr>
 				{% endfor %}

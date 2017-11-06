@@ -193,8 +193,8 @@ class ConnectorMetricsForm(MetricsForm):
         ),
         required=False,
     )
-    obp_api_request_id = forms.CharField(
-        label='OBP API Request ID',
+    correlation_id = forms.CharField(
+        label='Correlation ID',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
