@@ -142,6 +142,9 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 
 
+#authentication-select {
+	margin-bottom: 10px;
+}
 .authentication-method {
 	display: none;
 }
