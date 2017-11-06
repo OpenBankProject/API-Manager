@@ -148,6 +148,3 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .authentication-method {
 	display: none;
 }
-.authentication-method h3 {
-	margin-top: 0;
-}

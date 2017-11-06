@@ -26,11 +26,9 @@
 
 			<div class="col-xs-12 col-sm-9">
 				<div class="authentication-method" id="authenticate-oauth">
-					<h3>OAuth</h3>
 					<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed to authentication server</a>
 				</div>
 				<div class="authentication-method" id="authenticate-directlogin">
-					<h3>DirectLogin</h3>
 					<form action="{% url 'directlogin' %}" method="post">
 						{% csrf_token %}
 						<div class="form-group">
@@ -49,7 +47,6 @@
 					</form>
 				</div>
 				<div class="authentication-method" id="authenticate-gatewaylogin">
-					<h3>GatewayLogin</h3>
 					<form action="{% url 'gatewaylogin' %}" method="post">
 						{% csrf_token %}
 						<div class="form-group">
