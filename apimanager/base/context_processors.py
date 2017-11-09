@@ -12,7 +12,7 @@ from obp.api import API, APIError
 
 def api_root(request):
     """Returns the configured API_ROOT"""
-    return {'API_ROOT': settings.API_HOST + settings.API_BASE_PATH}
+    return {'API_ROOT': settings.API_ROOT}
 
 
 def api_username(request):

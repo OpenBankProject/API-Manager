@@ -39,21 +39,12 @@ class API(object):
     swagger = None
 
     def __init__(self, session_data=None):
-        self.set_base_path()
         if session_data:
             self.start_session(session_data)
         self.session_data = session_data
 
-    def set_base_path(self, base_path=None):
-        """Sets the basepath for API calls"""
-        if base_path:
-            self.base_path = settings.API_HOST + base_path
-        else:
-            self.base_path = settings.API_HOST + settings.API_BASE_PATH
-
-    def call(self, method='GET', urlpath='', payload=None):
+    def call(self, method='GET', url='', payload=None):
         """Workhorse which actually calls the API"""
-        url = self.base_path + urlpath
         log(logging.INFO, '{} {}'.format(method, url))
         if payload:
             log(logging.INFO, 'Payload: {}'.format(payload))
@@ -74,23 +65,43 @@ class API(object):
         return response
 
     def get(self, urlpath=''):
-        """Gets data from the API"""
-        response = self.call('GET', urlpath)
+        """
+        Gets data from the API
+
+        Convenience call which uses API_ROOT from settings
+        """
+        url = settings.API_ROOT + urlpath
+        response = self.call('GET', url)
         return self.handle_response(response)
 
     def delete(self, urlpath):
-        """Deletes data from the API"""
-        response = self.call('DELETE', urlpath)
+        """
+        Deletes data from the API
+
+        Convenience call which uses API_ROOT from settings
+        """
+        url = settings.API_ROOT + urlpath
+        response = self.call('DELETE', url)
         return self.handle_response(response)
 
     def post(self, urlpath, payload):
-        """Posts data to the API"""
-        response = self.call('POST', urlpath, payload)
+        """
+        Posts data to given urlpath with given payload
+
+        Convenience call which uses API_ROOT from settings
+        """
+        url = settings.API_ROOT + urlpath
+        response = self.call('POST', url, payload)
         return self.handle_response(response)
 
     def put(self, urlpath, payload):
-        """Puts data onto the API"""
-        response = self.call('PUT', urlpath, payload)
+        """
+        Puts data on given urlpath with given payload
+
+        Convenience call which uses API_ROOT from settings
+        """
+        url = settings.API_ROOT + urlpath
+        response = self.call('PUT', url, payload)
         return self.handle_response(response)
 
     def handle_response_404(self, response, prefix):
@@ -137,7 +148,7 @@ class API(object):
         for subsequent requests to the API
         """
         if 'authenticator' in session_data and\
-            'authenticator_kwargs' in session_data:
+                'authenticator_kwargs' in session_data:
             mod_name, cls_name = session_data['authenticator'].rsplit('.', 1)
             log(logging.INFO, 'Authenticator {}'.format(cls_name))
             cls = getattr(importlib.import_module(mod_name), cls_name)
@@ -149,13 +160,13 @@ class API(object):
 
     def get_swagger(self):
         """Gets the swagger definition from the API"""
+        # Poor man's caching ...
         if not self.session_data.get('swagger'):
-            self.set_base_path(settings.API_SWAGGER_BASE_PATH)
-            urlpath = '/resource-docs/v3.0.0/swagger'
-            response = self.get(urlpath)
-            # Set base path back
-            self.set_base_path()
-            self.session_data['swagger'] = response
+            # API throws 500 if authenticated via GatewayLogin ...
+            #response = self.call('GET', settings.API_URL_SWAGGER)
+            response = requests.get(settings.API_URL_SWAGGER)
+            swagger = self.handle_response(response)
+            self.session_data['swagger'] = swagger
         return self.session_data.get('swagger')
 
     def get_bank_id_choices(self):
