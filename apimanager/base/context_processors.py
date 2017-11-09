@@ -9,7 +9,6 @@ from django.contrib import messages
 from obp.api import API, APIError
 
 
-
 def api_root(request):
     """Returns the configured API_ROOT"""
     return {'API_ROOT': settings.API_ROOT}

@@ -50,4 +50,3 @@ class GatewayLoginForm(forms.Form):
         except AuthenticatorError as err:
             raise forms.ValidationError(err)
         return cleaned_data
-

@@ -163,7 +163,7 @@ class API(object):
         # Poor man's caching ...
         if not self.session_data.get('swagger'):
             # API throws 500 if authenticated via GatewayLogin ...
-            #response = self.call('GET', settings.API_URL_SWAGGER)
+            # response = self.call('GET', settings.API_URL_SWAGGER)
             response = requests.get(settings.API_URL_SWAGGER)
             swagger = self.handle_response(response)
             self.session_data['swagger'] = swagger

@@ -14,7 +14,6 @@ from obp.views import (
 )
 
 
-
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name="home"),
     # Defining authentication URLs here and not including oauth.urls for

@@ -15,7 +15,6 @@ from obp.api import API, APIError
 from base.filters import BaseFilter, FilterTime
 
 
-
 class FilterAppType(BaseFilter):
     """Filter consumers by application type"""
     filter_type = 'app_type'
@@ -35,7 +34,6 @@ class FilterEnabled(BaseFilter):
         return filtered
 
 
-
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for consumers"""
     template_name = "consumers/index.html"
@@ -46,7 +44,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
         return consumers
-
 
     def compile_statistics(self, consumers):
         """Compiles a set of statistical values for the given consumers"""
@@ -63,7 +60,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
             'unique_name_num': len(unique_name),
         }
         return statistics
-
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -91,7 +87,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
         return context
 
 
-
 class DetailView(LoginRequiredMixin, TemplateView):
     """Detail view for a consumer"""
     template_name = "consumers/detail.html"
@@ -114,7 +109,6 @@ class DetailView(LoginRequiredMixin, TemplateView):
         return context
 
 
-
 class EnableDisableView(LoginRequiredMixin, RedirectView):
     """View to enable or disable a consumer"""
     enabled = False
@@ -134,7 +128,6 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
         query = self.request.GET.urlencode()
         redirect_url = '{}?{}'.format(urlpath, query)
         return redirect_url
-
 
 
 class EnableView(EnableDisableView):

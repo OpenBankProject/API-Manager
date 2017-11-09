@@ -12,8 +12,7 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import FormView, TemplateView
-from django.utils.http import urlquote
+from django.views.generic import TemplateView
 
 from obp.api import API, APIError
 

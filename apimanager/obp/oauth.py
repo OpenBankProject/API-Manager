@@ -4,7 +4,6 @@ OAuth authenticator for OBP app
 """
 
 import logging
-import time
 
 from django.conf import settings
 

@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from django.conf import settings
 
 
-
 class BaseFilter(object):
     """Base for custom filter classes"""
     filter_type = None
@@ -34,7 +33,7 @@ class BaseFilter(object):
         filter_active_value = 'active_{}'.format(self.filter_type)
         self.context[filter_active_value] = 'All'
 
-        if not self.filter_type in self.request_get:
+        if self.filter_type not in self.request_get:
             return data
 
         filter_value = self.request_get[self.filter_type]
@@ -46,7 +45,6 @@ class BaseFilter(object):
         filter_active = 'active_{}_{}'.format(self.filter_type, filter_value)
         self.context[filter_active] = True
         return self._apply(data, filter_value)
-
 
 
 class FilterTime(BaseFilter):

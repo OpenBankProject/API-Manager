@@ -7,7 +7,7 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import FormView, TemplateView, View
+from django.views.generic import TemplateView
 
 from obp.api import API, APIError
 
