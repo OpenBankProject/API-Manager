@@ -31,28 +31,35 @@
 {% if apiuser.user_id %}
 	<div id="users-detail-entitlements">
 		<h2>Add Entitlement</h2>
-		<form class="form-inline" action="" method="post">
+		<form class="form" action="" method="post">
 			{% csrf_token %}
-            {{ form.user_id }}
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-lg-4">
-        			<div class="form-group">
-                        {{ form.role_name.label_tag}}
-                        {{ form.role_name }}
-        			</div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-lg-3">
-        			<div class="form-group">
-        				{{ form.bank_id.label_tag }}
-                        {{ form.bank_id }}
-        			</div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-lg-5">
-        			<div class="form-group">
-        				<button type="submit" class="btn btn-primary btn-green">Add</a>
-        			</div>
-                </div>
-            </div>
+			{{ form.user_id }}
+			<div class="row">
+				<div class="col-xs-12 col-md-4">
+					<div class="form-group">
+						{{ form.role_name.label_tag}}
+						{{ form.role_name }}
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-8">
+					<div class="form-group">
+						{{ form.bank_id.label_tag }}
+						{{ form.bank_id }}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-green form-control">Add</button>
+					</div>
+				</div>
+				<div class="col-sm-12 hidden-xs">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-green">Add</button>
+					</div>
+				</div>
+			</div>
 		</form>
 
 		<h2>Entitlements</h2>
