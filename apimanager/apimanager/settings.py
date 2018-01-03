@@ -78,6 +78,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'base.context_processors.api_root',
                 'base.context_processors.api_username',
+                'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
             ],
         },
