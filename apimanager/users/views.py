@@ -135,6 +135,61 @@ class DetailView(LoginRequiredMixin, FormView):
         return context
 
 
+class MyDetailView(LoginRequiredMixin, FormView):
+    """Detail view for a current user"""
+    form_class = AddEntitlementForm
+    template_name = 'users/detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.api = API(request.session.get('obp'))
+        return super(MyDetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self, *args, **kwargs):
+        form = super(MyDetailView, self).get_form(*args, **kwargs)
+        try:
+            form.fields['bank_id'].choices = self.api.get_bank_id_choices()
+        except APIError as err:
+            messages.error(self.request, err)
+        return form
+
+    def form_valid(self, form):
+        """Posts entitlement data to API"""
+        try:
+            data = form.cleaned_data
+            urlpath = '/users/{}/entitlements'.format(data['user_id'])
+            payload = {
+                'bank_id': data['bank_id'],
+                'role_name': data['role_name'],
+            }
+            entitlement = self.api.post(urlpath, payload=payload)
+        except APIError as err:
+            messages.error(self.request, err)
+            return super(MyDetailView, self).form_invalid(form)
+
+        msg = 'Entitlement with role {} has been added.'.format(
+            entitlement['role_name'])
+        messages.success(self.request, msg)
+        self.success_url = self.request.path
+        return super(MyDetailView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(MyDetailView, self).get_context_data(**kwargs)
+        # NOTE: assuming there is just one user with that email address
+        # The API needs a call 'get user by id'!
+        user = {}
+        try:
+            urlpath = '/users/current'
+            user = self.api.get(urlpath)
+            context['form'].fields['user_id'].initial = user['user_id']
+        except APIError as err:
+            messages.error(self.request, err)
+
+        context.update({
+            'apiuser': user,  # 'user' is logged-in user in template context
+        })
+        return context
+
+
 class DeleteEntitlementView(LoginRequiredMixin, View):
     """View to delete an entitlement"""
 

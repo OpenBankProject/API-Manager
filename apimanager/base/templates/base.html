@@ -30,7 +30,14 @@
 					{% url "consumers-index" as consumers_index_url %}
 					<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
 					{% url "users-index" as users_index_url %}
-					<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">Users</a></li>
+					{% url 'my-user-detail' API_USER_ID as url_users_detail %}
+					<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path %} active{% endif %}">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Users</a>
+						<ul class="dropdown-menu">
+							<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">All</a></li>
+							<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">My User</a></li>
+						</ul>
+					</li>
 					{% url "api-metrics" as api_metrics_url %}
 					{% url "connector-metrics" as connector_metrics_url %}
 					<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path %} active{% endif %}">
