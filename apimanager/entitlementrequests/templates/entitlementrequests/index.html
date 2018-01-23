@@ -7,13 +7,28 @@
 <div id="entitlementrequests">
 	<h1>Entitlement Requests</h1>
 
+	<div class="row">
+		<div class="col-xs-12 col-md-6">
+			<div id="filter-time" class="filter">
+				<div class="btn-group hidden-sm hidden-xs filter-time" role="group" aria-label="filter-time">
+					{% include "entitlementrequests/includes/filter_time.html" %}
+				</div>
+				<div class="btn-group-vertical visible-sm visible-xs filter-time" role="group" aria-label="filter-time">
+					{% include "entitlementrequests/includes/filter_time.html" %}
+				</div>
+			</div>
+		</div>
+
+	</div>
+
 	<div class="table-responsive">
-		<table class="table table-hover tablesorter" id="consumer-list">
+		<table class="table table-hover tablesorter" id="entitementrequests-list">
 			<thead>
 				<th>Entitlement Request ID</th>
 				<th>Role Name</th>
 				<th>User ID</th>
 				<th>Bank ID</th>
+				<th>Created</th>
 			</thead>
 
 			<tbody>
@@ -23,6 +38,7 @@
 				<td class="select">{{ entitlementrequest.role_name }}</td>
 				<td><a href="{{ url_users_detail }}">{{ entitlementrequest.user_id }}</a></td>
 				<td class="select">{{ entitlementrequest.bank_id }}</td>
+				<td class="select">{{ entitlementrequest.created|naturaltime }}</td>
 			</tr>
 			{% endfor %}
 			</tbody>
