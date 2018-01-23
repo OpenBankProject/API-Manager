@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^logout$',
         LogoutView.as_view(), name='oauth-logout'),
     url(r'^consumers/', include('consumers.urls')),
+    url(r'^entitlementrequests/', include('entitlementrequests.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),

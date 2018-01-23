@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+
+{% block page_title %}{{ block.super }} / Entitlement Requests {% endblock page_title %}
+
+{% block content %}
+<div id="entitlementrequests">
+	<h1>Entitlement Requests</h1>
+
+	<div class="table-responsive">
+		<table class="table table-hover tablesorter" id="consumer-list">
+			<thead>
+				<th>Entitlement Request ID</th>
+				<th>Role Name</th>
+				<th>User ID</th>
+				<th>Bank ID</th>
+			</thead>
+
+			<tbody>
+			{% for entitlementrequest in entitlementrequests %}
+			<tr class="entitlementrequest-row ">
+				<td>{{ entitlementrequest.entitlement_request_id }}</td>
+				<td class="select">{{ entitlementrequest.role_name }}</td>
+				<td><a href="{{ url_users_detail }}">{{ entitlementrequest.user_id }}</a></td>
+				<td class="select">{{ entitlementrequest.bank_id }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+			</tbody>
+		</table>
+	</div>
+
+
+</div>
+{% endblock content %}
+
+
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'entitlementrequests/js/entitlementrequests.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'entitlementrequests/css/entitlementrequests.css' %}" rel="stylesheet">
+{% endblock extracss %}

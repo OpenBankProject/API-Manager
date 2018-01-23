@@ -29,6 +29,8 @@
 				<ul class="nav navbar-nav">
 					{% url "consumers-index" as consumers_index_url %}
 					<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
+					{% url "entitlementrequests-index" as entitlementrequests_index_url %}
+					<li{% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">Entitlement Requests</a></li>
 					{% url "users-index" as users_index_url %}
 					{% url 'my-user-detail' API_USER_ID as url_users_detail %}
 					<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path %} active{% endif %}">

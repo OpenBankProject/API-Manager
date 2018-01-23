@@ -1,0 +1,20 @@
+.entitlementrequests #entitlementrequests-list  {
+	margin-top: 20px;
+}
+
+#entitlementrequests .btn-group-vertical.filter-enabled,
+#entitlementrequests .btn-group-vertical.filter-apptype {
+	margin-top: 10px;
+}
+
+#entitlementrequests-detail div {
+	margin: 5px 0;
+}
+
+#entitlementrequests .filter a {
+	font-size: 12px;
+}
+
+#entitlementrequests .actions .btn {
+	margin-bottom: 2px;
+}
