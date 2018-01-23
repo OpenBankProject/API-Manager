@@ -29,6 +29,7 @@
 				<th>User ID</th>
 				<th>Bank ID</th>
 				<th>Created</th>
+				<th>Action</th>
 			</thead>
 
 			<tbody>
@@ -39,6 +40,14 @@
 				<td><a href="{{ url_users_detail }}">{{ entitlementrequest.user_id }}</a></td>
 				<td class="select">{{ entitlementrequest.bank_id }}</td>
 				<td class="select">{{ entitlementrequest.created|naturaltime }}</td>
+				<td>
+					<form action="{% url 'entitlement-request-delete' entitlementrequest.entitlement_request_id %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="next" value="{{ request.path }}" />
+						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
+						<button type="submit" class="btn btn-primary btn-red">Delete</button>
+					</form>
+				</td>
 			</tr>
 			{% endfor %}
 			</tbody>

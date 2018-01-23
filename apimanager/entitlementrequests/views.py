@@ -5,11 +5,13 @@ Views of entitlement requests app
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView, RedirectView, View
 from obp.api import API, APIError
 from base.filters import BaseFilter, FilterTime
 from datetime import datetime
 from django.conf import settings
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 
@@ -18,7 +20,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "entitlementrequests/index.html"
 
     def scrub(self, entitlement_requests):
-        """Scrubs data in the given consumers to adher to certain formats"""
+        """Scrubs data in the given entitlement requests to adher to certain formats"""
         for entitlement_request in entitlement_requests:
             entitlement_request['created'] = datetime.strptime(
                 entitlement_request['created'], settings.API_DATETIMEFORMAT)
@@ -42,3 +44,22 @@ class IndexView(LoginRequiredMixin, TemplateView):
             'entitlementrequests': entitlement_requests,
         })
         return context
+
+class DeleteEntitlementRequest(LoginRequiredMixin, View):
+    """View to delete an entitlement"""
+
+    def post(self, request, *args, **kwargs):
+        """Deletes entitlement from API"""
+        api = API(self.request.session.get('obp'))
+        try:
+            urlpath = '/entitlement-requests/{}'.format(
+                kwargs['entitlement_request_id'])
+            api.delete(urlpath)
+            msg = 'Entitlement Request with role {} has been deleted.'.format(
+                request.POST.get('role_name', '<undefined>'))
+            messages.success(request, msg)
+        except APIError as err:
+            messages.error(request, err)
+
+        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
+        return HttpResponseRedirect(redirect_url)
