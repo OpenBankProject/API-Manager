@@ -45,7 +45,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         })
         return context
 
-class DeleteEntitlementRequest(LoginRequiredMixin, View):
+class RejectEntitlementRequest(LoginRequiredMixin, View):
     """View to delete an entitlement"""
 
     def post(self, request, *args, **kwargs):
@@ -54,6 +54,38 @@ class DeleteEntitlementRequest(LoginRequiredMixin, View):
         try:
             urlpath = '/entitlement-requests/{}'.format(
                 kwargs['entitlement_request_id'])
+            api.delete(urlpath)
+            msg = 'Entitlement Request with role {} has been deleted.'.format(
+                request.POST.get('role_name', '<undefined>'))
+            messages.success(request, msg)
+        except APIError as err:
+            messages.error(request, err)
+
+        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
+        return HttpResponseRedirect(redirect_url)
+
+
+class AcceptEntitlementRequest(LoginRequiredMixin, View):
+    """View to add entitlement and delete an entitlement request"""
+
+    def post(self, request, *args, **kwargs):
+        """Deletes entitlement request from API"""
+        api = API(self.request.session.get('obp'))
+
+        try:
+            urlpath = '/users/{}/entitlements'.format(kwargs['user_id'])
+            payload = {
+                'bank_id': request.POST.get('bank_id', '<undefined>'),
+                'role_name': request.POST.get('role_name', '<undefined>'),
+            }
+            api.post(urlpath, payload=payload)
+            msg = 'Entitlement with role {} has been added.'.format(request.POST.get('role_name', '<undefined>'))
+            messages.success(request, msg)
+        except APIError as err:
+            messages.error(request, err)
+
+        try:
+            urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', '<undefined>'))
             api.delete(urlpath)
             msg = 'Entitlement Request with role {} has been deleted.'.format(
                 request.POST.get('role_name', '<undefined>'))

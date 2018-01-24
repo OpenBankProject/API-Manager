@@ -29,6 +29,7 @@
 				<th>Bank ID</th>
 				<th>Created</th>
 				<th>Action</th>
+				<th>Action</th>
 			</thead>
 
 			<tbody>
@@ -44,7 +45,17 @@
 						{% csrf_token %}
 						<input type="hidden" name="next" value="{{ request.path }}" />
 						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
-						<button type="submit" class="btn btn-primary btn-red">Reject</button>
+						<button type="submit" class="btn btn-primary btn-sm btn-red">Reject</button>
+					</form>
+				</td>
+				<td>
+					<form action="{% url 'entitlement-request-accept' entitlementrequest.user.user_id %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="next" value="{{ request.path }}" />
+						<input type="hidden" name="entitlement_request_id" value="{{ entitlementrequest.entitlement_request_id }}" />
+						<input type="hidden" name="bank_id" value="{{ entitlementrequest.bank_id }}" />
+						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
+						<button type="submit" class="btn btn-primary btn-sm">Accept</button>
 					</form>
 				</td>
 			</tr>
