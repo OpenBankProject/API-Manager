@@ -24,9 +24,8 @@
 	<div class="table-responsive">
 		<table class="table table-hover tablesorter" id="entitementrequests-list">
 			<thead>
-				<th>Entitlement Request ID</th>
 				<th>Role Name</th>
-				<th>User ID</th>
+				<th>User name</th>
 				<th>Bank ID</th>
 				<th>Created</th>
 				<th>Action</th>
@@ -34,10 +33,10 @@
 
 			<tbody>
 			{% for entitlementrequest in entitlementrequests %}
+			{% url 'users-detail' entitlementrequest.user.user_id as url_users_detail %}
 			<tr class="entitlementrequest-row ">
-				<td>{{ entitlementrequest.entitlement_request_id }}</td>
 				<td class="select">{{ entitlementrequest.role_name }}</td>
-				<td><a href="{{ url_users_detail }}">{{ entitlementrequest.user_id }}</a></td>
+				<td><a href="{{ url_users_detail }}">{{ entitlementrequest.user.username }}</a></td>
 				<td class="select">{{ entitlementrequest.bank_id }}</td>
 				<td class="select">{{ entitlementrequest.created|naturaltime }}</td>
 				<td>
@@ -45,7 +44,7 @@
 						{% csrf_token %}
 						<input type="hidden" name="next" value="{{ request.path }}" />
 						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
-						<button type="submit" class="btn btn-primary btn-red">Delete</button>
+						<button type="submit" class="btn btn-primary btn-red">Reject</button>
 					</form>
 				</td>
 			</tr>
