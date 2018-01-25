@@ -71,7 +71,7 @@ class FilterTime(BaseFilter):
         else:
             return data
 
-        now = datetime.now()
+        now = datetime.utcnow()
         filtered = []
         for item in data:
             item_date = datetime.strptime(
