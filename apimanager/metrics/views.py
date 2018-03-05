@@ -87,7 +87,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.strptime(
-                metric['date'], settings.API_DATETIMEFORMAT)
+                metric['date'], '%Y-%m-%dT%H:%M:%S.%fZ')
         return metrics
 
     def to_api(self, cleaned_data):
