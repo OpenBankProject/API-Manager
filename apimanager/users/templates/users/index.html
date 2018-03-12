@@ -11,6 +11,7 @@
         <div class="hidden-xs">
             {% include "users/includes/filter_role.html" %}
             {% include "users/includes/filter_email.html" %}
+            {% include "users/includes/filter_username.html" %}
         </div>
         <div class="hidden-sm hidden-md hidden-lg">
             <div class="row">
@@ -19,6 +20,9 @@
                 </div>
                 <div class="col-xs-12">
                     {% include "users/includes/filter_email.html" %}
+                </div>
+				<div class="col-xs-12">
+                    {% include "users/includes/filter_username.html" %}
                 </div>
             </div>
         </div>
