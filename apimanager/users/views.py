@@ -35,6 +35,15 @@ class FilterEmail(BaseFilter):
         return filtered
 
 
+class FilterUsername(BaseFilter):
+    """Filter users by username """
+    filter_type = 'username'
+
+    def _apply(self, data, filter_value):
+        filtered = [x for x in data if x['username'].find(filter_value) != -1]
+        return filtered
+
+
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
@@ -64,6 +73,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
         users = FilterRoleName(context, self.request.GET)\
             .apply(users['users'])
         users = FilterEmail(context, self.request.GET)\
+            .apply(users)
+        users = FilterUsername(context, self.request.GET)\
             .apply(users)
         return users, role_names
 
