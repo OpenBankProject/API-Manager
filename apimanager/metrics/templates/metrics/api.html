@@ -142,6 +142,7 @@
     						<th>Verb</th>
     						<th>URL</th>
     						<th>Date</th>
+							<th>Duration(ms)</th>
     						<th>Details</th>
     					</tr>
     					</thead>
@@ -154,6 +155,7 @@
     								{{ metric.url }}
     							</td>
     							<td>{{ metric.date|date:"Y-m-d H:i:s.u" }}</td>
+								<td>{{ metric.duration }}</td>
     							<td>
     								<ul>
     									<li>User Name: {{ metric.user_name }}</li>
