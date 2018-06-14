@@ -34,3 +34,29 @@ class AddEntitlementForm(forms.Form):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(AddEntitlementForm, self).__init__(*args, **kwargs)
+
+class UsersForm(forms.Form):
+    limit = forms.IntegerField(
+        label='Limit',
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        initial=100,
+        required=False,
+    )
+    offset = forms.IntegerField(
+        label='Offset',
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        initial=0,
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(UsersForm, self).__init__(*args, **kwargs)

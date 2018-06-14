@@ -12,7 +12,7 @@ from django.views.generic import FormView, TemplateView, View
 from base.filters import BaseFilter
 from obp.api import API, APIError
 
-from .forms import AddEntitlementForm
+from .forms import AddEntitlementForm, UsersForm
 
 
 class FilterRoleName(BaseFilter):
@@ -47,16 +47,64 @@ class FilterUsername(BaseFilter):
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
+    form_class = UsersForm
 
-    def get_users_rolenames(self, context):
-        users = []
+    def get_form(self):
+        """
+        Get bound form either from request.GET or initials
+        We need a bound form because we already send a request to the API
+        without user intervention on initial request
+        """
+        if self.request.GET:
+            data = self.request.GET
+        else:
+            fields = self.form_class.declared_fields
+            data = {}
+            for name, field in fields.items():
+                if field.initial:
+                    data[name] = field.initial
+        form = self.form_class(data)
+        return form
+
+    def to_api(self, cleaned_data):
+        """
+        Convert form data from Django to format understood by API
+        - API treats empty parameters as actual values, so we have to remove
+        them
+        - Need to convert datetimes into required format
+        """
+        params = []
+        for name, value in cleaned_data.items():
+            # Maybe we should define the API format as Django format to not
+            # have to convert in places like this?
+            if value.__class__.__name__ == 'datetime':
+                value = value.strftime(settings.API_DATEFORMAT)
+            if value:
+                # API does not like quoted data
+                params.append('{}={}'.format(name, value))
+        params = '&'.join(params)
+        return params
+
+    def get_users(self, cleaned_data):
+        """
+        Gets the users from the API, using given cleaned form data.
+        """
+        params = self.to_api(cleaned_data)
+        urlpath = '/users?{}'.format(params)
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/users'
             users = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
             return [], []
+        return users
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        users = []
+        form = self.get_form()
+        if form.is_valid():
+            users = self.get_users(form.cleaned_data)
 
         role_names = []
         try:
@@ -70,26 +118,24 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         role_names = list(set(role_names))
         role_names.sort()
-        users = FilterRoleName(context, self.request.GET)\
-            .apply(users['users'])
-        users = FilterEmail(context, self.request.GET)\
-            .apply(users)
-        users = FilterUsername(context, self.request.GET)\
-            .apply(users)
-        return users, role_names
 
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        users, role_names = self.get_users_rolenames(context)
+        users = FilterRoleName(context, self.request.GET) \
+            .apply(users['users'])
+
+        users = FilterEmail(context, self.request.GET) \
+            .apply(users)
+        users = FilterUsername(context, self.request.GET) \
+            .apply(users)
+
         context.update({
             'role_names': role_names,
             'statistics': {
-                'users_num': len(users),
-            },
+                             'users_num': len(users),
+                         },
             'users': users,
+            'form': form,
         })
         return context
-
 
 class DetailView(LoginRequiredMixin, FormView):
     """Detail view for a user"""
