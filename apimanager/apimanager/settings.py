@@ -191,12 +191,13 @@ LOGIN_URL = reverse_lazy('home')
 
 
 API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
-API_DATEFORMAT = '%Y-%m-%d'
+#API_DATEFORMAT = '%Y-%m-%d'
+API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S'
 
 
 API_HOST = 'http://127.0.0.1:8080'
 API_BASE_PATH = '/obp/v'
-API_VERSION = '3.0.0'
+API_VERSION = '3.1.0'
 
 # URL to API Tester if it is running on API_HOST
 API_TESTER_URL = ''
@@ -234,3 +235,10 @@ if not OAUTH_CONSUMER_SECRET:
 API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
 # For some reason, swagger is not available at the latest API version
 API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}

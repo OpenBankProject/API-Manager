@@ -73,6 +73,8 @@ class FilterTime(BaseFilter):
 
         now = datetime.utcnow()
         filtered = []
+        print("FILTERED")
+        print(filtered)
         for item in data:
             item_date = datetime.strptime(
                 item[self.time_fieldname], settings.API_DATETIMEFORMAT)
