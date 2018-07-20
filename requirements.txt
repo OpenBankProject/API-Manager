@@ -4,3 +4,5 @@ requests==2.11.1
 requests-oauthlib==0.6.2
 PyJWT==1.5.3
 gunicorn==19.6.0
+matplotlib
+django-mathfilters

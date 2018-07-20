@@ -455,55 +455,53 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return calls_per_day, calls_per_day_pure, date_list
 
+    def calls_per_half_day(self, cleaned_data, from_date):
+        """
+        Convenience function to print number of calls per half day
+        """
+        #msg = 'Calls per Half Day (Server timezone is {}):'
+        #print(msg.format('UTC'))
+        return self.calls_per_delta(cleaned_data, from_date, hours=12)
+
+
+    def calls_per_hour(self, cleaned_data, from_date):
+        """
+        Convenience function to print number of calls per hour
+        """
+        #self.calls_per_delta(cleaned_data, from_date, hours=1)
+        calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_delta(cleaned_data, from_date, hours=1)
+        return calls_per_hour_list, calls_per_hour, hour_list
+
     def plot_line_chart(self, plot_data, date_month_list, period):
-        #calls_per_day, calls_per_day_pure = self.calls_per_day(cleaned_data, from_date)
-        #index = []
         date_list=[]
         month_list = []
+        hour_list = []
 
-        # print("PRINT DATE LIST %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5")
-        # print(len(date_month_list))
-        # print("LENGTH OF DATA")
-        # print(len(plot_data))
-
-        # for x in range (1, len(plot_data) + 1):
-        #     print(x)
-        #     index.append(x)
-
-
-
-        print("PRINTING PERIOD $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4444")
-        print(period)
 
         if period == 'day':
             plt.title("API calls per day", fontsize=14)
             plt.xlabel("Dates", fontsize=8)
             for date in date_month_list:
-                #date = datetime.datetime.strptime(date, API_DATEFORMAT)
                 date = date.strftime('%B %d')
                 date_list.append(str(date))
-            print("PRINTING DATE LIST&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
-            print(date_list)
             plt.plot(date_list, plot_data, linewidth=1, marker='o')
-            # for i, j in zip(date_list, plot_data):
-            #     plt.text(i, j, str(j), rotation='vertical')
-            #plt.xticks(date_list, rotation=90, fontsize=6)
-
-
-
 
         elif period == 'month':
             plt.title("API calls per month", fontsize=14)
             plt.xlabel("Months", fontsize=8)
             for date in date_month_list:
-                #month = datetime.datetime.strptime(date, API_DATEFORMAT)
                 month = date.strftime('%B %Y')
                 month_list.append(str(month))
-            print(
-                "PRINTING MONTH LIST&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
-            print(month_list)
             plt.plot(month_list, plot_data, linewidth=1, marker='o')
-            #plt.xticks(month_list, rotation=90, fontsize=6)
+
+        elif period == 'hour':
+            plt.title("API calls per hour", fontsize=14)
+            plt.xlabel("Hours", fontsize=8)
+            for date in date_month_list:
+                hour = date.strftime('%B %d -- %H : %m')
+                hour_list.append(str(hour))
+
+            plt.plot(hour_list, plot_data, linewidth=1, marker='o')
 
         plt.xticks(rotation=90, fontsize=6)
 
@@ -543,22 +541,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         # Clear the previous plot.
         plt.gcf().clear()
         return image_base64
-
-
-    def calls_per_half_day(self, cleaned_data, from_date):
-        """
-        Convenience function to print number of calls per half day
-        """
-        #msg = 'Calls per Half Day (Server timezone is {}):'
-        #print(msg.format('UTC'))
-        return self.calls_per_delta(cleaned_data, from_date, hours=12)
-
-
-    def calls_per_hour(self, cleaned_data, from_date):
-        """
-        Convenience function to print number of calls per hour
-        """
-        self.calls_per_delta(cleaned_data, from_date, hours=1)
 
     def get_users_cansearchwarehouse(self):
         users = []
@@ -617,13 +599,32 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         print(top_apis)
         return top_apis
 
-    def get_top_warehouse_calls(self, from_date):
-        top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = []
-        for api in top_apis:
-            if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
-                top_warehouse_calls.append(api)
-        return top_warehouse_calls
+    def get_top_warehouse_apis(self, from_date):
+        form = self.get_form()
+        api = API(self.request.session.get('obp'))
+        urlpath_warehouse_search = '/management/metrics/top-apis?from_date={}&to_date={}&implemented_by_partial_function={}'.format(
+            from_date.strftime(API_DATEFORMAT), form.data["to_date"], 'elasticSearchWarehouse')
+
+
+
+        urlpath_warehouse_search_v300 = '/management/metrics/top-apis?from_date={}&to_date={}&implemented_by_partial_function={}'.format(
+            from_date.strftime(API_DATEFORMAT), form.data["to_date"], 'elasticSearchWarehouseV300')
+
+        try:
+            top_apis_warehouse_search = api.get(urlpath_warehouse_search)
+            top_apis_warehouse_search_v300 = api.get(urlpath_warehouse_search_v300)
+
+        except APIError as err:
+            messages.error(self.request, err)
+            return [], []
+
+        top_apis_warehouse_search_total = top_apis_warehouse_search + top_apis_warehouse_search_v300
+
+        print("TOP WAREHOUSE APIS ##############$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(top_apis_warehouse_search_total)
+        print(type(top_apis_warehouse_search_total))
+
+        return top_apis_warehouse_search_total
 
     def get_top_apps_using_warehouse(self, from_date):
         form = self.get_form()
@@ -725,7 +726,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #time_to_first_api_call = self.time_to_first_api_call(from_date)
@@ -760,7 +761,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             #'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
@@ -786,7 +787,7 @@ class YearlySummaryView(MetricsSummaryView):
         context = super(YearlySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #        calls_per_day = self.calls_per_day(from_date)
@@ -814,7 +815,7 @@ class YearlySummaryView(MetricsSummaryView):
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
@@ -839,7 +840,7 @@ class QuarterlySummaryView(MetricsSummaryView):
         context = super(QuarterlySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #        calls_per_day = self.calls_per_day(from_date)
@@ -870,7 +871,7 @@ class QuarterlySummaryView(MetricsSummaryView):
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
@@ -895,7 +896,7 @@ class WeeklySummaryView(MetricsSummaryView):
         context = super(WeeklySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #        calls_per_day = self.calls_per_day(from_date)
@@ -905,8 +906,8 @@ class WeeklySummaryView(MetricsSummaryView):
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date)
-            calls_per_day_list, calls_per_day = self.calls_per_day(form.cleaned_data, from_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, 'day')
+            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date)
+            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date)
         print("TOTAL NUMBER OF API CALLS IN CONTEXT")
@@ -922,7 +923,7 @@ class WeeklySummaryView(MetricsSummaryView):
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
@@ -948,7 +949,7 @@ class DailySummaryView(MetricsSummaryView):
         context = super(DailySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #        calls_per_day = self.calls_per_day(from_date)
@@ -958,7 +959,8 @@ class DailySummaryView(MetricsSummaryView):
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date)
- #           calls_per_hour_list, calls_per_hour = self.calls_per_hour(form.cleaned_data, from_date)
+            calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(form.cleaned_data, from_date)
+            per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list[1:], 'hour')
  #           per_hour_chart = self.get_per_hour_chart(form.cleaned_data, from_date)
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date)
@@ -968,15 +970,15 @@ class DailySummaryView(MetricsSummaryView):
         context.update({
             'api_calls': api_calls,
             'calls_by_api_explorer': calls_by_api_explorer,
-#            'calls_per_hour_list': calls_per_hour_list,
-#            'per_hour_chart': per_hour_chart,
+            'calls_per_hour_list': calls_per_hour_list,
+            'per_hour_chart': per_hour_chart,
             'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
             'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
             'active_apps_names': active_apps_names,
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
@@ -1005,7 +1007,7 @@ class CustomSummaryView(MetricsSummaryView):
         context = super(CustomSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date)
-        top_warehouse_calls = self.get_top_warehouse_calls(from_date)
+        top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         #        calls_per_day = self.calls_per_day(from_date)
@@ -1032,7 +1034,7 @@ class CustomSummaryView(MetricsSummaryView):
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
             'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
+            'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,

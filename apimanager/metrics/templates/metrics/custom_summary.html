@@ -73,7 +73,7 @@
 			</tr>
 			<tr>
 				<td>API calls made using API Explorer:</td>
-				<td>{{ calls_by_api_explorer }}</td>
+				<td>{{ calls_by_api_explorer }} ({% widthratio calls_by_api_explorer api_calls 100 %} %)</td>
 			</tr>
 <!--			<tr>
 				<td>Calls per month:</td>
@@ -122,27 +122,27 @@
 				<td>{%for item in active_apps_list%} <p>{{item.app_name}} ({{ item.developer_email }})</p> {% endfor %}</td>
 			</tr>
 			<tr>
-				<td>Top APIs:</td>
+				<td>Top 10 APIs:</td>
 <!--				<td>{%for element in top_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}</td> -->
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
 				<td>Top Warehouse APIs:</td>
-				<td>{%for element in top_warehouse_calls%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}</td>
+				<td>{% if top_warehouse_apis %}{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 			<tr>
 				<td>Top Apps using data warehouse:</td>
-				<td>{%for element in top_apps_using_warehouse%} <p>{{ element.consumer_id }} ({{ element.developer_email }}) : {{ element.count }}</p> {% endfor %}</td>
+				<td>{% if top_apps_using_warehouse %}{%for element in top_apps_using_warehouse%} <p>{{ element.app_name }} ({{ element.developer_email }}) : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 			<tr>
-				<td>CanSearchWarehouse users:</td>
+				<td>Total number of CanSearchWarehouse users:</td>
 				<td>{{number_of_users_with_cansearchwarehouse}}</td>
 			</tr>
 
 			<tr>
 				<td>Users with role CanSearchWarehouse:</td>
 				<!--<td bgcolor="#FF0000">{%for user in users_with_cansearchwarehouse%} {{user}}, {%endfor%} {%for email in email_with_cansearchwarehouse%}{{email}}, {%endfor%}</td>-->
-				<td>{% for key, value in user_email_cansearchwarehouse.items %} {{key}} ({{value}}), {% endfor %}</td>
+				<td>{% if user_email_cansearchwarehouse %}{% for key, value in user_email_cansearchwarehouse.items %} {{key}}, {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 
 
