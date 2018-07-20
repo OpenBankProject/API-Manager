@@ -5,7 +5,9 @@ Forms of metrics app
 
 from django import forms
 from django.conf import settings
-
+from datetime import date
+from django.forms.widgets import SelectMultiple,CheckboxInput,CheckboxSelectMultiple
+from datetime import datetime, timedelta
 
 class MetricsForm(forms.Form):
     start_date = forms.DateTimeField(
@@ -202,3 +204,56 @@ class ConnectorMetricsForm(MetricsForm):
         ),
         required=False,
     )
+
+class CustomSummaryForm(forms.Form):
+    to_date = forms.DateTimeField(
+        label='To Date',
+        input_formats=[settings.API_DATEFORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': 'yyyy-mm-ddThh:mm:ss',
+                'class': 'form-control',
+            }
+        ),
+        required=True,
+        initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+    )
+
+    from_date_custom = forms.DateTimeField(
+        label='Start Date',
+        input_formats=[settings.API_DATEFORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': 'yyyy-mm-ddThh:mm:ss',
+                'class': 'form-control',
+            }
+        ),
+        required=True,
+        initial= (datetime.now() - timedelta(6)).strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+    )
+
+    include_obp_apps = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(CustomSummaryForm, self).__init__(*args, **kwargs)
+
+class MetricsSummaryForm(forms.Form):
+    to_date = forms.DateTimeField(
+        label='To Date',
+        input_formats=[settings.API_DATEFORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': 'yyyy-mm-ddThh:mm:ss',
+                'class': 'form-control',
+            }
+        ),
+        required=True,
+        initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+    )
+
+    include_obp_apps = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(MetricsSummaryForm, self).__init__(*args, **kwargs)

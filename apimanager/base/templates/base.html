@@ -42,11 +42,13 @@
 					</li>
 					{% url "api-metrics" as api_metrics_url %}
 					{% url "connector-metrics" as connector_metrics_url %}
-					<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path %} active{% endif %}">
+					{% url "metrics-summary" as metrics_summary_url %}
+					<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Metrics</a>
 						<ul class="dropdown-menu">
 							<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">API Metrics</a></li>
 							<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">Connector Metrics</a></li>
+							<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">KPI Dashboard</a></li>
 						</ul>
 					</li>
 					{% url "customers-create" as customers_create_url %}

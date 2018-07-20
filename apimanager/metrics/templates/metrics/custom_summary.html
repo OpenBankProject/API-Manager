@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / API Usage Report{% endblock page_title %}
+
+{% block content %}
+
+<div id="metrics">
+	<h1>API Usage Report</h1>
+	<h2>API instance : {{ api_host_name }}</h2>
+
+
+
+    <div id="metrics-data">
+    	<ul class="nav nav-tabs">
+    	{% block nav_tabs %}
+    		<li><a href="{% url 'yearly-summary' %}?{{ request.GET.urlencode }}">Year</a></li>
+			<li><a href="{% url 'quarterly-summary' %}?{{ request.GET.urlencode }}">Quarter</a></li>
+			<li><a href="{% url 'metrics-summary' %}?{{ request.GET.urlencode }}">Month</a></li>
+    		<li><a href="{% url 'weekly-summary' %}?{{ request.GET.urlencode }}">Week</a></li>
+			<li><a href="{% url 'daily-summary' %}?{{ request.GET.urlencode }}">Day</a></li>
+			<li><a href="{% url 'hourly-summary' %}?{{ request.GET.urlencode }}">Hour</a></li>
+			<li class="active"><a href="{% url 'custom-summary' %}?{{ request.GET.urlencode }}">Custom</a></li>
+    	{% endblock nav_tabs %}
+    	</ul>
+
+	<div id="metrics-filter">
+		<h2>Filter</h2>
+		<form action="{% url 'custom-summary' %}" method="get">
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				{{ form.non_field_errors }}
+			</div>
+			{% endif %}
+
+			<div class="row">
+				<div class="col-xs-6 col-sm-3">
+					{% if form.from_date_custom.errors %}<div class="alert alert-danger">{{ form.from_date_custom.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.from_date_custom.label_tag }}
+						{{ form.from_date_custom }}
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.to_date.label_tag }}
+						{{ form.to_date }}
+					</div>
+				</div>
+
+				<div class="col-xs-6 col-sm-3">
+					<div class="form-group">
+						{{ form.include_obp_apps }} Include OBP
+					</div>
+				</div>
+
+			</div>
+			<button type="submit" class="btn btn-primary">Update filter</button>
+		</form>
+
+	</div>
+
+    	<div class="tab-content">
+    		{% block tab_content %}
+    		<div class="tab-pane active">
+    			<h2>Period : From {{ from_date }} to {{ to_date }}</h2>
+
+		<table border="1">
+			<tr>
+				<td>Total API calls:</td>
+				<td>{{ api_calls }}</td>
+			</tr>
+			<tr>
+				<td>API calls made using API Explorer:</td>
+				<td>{{ calls_by_api_explorer }}</td>
+			</tr>
+<!--			<tr>
+				<td>Calls per month:</td>
+				<td>{%for item in calls_per_month_list%}<li>{{item}}</li>{% endfor %}</td>
+			</tr> -->
+			<tr>
+				<td>Calls per day (last 30 days):</td>
+				<!--<td>{%for item in calls_per_day%}<li>{{item}}</li>{% endfor %}</td>-->
+				<td><img src="data:image/png;base64, {{ per_day_chart }}" alt="somealt" /></td>
+			</tr>
+			<tr>
+				<td>Average number of calls per day: </td>
+				<td>{{ average_calls_per_day }}</td>
+			</tr>
+			<tr>
+				<td>Average response time (ms):</td>
+				<td>{{ average_response_time }}</td>
+			</tr>
+			<tr>
+<!--				<td>Median time from consumer registration to first API call:</td> -->
+				<td>Median time from consumer registration to first API call:</td>
+				<td>[]</td>
+			</tr>
+<!--			<tr>
+				<td>Calls per half day:</td>
+				<td bgcolor="#FF0000">[getAggreagteMetrics needs to filter by hour and minutes]</td>
+			</tr>
+			<tr>
+				<td>Calls per hour:</td>
+				<td bgcolor="#FF0000">[getAggreagteMetrics needs to filter by hour and minutes]</td>
+			</tr> -->
+			<tr>
+				<td>Apps with distinct names:</td>
+				<td>{{ number_of_apps_with_unique_app_name }}</td>
+			</tr>
+			<tr>
+				<td>Distinct developer email addresses:</td>
+				<td>{{ number_of_apps_with_unique_developer_email }}</td>
+			</tr>
+			<!--<tr>
+				<td>App names:</td>
+				<td>{%for item in unique_app_names%}{{item}}, {% endfor %}</td>
+			</tr>-->
+			<tr>
+				<td>Active apps:</td>
+				<td>{%for item in active_apps_list%} <p>{{item.app_name}} ({{ item.developer_email }})</p> {% endfor %}</td>
+			</tr>
+			<tr>
+				<td>Top APIs:</td>
+<!--				<td>{%for element in top_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}</td> -->
+				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
+			</tr>
+			<tr>
+				<td>Top Warehouse APIs:</td>
+				<td>{%for element in top_warehouse_calls%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}</td>
+			</tr>
+			<tr>
+				<td>Top Apps using data warehouse:</td>
+				<td>{%for element in top_apps_using_warehouse%} <p>{{ element.consumer_id }} ({{ element.developer_email }}) : {{ element.count }}</p> {% endfor %}</td>
+			</tr>
+			<tr>
+				<td>CanSearchWarehouse users:</td>
+				<td>{{number_of_users_with_cansearchwarehouse}}</td>
+			</tr>
+
+			<tr>
+				<td>Users with role CanSearchWarehouse:</td>
+				<!--<td bgcolor="#FF0000">{%for user in users_with_cansearchwarehouse%} {{user}}, {%endfor%} {%for email in email_with_cansearchwarehouse%}{{email}}, {%endfor%}</td>-->
+				<td>{% for key, value in user_email_cansearchwarehouse.items %} {{key}} ({{value}}), {% endfor %}</td>
+			</tr>
+
+
+
+		</table>
+    		</div>
+    		{% endblock tab_content %}
+    	</div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extracss %}
+		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
+{% endblock extracss %}
+
+{% block extrajs %}
+ <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2012",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+{% endblock extrajs %}
