@@ -5,9 +5,9 @@ Forms of metrics app
 
 from django import forms
 from django.conf import settings
-from datetime import date
-from django.forms.widgets import SelectMultiple,CheckboxInput,CheckboxSelectMultiple
 from datetime import datetime, timedelta
+from time import strftime
+
 
 class MetricsForm(forms.Form):
     start_date = forms.DateTimeField(
@@ -216,7 +216,7 @@ class CustomSummaryForm(forms.Form):
             }
         ),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+        initial=datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
     )
 
     from_date_custom = forms.DateTimeField(
@@ -249,11 +249,14 @@ class MetricsSummaryForm(forms.Form):
             }
         ),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+        initial=datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
+        kwargs.update(initial={
+            'to_date': strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+        })
         super(MetricsSummaryForm, self).__init__(*args, **kwargs)
