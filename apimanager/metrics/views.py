@@ -595,6 +595,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
 
         top_apis = top_apis[:10]
+        top_apis = reversed(top_apis)
         print("PRINT LIST OF TOP APIS .........................xxxxxxxxxxxxxxxxxxxxxxx.....................!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         print(top_apis)
         return top_apis
