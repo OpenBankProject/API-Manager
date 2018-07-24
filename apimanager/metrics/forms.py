@@ -256,7 +256,4 @@ class MetricsSummaryForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        kwargs.update(initial={
-            'to_date': strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        })
         super(MetricsSummaryForm, self).__init__(*args, **kwargs)
