@@ -176,7 +176,8 @@ class ConnectorMetricsView(MetricsView):
 class MetricsSummaryView(LoginRequiredMixin, TemplateView):
     """View for metrics summary (sort of abstract base class)"""
     form_class = MetricsSummaryForm
-    template_name = 'metrics/summary.html'
+    #template_name = 'metrics/summary.html'
+    template_name = 'metrics/weekly_summary.html'
     api_urlpath = None
 
     def get_form(self):
@@ -715,14 +716,72 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
 
 #    @cache_page(60 * 15)
+#     def get_context_data(self, **kwargs):
+#         form = self.get_form()
+#         from_date = (datetime.datetime.strptime(form.data['to_date'], API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
+#         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
+#
+#         # from_date_custom = form.data["from_date_custom"]
+#         # from_date_custom = datetime.datetime.strptime(from_date_custom, API_DATEFORMAT)
+#
+#         to_date = form.data["to_date"]
+#         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
+#         api_host_name = API_HOST
+#         top_apis = self.get_top_apis(from_date)
+#         top_warehouse_apis = self.get_top_warehouse_apis(from_date)
+#         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
+#         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
+#         #time_to_first_api_call = self.time_to_first_api_call(from_date)
+#
+#         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+#
+#         #most_diverse_usage = self.most_diverse_usage()
+#
+#
+#         #        calls_per_day = self.calls_per_day(from_date)
+#         # calls_per_half_day = self.calls_per_half_day()
+#         print("IS FORM VALID ??????????????????????????????????????????????????????????????????????????????????????????")
+#         print(form.is_valid())
+#
+#         #if form.is_valid():
+#         api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date)
+#         calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date)
+#         calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date)
+#         calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date)
+#         per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+#         unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date)
+#         active_apps_list = self.get_active_apps(form.cleaned_data, from_date)
+#
+#         context.update({
+#             'api_calls': api_calls,
+#             'calls_by_api_explorer': calls_by_api_explorer,
+#             'calls_per_month_list': calls_per_month_list,
+#             'per_day_chart': per_day_chart,
+#             'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
+#             'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
+#             'active_apps_list': active_apps_list,
+#             'average_calls_per_day': average_calls_per_day,
+#             'average_response_time': average_response_time,
+#             #'top_apis': top_apis,
+#             'top_warehouse_apis': top_warehouse_apis,
+#             'top_apps_using_warehouse': top_apps_using_warehouse,
+#             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
+#             'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
+#             'api_host_name': api_host_name,
+#             'from_date': from_date.strftime('%Y-%m-%d'),
+#             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
+#             'top_apis_bar_chart': top_apis_bar_chart,
+#             #'time_to_first_api_call': time_to_first_api_call,
+#             # ##'calls_per_day': calls_per_day,
+#             # ##'calls_per_half_day': calls_per_half_day,
+#             'form': form,
+#         })
+#         return context
+
     def get_context_data(self, **kwargs):
         form = self.get_form()
-        from_date = (datetime.datetime.strptime(form.data['to_date'], API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
+        from_date = (datetime.datetime.strptime(form.data['to_date'], API_DATEFORMAT) - timedelta(7)).strftime(API_DATEFORMAT)
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
-
-        # from_date_custom = form.data["from_date_custom"]
-        # from_date_custom = datetime.datetime.strptime(from_date_custom, API_DATEFORMAT)
-
         to_date = form.data["to_date"]
         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
@@ -730,38 +789,30 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         top_warehouse_apis = self.get_top_warehouse_apis(from_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        #time_to_first_api_call = self.time_to_first_api_call(from_date)
-
-        top_apis_bar_chart = self.plot_bar_chart(top_apis)
-
-        #most_diverse_usage = self.most_diverse_usage()
-
-
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
-        print("IS FORM VALID ??????????????????????????????????????????????????????????????????????????????????????????")
-        print(form.is_valid())
+        top_apis_bar_chart = self.plot_bar_chart(top_apis)
 
-        #if form.is_valid():
-        api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date)
-        calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date)
-        calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date)
-        calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date)
-        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
-        unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date)
-        active_apps_list = self.get_active_apps(form.cleaned_data, from_date)
+        if form.is_valid():
+            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date)
+            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date)
+            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date)
+            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
+            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date)
+            active_apps_names = self.get_active_apps(form.cleaned_data, from_date)
+        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
+        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
             'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_month_list': calls_per_month_list,
             'per_day_chart': per_day_chart,
             'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
             'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_list': active_apps_list,
+            'active_apps_names': active_apps_names,
             'average_calls_per_day': average_calls_per_day,
             'average_response_time': average_response_time,
-            #'top_apis': top_apis,
+            'top_apis': top_apis,
             'top_warehouse_apis': top_warehouse_apis,
             'top_apps_using_warehouse': top_apps_using_warehouse,
             'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
@@ -770,7 +821,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             'from_date': from_date.strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
-            #'time_to_first_api_call': time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
