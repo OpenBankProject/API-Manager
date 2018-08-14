@@ -233,21 +233,20 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         form = self.get_form()
         metrics = []
-
-        print("before checking include_obp_apps .................................")
+        api_calls_total = 0
+        average_response_time = 0
 
         # If Include OBP Apps is selected
         if cleaned_data.get('include_obp_apps'):
-            print("AFTER checking include_obp_apps .................................")
             urlpath = '/management/aggregate-metrics?from_date={}&to_date={}'.format(from_date, to_date)
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath)
                 # metrics = self.to_django(metrics)
+                api_calls_total = metrics[0]["count"]
+                average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 messages.error(self.request, err)
-
-            api_calls_total = metrics[0]["count"]
 
         else:
             urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
@@ -257,16 +256,17 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             try:
                 metrics = api.get(urlpath)
                 # metrics = self.to_django(metrics)
+                api_calls_total = metrics[0]["count"]
+                average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 messages.error(self.request, err)
-                #return [], []
-            api_calls_total = metrics[0]["count"]
+
 
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         number_of_days = abs((to_date - from_date).days)
         average_calls_per_day = api_calls_total / number_of_days
-        average_response_time = metrics[0]["average_response_time"]
+
         return api_calls_total, average_response_time, int(average_calls_per_day)
 
     def get_aggregate_metrics_api_explorer(self, from_date, to_date):
@@ -275,6 +275,9 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         form = self.get_form()
         metrics = []
+        api_calls_total = 0
+        average_response_time = 0
+        average_calls_per_day = 0
         #params = self.to_api(cleaned_data)
 
         urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
@@ -282,19 +285,21 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         try:
             metrics = api.get(urlpath)
             # metrics = self.to_django(metrics)
+            api_calls_total = metrics[0]["count"]
+            average_response_time = metrics[0]["average_response_time"]
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
-        api_calls_total = metrics[0]["count"]
+
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         number_of_days = abs((to_date - from_date).days)
         average_calls_per_day = api_calls_total / number_of_days
-        average_response_time = metrics[0]["average_response_time"]
+
         return api_calls_total, average_response_time, int(average_calls_per_day)
 
     def get_active_apps(self, cleaned_data, from_date, to_date):
+        apps = []
         form = self.get_form()
         active_apps_list = []
         urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
@@ -304,7 +309,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             active_apps_list = list(apps)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
         # If include_obp_apps is selected
         if cleaned_data.get('include_obp_apps'):
@@ -315,17 +319,19 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
 
     def get_total_number_of_apps(self, cleaned_data, from_date, to_date):
+        apps = []
+        apps_list = []
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         urlpath='/management/consumers'
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath)
+            apps_list = apps["list"]
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
-        apps_list = apps["list"]
+
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -372,8 +378,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
 
         date_from = from_date
-        print("PRINT TYPE OF FROM_DATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55")
-        print(type(from_date))
         date_to = from_date + timedelta(**delta)
 
         sum = 0
@@ -391,14 +395,13 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
+                    result = metrics[0]["count"]
+                    result_list_pure.append(result)
+                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                    sum += result
                 except APIError as err:
                     messages.error(self.request, err)
-                    return [], []
 
-                result = metrics[0]["count"]
-                result_list_pure.append(result)
-                result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                sum += result
                 date_from = date_to
                 date_list.append(date_from)
                 date_to = date_to + timedelta(**delta)
@@ -409,14 +412,13 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
+                    result = metrics[0]["count"]
+                    result_list_pure.append(result)
+                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                    sum += result
                 except APIError as err:
                     messages.error(self.request, err)
-                    return [], []
 
-                result = metrics[0]["count"]
-                result_list_pure.append(result)
-                result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                sum += result
                 date_from = date_to
                 date_list.append(date_from)
                 date_to = date_to + timedelta(**delta)
@@ -428,12 +430,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         Convenience function to print number of calls per month
         It is actually 30 days, not a month
         """
-        #print('Calls per Month (Server timezone is {}):'.format('UTC'))
         calls_per_month_list, calls_per_month, month_list = self.calls_per_delta(cleaned_data, from_date, to_date, days=30)
-
-        print("PRINT CALLS PER MONTH AND MONTH LIST")
-        print(len(calls_per_month_list))
-        print(len(month_list))
         return calls_per_month_list, calls_per_month, month_list
 
 
@@ -441,13 +438,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         Convenience function to print number of calls per day
         """
-        # print('Calls per Day (Server timezone is {}):'.format('UTC'))
         index = []
         calls_per_day, calls_per_day_pure, date_list = self.calls_per_delta(cleaned_data, from_date, to_date, days=1)
-        print("TYPE OF CALLS PER DAY")
-        print(calls_per_day)
-        print(type(calls_per_day_pure))
-        print(len(calls_per_day_pure))
 
         if len(calls_per_day) >= 90:
             calls_per_day = calls_per_day[-90:]
@@ -459,16 +451,12 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             calls_per_day_pure = calls_per_day_pure[-30:]
             date_list = date_list[-30:]
 
-        print(len(calls_per_day))
-
         return calls_per_day, calls_per_day_pure, date_list
 
     def calls_per_half_day(self, cleaned_data, from_date):
         """
         Convenience function to print number of calls per half day
         """
-        #msg = 'Calls per Half Day (Server timezone is {}):'
-        #print(msg.format('UTC'))
         return self.calls_per_delta(cleaned_data, from_date, hours=12)
 
 
@@ -485,6 +473,11 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         hour_list = []
 
         if period == 'day':
+            if len(plot_data) == 0:
+                plot_data = []
+                for x in range(0,31):
+                    plot_data.append(0)
+
             plt.title("API calls per day", fontsize=14)
             plt.xlabel("Dates", fontsize=8)
             for date in date_month_list:
@@ -493,6 +486,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             plt.plot(date_list, plot_data, linewidth=1, marker='o')
 
         elif period == 'month':
+            if len(plot_data) == 0:
+                plot_data = []
+                for x in range(0,12):
+                    plot_data.append(0)
             plt.title("API calls per month", fontsize=14)
             plt.xlabel("Months", fontsize=8)
             for date in date_month_list:
@@ -501,6 +498,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             plt.plot(month_list, plot_data, linewidth=1, marker='o')
 
         elif period == 'hour':
+            if len(plot_data) == 0:
+                plot_data = []
+                for x in range(0,24):
+                    plot_data.append(0)
             plt.title("API calls per hour", fontsize=14)
             plt.xlabel("Hours", fontsize=8)
             for date in date_month_list:
@@ -557,7 +558,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             users = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
         users_with_cansearchwarehouse = []
         email_with_cansearchwarehouse = []
@@ -572,11 +572,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         # fail gracefully in case API provides new structure
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
-            return [], []
-        print("PRINT USERS with CanSearchWarehouse............................ xxxxxxxxxxxxxxxxxxxxxxxxxxxXX .........................")
-        print(users_with_cansearchwarehouse)
-        print("PRINTING EMAILS with CanSearchWarehouse ...................... XXXXXXXXXXXXXXXXXXXXXX ..............................")
-        print(email_with_cansearchwarehouse)
 
         user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
         #return users_with_cansearchwarehouse, email_with_cansearchwarehouse
@@ -584,6 +579,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         return user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse
 
     def get_top_apis(self, from_date, to_date):
+        top_apis = []
         form = self.get_form()
         #urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date.strftime(API_DATEFORMAT), form.data["to_date"])
         urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date, to_date)
@@ -592,7 +588,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             top_apis = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
         for api in top_apis:
             if api['Implemented_by_partial_function'] == "":
@@ -600,20 +595,20 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         for api in top_apis:
             api['Implemented_by_partial_function'] = api['Implemented_by_partial_function'] + '(' + api['implemented_in_version'] + ')'
-
-
         top_apis = top_apis[:10]
         top_apis = reversed(top_apis)
-        print("PRINT LIST OF TOP APIS .........................xxxxxxxxxxxxxxxxxxxxxxx.....................!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-        print(top_apis)
+
         return top_apis
 
     def get_top_warehouse_calls(self, from_date, to_date):
-        top_apis = self.get_top_apis(from_date, to_date)
-        top_warehouse_calls = []
-        for api in top_apis:
-            if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
-                top_warehouse_calls.append(api)
+        try:
+            top_apis = self.get_top_apis(from_date, to_date)
+            top_warehouse_calls = []
+            for api in top_apis:
+                if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
+                    top_warehouse_calls.append(api)
+        except APIError as err:
+            messages.error(self.request, err)
         return top_warehouse_calls
 
     def get_top_apps_using_warehouse(self, from_date, to_date):
@@ -628,10 +623,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             top_apps_using_warehouse = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
-
-        print("TOP APPS USING WAREHOUSE ....................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-        print(top_apps_using_warehouse)
 
         top_apps_using_warehouse = top_apps_using_warehouse[:10]
 
@@ -639,9 +630,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return top_apps_using_warehouse
 
-    def time_to_first_api_call(self, from_date):
+    def time_to_first_api_call(self, from_date, to_date):
         form = self.get_form()
         new_apps_list = []
+        apps = []
 
         urlpath_consumers = '/management/consumers'
         api = API(self.request.session.get('obp'))
@@ -649,7 +641,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             apps = api.get(urlpath_consumers)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
         apps_list = apps["list"]
 
@@ -657,7 +648,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
             created_date = created_date.strftime(API_DATEFORMAT)
             created_date = datetime.datetime.strptime(created_date, API_DATEFORMAT)
-            if created_date >= from_date:
+            if created_date >= datetime.datetime.strptime(from_date, API_DATEFORMAT):
                 new_apps_list.append(app)
 
         times_to_call = {}
@@ -665,44 +656,18 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         for app in new_apps_list:
             urlpath_metrics = '/management/metrics?from_date={}&to_date={}&consumer_id={}&sort_by={}&direction={}&limit={}'.format(
-                from_date.strftime(API_DATEFORMAT), form.data["to_date"], app['consumer_id'], 'date', 'asc', '1')
+                from_date, to_date, app['consumer_id'], 'date', 'asc', '1')
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath_metrics)
                 metrics = list(metrics['metrics'])
-
                 if metrics:
                     time_to_first_call[app['consumer_id']] = str(datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ'))
 
             except APIError as err:
                 messages.error(self.request, err)
-                return [], []
 
         return time_to_first_call
-
-    def most_diverse_usage(self, limit):
-        form = self.get_form()
-        developer_email_list = []
-
-        urlpath_consumers = '/management/consumers'
-        api = API(self.request.session.get('obp'))
-        try:
-            apps = api.get(urlpath_consumers)
-        except APIError as err:
-            messages.error(self.request, err)
-            return [], []
-
-        apps_list = apps["list"]
-
-        for app in apps_list:
-            created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
-            created_date = created_date.strftime(API_DATEFORMAT)
-            created_date = datetime.datetime.strptime(created_date, API_DATEFORMAT)
-            if created_date >= from_date:
-                developer_email_list.append(app['created_by_user']['email'])
-
-        print("PRINTING DEVELOPER EMAIL ADDRESSES ...........................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(developer_email_list)
 
     def get_context_data(self, **kwargs):
         form = self.get_form()
@@ -710,44 +675,28 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
         to_date = to_date.strftime(API_DATEFORMAT)
 
-        print("TYPE of TO-DATE &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-        print(to_date)
-
         from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
-        #from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
-
-
-        print("PRINTING FROM DATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555")
-        print(type(from_date))
-
-
-
         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apis = self.get_top_apis(from_date, to_date)
         top_warehouse_calls = self.get_top_warehouse_calls(from_date, to_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        #time_to_first_api_call = self.time_to_first_api_call(from_date)
+        #time_to_first_api_call = self.time_to_first_api_call(from_date, to_date)
 
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
 
         #most_diverse_usage = self.most_diverse_usage()
-
-
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
-        print("IS FORM VALID ??????????????????????????????????????????????????????????????????????????????????????????")
-        print(form.is_valid())
-
-        #if form.is_valid():
-        api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-        calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-        calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
-        calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
-        unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-        active_apps_list = self.get_active_apps(form.cleaned_data, from_date, to_date)
+        if form.is_valid():
+            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
+            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
+            calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
+            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
+            per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
+            active_apps_list = self.get_active_apps(form.cleaned_data, from_date, to_date)
 
         context.update({
             'api_calls': api_calls,
@@ -804,8 +753,6 @@ class YearlySummaryView(MetricsSummaryView):
             per_month_chart = self.plot_line_chart(calls_per_month, month_list[1:], "month")
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
-        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
@@ -864,8 +811,6 @@ class QuarterlySummaryView(MetricsSummaryView):
             per_day_chart = self.plot_line_chart(calls_per_day, date_list, 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
-        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
@@ -923,8 +868,6 @@ class WeeklySummaryView(MetricsSummaryView):
             per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
-        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
@@ -983,8 +926,6 @@ class DailySummaryView(MetricsSummaryView):
  #           per_hour_chart = self.get_per_hour_chart(form.cleaned_data, from_date)
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
-        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
@@ -1049,8 +990,6 @@ class CustomSummaryView(MetricsSummaryView):
             per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-        print("TOTAL NUMBER OF API CALLS IN CONTEXT")
-        print(api_calls)
 
         context.update({
             'api_calls': api_calls,
