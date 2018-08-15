@@ -25,6 +25,7 @@ except ImportError:
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
+import statistics
 
 
 def get_random_color(to_hash):
@@ -630,7 +631,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return top_apps_using_warehouse
 
-    def time_to_first_api_call(self, from_date, to_date):
+    def median_time_to_first_api_call(self, from_date, to_date):
         form = self.get_form()
         new_apps_list = []
         apps = []
@@ -651,8 +652,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             if created_date >= datetime.datetime.strptime(from_date, API_DATEFORMAT):
                 new_apps_list.append(app)
 
-        times_to_call = {}
-        time_to_first_call = {}
+        times_to_first_call = []
 
         for app in new_apps_list:
             urlpath_metrics = '/management/metrics?from_date={}&to_date={}&consumer_id={}&sort_by={}&direction={}&limit={}'.format(
@@ -662,12 +662,20 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 metrics = api.get(urlpath_metrics)
                 metrics = list(metrics['metrics'])
                 if metrics:
-                    time_to_first_call[app['consumer_id']] = str(datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ'))
+                    time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
+                    times_to_first_call.append(time_difference.total_seconds())
+
 
             except APIError as err:
                 messages.error(self.request, err)
 
-        return time_to_first_call
+        if times_to_first_call:
+            median = statistics.median(times_to_first_call)
+            delta = datetime.timedelta(seconds=median)
+        else:
+            delta = 0
+
+        return delta
 
     def get_context_data(self, **kwargs):
         form = self.get_form()
@@ -682,7 +690,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         top_warehouse_calls = self.get_top_warehouse_calls(from_date, to_date)
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        #time_to_first_api_call = self.time_to_first_api_call(from_date, to_date)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
 
@@ -717,7 +725,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
-            #'time_to_first_api_call': time_to_first_api_call,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
@@ -745,6 +753,7 @@ class YearlySummaryView(MetricsSummaryView):
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
@@ -773,6 +782,7 @@ class YearlySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
@@ -801,6 +811,7 @@ class QuarterlySummaryView(MetricsSummaryView):
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
@@ -833,6 +844,7 @@ class QuarterlySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
@@ -860,6 +872,7 @@ class WeeklySummaryView(MetricsSummaryView):
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
@@ -890,6 +903,7 @@ class WeeklySummaryView(MetricsSummaryView):
             'top_apis_bar_chart': top_apis_bar_chart,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
         })
         return context
@@ -916,6 +930,7 @@ class DailySummaryView(MetricsSummaryView):
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         if form.is_valid():
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
@@ -949,6 +964,7 @@ class DailySummaryView(MetricsSummaryView):
             'top_apis_bar_chart': top_apis_bar_chart,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
         })
         return context
@@ -981,6 +997,7 @@ class CustomSummaryView(MetricsSummaryView):
         #        calls_per_day = self.calls_per_day(from_date)
         # calls_per_half_day = self.calls_per_half_day()
         top_apis_bar_chart = self.plot_bar_chart(top_apis)
+        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
         if form.is_valid():
         #if form:
@@ -1009,6 +1026,7 @@ class CustomSummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'median_time_to_first_api_call': median_time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
