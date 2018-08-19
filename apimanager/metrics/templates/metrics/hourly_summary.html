@@ -23,6 +23,15 @@
     	</ul>
 
 	<div id="metrics-filter">
+
+		<!--{% load bootstrap3 %}       {# import bootstrap4/bootstrap3 #}-->
+		<!--{% bootstrap_css %}         {# Embed Bootstrap CSS #}-->
+		{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+
+		{% block extrahead %}       {# Extra Resources Start #}
+		{{ form.media }}            {# Form required JS and CSS #}
+		{% endblock %
+
 		<h2>Filter</h2>
 		<form action="{% url 'hourly-summary' %}" method="get">
 			{% if form.non_field_errors %}
@@ -43,7 +52,7 @@
 
 				<div class="col-xs-6 col-sm-3">
 					<div class="form-group">
-						{{ form.include_obp_apps }} Include OBP
+						{{ form.include_obp_apps }} Include System Calls
 					</div>
 				</div>
 
@@ -86,7 +95,7 @@
 
 			<tr>
 				<td>Median time from consumer registration to first API call:</td>
-				<td>[]</td>
+				<td>{{ median_time_to_first_api_call }}</td>
 			</tr>
 
 			<tr>

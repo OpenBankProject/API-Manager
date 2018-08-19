@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
+    'bootstrap_datepicker_plus',
     'mathfilters',
 
     'base',
@@ -236,3 +238,15 @@ if not OAUTH_CONSUMER_SECRET:
 API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
 # For some reason, swagger is not available at the latest API version
 API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
+
+# Use BOOTSTRAP3 if you are using Bootstrap 3
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
