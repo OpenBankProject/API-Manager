@@ -601,8 +601,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         for api in top_apis:
             api['Implemented_by_partial_function'] = api['Implemented_by_partial_function'] + '(' + api['implemented_in_version'] + ')'
         top_apis = top_apis[:10]
+        # for api in top_apis:
+        #     #print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOP APIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+        #     print(str(top_apis.index(api) + 1) + "," + api['Implemented_by_partial_function'] + "," + str(api['count']))
         top_apis = reversed(top_apis)
-
         return top_apis
 
     def get_top_warehouse_calls(self, cleaned_data, from_date, to_date):
