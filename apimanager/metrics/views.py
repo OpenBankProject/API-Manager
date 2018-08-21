@@ -392,7 +392,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         if cleaned_data.get('include_obp_apps'):
             while date_to <= to_date:
                 urlpath = '/management/aggregate-metrics?from_date={}&to_date={}'.format(
-                    date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT))
+                    date_from.strftime(API_DATEFORMAT)[:-4].__add__("Z"), date_to.strftime(API_DATEFORMAT)[:-4].__add__("Z"))
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
@@ -409,7 +409,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         else:
             while date_to <= to_date:
                 urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}'.format(
-                    date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT), ",".join(EXCLUDE_APPS))
+                    date_from.strftime(API_DATEFORMAT)[:-4].__add__("Z"), date_to.strftime(API_DATEFORMAT)[:-4].__add__("Z"), ",".join(EXCLUDE_APPS))
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
@@ -582,7 +582,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date, to_date)
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)
+                top_apis = api.get(urlpath)['top_apis']
             except APIError as err:
                 messages.error(self.request, err)
         else:
@@ -590,7 +590,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)
+                top_apis = api.get(urlpath)['top_apis']
             except APIError as err:
                 messages.error(self.request, err)
 
@@ -628,7 +628,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             messages.error(self.request, err)
 
-        top_apps_using_warehouse = top_apps_using_warehouse[:10]
+        top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
 
 
 
@@ -650,7 +650,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
-            created_date = created_date.strftime(API_DATEFORMAT)
+            created_date = created_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
             created_date = datetime.datetime.strptime(created_date, API_DATEFORMAT)
             if created_date >= datetime.datetime.strptime(from_date, API_DATEFORMAT):
                 new_apps_list.append(app)
@@ -684,9 +684,9 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         form = self.get_form()
 
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
+        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)[:-4].__add__("Z")
         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
@@ -734,8 +734,8 @@ class YearlySummaryView(MetricsSummaryView):
     def get_context_data(self, **kwargs):
         form = self.get_form()
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(365)).strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
+        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(365)).strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
         context = super(YearlySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
@@ -784,8 +784,8 @@ class QuarterlySummaryView(MetricsSummaryView):
     def get_context_data(self, **kwargs):
         form = self.get_form()
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
+        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
         context = super(QuarterlySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
@@ -838,8 +838,8 @@ class WeeklySummaryView(MetricsSummaryView):
     def get_context_data(self, **kwargs):
         form = self.get_form()
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(7)).strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
+        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(7)).strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
         context = super(WeeklySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
@@ -890,8 +890,8 @@ class DailySummaryView(MetricsSummaryView):
     def get_context_data(self, **kwargs):
         form = self.get_form()
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(1)).strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
+        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(1)).strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
         context = super(DailySummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
@@ -947,10 +947,10 @@ class CustomSummaryView(MetricsSummaryView):
         form = self.get_form()
 
         to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
+        to_date = to_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
 
         from_date = datetime.datetime.strptime(form.data['from_date_custom'], '%Y-%m-%d %H:%M:%S')
-        from_date = from_date.strftime(API_DATEFORMAT)
+        from_date = from_date.strftime(API_DATEFORMAT)[:-4].__add__("Z")
         context = super(CustomSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)

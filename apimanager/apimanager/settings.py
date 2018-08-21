@@ -192,10 +192,10 @@ LOGGING = {
 
 LOGIN_URL = reverse_lazy('home')
 
-
+#Map Java: yyyy-MM-dd'T'HH:mm'Z'
 API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
-#API_DATEFORMAT = '%Y-%m-%d'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S'
+#Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 
 API_HOST = 'http://127.0.0.1:8080'
