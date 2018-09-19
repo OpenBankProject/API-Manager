@@ -9,10 +9,12 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView, RedirectView, FormView
 
 from obp.api import API, APIError
 from base.filters import BaseFilter, FilterTime
+
+from .forms import ApiConsumersForm
 
 
 class FilterAppType(BaseFilter):
@@ -69,7 +71,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             urlpath = '/management/consumers'
             consumers = api.get(urlpath)
             consumers = FilterEnabled(context, self.request.GET)\
-                .apply(consumers['list'])
+                .apply(consumers['consumers'])
             consumers = FilterAppType(context, self.request.GET)\
                 .apply(consumers)
             consumers = FilterTime(context, self.request.GET, 'created')\
@@ -87,16 +89,71 @@ class IndexView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class DetailView(LoginRequiredMixin, TemplateView):
+class DetailView(LoginRequiredMixin, FormView):
     """Detail view for a consumer"""
+    form_class = ApiConsumersForm
     template_name = "consumers/detail.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.api = API(request.session.get('obp'))
+        return super(DetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self):
+        """
+        Get bound form either from request.GET or initials
+        We need a bound form because we already send a request to the API
+        without user intervention on initial request
+        """
+        if self.request.GET:
+            data = self.request.GET
+
+        else:
+            fields = self.form_class.declared_fields
+            data = {}
+            for name, field in fields.items():
+                if field.initial:
+                    data[name] = field.initial
+        form = self.form_class(data)
+        return form
+
+    def form_valid(self, form):
+
+        """Put limits data to API"""
+        try:
+
+
+            data = ''
+            form = ApiConsumersForm(self.request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+
+
+            urlpath = '/management/consumers/{}/consumer/calls_limit'.format(data['consumer_id'])
+
+            payload = {
+                'per_minute_call_limit': data['per_minute_call_limit'],
+                'per_hour_call_limit': data['per_hour_call_limit'],
+                'per_day_call_limit': data['per_day_call_limit'],
+                'per_week_call_limit': data['per_week_call_limit'],
+                'per_month_call_limit': data['per_month_call_limit']
+            }
+            user = self.api.put(urlpath, payload=payload)
+        except APIError as err:
+            messages.error(self.request, err)
+            return super(DetailView, self).form_invalid(form)
+
+        msg = 'calls limit of consumer {} has been updated successfully.'.format(
+            data['consumer_id'])
+        messages.success(self.request, msg)
+        self.success_url = self.request.path
+        return super(DetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api = API(self.request.session.get('obp'))
 
         try:
-            urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
+            urlpath = '/management/consumers/{}'.format(self.kwargs['consumer_id'])
             consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
@@ -105,6 +162,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
         context.update({
             'consumer': consumer,
+            'form': self.get_form()
         })
         return context
 

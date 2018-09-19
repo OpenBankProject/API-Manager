@@ -8,3 +8,4 @@ gunicorn==19.6.0
 matplotlib
 django-mathfilters
 django-bootstrap3
+django-bootstrap-datepicker-plus
