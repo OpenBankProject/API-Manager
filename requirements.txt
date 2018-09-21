@@ -9,3 +9,4 @@ matplotlib
 django-bootstrap-datepicker-plus
 django-mathfilters
 django-bootstrap3
+django-bootstrap-datepicker-plus
