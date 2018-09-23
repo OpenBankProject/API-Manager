@@ -71,7 +71,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             urlpath = '/management/consumers'
             consumers = api.get(urlpath)
             consumers = FilterEnabled(context, self.request.GET)\
-                .apply(consumers['consumers'])
+                .apply(consumers['list'])
             consumers = FilterAppType(context, self.request.GET)\
                 .apply(consumers)
             consumers = FilterTime(context, self.request.GET, 'created')\
