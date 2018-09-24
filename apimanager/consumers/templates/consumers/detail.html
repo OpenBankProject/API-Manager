@@ -14,6 +14,7 @@
             <h2>Params</h2>
             <form action="" method="post">
                 {% csrf_token %}
+                {{ form.consumer_id }}
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger">
                         {{ form.non_field_errors }}
@@ -21,54 +22,42 @@
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-xs-2 col-sm-2">
                         {% if form.per_minute_call_limit.errors %}<div class="alert alert-danger">{{ form.per_minute_call_limit.errors }}</div>{% endif %}
                         <div class="form-group">
                             {{ form.per_minute_call_limit.label_tag }}
                             {{ form.per_minute_call_limit }}
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-xs-2 col-sm-2">
                         {% if form.per_hour_call_limit.errors %}<div class="alert alert-danger">{{ form.per_hour_call_limit.errors }}</div>{% endif %}
                         <div class="form-group">
                             {{ form.per_hour_call_limit.label_tag }}
                             {{ form.per_hour_call_limit }}
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-xs-2 col-sm-2">
                         {% if form.per_day_call_limit.errors %}<div class="alert alert-danger">{{ form.per_day_call_limit.errors }}</div>{% endif %}
                         <div class="form-group">
                             {{ form.per_day_call_limit.label_tag }}
                             {{ form.per_day_call_limit }}
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-xs-2 col-sm-2">
                         {% if form.per_week_call_limit.errors %}<div class="alert alert-danger">{{ form.per_week_call_limit.errors }}</div>{% endif %}
                         <div class="form-group">
                             {{ form.per_week_call_limit.label_tag }}
                             {{ form.per_week_call_limit }}
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6">
+                    <div class="col-xs-2 col-sm-2">
                         {% if form.per_month_call_limit.errors %}<div class="alert alert-danger">{{ form.per_month_call_limit.errors }}</div>{% endif %}
                         <div class="form-group">
                             {{ form.per_month_call_limit.label_tag }}
                             {{ form.per_month_call_limit }}
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6">
-                        {% if form.consumer_id.errors %}<div class="alert alert-danger">{{ form.consumer_id.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.consumer_id.label_tag }}
-                            {{ form.consumer_id }}
-                        </div>
-                    </div>
                 </div>
-
-
 
 
                 <button type="submit" class="btn btn-primary">Update Consumer</button>
