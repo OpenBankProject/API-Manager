@@ -143,6 +143,15 @@ class DetailView(LoginRequiredMixin, FormView):
             consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
+
+            call_limits_urlpath = '/management/consumers/{}/consumer/calls_limit'.format(self.kwargs['consumer_id'])
+            consumer_call_limtis = api.get(call_limits_urlpath)
+            consumer['per_minute_call_limit'] = consumer_call_limtis['per_minute_call_limit']
+            consumer['per_hour_call_limit'] = consumer_call_limtis['per_hour_call_limit']
+            consumer['per_day_call_limit'] = consumer_call_limtis['per_day_call_limit']
+            consumer['per_week_call_limit'] = consumer_call_limtis['per_week_call_limit']
+            consumer['per_month_call_limit'] = consumer_call_limtis['per_month_call_limit']
+
         except APIError as err:
             messages.error(self.request, err)
 

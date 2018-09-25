@@ -122,13 +122,51 @@
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-6 col-sm-6">
 			<div id="consumers-detail-redirect_url">
 				<strong>Redirect URL</strong><br />
 				<span>{{ consumer.redirect_url }}</span>
 			</div>
 		</div>
+        <div class="col-xs-6 col-sm-6">
+            <div id="consumers-per_minute_call_limit ">
+                <strong>Per minute call limit </strong><br />
+                <span>{{ consumer.per_minute_call_limit }}</span>
+            </div>
+        </div>
 	</div>
+
+    <div class="row">
+        <div class="col-xs-6 col-sm-6">
+            <div id="consumers-per_hour_call_limit ">
+                <strong>Per hour call limit </strong><br />
+                <span>{{ consumer.per_hour_call_limit }}</span>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div id="consumers-per_day_call_limit">
+                <strong>Per day call limit</strong><br />
+                <span>{{ consumer.per_day_call_limit }}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-6 col-sm-6">
+            <div id="consumers-per_week_call_limit">
+                <strong>Per week call limit</strong><br />
+                <span>{{ consumer.per_week_call_limit }}</span>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div id="consumers-per_month_call_limit">
+                <strong>Per month call limit</strong><br />
+                <span>{{ consumer.per_month_call_limit }}</span>
+            </div>
+        </div>
+    </div>
+
 
 	<div class="row">
 		<div class="col-xs-12">
