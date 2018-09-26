@@ -17,10 +17,11 @@ class MetricsForm(forms.Form):
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
+        initial='1900-01-01T00:00:00.000Z',
         required=False,
     )
     end_date = forms.DateTimeField(
@@ -28,7 +29,7 @@ class MetricsForm(forms.Form):
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
@@ -172,11 +173,11 @@ class ConnectorMetricsForm(MetricsForm):
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
-        initial='1970-01-01',
+        initial='1900-01-01T00:00:00.000Z',
         required=True,
     )
     connector_name = forms.CharField(
