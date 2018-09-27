@@ -5,18 +5,11 @@ Forms of consumers app
 
 from django import forms
 
-
-
 class ApiConsumersForm(forms.Form):
 
     consumer_id = forms.CharField(
-        label='Consumer ID',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-            }
-        ),
-        required=False,
+        widget=forms.HiddenInput(),
+        required=True,
     )
 
     per_minute_call_limit = forms.IntegerField(

@@ -16,6 +16,9 @@ from base.filters import BaseFilter, FilterTime
 
 from .forms import ApiConsumersForm
 
+# import logging
+# logger = logging.getLogger(__name__)
+
 
 class FilterAppType(BaseFilter):
     """Filter consumers by application type"""
@@ -98,35 +101,19 @@ class DetailView(LoginRequiredMixin, FormView):
         self.api = API(request.session.get('obp'))
         return super(DetailView, self).dispatch(request, *args, **kwargs)
 
-    def get_form(self):
-        """
-        Get bound form either from request.GET or initials
-        We need a bound form because we already send a request to the API
-        without user intervention on initial request
-        """
-        if self.request.GET:
-            data = self.request.GET
-
-        else:
-            fields = self.form_class.declared_fields
-            data = {}
-            for name, field in fields.items():
-                if field.initial:
-                    data[name] = field.initial
-        form = self.form_class(data)
+    def get_form(self, *args, **kwargs):
+        form = super(DetailView, self).get_form(*args, **kwargs)
+        form.fields['consumer_id'].initial = self.kwargs['consumer_id']
         return form
 
     def form_valid(self, form):
 
         """Put limits data to API"""
         try:
-
-
             data = ''
             form = ApiConsumersForm(self.request.POST)
             if form.is_valid():
                 data = form.cleaned_data
-
 
             urlpath = '/management/consumers/{}/consumer/calls_limit'.format(data['consumer_id'])
 
@@ -151,18 +138,25 @@ class DetailView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api = API(self.request.session.get('obp'))
-
         try:
             urlpath = '/management/consumers/{}'.format(self.kwargs['consumer_id'])
             consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
+
+            call_limits_urlpath = '/management/consumers/{}/consumer/calls_limit'.format(self.kwargs['consumer_id'])
+            consumer_call_limtis = api.get(call_limits_urlpath)
+            consumer['per_minute_call_limit'] = consumer_call_limtis['per_minute_call_limit']
+            consumer['per_hour_call_limit'] = consumer_call_limtis['per_hour_call_limit']
+            consumer['per_day_call_limit'] = consumer_call_limtis['per_day_call_limit']
+            consumer['per_week_call_limit'] = consumer_call_limtis['per_week_call_limit']
+            consumer['per_month_call_limit'] = consumer_call_limtis['per_month_call_limit']
+
         except APIError as err:
             messages.error(self.request, err)
 
         context.update({
-            'consumer': consumer,
-            'form': self.get_form()
+            'consumer': consumer
         })
         return context
 
