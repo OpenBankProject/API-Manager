@@ -19,6 +19,7 @@ class ApiConsumersForm(forms.Form):
                 'class': 'form-control',
             }
         ),
+        initial=-1,
         required=False,
     )
 
@@ -29,6 +30,7 @@ class ApiConsumersForm(forms.Form):
                 'class': 'form-control',
             }
         ),
+        initial=-1,
         required=False,
     )
     per_day_call_limit = forms.IntegerField(
@@ -38,6 +40,7 @@ class ApiConsumersForm(forms.Form):
                 'class': 'form-control',
             }
         ),
+        initial=-1,
         required=False,
     )
     per_week_call_limit = forms.IntegerField(
@@ -47,6 +50,7 @@ class ApiConsumersForm(forms.Form):
                 'class': 'form-control',
             }
         ),
+        initial=-1,
         required=False,
     )
 
@@ -57,5 +61,6 @@ class ApiConsumersForm(forms.Form):
                 'class': 'form-control',
             }
         ),
+        initial=-1,
         required=False,
     )
