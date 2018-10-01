@@ -49,20 +49,19 @@ class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "users/index.html"
 
     def get_users_rolenames(self, context):
-        users = []
+
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/users'
-            users = api.get(urlpath)
+            urlpath = '/entitlements'
+            entitlements = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
             return [], []
 
         role_names = []
         try:
-            for user in users['users']:
-                for entitlement in user['entitlements']['list']:
-                    role_names.append(entitlement['role_name'])
+            for entitlement in entitlements['list']:
+                role_names.append(entitlement['role_name'])
         # fail gracefully in case API provides new structure
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
@@ -70,23 +69,42 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         role_names = list(set(role_names))
         role_names.sort()
-        users = FilterRoleName(context, self.request.GET)\
-            .apply(users['users'])
-        users = FilterEmail(context, self.request.GET)\
-            .apply(users)
-        users = FilterUsername(context, self.request.GET)\
-            .apply(users)
-        return users, role_names
+
+        return role_names
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        users, role_names = self.get_users_rolenames(context)
+
+        api = API(self.request.session.get('obp'))
+        limit = self.request.GET.get('limit', 50)
+        offset = self.request.GET.get('offset', 0)
+        email = self.request.GET.get('email')
+        username = self.request.GET.get('username')
+
+        if email:
+            urlpath = '/users/email/{}/terminator'.format(email)
+        elif username:
+            urlpath = '/users/username/{}'.format(username)
+        else:
+            urlpath = '/users?limit={}&offset={}'.format(limit, offset)
+
+        try:
+            users = api.get(urlpath)
+        except APIError as err:
+            messages.error(self.request, err)
+            return [], []
+
+        role_names = self.get_users_rolenames(context)
+        users = FilterRoleName(context, self.request.GET) \
+            .apply([users] if username else users['users'])
         context.update({
             'role_names': role_names,
             'statistics': {
                 'users_num': len(users),
             },
             'users': users,
+            'limit': limit,
+            'offset': offset
         })
         return context
 
