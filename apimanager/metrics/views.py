@@ -28,6 +28,18 @@ import matplotlib.pyplot as plt
 import statistics
 
 
+def error_once_only(request, err):
+    """
+    Just add the error once
+    :param request:
+    :param err:
+    :return:
+    """
+    storage = messages.get_messages(request)
+    if str(err) not in [str(m.message) for m in storage]:
+        messages.error(request, err)
+
+
 def get_random_color(to_hash):
     hashed = str(int(hashlib.md5(to_hash.encode('utf-8')).hexdigest(), 16))
     r = int(hashed[0:3]) % 255
@@ -130,7 +142,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
             metrics = api.get(urlpath)
             metrics = self.to_django(metrics['metrics'])
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
         return metrics
 
     def get_context_data(self, **kwargs):
@@ -247,7 +259,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api_calls_total = metrics[0]["count"]
                 average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
 
         else:
             urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
@@ -260,7 +272,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api_calls_total = metrics[0]["count"]
                 average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
 
 
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
@@ -286,7 +298,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api_calls_total = metrics[0]["count"]
             average_response_time = metrics[0]["average_response_time"]
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
 
 
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
@@ -307,7 +319,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 apps = api.get(urlpath)
                 active_apps_list = list(apps)
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
@@ -316,7 +328,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 apps = api.get(urlpath)
                 active_apps_list = list(apps)
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
 
         return active_apps_list
 
@@ -332,7 +344,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             apps = api.get(urlpath)
             apps_list = apps["list"]
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -401,7 +413,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     result_list.append('{} - {} # {}'.format(date_from, date_to, result))
                     sum += result
                 except APIError as err:
-                    messages.error(self.request, err)
+                    error_once_only(self.request, err)
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -418,7 +430,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     result_list.append('{} - {} # {}'.format(date_from, date_to, result))
                     sum += result
                 except APIError as err:
-                    messages.error(self.request, err)
+                    error_once_only(self.request, err)
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -556,7 +568,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             urlpath = '/users'
             users = api.get(urlpath)
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
 
         users_with_cansearchwarehouse = []
         email_with_cansearchwarehouse = []
@@ -584,7 +596,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             try:
                 top_apis = api.get(urlpath)['top_apis']
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
         else:
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
@@ -592,7 +604,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             try:
                 top_apis = api.get(urlpath)['top_apis']
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
 
         for api in top_apis:
             if api['Implemented_by_partial_function'] == "":
@@ -613,7 +625,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
                     top_warehouse_calls.append(api)
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
         return top_warehouse_calls
 
     def get_top_apps_using_warehouse(self, from_date, to_date):
@@ -627,7 +639,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             top_apps_using_warehouse = api.get(urlpath)
             top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
 
         return top_apps_using_warehouse
 
@@ -643,7 +655,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             apps = api.get(urlpath_consumers)
             apps_list = apps["list"]
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
@@ -667,7 +679,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
 
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
 
         if times_to_first_call:
             median = statistics.median(times_to_first_call)

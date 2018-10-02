@@ -250,3 +250,18 @@ CACHES = {
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+# Apps to exclude when request to OBP-API's api
+EXCLUDE_APPS = []
+# Functions to exclude when request to OBP-API's api
+EXCLUDE_FUNCTIONS = []
+# Url Patterns to exclude when reqeust to OBP-API's api
+EXCLUDE_URL_PATTERN = []
+# App Name to aggregate metrics
+API_EXPLORER_APP_NAME = 'xxx'
+
+
+
+
+
+

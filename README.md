@@ -87,12 +87,15 @@ Execute the same steps as for development, but do not run the app.
 Edit `apimanager/apimanager/local_settings.py` for _additional_ changes to the development settings above:
 
 ```python
+
+import os
 # Disable debug
 DEBUG = False
 # Hosts allowed to access the app
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '<your public hostname here>']
+
 # Directory to place static files in, defaults to `../static-collected` relative to this file
-STATIC_ROOT = '<dirname>'
+STATIC_ROOT = ''
 # Admins to send e.g. error emails to
 ADMINS = [
         ('Admin', 'admin@example.com')
@@ -103,6 +106,40 @@ SERVER_EMAIL = 'apimanager@example.com'
 EMAIL_HOST = 'mail.example.com'
 # Enable email security
 EMAIL_TLS = True
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Used internally by Django, can be anything of your choice
+SECRET_KEY = 'abc'
+# API hostname, e.g. https://api.openbankproject.com
+API_HOST = 'http://127.0.0.1:8080'
+# Consumer key + secret to authenticate the _app_ against the API
+OAUTH_CONSUMER_KEY = ''
+OAUTH_CONSUMER_SECRET = ''
+# Database filename, default is `../db.sqlite3` relative to this file
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'),
+    }
+}
+
+# Apps to exclude when request to OBP-API's api
+EXCLUDE_APPS = []
+# Functions to exclude when request to OBP-API's api
+EXCLUDE_FUNCTIONS = []
+# Url Patterns to exclude when reqeust to OBP-API's api
+EXCLUDE_URL_PATTERN = []
+
+# App Name to aggregate metrics  
+API_EXPLORER_APP_NAME = 'xxx'
+
+#Map Java: yyyy-MM-dd'T'HH:mm'Z'
+API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+#Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
+
 ```
 
 ## Static files
