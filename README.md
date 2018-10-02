@@ -115,8 +115,8 @@ SECRET_KEY = 'abc'
 # API hostname, e.g. https://api.openbankproject.com
 API_HOST = 'http://127.0.0.1:8080'
 # Consumer key + secret to authenticate the _app_ against the API
-OAUTH_CONSUMER_KEY = 'y3og05zrlhhy4fcunnzrdutumrw3rbc0sydsyw5e'
-OAUTH_CONSUMER_SECRET = '42jfbpgfft3aviticlfdninl5wf5siz3hs1j1d3m'
+OAUTH_CONSUMER_KEY = ''
+OAUTH_CONSUMER_SECRET = ''
 # Database filename, default is `../db.sqlite3` relative to this file
 DATABASES = {
     'default': {
