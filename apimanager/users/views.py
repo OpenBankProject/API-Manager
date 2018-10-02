@@ -88,11 +88,11 @@ class IndexView(LoginRequiredMixin, TemplateView):
         else:
             urlpath = '/users?limit={}&offset={}'.format(limit, offset)
 
+        users = []
         try:
             users = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
-            return [], []
 
         role_names = self.get_users_rolenames(context)
         users = FilterRoleName(context, self.request.GET) \
