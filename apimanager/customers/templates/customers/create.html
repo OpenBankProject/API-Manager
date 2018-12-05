@@ -65,6 +65,30 @@
         </div>
 
         <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.title.errors %}<div class="alert alert-danger">{{ form.title.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branchId.errors %}<div class="alert alert-danger">{{ form.branchId.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branchId.label_tag }}
+                    {{ form.branchId }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.nameSuffix.errors %}<div class="alert alert-danger">{{ form.nameSuffix.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.nameSuffix.label_tag }}
+                    {{ form.nameSuffix }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 {% if form.face_image_url.errors %}<div class="alert alert-danger">{{ form.face_image_url.errors }}</div>{% endif %}
                 <div class="form-group">

@@ -212,6 +212,38 @@ class CreateCustomerForm(forms.Form):
         required=True,
     )
 
+    title = forms.CharField(
+        label='Title',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Title',
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+
+    branchId = forms.CharField(
+        label='Branch Id',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Branch Id',
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+
+    nameSuffix = forms.CharField(
+        label='Name Suffix',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Name Suffix',
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(CreateCustomerForm, self).__init__(*args, **kwargs)

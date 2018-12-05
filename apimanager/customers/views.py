@@ -70,6 +70,9 @@ class CreateView(LoginRequiredMixin, FormView):
             'kyc_status': data['kyc_status'],
             'last_ok_date':
                 data['last_ok_date'].strftime(settings.API_DATETIMEFORMAT),
+            'title': data['title'],
+            'branchId': data['branchId'],
+            'nameSuffix': data['nameSuffix']
         }
         try:
             result = self.api.post(urlpath, payload=payload)
