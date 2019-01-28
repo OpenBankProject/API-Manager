@@ -9,7 +9,7 @@ import operator
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from apimanager.local_settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
+from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
@@ -563,6 +563,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def get_users_cansearchwarehouse(self):
         users = []
+        users_with_cansearchwarehouse = []
+        email_with_cansearchwarehouse = []
         api = API(self.request.session.get('obp'))
         try:
             urlpath = '/users'
@@ -570,18 +572,16 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             error_once_only(self.request, err)
 
-        users_with_cansearchwarehouse = []
-        email_with_cansearchwarehouse = []
-
-        try:
-            for user in users['users']:
-                for entitlement in user['entitlements']['list']:
-                    if 'CanSearchWarehouse' in entitlement['role_name']:
-                        users_with_cansearchwarehouse.append(user["username"])
-                        email_with_cansearchwarehouse.append(user["email"])
-        # fail gracefully in case API provides new structure
-        except KeyError as err:
-            messages.error(self.request, 'KeyError: {}'.format(err))
+        else:
+            try:
+                for user in users['users']:
+                    for entitlement in user['entitlements']['list']:
+                        if 'CanSearchWarehouse' in entitlement['role_name']:
+                            users_with_cansearchwarehouse.append(user["username"])
+                            email_with_cansearchwarehouse.append(user["email"])
+            # fail gracefully in case API provides new structure
+            except KeyError as err:
+                messages.error(self.request, 'KeyError: {}'.format(err))
 
         user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
         number_of_users_with_cansearchwarehouse = len(user_email_cansearchwarehouse)
