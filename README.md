@@ -36,12 +36,24 @@ $ virtualenv --python=python3 ../venv
 $ source ../venv/bin/activate
 (venv)$ pip install -r requirements.txt
 ```
+Note: if this fails you may be missing the `python3-tk` and `tk` packages:
+
+```bash 
+$ sudo apt install python3-tk tk
+```
 
 ## Configure settings
 
 Create and edit `apimanager/apimanager/local_settings.py`:
 
 ```python
+import os
+BASE_DIR = '/your/base/dir'
+EXCLUDE_APPS = []
+EXCLUDE_FUNCTIONS = []
+EXCLUDE_URL_PATTERN = []
+API_EXPLORER_APP_NAME = 'API Explorer app name'
+API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 # Used internally by Django, can be anything of your choice
 SECRET_KEY = '<random string>'
 # API hostname, e.g. https://api.openbankproject.com
