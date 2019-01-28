@@ -144,7 +144,9 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             error_once_only(self.request, err)
         except KeyError as err:
-            error_once_only(self.request, err)
+            error_once_only(self.request, metrics['message'])
+        except:
+            error_once_only(self.request, 'Unknown Error')
         return metrics
 
     def get_context_data(self, **kwargs):
