@@ -30,6 +30,8 @@ class LoginToDjangoMixin(object):
             data = api.get('/users/current')
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
             return False
         else:
             userid = data['user_id'] or data['email']
@@ -66,6 +68,9 @@ class OAuthInitiateView(RedirectView):
         except AuthenticatorError as err:
             messages.error(self.request, err)
             return reverse('home')
+        except:
+            messages.error(self.request, 'Unknown Error')
+            return reverse('home')
         else:
             self.request.session['obp'] = {
                 'authenticator': 'obp.oauth.OAuthAuthenticator',
@@ -89,6 +94,8 @@ class OAuthAuthorizeView(RedirectView, LoginToDjangoMixin):
             authenticator.set_access_token(authorization_url)
         except AuthenticatorError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
         else:
             session_data['authenticator_kwargs'] = {
                 'token': authenticator.token,

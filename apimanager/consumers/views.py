@@ -82,6 +82,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
             consumers = self.scrub(consumers)
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown")
 
         sorted_consumers = sorted(
             consumers, key=lambda consumer: consumer['created'], reverse=True)
@@ -128,6 +130,9 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
+        except:
+            messages.error(self.request, "Unknown")
+            return super(DetailView, self).form_invalid(form)
 
         msg = 'calls limit of consumer {} has been updated successfully.'.format(
             data['consumer_id'])
@@ -154,6 +159,8 @@ class DetailView(LoginRequiredMixin, FormView):
 
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown")
 
         context.update({
             'consumer': consumer
@@ -175,6 +182,8 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
             messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown")
 
         urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()

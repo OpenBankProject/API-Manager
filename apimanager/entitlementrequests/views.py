@@ -39,6 +39,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
             entitlement_requests = self.scrub(entitlement_requests)
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         context.update({
             'entitlementrequests': entitlement_requests,
@@ -60,6 +62,8 @@ class RejectEntitlementRequest(LoginRequiredMixin, View):
             messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
         return HttpResponseRedirect(redirect_url)
@@ -83,6 +87,8 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
             messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         try:
             urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', '<undefined>'))
@@ -92,6 +98,8 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
             messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
         return HttpResponseRedirect(redirect_url)
