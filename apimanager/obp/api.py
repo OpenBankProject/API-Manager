@@ -53,9 +53,9 @@ class API(object):
         time_start = time.time()
         try:
             if payload:
-                response = session.request(method, url, json=payload)
+                response = session.request(method, url, json=payload, verify=False)
             else:
-                response = session.request(method, url)
+                response = session.request(method, url, verify=False)
         except ConnectionError as err:
             raise APIError(err)
         time_end = time.time()

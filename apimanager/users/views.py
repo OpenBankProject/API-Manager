@@ -57,6 +57,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             messages.error(self.request, err)
             return [], []
+        except:
+            messages.error(self.request, "Unknown Error")
+            return [], []
 
         role_names = []
         try:
@@ -65,6 +68,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
         # fail gracefully in case API provides new structure
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
+            return [], []
+        except:
+            messages.error(self.request, "Unknown Error")
             return [], []
 
         role_names = list(set(role_names))
@@ -93,10 +99,15 @@ class IndexView(LoginRequiredMixin, TemplateView):
             users = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
 
         role_names = self.get_users_rolenames(context)
-        users = FilterRoleName(context, self.request.GET) \
-            .apply([users] if username else users['users'])
+        try:
+            users = FilterRoleName(context, self.request.GET) \
+                .apply([users] if username else users['users'])
+        except:
+            users = []
         context.update({
             'role_names': role_names,
             'statistics': {
@@ -124,6 +135,8 @@ class DetailView(LoginRequiredMixin, FormView):
             form.fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
         return form
 
     def form_valid(self, form):
@@ -138,6 +151,9 @@ class DetailView(LoginRequiredMixin, FormView):
             entitlement = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
+            return super(DetailView, self).form_invalid(form)
+        except:
+            messages.error(self.request, 'Unknown Error')
             return super(DetailView, self).form_invalid(form)
 
         msg = 'Entitlement with role {} has been added.'.format(
@@ -157,6 +173,8 @@ class DetailView(LoginRequiredMixin, FormView):
             context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
 
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
@@ -179,6 +197,8 @@ class MyDetailView(LoginRequiredMixin, FormView):
             form.fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
         return form
 
     def form_valid(self, form):
@@ -193,6 +213,9 @@ class MyDetailView(LoginRequiredMixin, FormView):
             entitlement = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
+            return super(MyDetailView, self).form_invalid(form)
+        except:
+            messages.error(self.request, 'Unknown Error')
             return super(MyDetailView, self).form_invalid(form)
 
         msg = 'Entitlement with role {} has been added.'.format(
@@ -212,6 +235,8 @@ class MyDetailView(LoginRequiredMixin, FormView):
             context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
 
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
@@ -234,6 +259,8 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
             messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
 
         redirect_url = request.POST.get('next', reverse('users-index'))
         return HttpResponseRedirect(redirect_url)
