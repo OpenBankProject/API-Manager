@@ -57,8 +57,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             messages.error(self.request, err)
             return [], []
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as inst:
+            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return [], []
 
         role_names = []
@@ -69,8 +69,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
             return [], []
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as inst:
+            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return [], []
 
         role_names = list(set(role_names))
