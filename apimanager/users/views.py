@@ -51,26 +51,22 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_users_rolenames(self, context):
 
         api = API(self.request.session.get('obp'))
-        try:
-            urlpath = '/entitlements'
-            entitlements = api.get(urlpath)
-        except APIError as err:
-            messages.error(self.request, err)
-            return [], []
-        except Exception as inst:
-            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
-            return [], []
 
         role_names = []
         try:
-            for entitlement in entitlements['list']:
-                role_names.append(entitlement['role_name'])
+            urlpath = '/entitlements'
+            entitlements = api.get(urlpath)
+            if 'code' in entitlements and entitlements['code']==400:
+                messages.error(self.request, entitlements['message'])
+            else:
+                for entitlement in entitlements['list']:
+                    role_names.append(entitlement['role_name'])
+        except APIError as err:
+            messages.error(self.request, err)
+            return [], []
         # fail gracefully in case API provides new structure
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
-            return [], []
-        except Exception as inst:
-            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return [], []
 
         role_names = list(set(role_names))
@@ -170,7 +166,10 @@ class DetailView(LoginRequiredMixin, FormView):
         try:
             urlpath = '/users/user_id/{}'.format(self.kwargs['user_id'])
             user = self.api.get(urlpath)
-            context['form'].fields['user_id'].initial = user['user_id']
+            if 'code' in user and user['code']==403:
+                messages.error(self.request, user['message'])
+            else:
+                context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -211,18 +210,20 @@ class MyDetailView(LoginRequiredMixin, FormView):
                 'role_name': data['role_name'],
             }
             entitlement = self.api.post(urlpath, payload=payload)
+            if entitlement['code']==201:
+                msg = 'Entitlement with role {} has been added.'.format(entitlement['role_name'])
+                messages.success(self.request, msg)
+            else:
+                messages.error(self.request, entitlement['message'])
+            self.success_url = self.request.path
         except APIError as err:
             messages.error(self.request, err)
             return super(MyDetailView, self).form_invalid(form)
         except:
             messages.error(self.request, 'Unknown Error')
             return super(MyDetailView, self).form_invalid(form)
-
-        msg = 'Entitlement with role {} has been added.'.format(
-            entitlement['role_name'])
-        messages.success(self.request, msg)
-        self.success_url = self.request.path
-        return super(MyDetailView, self).form_valid(form)
+        else:
+            return super(MyDetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(MyDetailView, self).get_context_data(**kwargs)
@@ -253,10 +254,13 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         try:
             urlpath = '/users/{}/entitlement/{}'.format(
                 kwargs['user_id'], kwargs['entitlement_id'])
-            api.delete(urlpath)
-            msg = 'Entitlement with role {} has been deleted.'.format(
-                request.POST.get('role_name', '<undefined>'))
-            messages.success(request, msg)
+            result = api.delete(urlpath)
+            if result is not None and 'code' in result and result['code']==400:
+                messages.error(request, result['message'])
+            else:
+                msg = 'Entitlement with role {} has been deleted.'.format(
+                    request.POST.get('role_name', '<undefined>'))
+                messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
         except:

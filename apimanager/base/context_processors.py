@@ -24,6 +24,8 @@ def api_username(request):
             username = data['username']
         except APIError as err:
             messages.error(request, err)
+        except Exception as err:
+            messages.error(request, err)
     return {'API_USERNAME': username}
 
 
@@ -36,6 +38,8 @@ def api_user_id(request):
             data = api.get('/users/current')
             user_id = data['user_id']
         except APIError as err:
+            messages.error(request, err)
+        except Exception as err:
             messages.error(request, err)
     return {'API_USER_ID': user_id}
 

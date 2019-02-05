@@ -33,10 +33,14 @@ class IndexView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/entitlement-requests'
             entitlement_requests = api.get(urlpath)
-            entitlement_requests = entitlement_requests['entitlement_requests']
-            entitlement_requests = FilterTime(context, self.request.GET, 'created') \
-                .apply(entitlement_requests)
-            entitlement_requests = self.scrub(entitlement_requests)
+            if 'code' in entitlement_requests and entitlement_requests['code']==403:
+                messages.error(self.request, entitlement_requests['message'])
+                entitlement_requests=[]
+            else:
+                entitlement_requests = entitlement_requests['entitlement_requests']
+                entitlement_requests = FilterTime(context, self.request.GET, 'created') \
+                    .apply(entitlement_requests)
+                entitlement_requests = self.scrub(entitlement_requests)
         except APIError as err:
             messages.error(self.request, err)
         except:

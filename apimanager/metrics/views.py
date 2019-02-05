@@ -259,9 +259,12 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath)
+                if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
                 # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
+                else:
+                    api_calls_total = metrics[0]["count"]
+                    average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -274,9 +277,12 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath)
+                if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
                 # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
+                else:
+                    api_calls_total = metrics[0]["count"]
+                    average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -303,8 +309,11 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             metrics = api.get(urlpath)
-            api_calls_total = metrics[0]["count"]
-            average_response_time = metrics[0]["average_response_time"]
+            if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
+            else:
+                api_calls_total = metrics[0]["count"]
+                average_response_time = metrics[0]["average_response_time"]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -326,7 +335,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    active_apps_list = list(apps)
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -337,7 +349,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    active_apps_list = list(apps)
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -355,7 +370,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath)
-            apps_list = apps["list"]
+            if apps is not None and 'code' in apps and apps['code'] == 403:
+                error_once_only(self.request, apps['message'])
+            else:
+                apps_list = apps["list"]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -423,10 +441,13 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                    else:
+                        result = metrics[0]["count"]
+                        result_list_pure.append(result)
+                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                        sum += result
                 except APIError as err:
                     error_once_only(self.request, err)
                 except Exception as err:
@@ -442,10 +463,13 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                    else:
+                        result = metrics[0]["count"]
+                        result_list_pure.append(result)
+                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                        sum += result
                 except APIError as err:
                     error_once_only(self.request, err)
                 except Exception as err:
@@ -588,6 +612,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/users'
             users = api.get(urlpath)
+            if users is not None and 'code' in users and users['code'] == 403:
+                error_once_only(self.request, users['message'])
+            if 'users' not in users:
+                users['users']=[]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -617,7 +645,12 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date, to_date)
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)['top_apis']
+                top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -627,7 +660,12 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)['top_apis']
+                top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
@@ -666,7 +704,11 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             top_apps_using_warehouse = api.get(urlpath)
-            top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
+            if top_apps_using_warehouse is not None and 'code' in top_apps_using_warehouse and top_apps_using_warehouse['code']==403:
+                error_once_only(self.request, top_apps_using_warehouse['message'])
+                top_apps_using_warehouse = []
+            else:
+                top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -684,7 +726,10 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath_consumers)
-            apps_list = apps["list"]
+            if apps is not None and 'code' in apps and apps['code']==403:
+                error_once_only(self.request, apps['message'])
+            else:
+                apps_list = apps["list"]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -705,7 +750,11 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath_metrics)
-                metrics = list(metrics['metrics'])
+                if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                    error_once_only(self.request, metrics['message'])
+                    metrics = []
+                else:
+                    metrics = list(metrics['metrics'])
                 if metrics:
                     time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
                     times_to_first_call.append(time_difference.total_seconds())
