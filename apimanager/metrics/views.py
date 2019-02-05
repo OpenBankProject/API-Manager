@@ -145,8 +145,8 @@ class MetricsView(LoginRequiredMixin, TemplateView):
             error_once_only(self.request, err)
         except KeyError as err:
             error_once_only(self.request, metrics['message'])
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
         return metrics
 
     def get_context_data(self, **kwargs):
@@ -259,13 +259,16 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath)
+                if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
                 # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
+                else:
+                    api_calls_total = metrics[0]["count"]
+                    average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         else:
             urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
@@ -274,13 +277,16 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath)
+                if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
                 # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
+                else:
+                    api_calls_total = metrics[0]["count"]
+                    average_response_time = metrics[0]["average_response_time"]
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
 
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
@@ -303,11 +309,15 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             metrics = api.get(urlpath)
-            api_calls_total = metrics[0]["count"]
-            average_response_time = metrics[0]["average_response_time"]
+            if metrics is not None and 'code' in metrics and metrics['code']==403:
+                    error_once_only(self.request, metrics['message'])
+            else:
+                api_calls_total = metrics[0]["count"]
+                average_response_time = metrics[0]["average_response_time"]
         except APIError as err:
             error_once_only(self.request, err)
-
+        except Exception as err:
+            error_once_only(self.request, "Unknown Error. {}".format(type(err).__name__))
 
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
@@ -325,22 +335,28 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    active_apps_list = list(apps)
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    active_apps_list = list(apps)
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         return active_apps_list
 
@@ -354,11 +370,14 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath)
-            apps_list = apps["list"]
+            if apps is not None and 'code' in apps and apps['code'] == 403:
+                error_once_only(self.request, apps['message'])
+            else:
+                apps_list = apps["list"]
         except APIError as err:
             error_once_only(self.request, err)
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -422,14 +441,17 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                    else:
+                        result = metrics[0]["count"]
+                        result_list_pure.append(result)
+                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                        sum += result
                 except APIError as err:
                     error_once_only(self.request, err)
-                except:
-                    error_once_only(self.request, 'Unknown Error')
+                except Exception as err:
+                    error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -441,14 +463,17 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api = API(self.request.session.get('obp'))
                 try:
                     metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                    else:
+                        result = metrics[0]["count"]
+                        result_list_pure.append(result)
+                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                        sum += result
                 except APIError as err:
                     error_once_only(self.request, err)
-                except:
-                    error_once_only(self.request, 'Unknown Error')
+                except Exception as err:
+                    error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -587,10 +612,14 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/users'
             users = api.get(urlpath)
+            if users is not None and 'code' in users and users['code'] == 403:
+                error_once_only(self.request, users['message'])
+            if 'users' not in users:
+                users['users']=[]
         except APIError as err:
             error_once_only(self.request, err)
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         else:
             try:
@@ -602,8 +631,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             # fail gracefully in case API provides new structure
             except KeyError as err:
                 messages.error(self.request, 'KeyError: {}'.format(err))
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
         number_of_users_with_cansearchwarehouse = len(user_email_cansearchwarehouse)
@@ -616,21 +645,31 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date, to_date)
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)['top_apis']
+                top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
         else:
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
-                top_apis = api.get(urlpath)['top_apis']
+                top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         for api in top_apis:
             if api['Implemented_by_partial_function'] == "":
@@ -652,8 +691,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     top_warehouse_calls.append(api)
         except APIError as err:
             error_once_only(self.request, err)
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
         return top_warehouse_calls
 
     def get_top_apps_using_warehouse(self, from_date, to_date):
@@ -665,11 +704,15 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             top_apps_using_warehouse = api.get(urlpath)
-            top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
+            if top_apps_using_warehouse is not None and 'code' in top_apps_using_warehouse and top_apps_using_warehouse['code']==403:
+                error_once_only(self.request, top_apps_using_warehouse['message'])
+                top_apps_using_warehouse = []
+            else:
+                top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
         except APIError as err:
             error_once_only(self.request, err)
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         return top_apps_using_warehouse
 
@@ -683,11 +726,14 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath_consumers)
-            apps_list = apps["list"]
+            if apps is not None and 'code' in apps and apps['code']==403:
+                error_once_only(self.request, apps['message'])
+            else:
+                apps_list = apps["list"]
         except APIError as err:
             error_once_only(self.request, err)
-        except:
-            error_once_only(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
@@ -704,7 +750,11 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 metrics = api.get(urlpath_metrics)
-                metrics = list(metrics['metrics'])
+                if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                    error_once_only(self.request, metrics['message'])
+                    metrics = []
+                else:
+                    metrics = list(metrics['metrics'])
                 if metrics:
                     time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
                     times_to_first_call.append(time_difference.total_seconds())
@@ -712,8 +762,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
             except APIError as err:
                 error_once_only(self.request, err)
-            except:
-                error_once_only(self.request, 'Unknown Error')
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         if times_to_first_call:
             median = statistics.median(times_to_first_call)

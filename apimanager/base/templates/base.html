@@ -52,7 +52,12 @@
 						</ul>
 					</li>
 					{% url "customers-create" as customers_create_url %}
-					<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
+					<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Resources</a>
+						<ul class="dropdown-menu">
+							<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
+						</ul>
+					</li>
 					{% url "config-index" as config_index_url %}
 					<li{% ifequal request.path config_index_url %} class="active" {% endifequal %}><a href="{{ config_index_url }}">Config</a></li>
 				{% if API_TESTER_URL %}

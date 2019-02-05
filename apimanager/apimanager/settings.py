@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'obp',
     'consumers',
     'users',
+    'branches',
     'entitlementrequests',
     'customers',
     'metrics',
