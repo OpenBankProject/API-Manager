@@ -261,7 +261,7 @@ EXCLUDE_URL_PATTERN = []
 # App Name to aggregate metrics
 API_EXPLORER_APP_NAME = 'xxx'
 
-
+VERIFY = True if API_HOST.startswith("https") else False
 
 
 

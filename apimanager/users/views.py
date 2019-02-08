@@ -56,7 +56,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/entitlements'
             entitlements = api.get(urlpath)
-            if 'code' in entitlements and entitlements['code']==400:
+            if 'code' in entitlements and entitlements['code']>=400:
                 messages.error(self.request, entitlements['message'])
             else:
                 for entitlement in entitlements['list']:
@@ -166,7 +166,7 @@ class DetailView(LoginRequiredMixin, FormView):
         try:
             urlpath = '/users/user_id/{}'.format(self.kwargs['user_id'])
             user = self.api.get(urlpath)
-            if 'code' in user and user['code']==403:
+            if 'code' in user and user['code']>=400:
                 messages.error(self.request, user['message'])
             else:
                 context['form'].fields['user_id'].initial = user['user_id']
@@ -210,17 +210,17 @@ class MyDetailView(LoginRequiredMixin, FormView):
                 'role_name': data['role_name'],
             }
             entitlement = self.api.post(urlpath, payload=payload)
-            if entitlement['code']==201:
+            if 'code' in entitlement and entitlement['code'] >= 400:
+                messages.error(self.request, entitlement['message'])
+            else:
                 msg = 'Entitlement with role {} has been added.'.format(entitlement['role_name'])
                 messages.success(self.request, msg)
-            else:
-                messages.error(self.request, entitlement['message'])
             self.success_url = self.request.path
         except APIError as err:
             messages.error(self.request, err)
             return super(MyDetailView, self).form_invalid(form)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as err:
+            messages.error(self.request, 'Unknown Error. {}'.format(err))
             return super(MyDetailView, self).form_invalid(form)
         else:
             return super(MyDetailView, self).form_valid(form)
@@ -236,7 +236,7 @@ class MyDetailView(LoginRequiredMixin, FormView):
             context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
-        except:
+        except Exception as err:
             messages.error(self.request, 'Unknown Error')
 
         context.update({
@@ -255,7 +255,7 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
             urlpath = '/users/{}/entitlement/{}'.format(
                 kwargs['user_id'], kwargs['entitlement_id'])
             result = api.delete(urlpath)
-            if result is not None and 'code' in result and result['code']==400:
+            if result is not None and 'code' in result and result['code']>=400:
                 messages.error(request, result['message'])
             else:
                 msg = 'Entitlement with role {} has been deleted.'.format(

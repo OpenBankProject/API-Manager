@@ -35,7 +35,7 @@ class OAuthAuthenticator(Authenticator):
         )
         try:
             url = settings.API_HOST + settings.OAUTH_TOKEN_PATH
-            response = session.fetch_request_token(url, verify=False)
+            response = session.fetch_request_token(url, verify=settings.VERIFY)
         except (ValueError, TokenRequestDenied, ConnectionError) as err:
             raise AuthenticatorError(err)
         else:
