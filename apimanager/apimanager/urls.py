@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^consumers/', include('consumers.urls')),
     url(r'^entitlementrequests/', include('entitlementrequests.urls')),
     url(r'^users/', include('users.urls')),
+    url(r'^branches/', include('branches.urls')),
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),

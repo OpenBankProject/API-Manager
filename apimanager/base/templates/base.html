@@ -51,11 +51,13 @@
 							<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">KPI Dashboard</a></li>
 						</ul>
 					</li>
+					{% url "branches_list" as branches_list_url %}
 					{% url "customers-create" as customers_create_url %}
 					<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Resources</a>
 						<ul class="dropdown-menu">
 							<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
+							<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">Branches</a></li>
 						</ul>
 					</li>
 					{% url "config-index" as config_index_url %}
