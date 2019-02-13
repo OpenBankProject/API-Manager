@@ -172,8 +172,8 @@ class CreateBranchForm(forms.Form):
     )
 
     lobby = forms.CharField(
-        label='Lobby',
-        widget=forms.TextInput(
+        label=' Lobby Opening Hours',
+        widget=forms.Textarea(
             attrs={
                 'placeholder': 'None',
                 'class': 'form-control',
@@ -183,7 +183,7 @@ class CreateBranchForm(forms.Form):
     )
     drive_up = forms.CharField(
         label='Drive Up',
-        widget=forms.TextInput(
+        widget=forms.Textarea(
             attrs={
                 'placeholder': 'None',  # noqa
                 'class': 'form-control',
@@ -211,11 +211,10 @@ class CreateBranchForm(forms.Form):
         ),
         required=False,
     )
-    is_accessible = forms.CharField(
+    is_accessible = forms.ChoiceField(
         label='is accessible',
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
-                'placeholder': 'true',
                 'class': 'form-control',
             }
         ),
