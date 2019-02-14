@@ -129,6 +129,23 @@
         </div>
 
         <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.lobby.errors %}<div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.lobby.label_tag }}
+                    {{ form.lobby }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.drive_up.errors %}<div class="alert alert-danger">{{ form.drive_up.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.drive_up.label_tag }}
+                    {{ form.drive_up }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-sm-12 hidden-xs">
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-green">Add</button>
