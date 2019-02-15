@@ -129,7 +129,65 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_routing_scheme.errors %}<div class="alert alert-danger">{{ form.branch_routing_scheme.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_routing_scheme.label_tag }}
+                    {{ form.branch_routing_scheme }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_routing_address.errors %}<div class="alert alert-danger">{{ form.branch_routing_address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_routing_address.label_tag }}
+                    {{ form.branch_routing_address }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.is_accessible.errors %}<div class="alert alert-danger">{{ form.is_accessible.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.is_accessible.label_tag }}
+                    {{ form.is_accessible }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_type.label_tag }}
+                    {{ form.branch_type }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.more_info.errors %}<div class="alert alert-danger">{{ form.more_info.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.more_info.label_tag }}
+                    {{ form.more_info }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.phone_number.errors %}<div class="alert alert-danger">{{ form.phone_number.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+            </div>
+        </div>
+
 		<div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.accessibleFeatures.errors %}<div class="alert alert-danger">{{ form.accessibleFeatures.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.accessibleFeatures.label_tag }}
+                    {{ form.accessibleFeatures }}
+                </div>
+            </div>
+
             <div class="col-xs-12 col-sm-4">
                 {% if form.lobby.errors %}<div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
                 <div class="form-group">

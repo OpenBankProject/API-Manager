@@ -241,6 +241,7 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
         urlpath = "/banks/{}/branches/{}".format(self.kwargs['bank_id'], self.kwargs['branch_id'])
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
+            fields['is_accessible'].choices = [('', 'Choose...'), (True, True), (False, False)]
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -305,7 +306,16 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
                 }
             },
             "lobby": data["lobby"],
-            "drive_up": data["drive_up"]
+            "drive_up": data["drive_up"],
+            "branch_routing": {
+                "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"] != "" else "license name",
+                "address": data["branch_routing_address"] if data["branch_routing_address"] != "" else "license name"
+            },
+            "is_accessible": data["is_accessible"],
+            "accessibleFeatures": data["accessibleFeatures"],
+            "branch_type": data["branch_type"],
+            "more_info": data["more_info"],
+            "phone_number": data["phone_number"]
         }
         try:
             result = self.api.put(urlpath, payload=payload)
