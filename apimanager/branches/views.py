@@ -122,6 +122,18 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
                     }
                 ]
             }, indent=4)
+
+            fields['address'].initial = json.dumps({
+                "line_1":"No 1 the Road",
+                "line_2":"The Place",
+                "line_3":"The Hill",
+                "city":"Berlin",
+                "county":"String",
+                "state":"Brandenburg",
+                "postcode":"13359",
+                "country_code":"DE"
+            }, indent=4)
+
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -137,16 +149,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
                 "id": data["branch_id"],
                 "bank_id": data["bank_id"],
                 "name": data["name"],
-                "address": {
-                    "line_1": "No 1 the Road",
-                    "line_2": "The Place",
-                    "line_3": "The Hill",
-                    "city": data["address_city"] if data["address_city"]!="" else "Berlin",
-                    "county": "String",
-                    "state": "Brandenburg",
-                    "postcode": "13359",
-                    "country_code": "DE"
-                },
+                "address": json.loads(data['address']),
                 "location": {
                     "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else 37.0,
                     "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else 110.0
@@ -157,8 +160,8 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
                         "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
                     }
                 },
-                "lobby": data['lobby'],
-                "drive_up": data["drive_up"],
+                "lobby": json.loads(data['lobby']),
+                "drive_up": json.loads(data["drive_up"]),
                 "branch_routing": {
                     "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"]!="" else "license name",
                     "address": data["branch_routing_address"] if data["branch_routing_address"]!="" else "license name"
@@ -171,11 +174,14 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
             return super(IndexBranchesView, self).form_invalid(form)
         except Exception as err:
-            messages.error(self.request, "Unknown Error")
+            error_once_only(self.request, "Unknown Error")
             return super(IndexBranchesView, self).form_invalid(form)
+        if 'code' in result and result['code']>=400:
+            error_once_only(self.request, result['message'])
+            return super(IndexBranchesView, self).form_valid(form)
         msg = 'Branch {} for Bank {} has been created successfully!'.format(result['id'], result['bank_id'])
         messages.success(self.request, msg)
         return super(IndexBranchesView, self).form_valid(form)
@@ -241,7 +247,7 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
         urlpath = "/banks/{}/branches/{}".format(self.kwargs['bank_id'], self.kwargs['branch_id'])
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
-            fields['is_accessible'].choices = [('', 'Choose...'), (True, True), (False, False)]
+
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -251,21 +257,17 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
             fields['bank_id'].initial = self.kwargs['bank_id']
             fields['branch_id'].initial = self.kwargs['branch_id']
             fields['name'].initial = result['name']
-            fields['address_line1'].initial = result['address']['line_1']
-            fields['address_line2'].initial = result['address']['line_2']
-            fields['address_line3'].initial = result['address']['line_3']
-            fields['address_city'].initial = result['address']['city']
-            fields['address_county'].initial = result['address']['county']
-            fields['address_state'].initial = result['address']['state']
-            fields['address_postcode'].initial = result['address']['postcode']
-            fields['address_country_code'].initial = result['address']['country_code']
+            fields['address'].initial = json.dumps(result['address'], indent=4)
             fields['location_latitude'].initial = result['location']['latitude']
             fields['location_longitude'].initial = result['location']['longitude']
             fields['meta_license_id'].initial = result['meta']['license']['id']
             fields['meta_license_name'].initial = result['meta']['license']['name']
             fields['branch_routing_scheme'].initial = result['branch_routing']['scheme']
             fields['branch_routing_address'].initial = result['branch_routing']['address']
-            fields['is_accessible'].initial = result['is_accessible']
+            if result['is_accessible'].lower()=='true':
+                fields['is_accessible'].choices = [(True, True), (False, False)]
+            else:
+                fields['is_accessible'].choices = [(False, False), (True, True)]
             fields['accessibleFeatures'].initial = result['accessibleFeatures']
             fields['branch_type'].initial = result['branch_type']
             fields['more_info'].initial = result['more_info']
@@ -286,15 +288,7 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
             #"id": data["branch_id"],
             "bank_id": data["bank_id"],
             "name": data["name"],
-            "address": {
-                "line_1": data["address_line1"],
-                "line_2": data["address_line2"],
-                "line_3": data["address_line3"],
-                "city": data["address_city"],
-                "state": data["address_state"],
-                "postcode": data["address_postcode"],
-                "country": data["address_country_code"],
-            },
+            "address": json.loads(data['address']),
             "location": {
                 "latitude": float(data["location_latitude"]),
                 "longitude": float(data["location_longitude"])
@@ -305,8 +299,8 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
                     "name": data["meta_license_name"]
                 }
             },
-            "lobby": data["lobby"],
-            "drive_up": data["drive_up"],
+            "lobby": json.loads(data["lobby"]),
+            "drive_up": json.loads(data["drive_up"]),
             "branch_routing": {
                 "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"] != "" else "license name",
                 "address": data["branch_routing_address"] if data["branch_routing_address"] != "" else "license name"
