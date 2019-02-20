@@ -41,10 +41,10 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                {% if form.address_city.errors %}<div class="alert alert-danger">{{ form.address_city.errors }}</div>{% endif %}
+                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.address_city.label_tag }}
-                    {{ form.address_city }}
+                    {{ form.branch_type.label_tag }}
+                    {{ form.branch_type }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -103,22 +103,15 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
-                <div class="form-group">
-                    {{ form.branch_type.label_tag }}
-                    {{ form.branch_type }}
-                </div>
-            </div>
-        </div>
-
-		<div class="row">
-            <div class="col-xs-12 col-sm-4">
                 {% if form.more_info.errors %}<div class="alert alert-danger">{{ form.more_info.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.more_info.label_tag }}
                     {{ form.more_info }}
                 </div>
             </div>
+        </div>
+
+		<div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.phone_number.errors %}<div class="alert alert-danger">{{ form.phone_number.errors }}</div>{% endif %}
                 <div class="form-group">
@@ -129,6 +122,13 @@
         </div>
 
         <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.address.errors %}<div class="alert alert-danger">{{ form.address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.address.label_tag }}
+                    {{ form.address }}
+                </div>
+            </div>
             <div class="col-xs-12 col-sm-4">
                 {% if form.lobby.errors %}<div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
                 <div class="form-group">
@@ -206,6 +206,7 @@
                                 <li>Branch Type: {{branch.branch_type}}</li>
                                 <li>More Info: {{branch.more_info}}</li>
                                 <li>Phone Number: {{branch.phone_number}}</li>
+                                <li>Accessible Features: {{branch.accessibleFeatures}}</li>
                             </ul>
                         </div>
                     </td>

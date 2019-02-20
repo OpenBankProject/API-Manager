@@ -39,88 +39,10 @@ class CreateBranchForm(forms.Form):
         ),
         required=True
     )
-    address_line1 = forms.CharField(
-        label='address_line1',
-        widget=forms.TextInput(
+    address = forms.CharField(
+        label='Address',
+        widget=forms.Textarea(
             attrs={
-                'placeholder': 'No 1 the Road',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_line2 = forms.CharField(
-        label='address_line2',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'The Place',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_line3 = forms.CharField(
-        label='address_line3',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'The Hill',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_city = forms.CharField(
-        label='city',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Berlin',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_county = forms.CharField(
-        label='county',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'String',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_state = forms.CharField(
-        label='state',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Brandenburg',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_postcode = forms.CharField(
-        label='state',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '13359',
-                'class': 'form-control',
-            }
-        ),
-        required=False
-    )
-
-    address_country_code = forms.CharField(
-        label='country_code',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'DE',
                 'class': 'form-control',
             }
         ),
