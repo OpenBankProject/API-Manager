@@ -39,7 +39,7 @@ class DirectLoginAuthenticator(Authenticator):
 
         result = response.json()
         if response.status_code != 201:
-            raise AuthenticatorError(result['error'])
+            raise AuthenticatorError(result['message'])
         else:
             self.token = result['token']
 
