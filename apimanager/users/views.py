@@ -152,7 +152,7 @@ class DetailView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Unknown Error')
             return super(DetailView, self).form_invalid(form)
         if 'code' in entitlement and entitlement['code']>=400:
-            messages.error(self.request, entitlement[''])
+            messages.error(self.request, entitlement['message'])
             return super(DetailView, self).form_invalid(form)
         else:
             msg = 'Entitlement with role {} has been added.'.format(
