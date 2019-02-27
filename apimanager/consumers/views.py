@@ -133,8 +133,8 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-        except:
-            messages.error(self.request, "Unknown")
+        except Exception as err:
+            messages.error(self.request, "{}".format(err))
             return super(DetailView, self).form_invalid(form)
 
         msg = 'calls limit of consumer {} has been updated successfully.'.format(
@@ -152,22 +152,25 @@ class DetailView(LoginRequiredMixin, FormView):
             consumer['created'] = datetime.strptime(
                 consumer['created'], settings.API_DATETIMEFORMAT)
 
-            call_limits_urlpath = '/management/consumers/{}/consumer/calls_limit'.format(self.kwargs['consumer_id'])
+            call_limits_urlpath = '/management/consumers/{}/consumer/call-limits'.format(self.kwargs['consumer_id'])
             consumer_call_limtis = api.get(call_limits_urlpath)
-            consumer['per_minute_call_limit'] = consumer_call_limtis['per_minute_call_limit']
-            consumer['per_hour_call_limit'] = consumer_call_limtis['per_hour_call_limit']
-            consumer['per_day_call_limit'] = consumer_call_limtis['per_day_call_limit']
-            consumer['per_week_call_limit'] = consumer_call_limtis['per_week_call_limit']
-            consumer['per_month_call_limit'] = consumer_call_limtis['per_month_call_limit']
+            if 'code' in consumer_call_limtis and consumer_call_limtis['code'] > 400:
+                messages.error(self.request, "{}".format(consumer_call_limtis['message']))
+            else:
+                consumer['per_minute_call_limit'] = consumer_call_limtis['per_minute_call_limit']
+                consumer['per_hour_call_limit'] = consumer_call_limtis['per_hour_call_limit']
+                consumer['per_day_call_limit'] = consumer_call_limtis['per_day_call_limit']
+                consumer['per_week_call_limit'] = consumer_call_limtis['per_week_call_limit']
+                consumer['per_month_call_limit'] = consumer_call_limtis['per_month_call_limit']
 
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown")
-
-        context.update({
-            'consumer': consumer
-        })
+        except Exception as err:
+            messages.error(self.request, "{}".format(err))
+        finally:
+            context.update({
+                'consumer': consumer
+            })
         return context
 
 
