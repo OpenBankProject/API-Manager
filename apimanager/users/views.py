@@ -151,12 +151,15 @@ class DetailView(LoginRequiredMixin, FormView):
         except:
             messages.error(self.request, 'Unknown Error')
             return super(DetailView, self).form_invalid(form)
-
-        msg = 'Entitlement with role {} has been added.'.format(
-            entitlement['role_name'])
-        messages.success(self.request, msg)
-        self.success_url = self.request.path
-        return super(DetailView, self).form_valid(form)
+        if 'code' in entitlement and entitlement['code']>=400:
+            messages.error(self.request, entitlement['message'])
+            return super(DetailView, self).form_invalid(form)
+        else:
+            msg = 'Entitlement with role {} has been added.'.format(
+                entitlement['role_name'])
+            messages.success(self.request, msg)
+            self.success_url = self.request.path
+            return super(DetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
