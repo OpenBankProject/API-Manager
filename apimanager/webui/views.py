@@ -59,7 +59,7 @@ class IndexView(LoginRequiredMixin, FormView):
             urlpath = '/management/webui_props'
             payload = {
                 "name":"webui_api_explorer_url",
-                "value" : str(data["webui_props"]).replace("\n", "\\n").replace("\"", '\\"')
+                "value" : data["webui_props"]
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
