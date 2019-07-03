@@ -35,4 +35,5 @@ urlpatterns = [
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),
+    url(r'^webui/', include('webui.urls')),
 ]

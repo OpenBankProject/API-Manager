@@ -818,6 +818,9 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             'top_apis_bar_chart': top_apis_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context
 
@@ -868,6 +871,9 @@ class YearlySummaryView(MetricsSummaryView):
             'top_apis_bar_chart': top_apis_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context
 
@@ -922,6 +928,9 @@ class QuarterlySummaryView(MetricsSummaryView):
             'top_apis_bar_chart': top_apis_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context
 
@@ -973,6 +982,9 @@ class WeeklySummaryView(MetricsSummaryView):
             # ##'calls_per_half_day': calls_per_half_day,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context
 
@@ -1026,6 +1038,9 @@ class DailySummaryView(MetricsSummaryView):
             'top_apis_bar_chart': top_apis_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context
 
@@ -1085,5 +1100,8 @@ class CustomSummaryView(MetricsSummaryView):
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
             'form': form,
+            'excluded_apps':EXCLUDE_APPS,
+            'excluded_functions':EXCLUDE_FUNCTIONS,
+            'excluded_url_pattern':EXCLUDE_URL_PATTERN,
         })
         return context

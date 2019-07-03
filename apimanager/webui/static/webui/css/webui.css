@@ -1,0 +1,10 @@
+#config pre {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+#config .string { color: green; }
+#config .number { color: darkorange; }
+#config .boolean { color: blue; }
+#config .null { color: magenta; }
+#config .key { color: red; }
