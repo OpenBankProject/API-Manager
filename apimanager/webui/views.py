@@ -58,7 +58,7 @@ class IndexView(LoginRequiredMixin, FormView):
             data = form.cleaned_data
             urlpath = '/management/webui_props'
             payload = {
-                "name":"webui_api_explorer_url",
+                "name":"webui_sandbox_introduction",
                 "value" : data["webui_props"]
             }
             result = self.api.post(urlpath, payload=payload)
