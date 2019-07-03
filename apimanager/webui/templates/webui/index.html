@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
+
+{% block content %}
+<div id="webui">
+	<div id="webui_list">
+		<h1>WEBUI</h1>
+
+		<form method="post">
+			{% csrf_token %}
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				{{ form.non_field_errors }}
+			</div>
+			{% endif %}
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
+					{% if form.webui_props.errors %}<div class="alert alert-danger">{{ form.webui_props.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.webui_props.label_tag }}
+						{{ form.webui_props }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 hidden-xs">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-green">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'webui/js/config.js' %}"></script>
+
+{% endblock extrajs %}
+
+
+{% block extracss %}
+	<link href="{% static 'webui/css/webui.css' %}" rel="stylesheet">
+{% endblock extracss %}
