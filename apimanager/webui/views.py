@@ -27,7 +27,7 @@ class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
     template_name = "webui/index.html"
     form_class = WebuiForm
-    success_url = reverse_lazy('webui_list')
+    success_url = reverse_lazy('webui-index')
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
