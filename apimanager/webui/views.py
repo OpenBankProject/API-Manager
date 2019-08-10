@@ -64,10 +64,11 @@ class IndexView(LoginRequiredMixin, FormView):
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
-            error_once_only(self.request, err)
+            error_once_only(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
+                                     "Please check OBP-API server.   Details: " + str(err))))
             return super(IndexView, self).form_invalid(form)
         except Exception as err:
-            error_once_only(self.request, "Unknown Error")
+            error_once_only(self.request, "Unknown Error. Details: "+ str(err))
             return super(IndexView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
             error_once_only(self.request, result['message'])
