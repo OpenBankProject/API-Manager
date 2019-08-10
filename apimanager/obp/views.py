@@ -25,6 +25,7 @@ class LoginToDjangoMixin(object):
         Logs the user into Django
         Kind of faking it to establish if a user is authenticated later on
         """
+        # Here, we already get the Token for the api call.
         api = API(self.request.session.get('obp'))
         try:
             data = api.get('/users/current')
