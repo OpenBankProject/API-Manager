@@ -44,6 +44,7 @@ class IndexView(LoginRequiredMixin, FormView):
         fields = form.fields
         form.api = self.api
         try:
+            fields['webui_props_name'].initial = ""
             fields['webui_props'].initial = ""
 
         except APIError as err:
@@ -58,7 +59,7 @@ class IndexView(LoginRequiredMixin, FormView):
             data = form.cleaned_data
             urlpath = '/management/webui_props'
             payload = {
-                "name":"webui_sandbox_introduction",
+                "name"  : data["webui_props_name"],
                 "value" : data["webui_props"]
             }
             result = self.api.post(urlpath, payload=payload)

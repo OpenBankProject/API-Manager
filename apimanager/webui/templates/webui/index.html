@@ -16,6 +16,16 @@
 			</div>
 			{% endif %}
 
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+					{% if form.webui_props_name.errors %}<div class="alert alert-danger">{{ form.webui_props_name.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.webui_props_name.label_tag }}
+						{{ form.webui_props_name }}
+					</div>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col-xs-12 col-sm-4">
 					{% if form.webui_props.errors %}<div class="alert alert-danger">{{ form.webui_props.errors }}</div>{% endif %}
@@ -39,7 +49,7 @@
 {% endblock %}
 
 {% block extrajs %}
-	<script type="text/javascript" src="{% static 'webui/js/config.js' %}"></script>
+	<script type="text/javascript" src="{% static 'webui/js/webui.js' %}"></script>
 
 {% endblock extrajs %}
 
