@@ -35,7 +35,11 @@ class DirectLoginAuthenticator(Authenticator):
         try:
             response = requests.post(url, headers=headers)
         except requests.exceptions.ConnectionError as err:
-            raise AuthenticatorError(err)
+            raise AuthenticatorError(Exception("OBP-API server is not running or do not response properly. "
+                                               "Please check OBP-API server.    "
+                                               "Details: "+str(err)))
+        except BaseException as err:
+            raise AuthenticatorError(Exception("Unknown Error. Details:"+ str(err)))
 
         result = response.json()
         if response.status_code != 201:
