@@ -28,10 +28,10 @@
 
 			<div class="row">
 				<div class="col-xs-12 col-sm-4">
-					{% if form.webui_props.errors %}<div class="alert alert-danger">{{ form.webui_props.errors }}</div>{% endif %}
+					{% if form.webui_props_value.errors %}<div class="alert alert-danger">{{ form.webui_props_value.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.webui_props.label_tag }}
-						{{ form.webui_props }}
+						{{ form.webui_props_value.label_tag }}
+						{{ form.webui_props_value }}
 					</div>
 				</div>
 			</div>

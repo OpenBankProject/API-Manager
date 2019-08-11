@@ -11,8 +11,8 @@ class WebuiForm(forms.Form):
         ),
         required=True,
     )
-    webui_props = forms.CharField(
-        label='WEBUI Props',
+    webui_props_value = forms.CharField(
+        label='WEBUI Props Value',
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
