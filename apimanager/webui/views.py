@@ -48,9 +48,10 @@ class IndexView(LoginRequiredMixin, FormView):
             fields['webui_props_value'].initial = ""
 
         except APIError as err:
-            messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+            messages.error(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
+                                     "Please check OBP-API server.   Details: " + str(err))))
+        except Exception as err:
+            messages.error(self.request, "Unknown Error. Details: "+ str(err))
 
         return form
 
