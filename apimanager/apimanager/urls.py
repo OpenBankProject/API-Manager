@@ -36,4 +36,5 @@ urlpatterns = [
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),
     url(r'^webui/', include('webui.urls')),
+    url(r'^methodrouting/', include('methodrouting.urls')),
 ]

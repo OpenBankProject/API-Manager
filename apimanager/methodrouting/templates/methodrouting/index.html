@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
+
+{% block content %}
+<div id="methodrouting">
+	<div id="methodrouting_list">
+		<h1>Method Routing</h1>
+
+		<form method="post">
+			{% csrf_token %}
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				{{ form.non_field_errors }}
+			</div>
+			{% endif %}
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+					{% if form.method_routing_body.errors %}<div class="alert alert-danger">{{ form.method_routing_body.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.method_routing_body.label_tag }}
+						{{ form.method_routing_body }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 hidden-xs">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-green">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
+
+{% endblock extrajs %}
+
+
+{% block extracss %}
+	<link href="{% static 'methodrouting/css/methodrouting.css' %}" rel="stylesheet">
+{% endblock extracss %}
