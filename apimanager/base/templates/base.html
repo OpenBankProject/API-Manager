@@ -64,6 +64,8 @@
 					<li{% ifequal request.path config_index_url %} class="active" {% endifequal %}><a href="{{ config_index_url }}">Config</a></li>
 					{% url "webui-index" as webui_props_index_url %}
 					<li{% ifequal request.path webui_props_index_url %} class="active" {% endifequal %}><a href="{{ webui_props_index_url }}">Webui Props</a></li>
+                    {% url "methodrouting-index" as methodrouting_index_url %}
+					<li{% ifequal request.path methodrouting_index_url %} class="active" {% endifequal %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li>
 				{% if API_TESTER_URL %}
 					<li>
 						<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>

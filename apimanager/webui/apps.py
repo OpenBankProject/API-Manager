@@ -6,6 +6,6 @@ App config for config app
 from django.apps import AppConfig
 
 
-class ConfigConfig(AppConfig):
+class WebuiConfig(AppConfig):
     """Config for config"""
-    name = 'config'
+    name = 'Webui'

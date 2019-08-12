@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from obp.api import API, APIError
-from .forms import WebuiForm
+from .forms import MethodRoutingForm
 from django.urls import reverse_lazy
 
 def error_once_only(request, err):
@@ -25,9 +25,9 @@ def error_once_only(request, err):
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
-    template_name = "webui/index.html"
-    form_class = WebuiForm
-    success_url = reverse_lazy('webui-index')
+    template_name = "methodrouting/index.html"
+    form_class = MethodRoutingForm
+    success_url = reverse_lazy('methodrouting-index')
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
@@ -44,8 +44,7 @@ class IndexView(LoginRequiredMixin, FormView):
         fields = form.fields
         form.api = self.api
         try:
-            fields['webui_props_name'].initial = ""
-            fields['webui_props_value'].initial = ""
+            fields['method_routing_body'].initial = ""
 
         except APIError as err:
             messages.error(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
@@ -58,11 +57,8 @@ class IndexView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            urlpath = '/management/webui_props'
-            payload = {
-                "name"  : data["webui_props_name"],
-                "value" : data["webui_props_value"]
-            }
+            urlpath = '/management/method_routings'
+            payload = json.loads(data["method_routing_body"])
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
             error_once_only(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "

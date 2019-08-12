@@ -25,7 +25,7 @@ class DirectLoginForm(forms.Form):
         cleaned_data = super(DirectLoginForm, self).clean()
         authenticator = DirectLoginAuthenticator()
         try:
-            authenticator.login_to_api(cleaned_data)
+            authenticator.prepare_direct_login_token(cleaned_data)
             cleaned_data['authenticator'] = authenticator
         except AuthenticatorError as err:
             raise forms.ValidationError(err)
@@ -45,7 +45,7 @@ class GatewayLoginForm(forms.Form):
         cleaned_data = super(GatewayLoginForm, self).clean()
         authenticator = GatewayLoginAuthenticator()
         try:
-            authenticator.login_to_api(cleaned_data)
+            authenticator.prepare_gateway_login_token(cleaned_data)
             cleaned_data['authenticator'] = authenticator
         except AuthenticatorError as err:
             raise forms.ValidationError(err)

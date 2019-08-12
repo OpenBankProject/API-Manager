@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'metrics',
     'config',
     'webui',
+    'methodrouting',
 ]
 
 MIDDLEWARE = [

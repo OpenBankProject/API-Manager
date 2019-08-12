@@ -45,7 +45,7 @@ class GatewayLoginAuthenticator(Authenticator):
         self.token = token.decode('utf-8')
         return self.token
 
-    def login_to_api(self, data):
+    def prepare_gateway_login_token(self, data):
         token = self.create_jwt(data)
         # Make a test call to see if the token works
         url = '{}{}'.format(settings.API_ROOT, '/users/current')
@@ -53,9 +53,14 @@ class GatewayLoginAuthenticator(Authenticator):
         try:
             response = api.get(url)
         except requests.exceptions.ConnectionError as err:
-            raise AuthenticatorError(err)
+            raise AuthenticatorError(Exception("OBP-API server is not running or do not response properly. "
+                                               "Please check OBP-API server.    "
+                                               "Details: " + str(err)))
+        except BaseException as err:
+            raise AuthenticatorError(Exception("Unknown Error. Details:" + str(err)))
+        # this will show the obp errors
         if response.status_code != 200:
-            raise AuthenticatorError(response.json()['error'])
+            raise AuthenticatorError(response.json()['message'])
         else:
             return token
 
