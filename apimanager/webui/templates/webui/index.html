@@ -23,26 +23,23 @@
 						{{ form.webui_props_name.label_tag }}
 						{{ form.webui_props_name }}
 					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-xs-12 col-sm-4">
-					{% if form.webui_props_value.errors %}<div class="alert alert-danger">{{ form.webui_props_value.errors }}</div>{% endif %}
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    {% if form.webui_props_value.errors %}<div class="alert alert-danger">{{ form.webui_props_value.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.webui_props_value.label_tag }}
+                        {{ form.webui_props_value }}
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-4">
 					<div class="form-group">
-						{{ form.webui_props_value.label_tag }}
-						{{ form.webui_props_value }}
+                        <label >Save Value:</label> <br>
+						<button type="submit" class="btn btn-primary btn-green">Save</button>
 					</div>
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-sm-12 hidden-xs">
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-green">Submit</button>
-					</div>
-				</div>
-			</div>
+
 		</form>
 	</div>
 </div>
