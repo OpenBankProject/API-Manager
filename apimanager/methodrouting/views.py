@@ -39,72 +39,173 @@ class IndexView(LoginRequiredMixin, FormView):
   "method_routings": [
     {
       "method_name": "getChallengeThreshold",
-      "connector_name": "rest_vMar2019"
+      "connector_name": "rest_vMar2019",
+      "bank_id_pattern": "some_bankId_.+d",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getChargeLevel",
-      "connector_name": "akka_vDec2018"
-
+      "connector_name": "akka_vDec2018",
+      "bank_id_pattern": "some_bankId_.[a-zA-Z]",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getBank",
-      "connector_name": "kafka_vMar2017"
+      "connector_name": "kafka_vMar2017",
+      "bank_id_pattern": "*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
 
     },
     {
       "method_name": "getUser",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_[0-9]",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getBankAccounts",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "[a-z]{6}",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getCounterparty",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_[789][0-9]{9}",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getCoreBankAccounts",
-      "connector_name": "mapped"
+      "connector_name": "mapped",
+      "bank_id_pattern": "[0-9]{6}",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
 
     },
     {
       "method_name": "getBankAccountByIban",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getBankAccountByRouting",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getBankAccountsBalances",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "checkBankAccountExists",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getCounterpartiesFromTransaction",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getCounterpartyTrait",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     },
     {
       "method_name": "getCounterparty",
-      "connector_name": "mapped"
-
+      "connector_name": "mapped",
+      "bank_id_pattern": "some_bankId_.*",
+      "is_bank_id_exact_match": false,
+      "parameters": [
+        {
+          "key": "url",
+          "value": "http://127.0.0.1:8088/bnpedapi"
+        }
+      ]
     }
   ]
 }""")
