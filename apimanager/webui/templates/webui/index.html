@@ -8,6 +8,7 @@
 	<div id="webui_list">
 		<h1>WEBUI</h1>
 
+{#		<form method="post" action="{% url 'webui:webui-index' %}">#}
 		<form method="post">
 			{% csrf_token %}
 			{% if form.non_field_errors %}
@@ -18,27 +19,33 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-4">
-					{% if form.webui_props_name.errors %}<div class="alert alert-danger">{{ form.webui_props_name.errors }}</div>{% endif %}
-					<div class="form-group">
-						{{ form.webui_props_name.label_tag }}
-						{{ form.webui_props_name }}
-					</div>
+                    <label class="form-group" >Web UI Props Name:</label> <br>
                 </div>
                 <div class="col-xs-12 col-sm-4">
-                    {% if form.webui_props_value.errors %}<div class="alert alert-danger">{{ form.webui_props_value.errors }}</div>{% endif %}
-                    <div class="form-group">
-                        {{ form.webui_props_value.label_tag }}
-                        {{ form.webui_props_value }}
-                    </div>
+                    <label class="form-group" >Web UI Props Value:</label> <br>
                 </div>
                 <div class="col-sm-12 col-sm-4">
-					<div class="form-group">
-                        <label >Save Value:</label> <br>
-						<button type="submit" class="btn btn-primary btn-green">Save</button>
-					</div>
+                    <label class="form-group" >Save Value:</label> <br>
 				</div>
 			</div>
 
+            {% for webui_prop in webui_props %}
+				<div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group" name="webui_props_value" cols="20" rows="1"  id="id_webui_props_key"><strong>{{ webui_prop.name }}</strong></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <textarea name="webui_props_value" cols="40" rows="1" class="form-control" id="id_webui_props_value">{{ webui_prop.value }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-sm-4">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-green">Save</button>
+                        </div>
+                    </div>
+			    </div>
+			{% endfor %}
 
 		</form>
 	</div>

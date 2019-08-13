@@ -35,33 +35,34 @@ class IndexView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+        webui_props = []
+        api = API(self.request.session.get('obp'))
+        urlpath = '/management/webui_props?active=true'
 
+        try:
+            response = api.get(urlpath)
+        except APIError as err:
+            messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
+
+        webui_props = response["webui_props"]
+
+        context.update({'webui_props': webui_props})
         return context
 
     def get_form(self, *args, **kwargs):
         form = super(IndexView, self).get_form(*args, **kwargs)
-        # Cannot add api in constructor: super complains about unknown kwarg
-        fields = form.fields
-        form.api = self.api
-        try:
-            fields['webui_props_name'].initial = ""
-            fields['webui_props_value'].initial = ""
-
-        except APIError as err:
-            messages.error(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
-                                     "Please check OBP-API server.   Details: " + str(err))))
-        except Exception as err:
-            messages.error(self.request, "Unknown Error. Details: "+ str(err))
-
         return form
 
     def form_valid(self, form):
         try:
+            # TODO, need to be fixed later.
             data = form.cleaned_data
             urlpath = '/management/webui_props'
             payload = {
-                "name"  : data["webui_props_name"],
-                "value" : data["webui_props_value"]
+                "name"  : "1",
+                "value" : "2"
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
