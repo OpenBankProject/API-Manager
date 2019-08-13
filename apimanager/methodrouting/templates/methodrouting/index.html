@@ -9,30 +9,60 @@
 		<h1>Method Routing</h1>
 
 		<form method="post">
-			{% csrf_token %}
-			{% if form.non_field_errors %}
-			<div class="alert alert-danger">
-				{{ form.non_field_errors }}
-			</div>
-			{% endif %}
+{#			{% csrf_token %}#}
+{#			{% if form.non_field_errors %}#}
+{#			<div class="alert alert-danger">#}
+{#				{{ form.non_field_errors }}#}
+{#			</div>#}
+{#			{% endif %}#}
+{##}
+{#            <div class="row">#}
+{#                <div class="col-xs-12 col-sm-4">#}
+{#					{% if form.method_routing_body.errors %}<div class="alert alert-danger">{{ form.method_routing_body.errors }}</div>{% endif %}#}
+{#					<div class="form-group">#}
+{#						{{ form.method_routing_body.label_tag }}#}
+{#						{{ form.method_routing_body }}#}
+{#					</div>#}
+{#				</div>#}
+{#			</div>#}
+{##}
+{#			<div class="row">#}
+{#				<div class="col-sm-12 hidden-xs">#}
+{#					<div class="form-group">#}
+{#						<button type="submit" class="btn btn-primary btn-green">Submit</button>#}
+{#					</div>#}
+{#				</div>#}
+{#			</div>#}
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-4">
-					{% if form.method_routing_body.errors %}<div class="alert alert-danger">{{ form.method_routing_body.errors }}</div>{% endif %}
-					<div class="form-group">
-						{{ form.method_routing_body.label_tag }}
-						{{ form.method_routing_body }}
-					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-sm-12 hidden-xs">
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-green">Submit</button>
-					</div>
-				</div>
-			</div>
+        {% for method_routhing in method_routhings %}
+				<div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group" name="webui_props_value" cols="20" rows="1"  id="id_webui_props_key"><strong>{{ method_routhing.method_name }}</strong></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                LocalMapped <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">kafka_vSept2018</a></li>
+                                <li><a href="#">akka_vDec2018</a></li>
+                                <li><a href="#">mapped</a></li>
+                                <li><a href="#">rest_vMar2019</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-sm-4">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-green">Save</button>
+                        </div>
+                    </div>
+			    </div>
+			{% endfor %}
+
+
 		</form>
 	</div>
 </div>

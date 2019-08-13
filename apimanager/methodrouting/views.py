@@ -35,7 +35,80 @@ class IndexView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+        method_routhings=json.loads("""{
+  "method_routings": [
+    {
+      "method_name": "getChallengeThreshold",
+      "connector_name": "rest_vMar2019"
+    },
+    {
+      "method_name": "getChargeLevel",
+      "connector_name": "akka_vDec2018"
 
+    },
+    {
+      "method_name": "getBank",
+      "connector_name": "kafka_vMar2017"
+
+    },
+    {
+      "method_name": "getUser",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getBankAccounts",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getCounterparty",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getCoreBankAccounts",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getBankAccountByIban",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getBankAccountByRouting",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getBankAccountsBalances",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "checkBankAccountExists",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getCounterpartiesFromTransaction",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getCounterpartyTrait",
+      "connector_name": "mapped"
+
+    },
+    {
+      "method_name": "getCounterparty",
+      "connector_name": "mapped"
+
+    }
+  ]
+}""")
+        context.update({'method_routhings': method_routhings["method_routings"]})
         return context
 
     def get_form(self, *args, **kwargs):
