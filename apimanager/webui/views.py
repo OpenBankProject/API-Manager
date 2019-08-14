@@ -42,13 +42,14 @@ class IndexView(LoginRequiredMixin, FormView):
         try:
             response = api.get(urlpath)
         except APIError as err:
-            messages.error(self.request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
-
-        webui_props = response["webui_props"]
-
-        context.update({'webui_props': webui_props})
+            messages.error(self.request, Exception("OBP-API server is not running or do not response properly. "
+                                               "Please check OBP-API server.    "
+                                               "Details: " + str(err)))
+        except BaseException as err:
+            messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        else:
+            webui_props = response["webui_props"]
+            context.update({'webui_props': webui_props})
         return context
 
     def get_form(self, *args, **kwargs):
