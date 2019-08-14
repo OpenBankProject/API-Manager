@@ -136,4 +136,31 @@ class IndexView(LoginRequiredMixin, FormView):
         return super(IndexView, self).form_valid(form)
 
 def webui_save(request):
+    operation_id = request.POST.get('operation_id')
+    json_body = request.POST.get('json_body', '')
+    profile_id = request.POST.get('profile_id')
+    order = request.POST.get('order')
+    urlpath = request.POST.get('urlpath')
+    replica_id = request.POST.get('replica_id')
+    remark = request.POST.get('remark')
+
+    #if not re.match("^{.*}$", json_body):
+    #    json_body = "{{{}}}".format(json_body)
+
+    data = {
+        'operation_id' : operation_id,
+        'json_body': json_body,
+        'profile_id': profile_id,
+        'order': order,
+        'urlpath': urlpath,
+        'remark':remark,
+        'is_deleted':0
+    }
+
+    profile_list = ProfileOperation.objects.update_or_create(
+        operation_id=operation_id,
+        profile_id=profile_id,
+        replica_id=replica_id,
+        defaults=data
+    )
     return JsonResponse({'state': True})

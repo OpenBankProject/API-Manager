@@ -12,6 +12,7 @@ from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import MethodRoutingForm
 from django.urls import reverse_lazy
+from .models import MethodRouting
 
 def error_once_only(request, err):
     """
@@ -250,4 +251,32 @@ class IndexView(LoginRequiredMixin, FormView):
         return super(IndexView, self).form_valid(form)
 
 def methodrouting_save(request):
+    method = request.POST.get('method')
+    value = request.POST.get('value')
+    select1 = request.POST.get('select1')
+    select2 = request.POST.get('select2')
+    bank_id_pattern = request.POST.get('bank_id_pattern')
+    parameters = request.POST.get('parameters')
+
+    #if not re.match("^{.*}$", json_body):
+    #    json_body = "{{{}}}".format(json_body)
+
+    data = {
+        'method' : method,
+        'value': value,
+        'select1': select1,
+        'select2': select2,
+        'bank_id_pattern':bank_id_pattern,
+        'parameters':parameters
+    }
+
+    profile_list = MethodRouting.objects.update_or_create(
+        method=method,
+        value=value,
+        select1=select1,
+        select2=select2,
+        bank_id_pattern=bank_id_pattern,
+        parameters=parameters
+    )
+
     return JsonResponse({'state': True})
