@@ -28,7 +28,7 @@
 		<form method="post">
         {% csrf_token %}
         {% for method_routhing in method_routhings %}
-            <li class="runner">
+            <div class="runner">
                 <div class="row">
                     <div class="col-xs-12 col-sm-2">
                         <div class="form-group"  cols="1" rows="1" id="method_name"><strong>{{ method_routhing.method_name }}</strong></div>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </div>
         {% endfor %}
 		</form>
 	</div>
