@@ -28,36 +28,38 @@
 		<form method="post">
         {% csrf_token %}
         {% for method_routhing in method_routhings %}
-            <div class="row">
-                <div class="col-xs-12 col-sm-2">
-                    <div class="form-group"  cols="1" rows="1"><strong>{{ method_routhing.method_name }}</strong></div>
-                </div>
-                <div class="col-xs-12 col-sm-2" >
-                    <select>
-                      <option value="LocalMapped">LocalMapped</option>
-                      <option value="kafka_vSept2018">kafka_vSept2018</option>
-                      <option value="akka_vDec2018">akka_vDec2018</option>
-                      <option value="rest_vMar2019">rest_vMar2019</option>
-                    </select>
-                </div>
-                <div class="col-xs-12 col-sm-2">
-                    <textarea class="form-group" rows="1" >{{ method_routhing.bank_id_pattern }}</textarea>
-                </div>
-                <div class="col-xs-12 col-sm-2">
-                    <select>
-                      <option value="False">False</option>
-                      <option value="True">True</option>
-                    </select>
-                </div>
-                <div class="col-xs-12 col-sm-2">
-                    <textarea  cols="40" rows="1" class="form-control">{{ method_routhing.parameters }}</textarea>
-                </div>
-                <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-green">Save</button>
+            <li class="runner">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        <div class="form-group"  cols="1" rows="1" id="method_name"><strong>{{ method_routhing.method_name }}</strong></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2" >
+                        <select id="select1">
+                          <option value="LocalMapped">LocalMapped</option>
+                          <option value="kafka_vSept2018">kafka_vSept2018</option>
+                          <option value="akka_vDec2018">akka_vDec2018</option>
+                          <option value="rest_vMar2019">rest_vMar2019</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <textarea class="form-group" rows="1" name="bank_id_pattern">{{ method_routhing.bank_id_pattern }}</textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <select id="select2">
+                          <option value="False">False</option>
+                          <option value="True">True</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <textarea  cols="40" rows="1" class="form-control" name="parameters">{{ method_routhing.parameters }}</textarea>
+                    </div>
+                    <div class="col-sm-12 col-sm-2">
+                        <div class="form-group">
+                            <button id="forSave" class="btn btn-primary btn-green">Save</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </li>
         {% endfor %}
 		</form>
 	</div>

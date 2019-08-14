@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from obp.api import API, APIError
+from django.http import JsonResponse
 from .forms import WebuiForm
 from django.urls import reverse_lazy
 
@@ -79,3 +80,6 @@ class IndexView(LoginRequiredMixin, FormView):
         msg = 'Submission successfully!'
         messages.success(self.request, msg)
         return super(IndexView, self).form_valid(form)
+
+def webui_save(request):
+    return JsonResponse({'state': True})

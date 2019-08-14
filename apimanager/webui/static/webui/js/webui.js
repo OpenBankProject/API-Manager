@@ -22,4 +22,19 @@ $(document).ready(function($) {
 	}
 
 	$('#config-json').html((syntaxHighlight(ConfigJson)));
+
+	$('.runner button.forSave').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		method = $(runner).find('#id_webui_props_key').innerHTML;
+		value = $(runner).find('textarea[name="webui_props_value"]').val();
+
+		$.post('/webui/save/method', {
+			'method': method,
+			'value': value,
+			'csrfmiddlewaretoken': window.CSRF
+		}, function (response) {
+			t.next().show().fadeOut(1000);
+		});
+	});
 });

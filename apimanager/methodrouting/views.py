@@ -5,6 +5,7 @@ Views of config app
 
 import json
 
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
@@ -247,3 +248,6 @@ class IndexView(LoginRequiredMixin, FormView):
         msg = 'Submission successfully!'
         messages.success(self.request, msg)
         return super(IndexView, self).form_valid(form)
+
+def methodrouting_save(request):
+    return JsonResponse({'state': True})
