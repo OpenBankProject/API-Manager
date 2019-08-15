@@ -12,7 +12,7 @@ from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import MethodRoutingForm
 from django.urls import reverse_lazy
-from .models import MethodRouting
+from django.views.decorators.csrf import csrf_exempt
 
 def error_once_only(request, err):
     """
@@ -30,10 +30,6 @@ class IndexView(LoginRequiredMixin, FormView):
     template_name = "methodrouting/index.html"
     form_class = MethodRoutingForm
     success_url = reverse_lazy('methodrouting-index')
-
-    def dispatch(self, request, *args, **kwargs):
-        self.api = API(request.session.get('obp'))
-        return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -214,69 +210,36 @@ class IndexView(LoginRequiredMixin, FormView):
         context.update({'method_routhings': method_routhings["method_routings"]})
         return context
 
-    def get_form(self, *args, **kwargs):
-        form = super(IndexView, self).get_form(*args, **kwargs)
-        # Cannot add api in constructor: super complains about unknown kwarg
-        fields = form.fields
-        form.api = self.api
-        try:
-            fields['method_routing_body'].initial = ""
 
-        except APIError as err:
-            messages.error(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
-                                     "Please check OBP-API server.   Details: " + str(err))))
-        except Exception as err:
-            messages.error(self.request, "Unknown Error. Details: "+ str(err))
 
-        return form
-
-    def form_valid(self, form):
-        try:
-            data = form.cleaned_data
-            urlpath = '/management/method_routings'
-            payload = json.loads(data["method_routing_body"])
-            result = self.api.post(urlpath, payload=payload)
-        except APIError as err:
-            error_once_only(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
-                                     "Please check OBP-API server.   Details: " + str(err))))
-            return super(IndexView, self).form_invalid(form)
-        except Exception as err:
-            error_once_only(self.request, "Unknown Error. Details: "+ str(err))
-            return super(IndexView, self).form_invalid(form)
-        if 'code' in result and result['code']>=400:
-            error_once_only(self.request, result['message'])
-            return super(IndexView, self).form_valid(form)
-        msg = 'Submission successfully!'
-        messages.success(self.request, msg)
-        return super(IndexView, self).form_valid(form)
-
+@csrf_exempt
 def methodrouting_save(request):
-    method = request.POST.get('method')
-    value = request.POST.get('value')
-    select1 = request.POST.get('select1')
-    select2 = request.POST.get('select2')
+    method_name = request.POST.get('method_name')
+    connector_name = request.POST.get('connector_name')
     bank_id_pattern = request.POST.get('bank_id_pattern')
+    is_bank_id_exact_match = request.POST.get('is_bank_id_exact_match')
     parameters = request.POST.get('parameters')
 
-    #if not re.match("^{.*}$", json_body):
-    #    json_body = "{{{}}}".format(json_body)
-
-    data = {
-        'method' : method,
-        'value': value,
-        'select1': select1,
-        'select2': select2,
+    payload = {
+        'method_name' : method_name,
+        'connector_name': connector_name,
+        'is_bank_id_exact_match': bool(is_bank_id_exact_match),
         'bank_id_pattern':bank_id_pattern,
-        'parameters':parameters
+        'parameters':eval(parameters)
     }
 
-    profile_list = MethodRouting.objects.update_or_create(
-        method=method,
-        value=value,
-        select1=select1,
-        select2=select2,
-        bank_id_pattern=bank_id_pattern,
-        parameters=parameters
-    )
+    api = API(request.session.get('obp'))
 
+    try:
+        urlpath = '/management/method_routings'
+        result = api.post(urlpath, payload=payload)
+    except APIError as err:
+        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+                                                     "Please check OBP-API server.   Details: " + str(err))))
+    except Exception as err:
+        error_once_only(request, "Unknown Error. Details: " + str(err))
+    if 'code' in result and result['code'] >= 400:
+        error_once_only(request, result['message'])
+        msg = 'Submission successfully!'
+        messages.success(request, msg)
     return JsonResponse({'state': True})
