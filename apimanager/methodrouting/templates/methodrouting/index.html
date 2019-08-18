@@ -29,15 +29,18 @@
             <label class="form-group">Parameters:</label> <br>
         </div>
     </div>
-    {% for method_routing in method_routings %}
-        <div class="row">
-            <div class="runner">
+    <form method="post">
+        {% csrf_token %}
+        {% for method_routing in method_routings %}
+        <div class="runner">
+            <div class="row">
+                <input type="hidden", class="method_routing_id", value="{{ method_routing.method_routing_id }}">
                 <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1" >
-                        <strong id="method_name">{{ method_routing.method_name }}</strong></div>
+                    <div class="form-group" cols="1" rows="1"><strong
+                            class="method_name">{{ method_routing.method_name }}</strong></div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                    <select id="connector_name">
+                    <select class="connector_name form-control " }>
                         <option value="LocalMapped">LocalMapped</option>
                         <option value="kafka_vSept2018">kafka_vSept2018</option>
                         <option value="akka_vDec2018">akka_vDec2018</option>
@@ -45,28 +48,27 @@
                     </select>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                            <textarea class="form-group"
-                                      rows="1"
-                                      name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
+                    <textarea class="form-control" rows="1"
+                              name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
                 </div>
                 <div class="col-xs-12 col-sm-2" align="center">
-                    <select id="is_bank_id_exact_match" >
+                    <select class="is_bank_id_exact_match form-control">
                         <option value="False">False</option>
                         <option value="True">True</option>
                     </select>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                            <textarea cols="40"
-                                      rows="1"
-                                      class="form-control"
-                                      name="parameters">{{ method_routing.parameters }}</textarea>
+                    <textarea cols="40" rows="1" class="form-control"
+                              name="parameters">{{ method_routing.parameters }}</textarea>
                 </div>
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">
-                        <button id="forSave" class="btn btn-primary btn-green">Save</button>
+                        <button class="btn btn-primary btn-green forSave">Save</button>
+                        <button class="btn btn-primary btn-green forDelete">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
     {% endfor %}
+    </form>
 {% endblock %}
