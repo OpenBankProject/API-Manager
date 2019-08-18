@@ -29,12 +29,12 @@
             <label class="form-group">Parameters:</label> <br>
         </div>
     </div>
-    {% for method_routhing in method_routhings %}
+    {% for method_routing in method_routings %}
         <div class="row">
             <div class="runner">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1" >
-                        <strong id="method_name">{{ method_routhing.method_name }}</strong></div>
+                        <strong id="method_name">{{ method_routing.method_name }}</strong></div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <select id="connector_name">
@@ -47,7 +47,7 @@
                 <div class="col-xs-12 col-sm-2">
                             <textarea class="form-group"
                                       rows="1"
-                                      name="bank_id_pattern">{{ method_routhing.bank_id_pattern }}</textarea>
+                                      name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
                 </div>
                 <div class="col-xs-12 col-sm-2" align="center">
                     <select id="is_bank_id_exact_match" >
@@ -59,7 +59,7 @@
                             <textarea cols="40"
                                       rows="1"
                                       class="form-control"
-                                      name="parameters">{{ method_routhing.parameters }}</textarea>
+                                      name="parameters">{{ method_routing.parameters }}</textarea>
                 </div>
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">

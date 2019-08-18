@@ -33,184 +33,20 @@ class IndexView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        method_routhings=json.loads("""{
-  "method_routings": [
-    {
-      "method_name": "getChallengeThreshold",
-      "connector_name": "rest_vMar2019",
-      "bank_id_pattern": "some_bankId_.+d",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getChargeLevel",
-      "connector_name": "akka_vDec2018",
-      "bank_id_pattern": "some_bankId_.[a-zA-Z]",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getBank",
-      "connector_name": "kafka_vMar2017",
-      "bank_id_pattern": "*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
+        api = API(self.request.session.get('obp'))
+        urlpath = '/management/method_routings?active=true'
 
-    },
-    {
-      "method_name": "getUser",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_[0-9]",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getBankAccounts",
-      "connector_name": "mapped",
-      "bank_id_pattern": "[a-z]{6}",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getCounterparty",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_[789][0-9]{9}",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getCoreBankAccounts",
-      "connector_name": "mapped",
-      "bank_id_pattern": "[0-9]{6}",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-
-    },
-    {
-      "method_name": "getBankAccountByIban",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getBankAccountByRouting",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getBankAccountsBalances",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "checkBankAccountExists",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getCounterpartiesFromTransaction",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getCounterpartyTrait",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    },
-    {
-      "method_name": "getCounterparty",
-      "connector_name": "mapped",
-      "bank_id_pattern": "some_bankId_.*",
-      "is_bank_id_exact_match": false,
-      "parameters": [
-        {
-          "key": "url",
-          "value": "http://127.0.0.1:8088/bnpedapi"
-        }
-      ]
-    }
-  ]
-}""")
-        context.update({'method_routhings': method_routhings["method_routings"]})
+        try:
+            response = api.get(urlpath)
+        except APIError as err:
+            messages.error(self.request, Exception("OBP-API server is not running or do not response properly. "
+                                                   "Please check OBP-API server.    "
+                                                   "Details: " + str(err)))
+        except BaseException as err:
+            messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        else:
+            context.update(response)
         return context
-
-
 
 @csrf_exempt
 def methodrouting_save(request):

@@ -41,61 +41,7 @@ class IndexView(LoginRequiredMixin, FormView):
         urlpath = '/management/webui_props?active=true'
 
         try:
-            # response = api.get(urlpath)
-            response = json.loads("""{
-  "webui_props": [
-    {
-      "name": "webui_header_logo_left_url ",
-      "value": " /media/images/logo.png",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_header_logo_right_url ",
-      "value": "",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_index_page_about_section_background_image_url ",
-      "value": " /media/images/about-background.jpg",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_top_text",
-      "value": "",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_api_explorer_url ",
-      "value": " https://apiexplorer.openbankproject.com",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_sofi_url ",
-      "value": " https://sofi.openbankproject.com",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_api_manager_url ",
-      "value": " https://apimanager.openbankproject.com",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_api_manager_url ",
-      "value": " https://apitester.openbankproject.com",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_api_documentation_url ",
-      "value": " https://github.com/OpenBankProject/OBP-API/wiki",
-      "web_ui_props_id": "default"
-    },
-    {
-      "name": "webui_login_page_special_instructions",
-      "value": "",
-      "web_ui_props_id": "default"
-    }
-  ]
-}""")
+            response = api.get(urlpath)
         except APIError as err:
             messages.error(self.request, Exception("OBP-API server is not running or do not response properly. "
                                                "Please check OBP-API server.    "
