@@ -90,3 +90,22 @@ def webui_save(request):
         msg = 'Submission successfully!'
         messages.success(request, msg)
     return JsonResponse({'state': True})
+
+@csrf_exempt
+def webui_delete(request):
+    web_ui_props_id = request.POST.get('web_ui_props_id')
+
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/management/webui_props/{}'.format(web_ui_props_id)
+        result = api.delete(urlpath)
+    except APIError as err:
+        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+                                                    "Please check OBP-API server.   Details: " + str(err))))
+    except Exception as err:
+        error_once_only(request, "Unknown Error. Details: " + str(err))
+    if 'code' in result and result['code'] >= 400:
+        error_once_only(request, result['message'])
+        msg = 'Submission successfully!'
+        messages.success(request, msg)
+    return JsonResponse({'state': True})
