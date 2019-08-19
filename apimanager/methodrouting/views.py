@@ -60,7 +60,7 @@ def methodrouting_save(request):
     payload = {
         'method_name' : method_name,
         'connector_name': connector_name,
-        'is_bank_id_exact_match': bool(is_bank_id_exact_match),
+        'is_bank_id_exact_match': (is_bank_id_exact_match=="True"),
         'bank_id_pattern':bank_id_pattern,
         'parameters':eval(parameters),
         'method_routing_id':method_routing_id
