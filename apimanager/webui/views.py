@@ -12,6 +12,7 @@ from obp.api import API, APIError
 from django.http import JsonResponse
 from .forms import WebuiForm
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 
 def error_once_only(request, err):
     """
@@ -36,7 +37,6 @@ class IndexView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        webui_props = []
         api = API(self.request.session.get('obp'))
         urlpath = '/management/webui_props?active=true'
 
@@ -49,64 +49,44 @@ class IndexView(LoginRequiredMixin, FormView):
         except BaseException as err:
             messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
-            webui_props = response["webui_props"]
-            context.update({'webui_props': webui_props})
+            # Here is response of getWebuiProps.
+            # {
+            #     "webui_props": [
+            #         {
+            #             "name": "webui_header_logo_left_url ",
+            #             "value": " /media/images/logo.png",
+            #             "web_ui_props_id": "default"
+            #         }
+            #     ]
+            # }
+            context.update(response)
         return context
 
     def get_form(self, *args, **kwargs):
         form = super(IndexView, self).get_form(*args, **kwargs)
         return form
 
-    def form_valid(self, form):
-        try:
-            # TODO, need to be fixed later.
-            data = form.cleaned_data
-            urlpath = '/management/webui_props'
-            payload = {
-                "name"  : "1",
-                "value" : "2"
-            }
-            result = self.api.post(urlpath, payload=payload)
-        except APIError as err:
-            error_once_only(self.request, APIError(Exception("OBP-API server is not running or do not response properly. "
-                                     "Please check OBP-API server.   Details: " + str(err))))
-            return super(IndexView, self).form_invalid(form)
-        except Exception as err:
-            error_once_only(self.request, "Unknown Error. Details: "+ str(err))
-            return super(IndexView, self).form_invalid(form)
-        if 'code' in result and result['code']>=400:
-            error_once_only(self.request, result['message'])
-            return super(IndexView, self).form_valid(form)
-        msg = 'Submission successfully!'
-        messages.success(self.request, msg)
-        return super(IndexView, self).form_valid(form)
-
+@csrf_exempt
 def webui_save(request):
-    operation_id = request.POST.get('operation_id')
-    json_body = request.POST.get('json_body', '')
-    profile_id = request.POST.get('profile_id')
-    order = request.POST.get('order')
-    urlpath = request.POST.get('urlpath')
-    replica_id = request.POST.get('replica_id')
-    remark = request.POST.get('remark')
+    webui_props_name = request.POST.get('webui_props_name')
+    webui_props_value = request.POST.get('webui_props_value')
 
-    #if not re.match("^{.*}$", json_body):
-    #    json_body = "{{{}}}".format(json_body)
-
-    data = {
-        'operation_id' : operation_id,
-        'json_body': json_body,
-        'profile_id': profile_id,
-        'order': order,
-        'urlpath': urlpath,
-        'remark':remark,
-        'is_deleted':0
+    payload = {
+        'name': webui_props_name,
+        'value': webui_props_value
     }
 
-    profile_list = ProfileOperation.objects.update_or_create(
-        operation_id=operation_id,
-        profile_id=profile_id,
-        replica_id=replica_id,
-        defaults=data
-    )
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/management/webui_props'
+        result = api.post(urlpath, payload=payload)
+    except APIError as err:
+        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+                                                    "Please check OBP-API server.   Details: " + str(err))))
+    except Exception as err:
+        error_once_only(request, "Unknown Error. Details: " + str(err))
+    if 'code' in result and result['code'] >= 400:
+        error_once_only(request, result['message'])
+        msg = 'Submission successfully!'
+        messages.success(request, msg)
     return JsonResponse({'state': True})

@@ -4,62 +4,63 @@
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
 {% block content %}
-<div id="webui">
-	<div id="webui_list">
-		<h1>WEBUI</h1>
+    <div id="webui">
+        <div id="webui_list">
+            <h1>WEBUI</h1>
 
-{#		<form method="post" action="{% url 'webui:webui-index' %}">#}
-		<form method="post">
-			{% csrf_token %}
-			{% if form.non_field_errors %}
-			<div class="alert alert-danger">
-				{{ form.non_field_errors }}
-			</div>
-			{% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-4">
-                    <label class="form-group" >Web UI Props Name:</label> <br>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                    <label class="form-group" >Web UI Props Value:</label> <br>
-                </div>
-                <div class="col-sm-12 col-sm-4">
-                    <label class="form-group" >Save Value:</label> <br>
-				</div>
-			</div>
-
-            {% for webui_prop in webui_props %}
-            <div class="runner">
-				<div class="row">
+                <div class="row">
                     <div class="col-xs-12 col-sm-4">
-                        <div class="form-group" name="webui_props_value" cols="20" rows="1"  id="id_webui_props_key"><strong>{{ webui_prop.name }}</strong></div>
+                        <label class="form-group">Web UI Props Name:</label> <br>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <textarea name="webui_props_value" cols="40" rows="1" class="form-control" id="id_webui_props_value">{{ webui_prop.value }}</textarea>
-                        </div>
+                        <label class="form-group">Web UI Props Value:</label> <br>
                     </div>
                     <div class="col-sm-12 col-sm-4">
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-green" id="forSave">Save</button>
+                        <label class="form-group">Save Value:</label> <br>
+                    </div>
+                </div>
+
+                {% for webui_prop in webui_props %}
+                    <div class="runner">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" cols="20" rows="1"><strong
+                                        class="webui_props_name">{{ webui_prop.name }}</strong></div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <textarea class="form-control webui_props_value" cols="40"
+                                              rows="1">{{ webui_prop.value }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-sm-4">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-green forSave">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-			    </div>
-            </div>
-			{% endfor %}
+                {% endfor %}
 
-		</form>
-	</div>
-</div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extrajs %}
-	<script type="text/javascript" src="{% static 'webui/js/webui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'webui/js/webui.js' %}"></script>
 
 {% endblock extrajs %}
 
 
 {% block extracss %}
-	<link href="{% static 'webui/css/webui.css' %}" rel="stylesheet">
+    <link href="{% static 'webui/css/webui.css' %}" rel="stylesheet">
 {% endblock extracss %}
