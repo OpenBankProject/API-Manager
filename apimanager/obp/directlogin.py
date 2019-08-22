@@ -42,7 +42,7 @@ class DirectLoginAuthenticator(Authenticator):
             # This will get the directLogin Token back.
             response = requests.post(url, headers=headers)
         except requests.exceptions.ConnectionError as err:
-            raise AuthenticatorError(Exception("OBP-API server is not running or do not response properly. "
+            raise AuthenticatorError(Exception("The OBP-API server is not running or does not respond properly."
                                                "Please check OBP-API server.    "
                                                "Details: "+str(err)))
         except BaseException as err:
