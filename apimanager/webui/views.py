@@ -43,7 +43,7 @@ class IndexView(LoginRequiredMixin, FormView):
         try:
             response = api.get(urlpath)
         except APIError as err:
-            messages.error(self.request, Exception("OBP-API server is not running or do not response properly. "
+            messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
                                                "Please check OBP-API server.    "
                                                "Details: " + str(err)))
         except BaseException as err:
@@ -81,7 +81,7 @@ def webui_save(request):
         urlpath = '/management/webui_props'
         result = api.post(urlpath, payload=payload)
     except APIError as err:
-        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+        error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                     "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
         error_once_only(request, "Unknown Error. Details: " + str(err))
@@ -100,7 +100,7 @@ def webui_delete(request):
         urlpath = '/management/webui_props/{}'.format(web_ui_props_id)
         result = api.delete(urlpath)
     except APIError as err:
-        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+        error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                     "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
         error_once_only(request, "Unknown Error. Details: " + str(err))

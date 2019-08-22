@@ -39,7 +39,7 @@ class IndexView(LoginRequiredMixin, FormView):
         try:
             response = api.get(urlpath)
         except APIError as err:
-            messages.error(self.request, Exception("OBP-API server is not running or do not response properly. "
+            messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
                                                    "Please check OBP-API server.    "
                                                    "Details: " + str(err)))
         except BaseException as err:
@@ -75,7 +75,7 @@ def methodrouting_save(request):
             urlpath = '/management/method_routings/{}'.format(method_routing_id)
             result = api.put(urlpath, payload=payload)
     except APIError as err:
-        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+        error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                      "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
         error_once_only(request, "Unknown Error. Details: " + str(err))
@@ -90,13 +90,13 @@ def methodrouting_save(request):
 def methodrouting_delete(request):
     method_routing_id = request.POST.get('method_routing_id')
 
-    api = API(request.session.get('obp'))
+    api = API(request.session.get('The OBP-API server is not running or does not respond properly.obp'))
 
     try:
         urlpath = '/management/method_routings/{}'.format(method_routing_id)
         result = api.delete(urlpath)
     except APIError as err:
-        error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "
+        error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                      "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
         error_once_only(request, "Unknown Error. Details: " + str(err))

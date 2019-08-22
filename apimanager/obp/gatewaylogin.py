@@ -53,7 +53,7 @@ class GatewayLoginAuthenticator(Authenticator):
         try:
             response = api.get(url)
         except requests.exceptions.ConnectionError as err:
-            raise AuthenticatorError(Exception("OBP-API server is not running or do not response properly. "
+            raise AuthenticatorError(Exception("The OBP-API server is not running or does not respond properly."
                                                "Please check OBP-API server.    "
                                                "Details: " + str(err)))
         except BaseException as err:
