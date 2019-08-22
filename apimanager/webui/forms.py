@@ -16,6 +16,8 @@ class WebuiForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
+                'cols': '40',
+                'rows': '1'
             }
         ),
         required=False

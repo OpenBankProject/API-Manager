@@ -61,11 +61,17 @@
 						</ul>
 					</li>
 					{% url "config-index" as config_index_url %}
-					<li{% ifequal request.path config_index_url %} class="active" {% endifequal %}><a href="{{ config_index_url }}">Config</a></li>
 					{% url "webui-index" as webui_props_index_url %}
-					<li{% ifequal request.path webui_props_index_url %} class="active" {% endifequal %}><a href="{{ webui_props_index_url }}">Webui Props</a></li>
                     {% url "methodrouting-index" as methodrouting_index_url %}
-					<li{% ifequal request.path methodrouting_index_url %} class="active" {% endifequal %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li>
+                    <li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Configurations</a>
+						<ul class="dropdown-menu">
+							<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">Config</a></li>
+							<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">Webui Props</a></li>
+							<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li>
+						</ul>
+					</li>
+
 				{% if API_TESTER_URL %}
 					<li>
 						<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>

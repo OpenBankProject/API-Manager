@@ -1,25 +1,34 @@
 $(document).ready(function($) {
-	function syntaxHighlight(json) {
-		if (typeof json != 'string') {
-			 json = JSON.stringify(json, undefined, 2);
-		}
-		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-		return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-			var cls = 'number';
-			if (/^"/.test(match)) {
-				if (/:$/.test(match)) {
-					cls = 'key';
-				} else {
-					cls = 'string';
-				}
-			} else if (/true|false/.test(match)) {
-				cls = 'boolean';
-			} else if (/null/.test(match)) {
-				cls = 'null';
-			}
-			return '<span class="' + cls + '">' + match + '</span>';
-		});
-	}
+	$('.runner button.forSave').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		method_routing_id = $(runner).find('.method_routing_id').val();
+		method_name = $(runner).find('.method_name').text();
+		connector_name = $(runner).find('.connector_name').val();
+		bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
+		is_bank_id_exact_match = $(runner).find('.is_bank_id_exact_match').val();
+		parameters = $(runner).find('textarea[name="parameters"]').val();
 
-	$('#config-json').html((syntaxHighlight(ConfigJson)));
+		$.post('methodrouting/save/method', {
+			'method_routing_id': method_routing_id,
+			'method_name': method_name,
+			'connector_name': connector_name,
+			'bank_id_pattern': bank_id_pattern,
+			'is_bank_id_exact_match': is_bank_id_exact_match,
+			'parameters': parameters
+		}, function (response) {
+			t.next().show().fadeOut(1000);
+		});
+	});
+
+	$('.runner button.forDelete').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		method_routing_id = $(runner).find('.method_routing_id').val();
+		$.post('methodrouting/delete/method', {
+			'method_routing_id': method_routing_id
+		}, function (response) {
+			t.next().show().fadeOut(1000);
+		});
+	});
 });

@@ -1,25 +1,27 @@
 $(document).ready(function($) {
-	function syntaxHighlight(json) {
-		if (typeof json != 'string') {
-			 json = JSON.stringify(json, undefined, 2);
-		}
-		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-		return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-			var cls = 'number';
-			if (/^"/.test(match)) {
-				if (/:$/.test(match)) {
-					cls = 'key';
-				} else {
-					cls = 'string';
-				}
-			} else if (/true|false/.test(match)) {
-				cls = 'boolean';
-			} else if (/null/.test(match)) {
-				cls = 'null';
-			}
-			return '<span class="' + cls + '">' + match + '</span>';
-		});
-	}
+	$('.runner button.forSave').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		webui_props_name = $(runner).find('.webui_props_name').text();
+		webui_props_value = $(runner).find('.webui_props_value').val();
 
-	$('#config-json').html((syntaxHighlight(ConfigJson)));
+		$.post('/webui/save/method', {
+			'webui_props_name': webui_props_name,
+			'webui_props_value': webui_props_value
+		}, function (response) {
+			t.next().show().fadeOut(1000);
+		});
+	});
+
+	$('.runner button.forDelete').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		web_ui_props_id = $(runner).find('.web_ui_props_id').val();
+
+		$.post('/webui/delete/method', {
+			'web_ui_props_id': web_ui_props_id
+		}, function (response) {
+			t.next().show().fadeOut(1000);
+		});
+	});
 });

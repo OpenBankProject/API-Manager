@@ -78,7 +78,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 messages.error(self.request, consumers['message'])
             else:
                 consumers = FilterEnabled(context, self.request.GET)\
-                    .apply(consumers['list'])
+                        .apply(consumers['consumers'])
                 consumers = FilterAppType(context, self.request.GET)\
                     .apply(consumers)
                 consumers = FilterTime(context, self.request.GET, 'created')\

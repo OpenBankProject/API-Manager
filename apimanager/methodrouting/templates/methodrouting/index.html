@@ -1,49 +1,96 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
+{% endblock extrajs %}
+{% block extracss %}
+    <link href="{% static 'methodrouting/css/methodrouting.css' %}" rel="stylesheet">
+{% endblock extracss %}
 
 {% block content %}
-<div id="methodrouting">
-	<div id="methodrouting_list">
-		<h1>Method Routing</h1>
 
-		<form method="post">
-			{% csrf_token %}
-			{% if form.non_field_errors %}
-			<div class="alert alert-danger">
-				{{ form.non_field_errors }}
-			</div>
-			{% endif %}
+    <h1>Method Routing</h1>
 
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">Method Name:</label> <br>
+        </div>
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">Connector Name:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Bank Id Pattern:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Is Bank Id Exact Match:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Parameters:</label> <br>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for method_routing in method_routings %}
+        <div class="runner">
             <div class="row">
-                <div class="col-xs-12 col-sm-4">
-					{% if form.method_routing_body.errors %}<div class="alert alert-danger">{{ form.method_routing_body.errors }}</div>{% endif %}
-					<div class="form-group">
-						{{ form.method_routing_body.label_tag }}
-						{{ form.method_routing_body }}
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-12 hidden-xs">
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-green">Submit</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+                <input type="hidden", class="method_routing_id", value="{{ method_routing.method_routing_id }}">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1"><strong
+                            class="method_name">{{ method_routing.method_name }}</strong></div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <select class="connector_name form-control " }>
+                        {% if method_routing.connector_name == "mapped" %}
+                            <option value="mapped">mapped</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                        {% elif method_routing.connector_name == "kafka_vSept2018" %}
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                        {% elif method_routing.connector_name == "akka_vDec2018" %}
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                        {% elif method_routing.connector_name == "rest_vMar2019" %}
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <textarea class="form-control" rows="1"
+                              name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
+                </div>
+                <div class="col-xs-12 col-sm-2" align="center">
+                    <select class="is_bank_id_exact_match form-control">
+                        {% if method_routing.is_bank_id_exact_match == False %}
+                            <option value="False">False</option>
+                            <option value="True">True</option>
+                        {% else %}
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <textarea cols="40" rows="1" class="form-control"
+                              name="parameters">{{ method_routing.parameters }}</textarea>
+                </div>
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-green forSave">Save</button>
+                        <button class="btn btn-primary btn-red forDelete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </form>
 {% endblock %}
-
-{% block extrajs %}
-	<script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
-
-{% endblock extrajs %}
-
-
-{% block extracss %}
-	<link href="{% static 'methodrouting/css/methodrouting.css' %}" rel="stylesheet">
-{% endblock extracss %}
