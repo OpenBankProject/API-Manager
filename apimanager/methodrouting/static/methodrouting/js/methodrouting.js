@@ -28,7 +28,7 @@ $(document).ready(function($) {
 		$.post('methodrouting/delete/method', {
 			'method_routing_id': method_routing_id
 		}, function (response) {
-			t.next().show().fadeOut(1000);
+			t.parent().parent().parent().remove();
 		});
 	});
 });
