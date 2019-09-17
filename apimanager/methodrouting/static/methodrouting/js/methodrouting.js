@@ -2,7 +2,7 @@ $(document).ready(function($) {
 	$('.runner button.forSave').click(function() {
 		var t = $(this);
 		var runner = $(this).parent().parent().parent();
-		method_routing_id = $(runner).find('.method_routing_id').val();
+		method_routing_id = $(runner).find('.method_routing_id').text();
 		method_name = $(runner).find('.method_name').text();
 		connector_name = $(runner).find('.connector_name').val();
 		bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
@@ -24,7 +24,7 @@ $(document).ready(function($) {
 	$('.runner button.forDelete').click(function() {
 		var t = $(this);
 		var runner = $(this).parent().parent().parent();
-		method_routing_id = $(runner).find('.method_routing_id').val();
+		method_routing_id = $(runner).find('.method_routing_id').text();
 		$.post('methodrouting/delete/method', {
 			'method_routing_id': method_routing_id
 		}, function (response) {

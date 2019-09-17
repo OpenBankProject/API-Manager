@@ -63,13 +63,20 @@ def methodrouting_save(request):
         'method_routing_id':method_routing_id
     }
 
-    if method_routing_id!="":
-        method_routing_id = "/"+method_routing_id
-
     api = API(request.session.get('obp'))
-    urlpath = '/management/method_routings{}'.format(method_routing_id)
-    result = api.put(urlpath, payload=payload)
-    return result
+    try:
+        if(""==method_routing_id): # if method_routing_id=="". we will create a new method routing .
+            urlpath = '/management/method_routings'
+            result = api.post(urlpath, payload=payload)
+        else: # if method_routing_id not empty. we will update the current method routing ..
+            urlpath = '/management/method_routings/{}'.format(method_routing_id)
+            result = api.put(urlpath, payload=payload)
+    except APIError as err:
+        exception_handle(Exception("OBP-API server is not running or do not response properly. "
+                                                     "Please check OBP-API server.   Details: " + str(err)))
+    if 'code' in result and result['code'] >= 400:
+         exception_handle(Exception(result['message']))
+
 
 @exception_handle
 @csrf_exempt
