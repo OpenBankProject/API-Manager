@@ -87,7 +87,7 @@ def webui_save(request):
         error_once_only(request, "Unknown Error. Details: " + str(err))
     if 'code' in result and result['code'] >= 400:
         error_once_only(request, result['message'])
-        msg = 'Submission successfully!'
+        msg = 'Submit successfully!'
         messages.success(request, msg)
     return JsonResponse({'state': True})
 
@@ -106,6 +106,6 @@ def webui_delete(request):
         error_once_only(request, "Unknown Error. Details: " + str(err))
     if 'code' in result and result['code'] >= 400:
         error_once_only(request, result['message'])
-        msg = 'Submission successfully!'
+        msg = 'Submit successfully!'
         messages.success(request, msg)
     return JsonResponse({'state': True})

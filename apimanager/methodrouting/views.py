@@ -32,7 +32,7 @@ class IndexView(LoginRequiredMixin, FormView):
             if 'code' in response and response['code'] >= 400:
                 error_once_only(self.request, response['message'])
             else:
-                msg = 'Submission successfully!'
+                msg = 'Submit successfully!'
                 messages.success(self.request, msg)
         except APIError as err:
             error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
