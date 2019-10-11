@@ -10,9 +10,7 @@
     <div id="users-filters">
         <h4>Filters</h4>
         <div class="hidden-xs">
-			{% if role_names %}
-            	{% include "users/includes/filter_role.html" %}
-			{% endif %}
+            {% include "users/includes/filter_role.html" %}
             {% include "users/includes/filter_email.html" %}
             {% include "users/includes/filter_username.html" %}
         </div>
