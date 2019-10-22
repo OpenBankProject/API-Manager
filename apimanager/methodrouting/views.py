@@ -38,14 +38,17 @@ class IndexView(LoginRequiredMixin, FormView):
 
         try:
             response = api.get(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+                context.update({'method_routings': []})
+            else:
+                context.update(response)
         except APIError as err:
             messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
                                                    "Please check OBP-API server.    "
                                                    "Details: " + str(err)))
         except BaseException as err:
             messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
-        else:
-            context.update(response)
         return context
 
 @csrf_exempt
