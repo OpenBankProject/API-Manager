@@ -5,12 +5,20 @@ $(document).ready(function($) {
 		webui_props_name = $(runner).find('.webui_props_name').text();
 		webui_props_value = $(runner).find('.webui_props_value').val();
 
-		$.post('/webui/save/method', {
-			'webui_props_name': webui_props_name,
-			'webui_props_value': webui_props_value
-		}, function (response) {
-			t.next().show().fadeOut(1000);
-		});
+		$.ajax({
+          type: 'POST',
+          url: '/webui/save/method',
+          data: {
+                'webui_props_name': webui_props_name,
+                'webui_props_value': webui_props_value,
+                'csrfmiddlewaretoken': window.CSRF
+            },
+          success: function (response) {
+              alert('Saved');
+              t.next().show().fadeOut(1000);
+        },
+          async:false
+        });
 	});
 
 	$('.runner button.forDelete').click(function() {
