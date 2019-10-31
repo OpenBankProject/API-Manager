@@ -80,25 +80,32 @@ def webui_save(request):
     }
 
     api = API(request.session.get('obp'))
+    status_code = 200
     try:
         urlpath = '/management/webui_props'
         result = api.post(urlpath, payload=payload)
     except APIError as err:
+        status_code = 500
         error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                     "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
+        status_code = 500
         error_once_only(request, "Unknown Error. Details: " + str(err))
     if 'code' in result and result['code'] >= 400:
+        status_code = result['code']
         error_once_only(request, result['message'])
-        msg = 'Submit successfully!'
-        messages.success(request, msg)
-    return JsonResponse({'state': True})
+
+    errors = [str(m.message) for m in messages.get_messages(request)]
+    response = JsonResponse({'state': len(errors) == 0, 'errors': errors})
+    response.status_code = status_code
+    return response
 
 @csrf_exempt
 def webui_delete(request):
     web_ui_props_id = request.POST.get('web_ui_props_id')
 
     api = API(request.session.get('obp'))
+    status_code = 200
     try:
         urlpath = '/management/webui_props/{}'.format(web_ui_props_id)
         result = api.delete(urlpath)
@@ -108,7 +115,10 @@ def webui_delete(request):
     except Exception as err:
         error_once_only(request, "Unknown Error. Details: " + str(err))
     if 'code' in result and result['code'] >= 400:
+        status_code = result['code']
         error_once_only(request, result['message'])
-        msg = 'Submit successfully!'
-        messages.success(request, msg)
-    return JsonResponse({'state': True})
+
+    errors = [str(m.message) for m in messages.get_messages(request)]
+    response = JsonResponse({'state': len(errors) == 0, 'errors': errors})
+    response.status_code = status_code
+    return response
