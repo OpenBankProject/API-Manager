@@ -23,14 +23,15 @@
                 {% for webui_prop in webui_props %}
                     <div class="runner">
                         <div class="row">
-                            <input type="hidden" , class="web_ui_props_id" , value="{{ webui_prop.web_ui_props_id }}">
+                            <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}"/>
                             <div class="col-xs-12 col-sm-4">
-                                <div class="form-group" cols="20" rows="1"><div
-                                        class="webui_props_name">{{ webui_prop.name }}</div></div>
+                                <div class="form-group" cols="20" rows="1">
+                                    <div class="web_ui_props_name">{{ webui_prop.name }}</div>
+                                </div>
                             </div>
                             <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
-                                    <textarea class="form-control required webui_props_value" cols="40"
+                                    <textarea class="form-control required web_ui_props_value" cols="40"
                                               rows="1">{{ webui_prop.value }}</textarea>
                                 </div>
                             </div>
