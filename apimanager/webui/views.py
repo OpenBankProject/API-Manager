@@ -14,6 +14,7 @@ from .forms import WebuiForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 
+
 def error_once_only(request, err):
     """
     Just add the error once
@@ -24,6 +25,7 @@ def error_once_only(request, err):
     storage = messages.get_messages(request)
     if str(err) not in [str(m.message) for m in storage]:
         messages.error(request, err)
+
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
@@ -59,8 +61,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 context.update(response)
         except APIError as err:
             messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
-                                               "Please check OBP-API server.    "
-                                               "Details: " + str(err)))
+                                                   "Please check OBP-API server.    "
+                                                   "Details: " + str(err)))
         except BaseException as err:
             messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
         return context
@@ -68,6 +70,7 @@ class IndexView(LoginRequiredMixin, FormView):
     def get_form(self, *args, **kwargs):
         form = super(IndexView, self).get_form(*args, **kwargs)
         return form
+
 
 @csrf_exempt
 def webui_save(request):
@@ -83,15 +86,17 @@ def webui_save(request):
     status_code = response['code']
 
     errors = [str(m.message) for m in messages.get_messages(request)]
-    response = JsonResponse({'code': status_code, 'errors': errors, 'web_ui_props_id': response['result']['web_ui_props_id']})
+    response = JsonResponse(
+        {'code': status_code, 'errors': errors, 'web_ui_props_id': response['result'].get('web_ui_props_id')})
     response.status_code = status_code
     return response
+
 
 @csrf_exempt
 def webui_delete(request):
     web_ui_props_id = request.POST.get('web_ui_props_id')
     web_ui_props_name = request.POST.get('web_ui_props_name')
-    if web_ui_props_id == 'default' or web_ui_props_id == ''or web_ui_props_id is None:
+    if web_ui_props_id == 'default' or web_ui_props_id == '' or web_ui_props_id is None:
         status_code = 200
     else:
         status_code = __send_request(request, '/management/webui_props/' + web_ui_props_id, 'delete')['code']
@@ -109,7 +114,8 @@ def webui_delete(request):
     response.status_code = status_code
     return response
 
-def __send_request(request, url, method_name, payload = None):
+
+def __send_request(request, url, method_name, payload=None):
     api = API(request.session.get('obp'))
     code = 200
     try:
