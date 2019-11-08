@@ -14,6 +14,7 @@ from .forms import WebuiForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 
+
 def error_once_only(request, err):
     """
     Just add the error once
@@ -24,6 +25,7 @@ def error_once_only(request, err):
     storage = messages.get_messages(request)
     if str(err) not in [str(m.message) for m in storage]:
         messages.error(request, err)
+
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
@@ -59,8 +61,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 context.update(response)
         except APIError as err:
             messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
-                                               "Please check OBP-API server.    "
-                                               "Details: " + str(err)))
+                                                   "Please check OBP-API server.    "
+                                                   "Details: " + str(err)))
         except BaseException as err:
             messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
         return context
@@ -69,46 +71,68 @@ class IndexView(LoginRequiredMixin, FormView):
         form = super(IndexView, self).get_form(*args, **kwargs)
         return form
 
+
 @csrf_exempt
 def webui_save(request):
-    webui_props_name = request.POST.get('webui_props_name')
-    webui_props_value = request.POST.get('webui_props_value')
+    web_ui_props_name = request.POST.get('web_ui_props_name')
+    web_ui_props_value = request.POST.get('web_ui_props_value')
 
     payload = {
-        'name': webui_props_name,
-        'value': webui_props_value
+        'name': web_ui_props_name,
+        'value': web_ui_props_value
     }
 
-    api = API(request.session.get('obp'))
-    try:
-        urlpath = '/management/webui_props'
-        result = api.post(urlpath, payload=payload)
-    except APIError as err:
-        error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
-                                                    "Please check OBP-API server.   Details: " + str(err))))
-    except Exception as err:
-        error_once_only(request, "Unknown Error. Details: " + str(err))
-    if 'code' in result and result['code'] >= 400:
-        error_once_only(request, result['message'])
-        msg = 'Submission successfully!'
-        messages.success(request, msg)
-    return JsonResponse({'state': True})
+    response = __send_request(request, '/management/webui_props', 'post', payload)
+    status_code = response['code']
+
+    errors = [str(m.message) for m in messages.get_messages(request)]
+    response = JsonResponse(
+        {'code': status_code, 'errors': errors, 'web_ui_props_id': response['result'].get('web_ui_props_id')})
+    response.status_code = status_code
+    return response
+
 
 @csrf_exempt
 def webui_delete(request):
     web_ui_props_id = request.POST.get('web_ui_props_id')
+    web_ui_props_name = request.POST.get('web_ui_props_name')
+    if web_ui_props_id == 'default' or web_ui_props_id == '' or web_ui_props_id is None:
+        status_code = 200
+    else:
+        status_code = __send_request(request, '/management/webui_props/' + web_ui_props_id, 'delete')['code']
+    default_value = ''
+    if 200 <= status_code <= 299:
+        all_webui = __send_request(request, '/management/webui_props?active=true', 'get')
+        status_code = all_webui['code']
+        for v in all_webui['result']['webui_props']:
+            if v['name'] == web_ui_props_name:
+                default_value = v['value']
+                break
 
+    errors = [str(m.message) for m in messages.get_messages(request)]
+    response = JsonResponse({'code': status_code, 'errors': errors, 'default_value': default_value})
+    response.status_code = status_code
+    return response
+
+
+def __send_request(request, url, method_name, payload=None):
     api = API(request.session.get('obp'))
+    code = 200
     try:
-        urlpath = '/management/webui_props/{}'.format(web_ui_props_id)
-        result = api.delete(urlpath)
+        if payload:
+            result = getattr(api, method_name)(url, payload=payload)
+        else:
+            result = getattr(api, method_name)(url)
     except APIError as err:
+        code = 500
         error_once_only(request, APIError(Exception("The OBP-API server is not running or does not respond properly."
                                                     "Please check OBP-API server.   Details: " + str(err))))
     except Exception as err:
+        code = 500
         error_once_only(request, "Unknown Error. Details: " + str(err))
+
     if 'code' in result and result['code'] >= 400:
+        code = int(result['code'])
         error_once_only(request, result['message'])
-        msg = 'Submission successfully!'
-        messages.success(request, msg)
-    return JsonResponse({'state': True})
+
+    return {'code': code, 'result': result}

@@ -19,14 +19,17 @@
         <div class="col-xs-12 col-sm-2">
             <label class="form-group">Connector Name:</label> <br>
         </div>
-        <div class="col-sm-12 col-sm-2">
-            <label class="form-group">Bank Id Pattern:</label> <br>
+        <div class="col-sm-12 col-sm-1">
+            <label class="form-group">Pattern:</label> <br>
         </div>
-        <div class="col-sm-12 col-sm-2">
-            <label class="form-group">Is Bank Id Exact Match:</label> <br>
+        <div class="col-sm-12 col-sm-1">
+            <label class="form-group">Is Match:</label> <br>
         </div>
         <div class="col-sm-12 col-sm-2">
             <label class="form-group">Parameters:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Method ID:</label> <br>
         </div>
     </div>
     <form method="post">
@@ -34,10 +37,9 @@
         {% for method_routing in method_routings %}
         <div class="runner">
             <div class="row">
-                <input type="hidden", class="method_routing_id", value="{{ method_routing.method_routing_id }}">
                 <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1"><strong
-                            class="method_name">{{ method_routing.method_name }}</strong></div>
+                    <div class="form-group" cols="1" rows="1"><div
+                            class="method_name">{{ method_routing.method_name }}</div></div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <select class="connector_name form-control " }>
@@ -64,11 +66,11 @@
                         {% endif %}
                     </select>
                 </div>
-                <div class="col-xs-12 col-sm-2">
+                <div class="col-xs-12 col-sm-1">
                     <textarea class="form-control" rows="1"
                               name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
                 </div>
-                <div class="col-xs-12 col-sm-2" align="center">
+                <div class="col-xs-12 col-sm-1" align="center">
                     <select class="is_bank_id_exact_match form-control">
                         {% if method_routing.is_bank_id_exact_match == False %}
                             <option value="False">False</option>
@@ -83,9 +85,13 @@
                     <textarea cols="40" rows="1" class="form-control"
                               name="parameters">{{ method_routing.parameters }}</textarea>
                 </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1"><div
+                            class="method_routing_id">{{ method_routing.method_routing_id }}</div></div>
+                </div>
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">Save</button>
+                        <button class="btn btn-primary btn-green forSave">Save</button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
                         <button class="btn btn-primary btn-red forDelete">Delete</button>
                     </div>
                 </div>

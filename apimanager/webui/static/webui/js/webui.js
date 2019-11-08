@@ -1,27 +1,97 @@
 $(document).ready(function($) {
-	$('.runner button.forSave').click(function() {
-		var t = $(this);
-		var runner = $(this).parent().parent().parent();
-		webui_props_name = $(runner).find('.webui_props_name').text();
-		webui_props_value = $(runner).find('.webui_props_value').val();
+    $('.runner button.forSave').click(function(e) {
+        e.preventDefault();
+        var t = $(this);
+        var runner = t.parent().parent().parent();
+        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
+        var web_ui_props_value = $(runner).find('.web_ui_props_value').val();
+        $('.dynamic-message').each(function(i, d_msg){
+            $(d_msg).remove();
+        });
+        var webui = $('#webui');
+        if(web_ui_props_value.trim() === '') {
+            $('<div class="alert alert-dismissible alert-danger dynamic-message" role="alert">\n' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                'Web UI Props Value should not be empty!' +
+                '</div>'
+            ).insertBefore(webui);
+            return;
+        }
+        t.attr("disabled","disabled").toggleClass("disabled");
+        t.next().attr("disabled","disabled").toggleClass("disabled");
+        $.ajax({
+            type: 'POST',
+            url: '/webui/save/method',
+            data: {
+                'web_ui_props_name': web_ui_props_name,
+                'web_ui_props_value': web_ui_props_value,
+                'csrfmiddlewaretoken': window.CSRF
+            },
+            success: function (response) {
+                t.removeAttr("disabled").toggleClass("disabled");
+                t.next().removeAttr("disabled").toggleClass("disabled");
+                $(runner).find('.web_ui_props_id').val(response['web_ui_props_id']);
+                $('<div class="alert alert-dismissible alert-success dynamic-message" role="alert">\n' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Success!</div>'
+                ).insertBefore(webui);
+            },
+            error: function (response) {
+                var errors = response.responseJSON ? response.responseJSON['errors'] : [response.responseText];
+                errors.forEach(function(e){
+                    $('<div class="alert alert-dismissible alert-danger dynamic-message" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        e +
+                        '</div>'
+                    ).insertBefore(webui);
+                });
+                t.removeAttr("disabled").toggleClass("disabled");
+                t.next().removeAttr("disabled").toggleClass("disabled")
+            }
+        });
+    });
 
-		$.post('/webui/save/method', {
-			'webui_props_name': webui_props_name,
-			'webui_props_value': webui_props_value
-		}, function (response) {
-			t.next().show().fadeOut(1000);
-		});
-	});
+    $('.runner button.forDelete').click(function() {
+        var t = $(this);
+        var runner = t.parent().parent().parent();
+        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
+        var textArea = runner.find('.web_ui_props_value');
+        var props_id = $(runner).find('.web_ui_props_id');
+        var web_ui_props_id = props_id.val();
+        $('.dynamic-message').each(function(i, d_msg){
+            $(d_msg).remove();
+        });
+        var webui = $('#webui');
+        t.attr("disabled","disabled").toggleClass("disabled");
+        t.next().attr("disabled","disabled").toggleClass("disabled");
 
-	$('.runner button.forDelete').click(function() {
-		var t = $(this);
-		var runner = $(this).parent().parent().parent();
-		web_ui_props_id = $(runner).find('.web_ui_props_id').val();
-
-		$.post('/webui/delete/method', {
-			'web_ui_props_id': web_ui_props_id
-		}, function (response) {
-			t.next().show().fadeOut(1000);
-		});
-	});
+        $.ajax({
+            type: 'POST',
+            url: '/webui/delete/method',
+            data: {'web_ui_props_id': web_ui_props_id,
+                'web_ui_props_name': web_ui_props_name,
+                'csrfmiddlewaretoken': window.CSRF
+            },
+            success: function (response) {
+                t.removeAttr("disabled").toggleClass("disabled");
+                t.next().removeAttr("disabled").toggleClass("disabled");
+                textArea.val(response['default_value']);
+                props_id.val('default');
+                $('<div class="alert alert-dismissible alert-success dynamic-message" role="alert">\n' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Success!</div>'
+                ).insertBefore(webui);
+            },
+            error: function (response) {
+                var errors = response.responseJSON ? response.responseJSON['errors'] : [response.responseText];
+                errors.forEach(function(e){
+                    $('<div class="alert alert-dismissible alert-danger dynamic-message" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        e +
+                        '</div>'
+                    ).insertBefore(webui);
+                });
+                t.removeAttr("disabled").toggleClass("disabled");
+                t.next().removeAttr("disabled").toggleClass("disabled")
+            }
+        });
+    });
 });

@@ -6,10 +6,11 @@ Forms of metrics app
 from django import forms
 from django.conf import settings
 from datetime import date
-from django.forms.widgets import SelectMultiple,CheckboxInput,CheckboxSelectMultiple
+from django.forms.widgets import SelectMultiple, CheckboxInput, CheckboxSelectMultiple
 from datetime import datetime, timedelta
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+
 
 class MetricsForm(forms.Form):
     start_date = forms.DateTimeField(
@@ -208,10 +209,11 @@ class ConnectorMetricsForm(MetricsForm):
         required=False,
     )
 
+
 class CustomSummaryForm(forms.Form):
     to_date = forms.DateTimeField(
         label='To Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
@@ -225,7 +227,7 @@ class CustomSummaryForm(forms.Form):
 
     from_date_custom = forms.DateTimeField(
         label='From Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
@@ -234,7 +236,7 @@ class CustomSummaryForm(forms.Form):
         # ),
         widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
         required=True,
-        initial= (datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:%M:%S'),
+        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:%M:%S'),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
@@ -243,20 +245,21 @@ class CustomSummaryForm(forms.Form):
         kwargs.setdefault('label_suffix', '')
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
+
 class MetricsSummaryForm(forms.Form):
     to_date = forms.DateTimeField(
         label='To Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DateTimePickerInput(format='%Y-%m-%d %H:00:00'),
         required=True,
-        #initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+        initial=str(datetime.now().strftime('%Y-%m-%d %H:00:00')),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
