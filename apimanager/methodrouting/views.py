@@ -5,6 +5,7 @@ Views of config app
 
 import json
 
+from django.conf import settings
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,7 +27,7 @@ class IndexView(LoginRequiredMixin, FormView):
         context = super(IndexView, self).get_context_data(**kwargs)
         api = API(self.request.session.get('obp'))
         urlpath = '/management/method_routings?active=true'
-
+        method_routings =''
         try:
             response = api.get(urlpath)
             if 'code' in response and response['code'] >= 400:
@@ -34,6 +35,7 @@ class IndexView(LoginRequiredMixin, FormView):
             else:
                 msg = 'Submit successfully!'
                 messages.success(self.request, msg)
+                method_routings=response['method_routings']
         except APIError as err:
             error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
                                                    "Please check OBP-API server.    "
@@ -41,7 +43,10 @@ class IndexView(LoginRequiredMixin, FormView):
         except BaseException as err:
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
-            context.update(response)
+            context.update({
+                'method_routings': method_routings,
+                'methodSwaggerUrl': '{}/message-docs/rest_vMar2019/swagger2.0?functions'.format(settings.API_ROOT )
+            })
         return context
 
 @exception_handle
