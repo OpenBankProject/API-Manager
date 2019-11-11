@@ -5,3 +5,4 @@ apimanager/apimanager/local_settings.py
 .idea
 API-Manager.iml
 apimanager/.DS_Store
+venv
