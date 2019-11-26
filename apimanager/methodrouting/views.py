@@ -33,8 +33,6 @@ class IndexView(LoginRequiredMixin, FormView):
             if 'code' in response and response['code'] >= 400:
                 error_once_only(self.request, response['message'])
             else:
-                msg = 'Submit successfully!'
-                messages.success(self.request, msg)
                 method_routings=response['method_routings']
         except APIError as err:
             error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
@@ -75,7 +73,6 @@ def methodrouting_save(request):
     else: # if method_routing_id not empty. we will update the current method routing ..
         urlpath = '/management/method_routings/{}'.format(method_routing_id)
         result = api.put(urlpath, payload=payload)
-
     return result
 
 
