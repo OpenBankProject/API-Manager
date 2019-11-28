@@ -5,9 +5,7 @@ $(document).ready(function($) {
         var runner = t.parent().parent().parent();
         var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
         var web_ui_props_value = $(runner).find('.web_ui_props_value').val();
-        $('.dynamic-message').each(function(i, d_msg){
-            $(d_msg).remove();
-        });
+    
         var webui = $('#webui');
         if(web_ui_props_value.trim() === '') {
             $('<div class="alert alert-dismissible alert-danger dynamic-message" role="alert">\n' +
@@ -17,6 +15,7 @@ $(document).ready(function($) {
             ).insertBefore(webui);
             return;
         }
+		/*
         t.attr("disabled","disabled").toggleClass("disabled");
         t.next().attr("disabled","disabled").toggleClass("disabled");
         $.ajax({
@@ -48,22 +47,30 @@ $(document).ready(function($) {
                 t.next().removeAttr("disabled").toggleClass("disabled")
             }
         });
+		*/
+		$('.runner button.forSave').attr("disabled","disabled");
+		$('.runner button.forDelete').attr("disabled","disabled");
+		$.post('/webui/save/method', {
+			'web_ui_props_name': web_ui_props_name,
+            'web_ui_props_value': web_ui_props_value,
+		}, function (response) {
+			location.reload(); 
+		});
     });
 
-    $('.runner button.forDelete').click(function() {
+    $('.runner button.forDelete').click(function(e) {
+		e.preventDefault();
         var t = $(this);
         var runner = t.parent().parent().parent();
         var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
         var textArea = runner.find('.web_ui_props_value');
         var props_id = $(runner).find('.web_ui_props_id');
         var web_ui_props_id = props_id.val();
-        $('.dynamic-message').each(function(i, d_msg){
-            $(d_msg).remove();
-        });
         var webui = $('#webui');
+		/*
         t.attr("disabled","disabled").toggleClass("disabled");
         t.next().attr("disabled","disabled").toggleClass("disabled");
-
+			
         $.ajax({
             type: 'POST',
             url: '/webui/delete/method',
@@ -93,5 +100,13 @@ $(document).ready(function($) {
                 t.next().removeAttr("disabled").toggleClass("disabled")
             }
         });
+		*/
+		$('.runner button.forSave').attr("disabled","disabled");
+		$('.runner button.forDelete').attr("disabled","disabled");
+		$.post('/webui/delete/method', {
+			'web_ui_props_id': web_ui_props_id
+		}, function (response) {
+			location.reload();
+		});
     });
 });
