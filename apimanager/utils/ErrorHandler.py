@@ -2,6 +2,7 @@ from django.contrib import messages
 import functools
 from obp.api import API, APIError
 from django.http import JsonResponse
+import traceback
 
 def error_once_only(request, err):
     """
@@ -19,7 +20,7 @@ def exception_handle(fn):
     def wrapper(request, *args, **kwargs):
         try:
             result = fn(request, *args, **kwargs)
-            if 'code' in result and result['code'] >= 400:
+            if isinstance(result,dict) and 'code' in result and result['code'] >= 400:
                 error_once_only(request, result['message'])
             else:
                 msg = 'Submit successfully!'

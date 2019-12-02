@@ -136,7 +136,7 @@ class API(object):
             return response.text
         else:
             data = response.json()
-            if 'error' in data:
+            if isinstance(data,dict) and 'error' in data:
                 self.handle_response_error(prefix, data['error'])
             return data
 

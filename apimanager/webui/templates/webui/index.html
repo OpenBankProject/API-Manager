@@ -8,13 +8,16 @@
         <div id="webui_list">
             <h1>WEBUI</h1>
             <div class="row">
-                <div class="col-xs-12 col-sm-4">
+                <div class="col-xs-12 col-sm-3">
                     <label class="form-group">Web UI Props Name:</label> <br>
                 </div>
-                <div class="col-xs-12 col-sm-4">
+                <div class="col-xs-12 col-sm-3">
                     <label class="form-group">Web UI Props Value:</label> <br>
                 </div>
-                <div class="col-sm-12 col-sm-4">
+				<div class="col-xs-12 col-sm-3">
+                    <label class="form-group">Web UI Props Id:</label> <br>
+                </div>
+                <div class="col-sm-12 col-sm-3">
                     <label class="form-group">Save Value:</label> <br>
                 </div>
             </div>
@@ -24,18 +27,22 @@
                     <div class="runner">
                         <div class="row">
                             <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}"/>
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group" cols="20" rows="1">
                                     <div class="web_ui_props_name">{{ webui_prop.name }}</div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
                                     <textarea class="form-control required web_ui_props_value" cols="40"
                                               rows="1">{{ webui_prop.value }}</textarea>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-sm-4">
+							<div class="col-xs-12 col-sm-3">
+								<div class="form-group" cols="1" rows="1"><div
+										class="">{{ webui_prop.web_ui_props_id }}</div></div>
+							</div>
+                            <div class="col-sm-12 col-sm-3">
                                 <div class="form-group">
                                     <button class="btn btn-primary btn-green forSave">Save</button>
                                     <button class="btn btn-primary btn-red forDelete">Delete</button>
@@ -53,7 +60,6 @@
     <script type="text/javascript" src="{% static 'webui/js/webui.js' %}"></script>
 
 {% endblock extrajs %}
-
 
 {% block extracss %}
     <link href="{% static 'webui/css/webui.css' %}" rel="stylesheet">
