@@ -9,13 +9,15 @@ import operator
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
+from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT,CACHE_DATEFORMAT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from obp.api import API, APIError
 from .forms import APIMetricsForm, ConnectorMetricsForm, MetricsSummaryForm, CustomSummaryForm
 from pylab import *
+from django.core.cache import cache
+import traceback
 try:
     # Python 2
     import cStringIO
@@ -373,7 +375,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             if apps is not None and 'code' in apps and apps['code'] == 403:
                 error_once_only(self.request, apps['message'])
             else:
-                apps_list = apps["list"]
+                apps_list = apps["consumers"]
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
@@ -438,20 +440,33 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             while date_to <= to_date:
                 urlpath = '/management/aggregate-metrics?from_date={}&to_date={}'.format(
                     date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT))
-                api = API(self.request.session.get('obp'))
+                apicaches=None
                 try:
-                    metrics = api.get(urlpath)
-                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
-                        error_once_only(self.request, metrics['message'])
-                    else:
-                        result = metrics[0]["count"]
-                        result_list_pure.append(result)
-                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                        sum += result
-                except APIError as err:
-                    error_once_only(self.request, err)
+                    apicaches=cache.get('aggregate-metrics,{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT)))
                 except Exception as err:
-                    error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+                    apicaches=None
+                if apicaches:
+                    result = apicaches
+                    result_list_pure.append(result)
+                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                    sum += result
+                else:
+                    api = API(self.request.session.get('obp'))
+                    try:
+                        metrics = api.get(urlpath)
+                        if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                            error_once_only(self.request, metrics['message'])
+                        else:
+                            result = metrics[0]["count"]
+                            result_list_pure.append(result)
+                            result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                            sum += result
+                            
+                            cache.set('aggregate-metrics,{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT)),result)
+                    except APIError as err:
+                        error_once_only(self.request, err)
+                    except Exception as err:
+                        error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -460,20 +475,33 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             while date_to <= to_date:
                 urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}'.format(
                     date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT), ",".join(EXCLUDE_APPS))
-                api = API(self.request.session.get('obp'))
+                apicaches=None
                 try:
-                    metrics = api.get(urlpath)
-                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
-                        error_once_only(self.request, metrics['message'])
-                    else:
-                        result = metrics[0]["count"]
-                        result_list_pure.append(result)
-                        result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                        sum += result
-                except APIError as err:
-                    error_once_only(self.request, err)
+                    apicaches=cache.get('aggregate-metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT),",".join(EXCLUDE_APPS)))
                 except Exception as err:
-                    error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+                    apicaches=None
+                if apicaches:
+                    result = apicaches
+                    result_list_pure.append(result)
+                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                    sum += result
+                else:
+                    api = API(self.request.session.get('obp'))
+                    try:
+                        metrics = api.get(urlpath)
+                        if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                            error_once_only(self.request, metrics['message'])
+                        else:
+                            result = metrics[0]["count"]
+                            result_list_pure.append(result)
+                            result_list.append('{} - {} # {}'.format(date_from, date_to, result))
+                            sum += result
+                            
+                            cache.set('aggregate-metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT),",".join(EXCLUDE_APPS)),result)
+                    except APIError as err:
+                        error_once_only(self.request, err)
+                    except Exception as err:
+                        error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
                 date_from = date_to
                 date_list.append(date_from)
@@ -723,17 +751,26 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         apps_list = []
 
         urlpath_consumers = '/management/consumers'
-        api = API(self.request.session.get('obp'))
+        apicaches=None
         try:
-            apps = api.get(urlpath_consumers)
-            if apps is not None and 'code' in apps and apps['code']==403:
-                error_once_only(self.request, apps['message'])
-            else:
-                apps_list = apps["list"]
-        except APIError as err:
-            error_once_only(self.request, err)
+            apicaches=cache.get('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']))
         except Exception as err:
-            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+            apicaches=None
+        if apicaches:
+            apps_list=apicaches
+        else:
+            api = API(self.request.session.get('obp'))
+            try:
+                apps = api.get(urlpath_consumers)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    apps_list = apps["consumers"]
+                    cache.set('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']),apps_list)
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
@@ -744,17 +781,30 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         times_to_first_call = []
 
+        strfrom_date=datetime.datetime.strptime(from_date, API_DATEFORMAT)
+        strto_date=datetime.datetime.strptime(to_date, API_DATEFORMAT)
         for app in new_apps_list:
             urlpath_metrics = '/management/metrics?from_date={}&to_date={}&consumer_id={}&sort_by={}&direction={}&limit={}'.format(
                 from_date, to_date, app['consumer_id'], 'date', 'asc', '1')
             api = API(self.request.session.get('obp'))
             try:
-                metrics = api.get(urlpath_metrics)
-                if metrics is not None and 'code' in metrics and metrics['code'] == 403:
-                    error_once_only(self.request, metrics['message'])
-                    metrics = []
+                apicaches=None
+                try:
+                    apicaches=cache.get('metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],app['consumer_id'],strfrom_date.strftime(CACHE_DATEFORMAT), strto_date.strftime(CACHE_DATEFORMAT)))
+                except Exception as err:
+                    apicaches=None
+                metrics=[]
+                if apicaches :
+                    metrics=apicaches
                 else:
-                    metrics = list(metrics['metrics'])
+                    metrics = api.get(urlpath_metrics)
+                    
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                        metrics = []
+                    else:
+                        metrics = list(metrics['metrics'])
+                        cache.set('metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],app['consumer_id'],strfrom_date.strftime(CACHE_DATEFORMAT), strto_date.strftime(CACHE_DATEFORMAT)),metrics)
                 if metrics:
                     time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
                     times_to_first_call.append(time_difference.total_seconds())
@@ -785,7 +835,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
         median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
         if form.is_valid():
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
@@ -833,7 +882,7 @@ class YearlySummaryView(MetricsSummaryView):
         to_date = to_date.strftime(API_DATEFORMAT)
         from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(365)).strftime(API_DATEFORMAT)
 
-        context = super(YearlySummaryView, self).get_context_data(**kwargs)
+        context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
@@ -886,7 +935,7 @@ class QuarterlySummaryView(MetricsSummaryView):
         to_date = to_date.strftime(API_DATEFORMAT)
         from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
 
-        context = super(QuarterlySummaryView, self).get_context_data(**kwargs)
+        context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
@@ -943,7 +992,7 @@ class WeeklySummaryView(MetricsSummaryView):
         to_date = to_date.strftime(API_DATEFORMAT)
         from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(7)).strftime(API_DATEFORMAT)
 
-        context = super(WeeklySummaryView, self).get_context_data(**kwargs)
+        context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
@@ -1059,7 +1108,7 @@ class CustomSummaryView(MetricsSummaryView):
 
         from_date = datetime.datetime.strptime(form.data['from_date_custom'], '%Y-%m-%d %H:%M:%S')
         from_date = from_date.strftime(API_DATEFORMAT)
-        context = super(CustomSummaryView, self).get_context_data(**kwargs)
+        context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
         user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
