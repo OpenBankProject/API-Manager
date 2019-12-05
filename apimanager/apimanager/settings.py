@@ -255,7 +255,8 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
-CACHE_DATEFORMAT = '%Y%m%d%H'
+CACHE_DATEFORMAT = '%Y%m%d%H%M%S'
+CACHE_TIME = 3600
 
 # Local settings can override anything in here
 try:
