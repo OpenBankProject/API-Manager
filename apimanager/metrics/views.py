@@ -631,6 +631,29 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         # Clear the previous plot.
         plt.gcf().clear()
         return image_base64
+        
+    def plot_topconsumer_bar_chart(self, data):
+        x = []
+        y = []
+        for item in data:
+            y.append(item['count'])
+            x.append(item['app_name'])
+        plt.barh(x, y)
+        plt.title("Top consumers", fontsize=10)
+        plt.xlabel("Number of API Calls", fontsize=8)
+        plt.xticks([])
+        plt.ylabel("Consumers", fontsize=8)
+        plt.tick_params(axis='y', labelsize=8)
+        for i, j in zip(y, x):
+            plt.text(i, j, str(i), clip_on=True, ha='center',va='center', fontsize=8)
+        plt.tight_layout()
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+        buf.close()
+        # Clear the previous plot.
+        plt.gcf().clear()
+        return image_base64
 
     def get_users_cansearchwarehouse(self):
         users = []
@@ -709,6 +732,47 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         top_apis = reversed(top_apis)
 
         return top_apis
+        
+    def get_top_consumers(self, cleaned_data, from_date, to_date):
+        top_consumers = []
+        form = self.get_form()
+        if cleaned_data.get('include_obp_apps'):
+            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
+            api = API(self.request.session.get('obp'))
+            try:
+                top_consumers = api.get(urlpath)
+                if top_consumers is not None and 'code' in top_consumers and top_consumers['code']==403:
+                    error_once_only(self.request, top_consumers['message'])
+                    top_consumers=[]
+                else:
+                    top_consumers = top_consumers['top_consumers']
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+        else:
+            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+                from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+            api = API(self.request.session.get('obp'))
+            try:
+                top_consumers = api.get(urlpath)
+                if top_consumers is not None and 'code' in top_consumers and top_consumers['code']==403:
+                    error_once_only(self.request, top_consumers['message'])
+                    top_consumers=[]
+                else:
+                    top_consumers = top_consumers['top_consumers']
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+        for consumer in top_consumers:
+            if consumer['app_name'] == "":
+                top_consumers.remove(consumer)
+
+        top_consumers = top_consumers[:10]
+        top_consumers = reversed(top_consumers)
+
+        return top_consumers
 
     def get_top_warehouse_calls(self, cleaned_data, from_date, to_date):
         try:
@@ -838,6 +902,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         if form.is_valid():
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
@@ -865,6 +931,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
             'excluded_apps':EXCLUDE_APPS,
@@ -897,6 +964,8 @@ class YearlySummaryView(MetricsSummaryView):
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
 
         context.update({
@@ -918,6 +987,7 @@ class YearlySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
             'excluded_apps':EXCLUDE_APPS,
@@ -952,6 +1022,8 @@ class QuarterlySummaryView(MetricsSummaryView):
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
 
         context.update({
@@ -975,6 +1047,7 @@ class QuarterlySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
             'excluded_apps':EXCLUDE_APPS,
@@ -1008,6 +1081,8 @@ class WeeklySummaryView(MetricsSummaryView):
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
 
         context.update({
@@ -1028,6 +1103,7 @@ class WeeklySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             # ##'calls_per_half_day': calls_per_half_day,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
@@ -1064,6 +1140,8 @@ class DailySummaryView(MetricsSummaryView):
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
 
         context.update({
@@ -1085,6 +1163,7 @@ class DailySummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             'form': form,
             'excluded_apps':EXCLUDE_APPS,
@@ -1125,6 +1204,8 @@ class CustomSummaryView(MetricsSummaryView):
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
             top_apis_bar_chart = self.plot_bar_chart(top_apis)
+            top_consumers=self.get_top_consumers(form.cleaned_data, from_date, to_date)
+            top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
 
         context.update({
@@ -1145,6 +1226,7 @@ class CustomSummaryView(MetricsSummaryView):
             'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
             'top_apis_bar_chart': top_apis_bar_chart,
+            'top_consumers_bar_chart':top_consumers_bar_chart,
             'median_time_to_first_api_call': median_time_to_first_api_call,
             # ##'calls_per_day': calls_per_day,
             # ##'calls_per_half_day': calls_per_half_day,
