@@ -9,7 +9,7 @@ import operator
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT,CACHE_DATEFORMAT,CACHE_TIME
+from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT,CACHE_DATEFORMAT,CACHE_TIME,CACHE_TIME_SHORT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
@@ -445,7 +445,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     apicaches=cache.get('aggregate-metrics,{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT)))
                 except Exception as err:
                     apicaches=None
-                if apicaches:
+                if not apicaches is None:
                     result = apicaches
                     result_list_pure.append(result)
                     result_list.append('{} - {} # {}'.format(date_from, date_to, result))
@@ -462,7 +462,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                             result_list.append('{} - {} # {}'.format(date_from, date_to, result))
                             sum += result
                             
-                            cache.set('aggregate-metrics,{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT)),result,CACHE_TIME if date_from.minute==0 and date_from.second==0 and date_to.minute==0 and date_to.second==0 else 0)
+                            cache.set('aggregate-metrics,{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT)),result,CACHE_TIME if date_from.minute==0 and date_from.second==0 and date_to.minute==0 and date_to.second==0 else CACHE_TIME_SHORT)
                     except APIError as err:
                         error_once_only(self.request, err)
                     except Exception as err:
@@ -480,7 +480,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     apicaches=cache.get('aggregate-metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT),",".join(EXCLUDE_APPS)))
                 except Exception as err:
                     apicaches=None
-                if apicaches:
+                if not apicaches is None:
                     result = apicaches
                     result_list_pure.append(result)
                     result_list.append('{} - {} # {}'.format(date_from, date_to, result))
@@ -497,7 +497,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                             result_list.append('{} - {} # {}'.format(date_from, date_to, result))
                             sum += result
                             
-                            cache.set('aggregate-metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT),",".join(EXCLUDE_APPS)),result,CACHE_TIME if date_from.minute==0 and date_from.second==0 and date_to.minute==0 and date_to.second==0 else 0)
+                            cache.set('aggregate-metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],date_from.strftime(CACHE_DATEFORMAT), date_to.strftime(CACHE_DATEFORMAT),",".join(EXCLUDE_APPS)),result,CACHE_TIME if date_from.minute==0 and date_from.second==0 and date_to.minute==0 and date_to.second==0 else CACHE_TIME_SHORT)
                     except APIError as err:
                         error_once_only(self.request, err)
                     except Exception as err:
@@ -820,7 +820,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             apicaches=cache.get('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']))
         except Exception as err:
             apicaches=None
-        if apicaches:
+        if not apicaches is None:
             apps_list=apicaches
         else:
             api = API(self.request.session.get('obp'))
@@ -858,7 +858,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 except Exception as err:
                     apicaches=None
                 metrics=[]
-                if apicaches :
+                if not apicaches is None:
                     metrics=apicaches
                 else:
                     metrics = api.get(urlpath_metrics)
@@ -868,7 +868,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                         metrics = []
                     else:
                         metrics = list(metrics['metrics'])
-                        cache.set('metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],app['consumer_id'],strfrom_date.strftime(CACHE_DATEFORMAT), strto_date.strftime(CACHE_DATEFORMAT)),metrics,CACHE_TIME if strfrom_date.minute==0 and strfrom_date.second==0 and strto_date.minute==0 and strto_date.second==0 else 0)
+                        cache.set('metrics,{},{},{},{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token'],app['consumer_id'],strfrom_date.strftime(CACHE_DATEFORMAT), strto_date.strftime(CACHE_DATEFORMAT)),metrics,CACHE_TIME if strfrom_date.minute==0 and strfrom_date.second==0 and strto_date.minute==0 and strto_date.second==0 else CACHE_TIME_SHORT)
                 if metrics:
                     time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
                     times_to_first_call.append(time_difference.total_seconds())

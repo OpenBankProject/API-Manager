@@ -257,6 +257,7 @@ CACHES = {
 }
 CACHE_DATEFORMAT = '%Y%m%d%H%M%S'
 CACHE_TIME = 3600
+CACHE_TIME_SHORT = 300
 
 # Local settings can override anything in here
 try:
