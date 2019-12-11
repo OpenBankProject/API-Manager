@@ -371,15 +371,23 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         urlpath='/management/consumers'
         api = API(self.request.session.get('obp'))
         try:
-            apps = api.get(urlpath)
-            if apps is not None and 'code' in apps and apps['code'] == 403:
-                error_once_only(self.request, apps['message'])
-            else:
-                apps_list = apps["consumers"]
-        except APIError as err:
-            error_once_only(self.request, err)
+            apicaches=cache.get('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']))
         except Exception as err:
-            error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+            apicaches=None
+        if not apicaches is None:
+            apps_list=apicaches
+        else:
+            try:
+                apps = api.get(urlpath)
+                if apps is not None and 'code' in apps and apps['code'] == 403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    apps_list = apps["consumers"]
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
+        
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -894,6 +902,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         to_date = to_date.strftime(API_DATEFORMAT)
 
         from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
+    
         context = super(MetricsSummaryView, self).get_context_data(**kwargs)
         api_host_name = API_HOST
         top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
