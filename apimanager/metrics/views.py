@@ -464,6 +464,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                         metrics = api.get(urlpath)
                         if metrics is not None and 'code' in metrics and metrics['code'] == 403:
                             error_once_only(self.request, metrics['message'])
+                            if(metrics['message'].startswith('OBP-20006')):
+                                break
                         else:
                             result = metrics[0]["count"]
                             result_list_pure.append(result)
@@ -499,6 +501,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                         metrics = api.get(urlpath)
                         if metrics is not None and 'code' in metrics and metrics['code'] == 403:
                             error_once_only(self.request, metrics['message'])
+                            if(metrics['message'].startswith('OBP-20006')):
+                                break
                         else:
                             result = metrics[0]["count"]
                             result_list_pure.append(result)
@@ -817,6 +821,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         return top_apps_using_warehouse
 
     def median_time_to_first_api_call(self, from_date, to_date):
+        if 2>1:
+            return 0
         form = self.get_form()
         new_apps_list = []
         apps = []
@@ -873,6 +879,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     
                     if metrics is not None and 'code' in metrics and metrics['code'] == 403:
                         error_once_only(self.request, metrics['message'])
+                        if(metrics['message'].startswith('OBP-20006')):
+                            break
                         metrics = []
                     else:
                         metrics = list(metrics['metrics'])
@@ -916,7 +924,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
+            #calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
             calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
             per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
@@ -925,7 +933,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         context.update({
             'api_calls': api_calls,
             'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_month_list': calls_per_month_list,
+            #'calls_per_month_list': calls_per_month_list,
             'per_day_chart': per_day_chart,
             'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
             'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
