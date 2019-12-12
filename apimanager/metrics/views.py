@@ -370,6 +370,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         urlpath='/management/consumers'
         api = API(self.request.session.get('obp'))
+        apicaches=None
         try:
             apicaches=cache.get('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']))
         except Exception as err:
@@ -383,6 +384,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     error_once_only(self.request, apps['message'])
                 else:
                     apps_list = apps["consumers"]
+                    cache.set('consumers,{}'.format(self.request.session.get('obp')['authenticator_kwargs']['token']),apps_list)
             except APIError as err:
                 error_once_only(self.request, err)
             except Exception as err:
