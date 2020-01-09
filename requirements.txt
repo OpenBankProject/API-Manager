@@ -1,7 +1,7 @@
 #Django==1.11.7
 Django==2.0.12
 oauthlib==2.0.0
-requests==2.11.1
+requests==2.20.0
 requests-oauthlib==0.6.2
 PyJWT==1.5.3
 gunicorn==19.6.0
