@@ -114,6 +114,10 @@
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
+				<td>Top 10 Consumers:</td>
+				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
+			</tr>
+			<tr>
 				<td>Top Warehouse APIs:</td>
 				<td>{% if top_warehouse_apis %}{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>

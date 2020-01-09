@@ -222,7 +222,7 @@ class CustomSummaryForm(forms.Form):
         # ),
         widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+        initial=str(datetime.now().strftime('%Y-%m-%d %H:00:00')),
     )
 
     from_date_custom = forms.DateTimeField(
@@ -236,7 +236,7 @@ class CustomSummaryForm(forms.Form):
         # ),
         widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:%M:%S'),
+        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:00:00'),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
@@ -256,7 +256,7 @@ class MetricsSummaryForm(forms.Form):
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:00:00'),
+        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
         required=True,
         # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime('%Y-%m-%d %H:00:00')),

@@ -249,6 +249,15 @@ EXCLUDE_URL_PATTERN = []
 # App Name to aggregate metrics
 API_EXPLORER_APP_NAME = 'xxx'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+CACHE_DATEFORMAT = '%Y%m%d%H%M%S'
+CACHE_TIME = 3600
+CACHE_TIME_SHORT = 300
 
 # Local settings can override anything in here
 try:
