@@ -104,6 +104,16 @@ class API(object):
         response = self.call('PUT', url, payload)
         return self.handle_response(response)
 
+    def patch(self, urlpath, payload):
+        """
+        Puts data on given urlpath with given payload
+
+        Convenience call which uses API_ROOT from settings
+        """
+        url = settings.API_ROOT + urlpath
+        response = self.call('PATCH', url, payload)
+        return self.handle_response(response)
+
     def handle_response_404(self, response, prefix):
         # Stripping HTML body ...
         if response.text.find('body'):
