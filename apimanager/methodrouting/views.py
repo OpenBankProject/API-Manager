@@ -56,13 +56,13 @@ def methodrouting_save(request):
     is_bank_id_exact_match = request.POST.get('is_bank_id_exact_match')
     parameters = request.POST.get('parameters')
     method_routing_id = request.POST.get('method_routing_id')
-
+    parameters_Json_editor = request.POST.get('parameters_Json_editor')
     payload = {
         'method_name' : method_name,
         'connector_name': connector_name,
         'is_bank_id_exact_match': (is_bank_id_exact_match=="True"),
         'bank_id_pattern':bank_id_pattern,
-        'parameters':eval(parameters),
+        'parameters':eval(parameters_Json_editor),
         'method_routing_id':method_routing_id
     }
 

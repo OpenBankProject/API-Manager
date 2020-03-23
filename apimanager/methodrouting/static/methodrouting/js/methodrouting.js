@@ -1,3 +1,61 @@
+const schema = {};
+var json = [
+	{
+		key: 'url',
+		value: 'http://localhost:8080'
+	},
+	{
+		"key":"outBoundMapping",
+		"value":{
+			"cc":{
+				"cId":"outboundAdapterCallContext.correlationId"
+			},
+			"bankId":"bankId.value + 'helloworld'",
+			"originalJson":"$root"
+		}
+	},
+	{
+		"key":"inBoundMapping",
+		"value":{
+			"inboundAdapterCallContext$default":{
+				"correlationId":"correlation_id_value",
+				"sessionId":"session_id_value"
+			},
+			"status$default":{
+				"errorCode":"",
+				"backendMessages":[]
+			},
+			"data":{
+				"bankId":{
+					"value":"result.bank_id"
+				},
+				"shortName":"result.name",
+				"fullName":"'full: ' + result.name",
+				"logoUrl":"result.logo",
+				"websiteUrl":"result.website",
+				"bankRoutingScheme[0]":"result.routing.routing_scheme",
+				"bankRoutingAddress[0]":"result.routing.routing_address",
+				"swiftBic":"result.swift_bic",
+				"nationalIdentifier":"result.national"
+			}
+		}
+	}];
+
+const options = {
+	mode: 'code',
+	modes: ['code', 'text', 'tree', 'preview']
+};
+// get json
+function getJSON() {
+	var json = editor.get();
+	alert(JSON.stringify(json, null, 2));
+}
+// create the editor
+const container = document.getElementById('jsoneditor');
+const editor = new JSONEditor(container, options, json);
+// // get json
+// const updatedJson = editor.get()
+
 $(document).ready(function($) {
 	$('.runner button.forSave').click(function() {
 		var t = $(this);
@@ -8,6 +66,7 @@ $(document).ready(function($) {
 		bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
 		is_bank_id_exact_match = $(runner).find('.is_bank_id_exact_match').val();
 		parameters = $(runner).find('textarea[name="parameters"]').val();
+		parameters_Json_editor = JSON.stringify(editor.get());
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('methodrouting/save/method', {
@@ -16,7 +75,8 @@ $(document).ready(function($) {
 			'connector_name': connector_name,
 			'bank_id_pattern': bank_id_pattern,
 			'is_bank_id_exact_match': is_bank_id_exact_match,
-			'parameters': parameters
+			'parameters': parameters,
+			'parameters_Json_editor': parameters_Json_editor,
 		}, function (response) {
 			location.reload(); 
 		});
