@@ -9,11 +9,6 @@
 #config .null { color: magenta; }
 #config .key { color: red; }
 
-#jsoneditor {
-  width: 100%;
-  height: 500px;
-}
-
 /* custom bold styling for non-default JSON schema values */
 .jsoneditor-is-not-default {
   font-weight: bold;
