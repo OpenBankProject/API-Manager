@@ -27,7 +27,7 @@ class IndexView(LoginRequiredMixin, FormView):
         context = super(IndexView, self).get_context_data(**kwargs)
         api = API(self.request.session.get('obp'))
         urlpath = '/management/method_routings?active=true'
-        method_routings =''
+        method_routings =[]
         try:
             response = api.get(urlpath)
             if 'code' in response and response['code'] >= 400:
@@ -41,9 +41,12 @@ class IndexView(LoginRequiredMixin, FormView):
         except BaseException as err:
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
+            for i in range(len(method_routings)):
+                method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'])
+
             context.update({
                 'method_routings': method_routings,
-                'methodSwaggerUrl': '{}/message-docs/rest_vMar2019/swagger2.0?functions'.format(settings.API_ROOT )
+                "methodSwaggerUrl": json.dumps('{}/message-docs/rest_vMar2019/swagger2.0?functions'.format(settings.API_ROOT ))
             })
         return context
 
