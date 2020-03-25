@@ -13,3 +13,7 @@
 .jsoneditor-is-not-default {
   font-weight: bold;
 }
+
+.jsoneditor_div{
+  height: 400px;
+}
