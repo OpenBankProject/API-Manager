@@ -2,11 +2,6 @@
 {% load static %}
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
-{% block extracss %}
-    <link href="{% static 'dynamicendpoints/css/jsoneditor.min.css' %}" rel="stylesheet">
-    <link href="{% static 'dynamicendpoints/css/dynamicendpoints.css' %}" rel="stylesheet">
-{% endblock extracss %}
-
 {% block content %}
     <h1>Dynamicend Points</h1>
     <div class="row">
@@ -49,6 +44,5 @@
 
 
 {% block extrajs %}
-    <script type="text/javascript" src="{% static 'dynamicendpoints/js/jsoneditor.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'dynamicendpoints/js/dynamicendpoints.js' %}"></script>
 {% endblock extrajs %}

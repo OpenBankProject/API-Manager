@@ -2,11 +2,6 @@
 {% load static %}
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
-{% block extrajs %}
-    <script type="text/javascript" src="{% static 'methodrouting/js/jsoneditor.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
-{% endblock extrajs %}
-
 {% block content %}
     <h1>Method Routing</h1>
     <div class="row">
@@ -111,9 +106,6 @@
     </form>
 {% endblock %}
 
-
-
-{% block extracss %}
-    <link href="{% static 'methodrouting/css/jsoneditor.min.css' %}" rel="stylesheet">
-    <link href="{% static 'methodrouting/css/methodrouting.css' %}" rel="stylesheet">
-{% endblock extracss %}
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
+{% endblock extrajs %}
