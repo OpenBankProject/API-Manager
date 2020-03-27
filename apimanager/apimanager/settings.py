@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'config',
     'webui',
     'methodrouting',
+    'dynamicendpoints'
 ]
 
 MIDDLEWARE = [
