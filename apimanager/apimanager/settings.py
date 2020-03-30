@@ -204,7 +204,7 @@ API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 API_HOST = 'http://127.0.0.1:8080'
 API_BASE_PATH = '/obp/v'
-API_VERSION = '3.1.0'
+API_VERSION = '4.0.0'
 
 # URL to API Tester if it is running on API_HOST
 API_TESTER_URL = ''
