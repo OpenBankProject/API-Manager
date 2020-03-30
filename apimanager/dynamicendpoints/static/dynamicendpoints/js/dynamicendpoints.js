@@ -41,4 +41,18 @@ $(document).ready(function($) {
 		runner.find('jsoneditor_div').css("display","none");
 		return false;
 	});
+
+	$('.runner button.forDelete').click(function() {
+		var t = $(this);
+		var runner = $(this).parent().parent().parent();
+		dynamic_endpoint_id = $(runner).find('.dynamic_endpoint_id').text();
+		$('.runner button.forSave').attr("disabled","disabled");
+		$('.runner button.forDelete').attr("disabled","disabled");
+		$.post('dynamicendpoints/delete/dynamicendpoint', {
+			'dynamic_endpoint_id': dynamic_endpoint_id
+		}, function (response) {
+			location.reload();
+		});
+		return false;
+	});
 });

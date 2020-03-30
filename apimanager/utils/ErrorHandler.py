@@ -23,7 +23,7 @@ def exception_handle(fn):
             if isinstance(result,dict) and 'code' in result and result['code'] >= 400:
                 error_once_only(request, result['message'])
             else:
-                msg = 'Submit successfully!'
+                msg = 'Submitted!'
                 messages.success(request, msg)
         except APIError as err:
             error_once_only(request, APIError(Exception("OBP-API server is not running or do not response properly. "

@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-                        <a href="" class="method_name">{{ dynamic_endpoint.dynamic_endpoint_id }}</a></div>
+                        <a href="" class="dynamic_endpoint_id">{{ dynamic_endpoint.dynamic_endpoint_id }}</a></div>
                 </div>
                 
                 <div class="col-xs-12 col-sm-8">
@@ -30,6 +30,13 @@
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">
                         <button class="btn btn-primary btn-green forSave">Create </button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
+                    </div>
+                </div>
+                {%  endif %}
+                {%  if forloop.counter0 > 0 %}
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-red forDelete">Delete</button>
                     </div>
                 </div>
                 {%  endif %}
