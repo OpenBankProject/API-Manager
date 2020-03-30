@@ -8,3 +8,12 @@
 #config .boolean { color: blue; }
 #config .null { color: magenta; }
 #config .key { color: red; }
+
+/* custom bold styling for non-default JSON schema values */
+.jsoneditor-is-not-default {
+  font-weight: bold;
+}
+
+.jsoneditor_div{
+  height: 400px;
+}
