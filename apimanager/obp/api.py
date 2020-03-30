@@ -105,11 +105,8 @@ class API(object):
         return self.handle_response(response)
 
     def handle_response_404(self, response, prefix):
-        # Stripping HTML body ...
-        if response.text.find('body'):
-            msg = response.text.split('<body>')[1].split('</body>')[0]
         msg = '{} {}: {}'.format(
-            prefix, response.status_code, msg)
+            prefix, response.status_code, response.text)
         log(logging.ERROR, msg)
         raise APIError(msg)
 
