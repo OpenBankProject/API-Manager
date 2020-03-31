@@ -36,7 +36,6 @@ $(document).ready(function($) {
 		var jsoneditor_id= $(runner).find('.jsoneditor_div')[0].id
 		var json_editor_number = jsoneditor_id.replace("jsoneditor","")
 		parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
-		console.log("parameters_Json_editor:"+parameters_Json_editor)
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('methodrouting/save/method', {
