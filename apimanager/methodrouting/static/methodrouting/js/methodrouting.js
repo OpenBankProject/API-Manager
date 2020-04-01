@@ -33,10 +33,14 @@ $(document).ready(function($) {
 		bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
 		is_bank_id_exact_match = $(runner).find('.is_bank_id_exact_match').val();
 		parameters = $(runner).find('textarea[name="parameters"]').val();
-		var jsoneditor_id= $(runner).find('.jsoneditor_div')[0].id
-		var json_editor_number = jsoneditor_id.replace("jsoneditor","")
-		parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
-		console.log("parameters_Json_editor:"+parameters_Json_editor)
+		var jsoneditor_id= $(runner).find('.jsoneditor_div')[0].id;
+		var json_editor_number = jsoneditor_id.replace("jsoneditor","");
+		//if the user do not click the `parameters` box, then there is no json_editors here,so we use the parameters directly.
+		if (typeof json_editors[json_editor_number] === 'undefined') {
+			parameters_Json_editor = parameters;
+		} else {
+			parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
+		}
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('methodrouting/save/method', {
@@ -45,7 +49,6 @@ $(document).ready(function($) {
 			'connector_name': connector_name,
 			'bank_id_pattern': bank_id_pattern,
 			'is_bank_id_exact_match': is_bank_id_exact_match,
-			'parameters': parameters_Json_editor,
 			'parameters_Json_editor': parameters_Json_editor,
 		}, function (response) {
 			location.reload(); 

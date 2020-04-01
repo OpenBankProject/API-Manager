@@ -18,9 +18,11 @@ $(document).ready(function($) {
 		//make sure only create one jsoneditor_div block 
 		if(!(jsoneditor_div.css("display") ==="block")){
 			json_editors[json_editor_number] = new JSONEditor(container[0], options, parameters);
+			$(runner).find('textarea[name="parameters"]').prop( "disabled", true );
 			jsoneditor_div.css("display","block");
 		}else{
 			json_editors[json_editor_number] = json_editors[json_editor_number].set(parameters)
+			$(runner).find('textarea[name="parameters"]').prop( "disabled", true );
 		}
 	});
 	
