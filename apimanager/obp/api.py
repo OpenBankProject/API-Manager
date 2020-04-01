@@ -125,16 +125,12 @@ class API(object):
     def handle_response(self, response):
         """Handles the response, e.g. errors or conversion to JSON"""
         prefix = 'APIError'
-        # if response.status_code == 404:
-        #     self.handle_response_404(response, prefix)
-        # elif response.status_code == 500:
-        #     self.handle_response_500(response, prefix)
-        # elif response.status_code in [204]:
-        #     return response.text
-        # else:
-        data = response.json()
-        if isinstance(data,dict) and 'error' in data:
-            self.handle_response_error(prefix, data['error'])
+        if response.status_code in [204]:
+            return response.text
+        else:
+            data = response.json()
+            if isinstance(data,dict) and 'error' in data:
+                self.handle_response_error(prefix, data['error'])
         return data
 
     def start_session(self, session_data):
