@@ -22,11 +22,18 @@ def api_username(request):
             api = API(request.session.get('obp'))
             data = api.get('/users/current')
             username = data['username']
+            email = data['email']
+            provider = data['provider']
+            nametodisplay = ""
+            if "google" in provider:
+                nametodisplay = email
+            else:
+                nametodisplay = username
         except APIError as err:
             messages.error(request, err)
         except Exception as err:
             messages.error(request, err)
-    return {'API_USERNAME': username}
+    return {'API_USERNAME': nametodisplay}
 
 
 def api_user_id(request):
