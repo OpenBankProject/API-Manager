@@ -37,4 +37,5 @@ urlpatterns = [
     url(r'^config/', include('config.urls')),
     url(r'^webui/', include('webui.urls')),
     url(r'^methodrouting/', include('methodrouting.urls')),
+    url(r'^dynamicendpoints/', include('dynamicendpoints.urls')),
 ]

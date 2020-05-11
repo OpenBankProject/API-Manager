@@ -1,17 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
-{% block extrajs %}
-    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
-{% endblock extrajs %}
-{% block extracss %}
-    <link href="{% static 'methodrouting/css/methodrouting.css' %}" rel="stylesheet">
-{% endblock extracss %}
+{% block page_title %}{{ block.super }} / Method Routings{% endblock page_title %}
 
 {% block content %}
-
     <h1>Method Routing</h1>
-
     <div class="row">
         <div class="col-xs-12 col-sm-2">
             <label class="form-group">Method Name:</label> <br>
@@ -39,7 +31,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-                        <a href="{{ methodSwaggerUrl }}={{ method_routing.method_name }}" class="method_name">{{ method_routing.method_name }}</a></div>
+{#                        <a href="{{ methodSwaggerUrl }}={{ method_routing.method_name }}" class="method_name">{{ method_routing.method_name }}</a></div>#}
+                        <div class="method_name">{{ method_routing.method_name }}</div></div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <select class="connector_name form-control " }>
@@ -92,7 +85,7 @@
                     </select>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                    <textarea cols="40" rows="1" class="form-control"
+                    <textarea cols="40" rows="1" class="form-control parameters"
                               name="parameters">{{ method_routing.parameters }}</textarea>
                 </div>
                 <div class="col-xs-12 col-sm-2">
@@ -105,8 +98,15 @@
                         <button class="btn btn-primary btn-red forDelete">Delete</button>
                     </div>
                 </div>
+                <div class="col-sm-12 col-sm-12">
+                    <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
+                </div>
             </div>
         </div>
     {% endfor %}
     </form>
 {% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
+{% endblock extrajs %}

@@ -58,7 +58,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             entitlements = api.get(urlpath)
             if 'code' in entitlements and entitlements['code'] >= 400:
                 messages.error(self.request, entitlements['message'] +
-                               " No Role name will be shown in the 'Filters' dropdown!")
+                               ". No Role name will be shown in the 'Filters' dropdown!")
             else:
                 for entitlement in entitlements['list']:
                     role_names.append(entitlement['role_name'])

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}{{ block.super }} / Dynamic Endpoints{% endblock page_title %}
+
+{% block content %}
+    <h1>Dynamic Endpoints</h1>
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">ENDPOINT ID:</label> <br>
+        </div>
+        <div class="col-xs-12 col-sm-10">
+            <label class="form-group">SWAGGER STRING:</label> <br>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for dynamic_endpoint in dynamic_endpoints %}
+        <div class="runner">
+            <div class="row">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+{#                        <a href="" class="dynamic_endpoint_id">{{ dynamic_endpoint.dynamic_endpoint_id }}</a></div>#}
+                        <div class="dynamic_endpoint_id">{{ dynamic_endpoint.dynamic_endpoint_id }}</div></div>
+                </div>
+                
+                <div class="col-xs-12 col-sm-8">
+                    <textarea cols="40" rows="1" class="form-control parameters"
+                              name="parameters">{{ dynamic_endpoint.swagger_string }}</textarea>
+                </div>
+                {%  if forloop.counter0 == 0 %}
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-green forSave">Create </button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
+                    </div>
+                </div>
+                {%  endif %}
+                {%  if forloop.counter0 > 0 %}
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-red forDelete">Delete</button>
+                    </div>
+                </div>
+                {%  endif %}
+                <div class="col-sm-12 col-sm-12">
+                    <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </form>
+{% endblock %}
+
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'dynamicendpoints/js/dynamicendpoints.js' %}"></script>
+{% endblock extrajs %}
