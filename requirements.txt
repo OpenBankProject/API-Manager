@@ -1,5 +1,5 @@
 #Django==1.11.7
-Django==2.2.9
+Django==2.2.10
 oauthlib==2.0.0
 requests==2.20.0
 requests-oauthlib==0.6.2
