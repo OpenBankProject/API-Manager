@@ -15,18 +15,26 @@ def api_root(request):
 
 
 def api_username(request):
-    """Returns the API username of the logged-in user"""
-    username = 'not authenticated'
+    """Returns the API username/email of the logged-in user"""
+    nametodisplay = 'not authenticated'
     if request.user.is_authenticated:
         try:
             api = API(request.session.get('obp'))
             data = api.get('/users/current')
             username = data['username']
+            email = data['email']
+            provider = data['provider']
+            if "google" in provider:
+                nametodisplay = email
+            elif "yahoo" in provider:
+                nametodisplay = email
+            else:
+                nametodisplay = username
         except APIError as err:
             messages.error(request, err)
         except Exception as err:
             messages.error(request, err)
-    return {'API_USERNAME': username}
+    return {'API_USERNAME': nametodisplay}
 
 
 def api_user_id(request):
