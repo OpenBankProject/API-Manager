@@ -13,6 +13,14 @@
             {% include "users/includes/filter_role.html" %}
             {% include "users/includes/filter_email.html" %}
             {% include "users/includes/filter_username.html" %}
+			<div id="filter-time" class="filter">
+				<div class="btn-group hidden-sm hidden-xs filter-time" role="group" aria-label="filter-time">
+					{% include "users/includes/filter_locked.html" %}
+				</div>
+				<div class="btn-group-vertical visible-sm visible-xs filter-time" role="group" aria-label="filter-time">
+					{% include "users/includes/filter_locked.html" %}
+				</div>
+			</div>
         </div>
         <div class="hidden-sm hidden-md hidden-lg">
             <div class="row">
