@@ -82,13 +82,15 @@ class IndexView(LoginRequiredMixin, TemplateView):
         offset = self.request.GET.get('offset', 0)
         email = self.request.GET.get('email')
         username = self.request.GET.get('username')
+        lockedstatus = self.request.GET.get('locked_status')
+        if lockedstatus is None: lockedstatus = "active"
 
         if email:
             urlpath = '/users/email/{}/terminator'.format(email)
         elif username:
             urlpath = '/users/username/{}'.format(username)
         else:
-            urlpath = '/users?limit={}&offset={}'.format(limit, offset)
+            urlpath = '/users?limit={}&offset={}&locked_status={}'.format(limit, offset, lockedstatus)
 
         users = []
         try:
@@ -115,7 +117,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
             },
             'users': users,
             'limit': limit,
-            'offset': offset
+            'offset': offset,
+            'locked_status': lockedstatus
         })
         return context
 
