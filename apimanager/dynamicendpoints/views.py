@@ -63,7 +63,7 @@ class IndexView(LoginRequiredMixin, FormView):
                                 "parameters":[{
                                     "name":"body",
                                     "in":"body",
-                                    "required":"true",
+                                    "required":True,
                                     "schema":{
                                         "$ref":"#/definitions/user"
                                     }
@@ -144,7 +144,7 @@ class IndexView(LoginRequiredMixin, FormView):
                                 "parameters":[{
                                     "name":"body",
                                     "in":"body",
-                                    "required":"true",
+                                    "required":True,
                                     "schema":{
                                         "$ref":"#/definitions/user"
                                     }
@@ -255,7 +255,7 @@ class IndexView(LoginRequiredMixin, FormView):
                         "userId":{
                             "name":"userId",
                             "in":"path",
-                            "required":"true",
+                            "required":True,
                             "type":"string",
                             "description":"user ID"
                         }
