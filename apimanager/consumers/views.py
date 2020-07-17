@@ -74,7 +74,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/management/consumers'
             consumers = api.get(urlpath)
-            if 'code' in consumers and consumers['code']==403:
+            if 'code' in consumers and consumers['code'] >= 400:
                 messages.error(self.request, consumers['message'])
             else:
                 consumers = FilterEnabled(context, self.request.GET)\
@@ -154,7 +154,7 @@ class DetailView(LoginRequiredMixin, FormView):
 
             call_limits_urlpath = '/management/consumers/{}/consumer/call-limits'.format(self.kwargs['consumer_id'])
             consumer_call_limtis = api.get(call_limits_urlpath)
-            if 'code' in consumer_call_limtis and consumer_call_limtis['code'] > 400:
+            if 'code' in consumer_call_limtis and consumer_call_limtis['code'] >= 400:
                 messages.error(self.request, "{}".format(consumer_call_limtis['message']))
             else:
                 consumer['per_minute_call_limit'] = consumer_call_limtis['per_minute_call_limit']
@@ -184,8 +184,11 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
         try:
             urlpath = '/management/consumers/{}'.format(kwargs['consumer_id'])
             payload = {'enabled': self.enabled}
-            api.put(urlpath, payload)
-            messages.success(self.request, self.success)
+            response = api.put(urlpath, payload)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)
         except:
