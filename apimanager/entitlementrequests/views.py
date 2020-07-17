@@ -35,7 +35,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             entitlement_requests = api.get(urlpath)
             if 'code' in entitlement_requests and entitlement_requests['code']>=400:
                 messages.error(self.request, entitlement_requests['message'])
-                entitlement_requests=[]
+                entitlement_requests = []
             else:
                 entitlement_requests = entitlement_requests['entitlement_requests']
                 entitlement_requests = FilterTime(context, self.request.GET, 'created') \
@@ -103,10 +103,13 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
 
         try:
             urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', '<undefined>'))
-            api.delete(urlpath)
-            msg = 'Entitlement Request with role {} has been deleted.'.format(
-                request.POST.get('role_name', '<undefined>'))
-            messages.success(request, msg)
+            response = api.delete(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                msg = 'Entitlement Request with role {} has been deleted.'.format(
+                    request.POST.get('role_name', '<undefined>'))
+                messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
         except:
