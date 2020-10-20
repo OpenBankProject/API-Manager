@@ -443,7 +443,6 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         result_list = []
         result_list_pure = []
         date_list = []
-        date_list.append(date_from)
 
         # If include_obp_apps is selected
         if cleaned_data.get('include_obp_apps'):
@@ -480,8 +479,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     except Exception as err:
                         error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
-                date_from = date_to
                 date_list.append(date_from)
+                date_from = date_to
                 date_to = date_to + timedelta(**delta)
         else:
             while date_to <= to_date:
@@ -517,8 +516,8 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                     except Exception as err:
                         error_once_only(self.request, 'Unknown Error. {}'.format(type(err).__name__))
 
-                date_from = date_to
                 date_list.append(date_from)
+                date_from = date_to
                 date_to = date_to + timedelta(**delta)
         return result_list, result_list_pure, date_list
 
@@ -978,7 +977,7 @@ class YearlySummaryView(MetricsSummaryView):
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
             calls_per_month_list, calls_per_month, month_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
-            per_month_chart = self.plot_line_chart(calls_per_month, month_list[1:], "month")
+            per_month_chart = self.plot_line_chart(calls_per_month, month_list, "month")
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
@@ -1035,7 +1034,7 @@ class QuarterlySummaryView(MetricsSummaryView):
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
             calls_per_month_list, calls_per_month, month_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
             calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_month_chart = self.plot_line_chart(calls_per_month, month_list[1:], 'month')
+            per_month_chart = self.plot_line_chart(calls_per_month, month_list, 'month')
             per_day_chart = self.plot_line_chart(calls_per_day, date_list, 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
@@ -1095,7 +1094,7 @@ class WeeklySummaryView(MetricsSummaryView):
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
             calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
+            per_day_chart = self.plot_line_chart(calls_per_day, date_list, 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
@@ -1152,7 +1151,7 @@ class DailySummaryView(MetricsSummaryView):
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
             calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(form.cleaned_data, from_date, to_date)
-            per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list[1:], 'hour')
+            per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list, 'hour')
  #           calls_per_hour_list, calls_per_hour = self.calls_per_hour(form.cleaned_data, from_date)
  #           per_hour_chart = self.get_per_hour_chart(form.cleaned_data, from_date)
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
@@ -1218,7 +1217,7 @@ class CustomSummaryView(MetricsSummaryView):
             api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
             calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
             calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
+            per_day_chart = self.plot_line_chart(calls_per_day, date_list, 'day')
             unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
             active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
             top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
