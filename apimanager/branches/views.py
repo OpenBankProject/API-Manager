@@ -16,19 +16,6 @@ from obp.api import API, APIError
 
 from .forms import CreateBranchForm
 
-
-def error_once_only(request, err):
-    """
-    Just add the error once
-    :param request:
-    :param err:
-    :return:
-    """
-    storage = messages.get_messages(request)
-    if str(err) not in [str(m.message) for m in storage]:
-        messages.error(request, err)
-
-
 class IndexBranchesView(LoginRequiredMixin, FormView):
     """Index view for branches"""
     template_name = "branches/index.html"
