@@ -71,8 +71,11 @@ class API(object):
         Convenience call which uses API_ROOT from settings
         """
         url = settings.API_ROOT + urlpath
-        response = self.call('GET', url)
-        return self.handle_response(response)
+        response = self.handle_response(self.call('GET', url))
+        if response is not None and 'code' in response:
+            raise APIError(response['message'])
+        else:    
+            return response
 
     def delete(self, urlpath):
         """
