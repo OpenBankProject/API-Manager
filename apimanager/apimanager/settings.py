@@ -71,6 +71,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# TIMEOUT is 2592000 seconds = 60*60*24*30 (1 month)
+# MAX_ENTRIES is 1000000 entities
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 600000,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000000
+        }
+    }
+}
+
 ROOT_URLCONF = 'apimanager.urls'
 
 TEMPLATES = [
@@ -228,14 +241,6 @@ DIRECTLOGIN_PATH = '/my/logins/direct'
 GATEWAYLOGIN_HAS_CBS = False
 
 
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
-    }
-}
-
 # Use BOOTSTRAP3 if you are using Bootstrap 3
 BOOTSTRAP4 = {
     'include_jquery': True,
@@ -248,17 +253,7 @@ EXCLUDE_FUNCTIONS = []
 # Url Patterns to exclude when reqeust to OBP-API's api
 EXCLUDE_URL_PATTERN = []
 # App Name to aggregate metrics
-API_EXPLORER_APP_NAME = 'xxx'
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
-}
-CACHE_DATEFORMAT = '%Y%m%d%H%M%S'
-CACHE_TIME = 3600
-CACHE_TIME_SHORT = 300
+API_EXPLORER_APP_NAME = 'API Explorer'
 
 # Local settings can override anything in here
 try:
