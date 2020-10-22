@@ -6,7 +6,7 @@ Context processors for base app
 from django.conf import settings
 from django.contrib import messages
 
-from obp.api import API, APIError
+from obp.api import API, APIError, LOGGER
 from django.core.cache import cache
 
 def api_root(request):
@@ -43,6 +43,8 @@ def api_username(request):
                 else:
                     nametodisplay = username
                 apicaches=cache.set(cache_key, {'API_USERNAME': nametodisplay})
+                LOGGER.warning('The cache is setting try to api_user_name:')
+                LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
             except APIError as err:
                 messages.error(request, err)
             except Exception as err:
@@ -71,6 +73,8 @@ def api_user_id(request):
                 data = api.get('/users/current')
                 user_id = data['user_id']
                 apicaches=cache.set(cache_key, {'API_USER_ID': user_id})
+                LOGGER.warning('The cache is setting try to api_user_id:')
+                LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
             except APIError as err:
                 messages.error(request, err)
             except Exception as err:
