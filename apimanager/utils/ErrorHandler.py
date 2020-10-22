@@ -1,6 +1,6 @@
 from django.contrib import messages
 import functools
-from obp.api import API, APIError
+from obp.api import API, APIError, LOGGER
 from django.http import JsonResponse
 import traceback
 
@@ -11,6 +11,7 @@ def error_once_only(request, err):
     :param err:
     :return:
     """
+    LOGGER.exception('error_once_only - Error Message: {}'.format(err))
     storage = messages.get_messages(request)
     if str(err) not in [str(m.message) for m in storage]:
         messages.error(request, err)
