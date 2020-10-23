@@ -71,13 +71,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# TIMEOUT is 2592000 seconds = 60*60*24*30 (1 month)
+# TIMEOUT is 31104000 seconds = 60*60*24*30*12 (1 year)
 # MAX_ENTRIES is 1000000 entities
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique-snowflake',
-        'TIMEOUT': 600000,
+        'TIMEOUT': 31104000,
         'OPTIONS': {
             'MAX_ENTRIES': 10000000
         }
