@@ -246,7 +246,7 @@ class CustomSummaryForm(forms.Form):
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
 
-class MetricsSummaryForm(forms.Form):
+class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
         label='To Date',
         # input_formats=[settings.API_DATEFORMAT],
@@ -266,4 +266,4 @@ class MetricsSummaryForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super(MetricsSummaryForm, self).__init__(*args, **kwargs)
+        super(MonthlyMetricsSummaryForm, self).__init__(*args, **kwargs)

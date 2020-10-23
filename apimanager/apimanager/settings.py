@@ -214,6 +214,9 @@ API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
+# the API_Manager the web form date format, eg: 2020-10-11
+API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
+
 
 API_HOST = 'http://127.0.0.1:8080'
 API_BASE_PATH = '/obp/v'

@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from .forms import WebuiForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from utils.ErrorHandler import exception_handle, error_once_only
+from base.utils import exception_handle, error_once_only
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
