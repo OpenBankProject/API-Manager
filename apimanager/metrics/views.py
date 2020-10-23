@@ -338,34 +338,9 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def get_total_number_of_apps(self, cleaned_data, from_date, to_date):
         apps = []
-        apps_list = []
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
-        urlpath = '/management/consumers'
-        api = API(self.request.session.get('obp'))
-        cache_key = get_cache_key_for_current_call(self.request, urlpath)
-        apicaches=None
-        try:
-            apicaches=cache.get(cache_key)
-        except Exception as err:
-            apicaches=None
-        if not apicaches is None:
-            apps_list=apicaches
-        else:
-            try:
-                apps = api.get(urlpath)
-                if apps is not None and 'code' in apps and apps['code'] == 403:
-                    error_once_only(self.request, apps['message'])
-                else:
-                    apps_list = apps["consumers"]
-                    cache.set(cache_key, apps_list)
-                    LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
-                    LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
-            except APIError as err:
-                error_once_only(self.request, err)
-            except Exception as err:
-                error_once_only(self.request, 'Unknown Error. {}'.format(err))
-        
+        apps_list =  self.get_all_consumers()
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -401,6 +376,30 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         number_of_apps_with_unique_developer_email = len(unique_developer_emails)
 
         return unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email
+
+    def get_all_consumers(self):
+        urlpath = '/management/consumers'
+        api = API(self.request.session.get('obp'))
+        cache_key = get_cache_key_for_current_call(self.request, urlpath)
+        apicaches = None
+        try:
+            apicaches = cache.get(cache_key)
+        except Exception as err:
+            apicaches = None
+        if not apicaches is None:
+            apps_list = apicaches
+        else:
+            try:
+                apps = api.get(urlpath)
+                apps_list = apps["consumers"]
+                cache.set(cache_key, apps_list, 60 * 60)  # for the consumers we cache for 1 hour, consumers may be increased 
+                LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
+                LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+        return apps_list
 
     def calls_per_delta(self, is_included_obp_apps, from_date_string, to_date_string, **delta ):
         """
@@ -736,37 +735,12 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         return top_apps_using_warehouse
 
     def median_time_to_first_api_call(self, from_date, to_date):
-        if 2>1:
-            return 0
+        return 0 #TODO this cost too much time, do not use this at the moment.
         form = self.get_form()
         new_apps_list = []
         apps = []
-        apps_list = []
+        apps_list = self.get_all_consumers()
 
-        urlpath_consumers = '/management/consumers'
-        cache_key = get_cache_key_for_current_call(self.request, urlpath_consumers)
-        apicaches=None
-        try:
-            apicaches=cache.get(cache_key)
-        except Exception as err:
-            apicaches=None
-        if not apicaches is None:
-            apps_list=apicaches
-        else:
-            api = API(self.request.session.get('obp'))
-            try:
-                apps = api.get(urlpath_consumers)
-                if apps is not None and 'code' in apps and apps['code']==403:
-                    error_once_only(self.request, apps['message'])
-                else:
-                    apps_list = apps["consumers"]
-                    cache.set(cache_key, apps_list)
-                    LOGGER.warning('The cache is setting, url is: {}'.format(urlpath_consumers))
-                    LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
-            except APIError as err:
-                error_once_only(self.request, err)
-            except Exception as err:
-                error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
