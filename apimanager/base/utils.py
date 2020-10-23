@@ -24,6 +24,7 @@ def get_cache_key_for_current_call(request, urlpath):
     """we will generate the cache key by login username+urlpath
        url path may contain lots of special characters, here we use the hash method first.
     """
+    #TODO, we need the obp user.provide there. 
     return context_processors.api_username(request).get('API_USERNAME') + str(hash(urlpath))
 
 
