@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,7 +70,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+#cache the view page, we set 60s = 1m, 
+CACHE_MIDDLEWARE_SECONDS = 60
+
+# TIMEOUT is 31104000 seconds = 60*60*24*30*12 (1 year)
+# MAX_ENTRIES is 1000000 entities
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 31104000,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000000
+        }
+    }
+}
 
 ROOT_URLCONF = 'apimanager.urls'
 
@@ -201,6 +219,9 @@ API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
+# the API_Manager the web form date format, eg: 2020-10-11
+API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
+
 
 API_HOST = 'http://127.0.0.1:8080'
 API_BASE_PATH = '/obp/v'
@@ -228,14 +249,6 @@ DIRECTLOGIN_PATH = '/my/logins/direct'
 GATEWAYLOGIN_HAS_CBS = False
 
 
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
-    }
-}
-
 # Use BOOTSTRAP3 if you are using Bootstrap 3
 BOOTSTRAP4 = {
     'include_jquery': True,
@@ -248,17 +261,7 @@ EXCLUDE_FUNCTIONS = []
 # Url Patterns to exclude when reqeust to OBP-API's api
 EXCLUDE_URL_PATTERN = []
 # App Name to aggregate metrics
-API_EXPLORER_APP_NAME = 'xxx'
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
-}
-CACHE_DATEFORMAT = '%Y%m%d%H%M%S'
-CACHE_TIME = 3600
-CACHE_TIME_SHORT = 300
+API_EXPLORER_APP_NAME = 'API Explorer'
 
 # Local settings can override anything in here
 try:

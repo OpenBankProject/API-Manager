@@ -211,7 +211,7 @@ class ConnectorMetricsForm(MetricsForm):
 
 
 class CustomSummaryForm(forms.Form):
-    to_date = forms.DateTimeField(
+    to_date = forms.DateField(
         label='To Date',
         # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
@@ -220,12 +220,12 @@ class CustomSummaryForm(forms.Form):
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:00:00')),
+        initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
-    from_date_custom = forms.DateTimeField(
+    from_date_custom = forms.DateField(
         label='From Date',
         # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
@@ -234,9 +234,9 @@ class CustomSummaryForm(forms.Form):
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:00:00'),
+        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
@@ -246,8 +246,8 @@ class CustomSummaryForm(forms.Form):
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
 
-class MetricsSummaryForm(forms.Form):
-    to_date = forms.DateTimeField(
+class MonthlyMetricsSummaryForm(forms.Form):
+    to_date = forms.DateField(
         label='To Date',
         # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
@@ -256,14 +256,14 @@ class MetricsSummaryForm(forms.Form):
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
         # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:00:00')),
+        initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super(MetricsSummaryForm, self).__init__(*args, **kwargs)
+        super(MonthlyMetricsSummaryForm, self).__init__(*args, **kwargs)

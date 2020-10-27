@@ -7,7 +7,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from obp.api import API, APIError
-from utils.ErrorHandler import exception_handle, error_once_only
+from base.utils import exception_handle, error_once_only
 from .forms import DynamicEndpointsForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
