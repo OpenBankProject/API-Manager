@@ -5,6 +5,7 @@ Views of metrics app
 
 import json
 import hashlib
+import operator
 from datetime import datetime, timedelta
 from enum import Enum
 
