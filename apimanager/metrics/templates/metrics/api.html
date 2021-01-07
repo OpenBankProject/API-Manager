@@ -18,17 +18,17 @@
 
     		<div class="row">
     			<div class="col-xs-6 col-sm-3">
-    				{% if form.start_date.errors %}<div class="alert alert-danger">{{ form.start_date.errors }}</div>{% endif %}
+    				{% if form.from_date.errors %}<div class="alert alert-danger">{{ form.from_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.start_date.label_tag }}
-    					{{ form.start_date }}
+    					{{ form.from_date.label_tag }}
+    					{{ form.from_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
-    				{% if form.end_date.errors %}<div class="alert alert-danger">{{ form.end_date.errors }}</div>{% endif %}
+    				{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.end_date.label_tag }}
-    					{{ form.end_date }}
+    					{{ form.to_date.label_tag }}
+    					{{ form.to_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">

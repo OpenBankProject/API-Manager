@@ -13,8 +13,8 @@ from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
 
 class MetricsForm(forms.Form):
-    start_date = forms.DateTimeField(
-        label='Start Date',
+    from_date = forms.DateTimeField(
+        label='From Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -22,11 +22,11 @@ class MetricsForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        initial='1900-01-01T00:00:00.000Z',
+        initial='2020-01-01T00:00:00.000Z',
         required=False,
     )
-    end_date = forms.DateTimeField(
-        label='End Date',
+    to_date = forms.DateTimeField(
+        label='To Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -168,9 +168,9 @@ class APIMetricsForm(MetricsForm):
 
 
 class ConnectorMetricsForm(MetricsForm):
-    # override start_date until API returns values without given date
-    start_date = forms.DateTimeField(
-        label='Start Date',
+    # override from_date until API returns values without given date
+    from_date = forms.DateTimeField(
+        label='From Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -178,7 +178,7 @@ class ConnectorMetricsForm(MetricsForm):
                 'class': 'form-control',
             }
         ),
-        initial='1900-01-01T00:00:00.000Z',
+        initial='2020-01-01T00:00:00.000Z',
         required=True,
     )
     connector_name = forms.CharField(

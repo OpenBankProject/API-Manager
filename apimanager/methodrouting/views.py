@@ -43,7 +43,7 @@ class IndexView(LoginRequiredMixin, FormView):
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
             for i in range(len(method_routings)):
-                method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'])
+                method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
 
             context.update({
                 'method_routings': method_routings,
