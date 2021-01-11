@@ -15,12 +15,12 @@ $(document).ready(function($) {
 		var container = $("#"+json_editor_id);
 		parameters = JSON.parse($(runner).find('textarea[name="parameters"]').text());
 		var jsoneditor_div =  $(runner).find('.jsoneditor_div');
-		//make sure only create one jsoneditor_div block 
+		//make sure only create one jsoneditor_div block, click once to open and then close the block.
 		if(!(jsoneditor_div.css("display") ==="block")){
 			json_editors[json_editor_number] = new JSONEditor(container[0], options, parameters);
 			jsoneditor_div.css("display","block");
 		}else{
-			json_editors[json_editor_number] = json_editors[json_editor_number].set(parameters)
+			jsoneditor_div.css("display","none");
 		}
 	});
 	
