@@ -105,10 +105,16 @@
                             class="method_routing_id">{{ method_routing.method_routing_id }}</div></div>
                 </div>
                 <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">Save</button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
-                        <button class="btn btn-primary btn-red forDelete">Delete</button>
-                    </div>
+                    {% if method_routing.method_routing_id == "" %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-green forSave">Create New </button>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-bule forSave">Update</button>
+                            <button class="btn btn-primary btn-red forDelete">Delete</button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-sm-12 col-sm-12">
                     <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
