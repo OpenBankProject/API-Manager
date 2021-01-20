@@ -43,11 +43,23 @@ class IndexView(LoginRequiredMixin, FormView):
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
             for i in range(len(method_routings)):
-                method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
+                #if the parameters are empty, we provide the example value.
+                if(str(method_routings[i]['parameters']).find("key") == -1):
+                    method_routings[i]['parameters'] = json.dumps([{
+                        "key":"url",
+                        "value":"http://mydomain.com/xxx"
+                    }], sort_keys=False)
+                else:
+                    method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
 
+            if(str(settings.API_ROOT).find("127.0.0.1") == -1):
+                methodSwaggerUrl = '{}/message-docs?connector=stored_procedure_vDec2019#'.format(settings.API_HOST.replace(".openbankproject.", "-explorer.openbankproject."))
+            else:
+                methodSwaggerUrl = "http://127.0.0.1:8082/message-docs?connector=stored_procedure_vDec2019#"
+            
             context.update({
                 'method_routings': method_routings,
-                "methodSwaggerUrl": json.dumps('{}/message-docs/rest_vMar2019/swagger2.0?functions'.format(settings.API_ROOT ))
+                "methodSwaggerUrl": methodSwaggerUrl
             })
         return context
 

@@ -31,8 +31,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-{#                        <a href="{{ methodSwaggerUrl }}={{ method_routing.method_name }}" class="method_name">{{ method_routing.method_name }}</a></div>#}
-                        <div class="method_name">{{ method_routing.method_name }}</div></div>
+                        <div class="method_name"><a href="{{methodSwaggerUrl}}obp.{{method_routing.method_name}}">{{method_routing.method_name}}</a></div>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <select class="connector_name form-control " }>
@@ -97,7 +97,7 @@
                     </select>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                    <textarea cols="40" rows="1" class="form-control parameters"
+                    <textarea readonly cols="40" rows="1" class="form-control parameters"
                               name="parameters">{{ method_routing.parameters }}</textarea>
                 </div>
                 <div class="col-xs-12 col-sm-2">
@@ -105,10 +105,16 @@
                             class="method_routing_id">{{ method_routing.method_routing_id }}</div></div>
                 </div>
                 <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">Save</button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
-                        <button class="btn btn-primary btn-red forDelete">Delete</button>
-                    </div>
+                    {% if method_routing.method_routing_id == "" %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-green forSave">Create New </button>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-bule forSave">Update</button>
+                            <button class="btn btn-primary btn-red forDelete">Delete</button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-sm-12 col-sm-12">
                     <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
