@@ -47,7 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 if(str(method_routings[i]['parameters']).find("key") == -1):
                     method_routings[i]['parameters'] = json.dumps([{
                         "key":"url",
-                        "value":"http://mydomain.com/xxx"
+                        "value":"http://example.com/xxx"
                     }], sort_keys=False)
                 else:
                     method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
