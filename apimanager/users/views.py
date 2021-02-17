@@ -283,6 +283,6 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         elif ("/users/myuser/user_id/" in str(redirect_url_from_gui)):
             redirect_url = reverse('my-user-detail',kwargs={"user_id":kwargs['user_id']})
         else:
-             redirect_url = redirect_url_from_gui
+             redirect_url = reverse('users-index')
         
         return HttpResponseRedirect(redirect_url)
