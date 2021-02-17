@@ -276,5 +276,13 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         except:
             messages.error(self.request, 'Unknown Error')
 
-        redirect_url = request.POST.get('next', reverse('users-index'))
+        # from sonarcloud: Change this code to not perform redirects based on user-controlled data.    
+        redirect_url_from_gui = request.POST.get('next', reverse('users-index'))
+        if "/users/all/user_id/" in str(redirect_url_from_gui):
+            redirect_url = reverse('users-detail',kwargs={"user_id":kwargs['user_id']})
+        elif ("/users/myuser/user_id/" in str(redirect_url_from_gui)):
+            redirect_url = reverse('my-user-detail',kwargs={"user_id":kwargs['user_id']})
+        else:
+             redirect_url = redirect_url_from_gui
+        
         return HttpResponseRedirect(redirect_url)
