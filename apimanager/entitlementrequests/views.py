@@ -73,8 +73,7 @@ class RejectEntitlementRequest(LoginRequiredMixin, View):
         except:
             messages.error(self.request, "Unknown Error")
 
-        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
-        return HttpResponseRedirect(redirect_url)
+        return HttpResponseRedirect(reverse('entitlementrequests-index'))
 
 
 class AcceptEntitlementRequest(LoginRequiredMixin, View):
@@ -115,5 +114,4 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
         except:
             messages.error(self.request, "Unknown Error")
 
-        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
-        return HttpResponseRedirect(redirect_url)
+        return HttpResponseRedirect(reverse('entitlementrequests-index'))
