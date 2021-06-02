@@ -2,17 +2,15 @@
 """
 Views of users app
 """
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from base.filters import BaseFilter
 from obp.api import API, APIError
-
-from .forms import AddEntitlementForm
+from .forms import AddEntitlementForm,CreateInvitationForm
 
 
 class FilterRoleName(BaseFilter):
@@ -254,6 +252,54 @@ class MyDetailView(LoginRequiredMixin, FormView):
         })
         return context
 
+class InvitationView(LoginRequiredMixin, FormView):
+    """View to create a User Invitation"""
+    form_class = CreateInvitationForm
+    template_name = 'users/invitation.html'
+    success_url = reverse_lazy('my-user-invitation')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.api = API(request.session.get('obp'))
+        return super(InvitationView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self, *args, **kwargs):
+        form = super(InvitationView, self).get_form(*args, **kwargs)
+        form.api = self.api
+        fields = form.fields
+        try:
+            fields['bank_id'].choices = self.api.get_bank_id_choices()
+        except APIError as err:
+            messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
+        return form
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        urlpath = '/banks/{}/user-invitation'.format(data['bank_id'])
+        payload = {
+            'first_name': data['first_name'],
+            'last_name': data['last_name'],
+            'email': data['email'],
+            'company': data['company'],
+            'country': data['country'],
+            'purpose': data['purpose']
+        }
+        try:
+            result = self.api.post(urlpath, payload=payload)
+            if 'code' in result and result['code'] >= 400:
+                messages.error(self.request, result['message'])
+                return super(InvitationView, self).form_valid(form)
+            else:
+                msg = 'Create User Invitation secret_key({}) at Bank({}) has been {}!'.format(result['secret_key'],data['bank_id'], result['status'] )
+                messages.success(self.request, msg)
+                return super(InvitationView, self).form_valid(form)
+        except APIError as err:
+            messages.error(self.request, err)
+            return super(InvitationView, self).form_invalid(form)
+        except: 
+            messages.error(self.request, "Unknown Error")
+            return super(InvitationView, self).form_invalid(form)
 
 class DeleteEntitlementView(LoginRequiredMixin, View):
     """View to delete an entitlement"""
