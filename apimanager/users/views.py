@@ -274,9 +274,11 @@ class InvitationView(LoginRequiredMixin, FormView):
             messages.error(self.request, "Unknown Error")
         return form
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         data = form.cleaned_data
-        urlpath = '/banks/{}/user-invitation'.format(data['bank_id'])
+        post_url_path = '/banks/{}/user-invitation'.format(data['bank_id'])
+        get_url_path = '/banks/{}/user-invitations'.format(data['bank_id'])
+        invitations=[]
         payload = {
             'first_name': data['first_name'],
             'last_name': data['last_name'],
@@ -285,15 +287,24 @@ class InvitationView(LoginRequiredMixin, FormView):
             'country': data['country'],
             'purpose': data['purpose']
         }
+        context = self.get_context_data(**kwargs)
         try:
-            result = self.api.post(urlpath, payload=payload)
+            response = self.api.get(get_url_path)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                invitations = invitations + response['user_invitations']
+            result = self.api.post(post_url_path, payload=payload)
             if 'code' in result and result['code'] >= 400:
                 messages.error(self.request, result['message'])
                 return super(InvitationView, self).form_valid(form)
             else:
+                context.update({
+                    'invitations': invitations,
+                })
                 msg = 'Create User Invitation secret_key({}) at Bank({}) has been {}!'.format(result['secret_key'],data['bank_id'], result['status'] )
                 messages.success(self.request, msg)
-                return super(InvitationView, self).form_valid(form)
+                return self.render_to_response(context)
         except APIError as err:
             messages.error(self.request, err)
             return super(InvitationView, self).form_invalid(form)

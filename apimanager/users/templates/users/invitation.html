@@ -5,7 +5,7 @@
 
 
 {% block content %}
-    <div id="create-invitation">
+    <div id="user-invitation">
         <h1>Invite Developer</h1>
 
         <form action="{% url 'my-user-invitation' %}" method="post">
@@ -71,6 +71,34 @@
             </div>
 
             <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="table-responsive">
+                <table class="table table-hover tablesorter" id="invitation-list">
+                    <thead>
+                    <th>Secret Key</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>company</th>
+                    <th>country</th>
+                    <th>purpose</th>
+                    <th>status</th>
+                    </thead>
+                    <tbody>
+                    {% for invitation in invitations %}
+                        <tr data-invitation-id="{{ invitation.secret_key }}">
+                            <td>{{ invitation.secret_key }}</td>
+                            <td>{{ invitation.first_name }}</td>
+                            <td>{{ invitation.last_name }}</td>
+                            <td>{{ invitation.email }}</td>
+                            <td>{{ invitation.company }}</td>
+                            <td>{{ invitation.country }}</td>
+                            <td>{{ invitation.purpose }}</td>
+                            <td>{{ invitation.status }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </form>
     </div>
 {% endblock content %}
