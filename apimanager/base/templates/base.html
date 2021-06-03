@@ -35,11 +35,13 @@
 					<li{% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">Entitlement Requests</a></li>
 					{% url "users-index" as users_index_url %}
 					{% url 'my-user-detail' API_USER_ID as url_users_detail %}
-					<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path %} active{% endif %}">
+					{% url "my-user-invitation" as my_user_invitation %}
+					<li class="dropdown{% if users_index_url in request.path or url_users_detail or my_user_invitation in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Users</a>
 						<ul class="dropdown-menu">
 							<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">All</a></li>
 							<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">My User</a></li>
+							<li{% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">Invite Developer</a></li>
 						</ul>
 					</li>
 					{% url "api-metrics" as api_metrics_url %}

@@ -5,7 +5,7 @@ URLs for users app
 
 from django.conf.urls import url
 
-from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView
+from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView,InvitationView
 
 urlpatterns = [
     url(r'^all$',
@@ -17,6 +17,9 @@ urlpatterns = [
     url(r'^myuser/user_id/(?P<user_id>[\w\@\.\+-]+)$',
         MyDetailView.as_view(),
         name='my-user-detail'),
+    url(r'^myuser/invitation$',
+        InvitationView.as_view(),
+        name='my-user-invitation'),
     url(r'^(?P<user_id>[\w-]+)/entitlement/delete/(?P<entitlement_id>[\w-]+)$',
         DeleteEntitlementView.as_view(),
         name='users-delete-entitlement'),

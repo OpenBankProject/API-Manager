@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
+
+
+{% block content %}
+    <div id="create-invitation">
+        <h1>Invitation Developer</h1>
+
+        <form action="{% url 'my-user-invitation' %}" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    {% if form.bank_id.errors %}<div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.bank_id.label_tag }}
+                        {{ form.bank_id }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    {% if form.first_name.errors %}<div class="alert alert-danger">{{ form.first_name.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.first_name.label_tag }}
+                        {{ form.first_name }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    {% if form.last_name.errors %}<div class="alert alert-danger">{{ form.last_name.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.last_name.label_tag }}
+                        {{ form.last_name }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    {% if form.email.errors %}<div class="alert alert-danger">{{ form.email.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    {% if form.company.errors %}<div class="alert alert-danger">{{ form.company.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.company.label_tag }}
+                        {{ form.company }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    {% if form.country.errors %}<div class="alert alert-danger">{{ form.country.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.country.label_tag }}
+                        {{ form.country }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    {% if form.purpose.errors %}<div class="alert alert-danger">{{ form.purpose.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        {{ form.purpose.label_tag }}
+                        {{ form.purpose }}
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </form>
+    </div>
+{% endblock content %}
+
+
+{% block extrajs %}
+{% endblock extrajs %}
+
+{% block extracss %}
+    <link href="{% static 'users/css/users.css' %}" rel="stylesheet">
+{% endblock extracss %}
