@@ -302,14 +302,14 @@ class InvitationView(LoginRequiredMixin, FormView):
                 context.update({
                     'invitations': invitations,
                 })
-                msg = 'Create User Invitation secret_key({}) at Bank({}) has been {}!'.format(result['secret_key'],data['bank_id'], result['status'] )
+                msg = 'User Invitation ({}) at Bank({}) has been {}!'.format(result['first_name'],data['bank_id'], result['status'] )
                 messages.success(self.request, msg)
                 return self.render_to_response(context)
         except APIError as err:
             messages.error(self.request, err)
             return super(InvitationView, self).form_invalid(form)
-        except: 
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, "Unknown Error:{}".format(str(err)))
             return super(InvitationView, self).form_invalid(form)
 
 class DeleteEntitlementView(LoginRequiredMixin, View):

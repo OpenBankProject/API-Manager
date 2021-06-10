@@ -74,7 +74,6 @@
             <div class="table-responsive">
                 <table class="table table-hover tablesorter" id="invitation-list">
                     <thead>
-                    <th>Secret Key</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
@@ -85,8 +84,7 @@
                     </thead>
                     <tbody>
                     {% for invitation in invitations %}
-                        <tr data-invitation-id="{{ invitation.secret_key }}">
-                            <td>{{ invitation.secret_key }}</td>
+                        <tr>
                             <td>{{ invitation.first_name }}</td>
                             <td>{{ invitation.last_name }}</td>
                             <td>{{ invitation.email }}</td>
