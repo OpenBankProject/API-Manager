@@ -285,7 +285,7 @@ class InvitationView(LoginRequiredMixin, FormView):
             'email': data['email'],
             'company': data['company'],
             'country': data['country'],
-            'purpose': data['purpose']
+            'purpose': 'DEVELOP'
         }
         context = self.get_context_data(**kwargs)
         try:

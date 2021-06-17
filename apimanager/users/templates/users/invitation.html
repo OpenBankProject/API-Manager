@@ -40,32 +40,25 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-3">
+                <div class="col-xs-12 col-sm-4">
                     {% if form.email.errors %}<div class="alert alert-danger">{{ form.email.errors }}</div>{% endif %}
                     <div class="form-group">
                         {{ form.email.label_tag }}
                         {{ form.email }}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-3">
+                <div class="col-xs-12 col-sm-4">
                     {% if form.company.errors %}<div class="alert alert-danger">{{ form.company.errors }}</div>{% endif %}
                     <div class="form-group">
                         {{ form.company.label_tag }}
                         {{ form.company }}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-3">
+                <div class="col-xs-12 col-sm-4">
                     {% if form.country.errors %}<div class="alert alert-danger">{{ form.country.errors }}</div>{% endif %}
                     <div class="form-group">
                         {{ form.country.label_tag }}
                         {{ form.country }}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                    {% if form.purpose.errors %}<div class="alert alert-danger">{{ form.purpose.errors }}</div>{% endif %}
-                    <div class="form-group">
-                        {{ form.purpose.label_tag }}
-                        {{ form.purpose }}
                     </div>
                 </div>
             </div>
@@ -79,7 +72,6 @@
                     <th>Email</th>
                     <th>company</th>
                     <th>country</th>
-                    <th>purpose</th>
                     <th>status</th>
                     </thead>
                     <tbody>
@@ -90,7 +82,6 @@
                             <td>{{ invitation.email }}</td>
                             <td>{{ invitation.company }}</td>
                             <td>{{ invitation.country }}</td>
-                            <td>{{ invitation.purpose }}</td>
                             <td>{{ invitation.status }}</td>
                         </tr>
                     {% endfor %}
