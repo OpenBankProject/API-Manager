@@ -27,6 +27,13 @@
 		<span>{{ apiuser.provider_id }}</span>
 	</div>
 
+    <form action="{% url 'users-delete-user' apiuser.user_id  %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        <input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
+        <button type="submit" class="btn btn-primary btn-red">Delete User</button>
+    </form>
+
 
 {% if apiuser.user_id %}
 	<div id="users-detail-entitlements">

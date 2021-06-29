@@ -343,3 +343,35 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
              redirect_url = reverse('users-index')
         
         return HttpResponseRedirect(redirect_url)
+
+
+class DeleteUserView(LoginRequiredMixin, View):
+    """View to delete a user"""
+
+    def post(self, request, *args, **kwargs):
+        """Deletes a user via API"""
+        api = API(self.request.session.get('obp'))
+        try:
+            urlpath = '/users/{}'.format(
+                kwargs['user_id'])
+            result = api.delete(urlpath)
+            if result is not None and 'code' in result and result['code'] >= 400:
+                messages.error(request, result['message'])
+            else:
+                msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
+                messages.success(request, msg)
+        except APIError as err:
+            messages.error(request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
+
+        # from sonarcloud: Change this code to not perform redirects based on user-controlled data.
+        redirect_url_from_gui = request.POST.get('next', reverse('users-index'))
+        if "/users/all/user_id/" in str(redirect_url_from_gui):
+            redirect_url = reverse('users-detail', kwargs={"user_id": kwargs['user_id']})
+        elif ("/users/myuser/user_id/" in str(redirect_url_from_gui)):
+            redirect_url = reverse('my-user-detail', kwargs={"user_id": kwargs['user_id']})
+        else:
+            redirect_url = reverse('users-index')
+
+        return HttpResponseRedirect(redirect_url)
