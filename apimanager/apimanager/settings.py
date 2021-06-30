@@ -106,6 +106,7 @@ TEMPLATES = [
                 'base.context_processors.api_username',
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
+                'base.context_processors.portal_page'
             ],
         },
     },
@@ -224,6 +225,8 @@ API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 
 API_HOST = 'http://127.0.0.1:8080'
+# Only override this if you have a separate portal instance
+API_PORTAL = None
 API_BASE_PATH = '/obp/v'
 API_VERSION = '4.0.0'
 
