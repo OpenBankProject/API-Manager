@@ -27,10 +27,15 @@
 		<span>{{ apiuser.provider_id }}</span>
 	</div>
 	
+	
+	{% if apiuser.is_deleted %}
 	<div id="users-detail-deleted">
 		<strong>Deleted</strong><br />
 		<span>{{ apiuser.is_deleted }}</span>
 	</div>
+	{% else %}
+	
+	{% endif %}
 
     <form action="{% url 'users-delete-user' apiuser.user_id  %}" method="post">
         {% csrf_token %}
