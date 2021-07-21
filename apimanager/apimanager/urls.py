@@ -20,6 +20,8 @@ urlpatterns = [
     # backward compatibility
     url(r'^oauth/initiate$',
         OAuthInitiateView.as_view(), name='oauth-initiate'),
+    url(r'^single-sign-on',
+        OAuthInitiateView.as_view(), name='single-sign-on'),
     url(r'^oauth/authorize$',
         OAuthAuthorizeView.as_view(), name='oauth-authorize'),
     url(r'^directlogin$',
