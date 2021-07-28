@@ -226,7 +226,7 @@ API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 API_HOST = 'http://127.0.0.1:8080'
 # Only override this if you have a separate portal instance
-API_PORTAL = None
+API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
 API_VERSION = '4.0.0'
 
@@ -265,6 +265,8 @@ EXCLUDE_FUNCTIONS = []
 EXCLUDE_URL_PATTERN = []
 # App Name to aggregate metrics
 API_EXPLORER_APP_NAME = 'API Explorer'
+
+LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
 
 # Local settings can override anything in here
 try:
