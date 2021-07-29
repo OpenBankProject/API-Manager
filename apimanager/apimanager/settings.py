@@ -106,7 +106,8 @@ TEMPLATES = [
                 'base.context_processors.api_username',
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
-                'base.context_processors.portal_page'
+                'base.context_processors.portal_page',
+                'base.context_processors.logo_url'
             ],
         },
     },
