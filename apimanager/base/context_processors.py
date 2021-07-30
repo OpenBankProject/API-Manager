@@ -23,6 +23,16 @@ def portal_page(request):
         return {'API_PORTAL': settings.API_PORTAL}
 
 
+def logo_url(request):
+    """Returns the configured LOGO_URL"""
+    return {'logo_url': settings.LOGO_URL}
+
+
+def override_css_url(request):
+    """Returns the configured OVERRIDE_CSS_URL"""
+    return {'override_css_url': settings.OVERRIDE_CSS_URL}
+
+
 def api_username(request):
     """Returns the API username/email of the logged-in user"""
     nametodisplay = 'not authenticated'
