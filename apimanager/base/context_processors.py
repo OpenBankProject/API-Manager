@@ -28,6 +28,11 @@ def logo_url(request):
     return {'logo_url': settings.LOGO_URL}
 
 
+def override_css_url(request):
+    """Returns the configured OVERRIDE_CSS_URL"""
+    return {'override_css_url': settings.OVERRIDE_CSS_URL}
+
+
 def api_username(request):
     """Returns the API username/email of the logged-in user"""
     nametodisplay = 'not authenticated'

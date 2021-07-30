@@ -107,7 +107,8 @@ TEMPLATES = [
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
                 'base.context_processors.portal_page',
-                'base.context_processors.logo_url'
+                'base.context_processors.logo_url',
+                'base.context_processors.override_css_url'
             ],
         },
     },
@@ -268,6 +269,7 @@ EXCLUDE_URL_PATTERN = []
 API_EXPLORER_APP_NAME = 'API Explorer'
 
 LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
+OVERRIDE_CSS_URL = None
 
 # Local settings can override anything in here
 try:
