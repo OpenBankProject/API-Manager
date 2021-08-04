@@ -26,4 +26,7 @@ urlpatterns = [
     url(r'^(?P<user_id>[\w-]+)/delete$',
         DeleteUserView.as_view(),
         name='users-delete-user'),
+    url(r'^export_csv$',
+        IndexView.export_scv,
+        name='export-csv')
 ]

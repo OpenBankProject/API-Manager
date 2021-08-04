@@ -2,16 +2,17 @@
 """
 Views of users app
 """
+import datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from base.filters import BaseFilter
 from obp.api import API, APIError
 from .forms import AddEntitlementForm,CreateInvitationForm
-
+import csv
 
 class FilterRoleName(BaseFilter):
     """Filter users by role names"""
@@ -46,6 +47,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
 
+    users = []
     def get_users_rolenames(self, context):
 
         api = API(self.request.session.get('obp'))
@@ -90,13 +92,12 @@ class IndexView(LoginRequiredMixin, TemplateView):
         else:
             urlpath = '/users?limit={}&offset={}&locked_status={}'.format(limit, offset, lockedstatus)
 
-        users = []
         try:
             response = api.get(urlpath)
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
-                users = response
+                IndexView.users = response
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -104,21 +105,30 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         role_names = self.get_users_rolenames(context)
         try:
-            users = FilterRoleName(context, self.request.GET) \
-                .apply([users] if username else users['users'])
+            IndexView.users = FilterRoleName(context, self.request.GET) \
+                .apply([IndexView.users] if username else IndexView.users['users'])
         except:
-            users = []
+            IndexView.users = []
         context.update({
             'role_names': role_names,
             'statistics': {
-                'users_num': len(users),
+                'users_num': len(IndexView.users),
             },
-            'users': users,
+            'users': IndexView.users,
             'limit': limit,
             'offset': offset,
             'locked_status': lockedstatus
         })
         return context
+
+    def export_scv(request):
+        response = HttpResponse(content_type = 'text/csv')
+        response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
+        writer = csv.writer(response)
+        writer.writerow(["username","user_id","email","provider_id","provider"])
+        for user in IndexView.users:
+            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider']])
+        return response
 
 
 class DetailView(LoginRequiredMixin, FormView):
@@ -285,7 +295,7 @@ class InvitationView(LoginRequiredMixin, FormView):
             'email': data['email'],
             'company': data['company'],
             'country': data['country'],
-            'purpose': 'DEVELOP'
+            'purpose': 'DEVELOPER'
         }
         context = self.get_context_data(**kwargs)
         try:
