@@ -125,9 +125,26 @@ class IndexView(LoginRequiredMixin, TemplateView):
         response = HttpResponse(content_type = 'text/csv')
         response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
         writer = csv.writer(response)
-        writer.writerow(["username","user_id","email","provider_id","provider"])
+        writer.writerow(["username","user_id","email","provider_id","provider",
+                         "agreements-accept_marketing_info",
+                         "agreements-terms_and_conditions",
+                         "agreements-privacy_conditions",
+                         ])
         for user in IndexView.users:
-            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider']])
+            if(len(user['agreements'])==1):
+                writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                                 user['agreements'][0]['text']])
+            elif (len(user['agreements'])==2):
+                writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                                 user['agreements'][0]['text'],
+                                 user['agreements'][1]['text']])
+            elif(len(user['agreements'])>=3):
+                writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                                 user['agreements'][0]['text'],
+                                 user['agreements'][1]['text'],
+                                 user['agreements'][2]['text']])
+            else:
+                writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider']])
         return response
 
 
