@@ -70,7 +70,7 @@ class CreateInvitationForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=False,
+        required=True,
     )
     company = forms.CharField(
         label='Company',
@@ -80,7 +80,7 @@ class CreateInvitationForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=False,
+        required=True,
     )
     country = forms.CharField(
         label='Country',
@@ -90,7 +90,7 @@ class CreateInvitationForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=False,
+        required=True,
     )
     purpose = forms.CharField(
         label='Purpose',
