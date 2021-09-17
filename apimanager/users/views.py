@@ -126,9 +126,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
         response = HttpResponse(content_type = 'text/csv')
         response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
         writer = csv.writer(response)
-        writer.writerow(["username","user_id","email","provider_id","provider"])
+        writer.writerow(["username","user_id","email","provider_id","provider","last_marketing_agreement_signed_date"])
         for user in IndexView.users:
-            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider']])
+            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                             user['last_marketing_agreement_signed_date']])
         return response
 
 
