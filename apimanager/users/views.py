@@ -14,6 +14,7 @@ from obp.api import API, APIError
 from .forms import AddEntitlementForm,CreateInvitationForm
 import csv
 
+
 class FilterRoleName(BaseFilter):
     """Filter users by role names"""
     filter_type = 'role_name'
@@ -125,9 +126,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
         response = HttpResponse(content_type = 'text/csv')
         response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
         writer = csv.writer(response)
-        writer.writerow(["username","user_id","email","provider_id","provider"])
+        writer.writerow(["username","user_id","email","provider_id","provider","last_marketing_agreement_signed_date"])
         for user in IndexView.users:
-            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider']])
+            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                             user['last_marketing_agreement_signed_date']])
         return response
 
 
@@ -262,6 +264,7 @@ class MyDetailView(LoginRequiredMixin, FormView):
         })
         return context
 
+
 class InvitationView(LoginRequiredMixin, FormView):
     """View to create a User Invitation"""
     form_class = CreateInvitationForm
@@ -299,19 +302,12 @@ class InvitationView(LoginRequiredMixin, FormView):
         }
         context = self.get_context_data(**kwargs)
         try:
-            response = self.api.get(get_url_path)
-            if 'code' in response and response['code'] >= 400:
-                messages.error(self.request, response['message'])
-            else:
-                invitations = invitations + response['user_invitations']
             result = self.api.post(post_url_path, payload=payload)
             if 'code' in result and result['code'] >= 400:
                 messages.error(self.request, result['message'])
                 return super(InvitationView, self).form_valid(form)
             else:
-                context.update({
-                    'invitations': invitations,
-                })
+                self.get_invitations(context, get_url_path, invitations)
                 msg = 'User Invitation ({}) at Bank({}) has been {}!'.format(result['first_name'],data['bank_id'], result['status'] )
                 messages.success(self.request, msg)
                 return self.render_to_response(context)
@@ -321,6 +317,17 @@ class InvitationView(LoginRequiredMixin, FormView):
         except Exception as err:
             messages.error(self.request, "Unknown Error:{}".format(str(err)))
             return super(InvitationView, self).form_invalid(form)
+
+    def get_invitations(self, context, get_url_path, invitations):
+        response = self.api.get(get_url_path)
+        if 'code' in response and response['code'] >= 400:
+            messages.error(self.request, response['message'])
+        else:
+            invitations = invitations + response['user_invitations']
+        context.update({
+            'invitations': invitations,
+        })
+
 
 class DeleteEntitlementView(LoginRequiredMixin, View):
     """View to delete an entitlement"""
