@@ -1,5 +1,4 @@
 /* Override Log on/out button */
-/*
 .navbar-btn .btn-default {
     font-family: UniversNextforDolphin-Regular;
     font-size: 16px;
@@ -11,9 +10,20 @@
     border: 0;
 }
 .navbar-btn .btn-default:hover {
-	background: #AF000D;
+    background: #AF000D;
 }
 .navbar-btn .btn-default:active {
-	background: #83000A;
+    background: #83000A;
 }
-*/
+
+.navbar-default {
+    background-color: #333333;
+    border: none;
+}
+.btn-primary {
+    background-color: #F3F3F3;
+    border: 1px solid #333333;
+    border-radius: 0;
+    outline: 0;
+    color: #000;
+}
