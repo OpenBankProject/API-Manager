@@ -164,3 +164,18 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .authentication-method {
 	display: none;
 }
+#navbar-login-username{
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+.dropdown-hr{
+	margin:0px;
+	padding: 0px;
+}
+.dropdown-menu{
+	padding: 0;
+}

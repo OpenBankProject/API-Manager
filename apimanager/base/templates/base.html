@@ -41,8 +41,8 @@
 					<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path or my_user_invitation in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Users</a>
 						<ul class="dropdown-menu">
-							<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">All</a></li>
-							<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">My User</a></li>
+							<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">All</a></li><hr class="dropdown-hr">
+							<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">My User</a></li><hr class="dropdown-hr">
 							<li{% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">Invite Developer</a></li>
 						</ul>
 					</li>
@@ -52,8 +52,8 @@
 					<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Metrics</a>
 						<ul class="dropdown-menu">
-							<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">API Metrics</a></li>
-							<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">Connector Metrics</a></li>
+							<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">API Metrics</a></li><hr class="dropdown-hr">
+							<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">Connector Metrics</a></li><hr class="dropdown-hr">
 							<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">KPI Dashboard</a></li>
 						</ul>
 					</li>
@@ -62,7 +62,7 @@
 					<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Resources</a>
 						<ul class="dropdown-menu">
-							<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li>
+							<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li><hr class="dropdown-hr">
 							<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">Branches</a></li>
 						</ul>
 					</li>
@@ -73,9 +73,9 @@
                     <li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Configurations</a>
 						<ul class="dropdown-menu">
-							<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">Config</a></li>
-							<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">Webui Props</a></li>
-							<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li>
+							<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">Config</a></li><hr class="dropdown-hr">
+							<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">Webui Props</a></li><hr class="dropdown-hr">
+							<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li><hr class="dropdown-hr">
 							<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">Dynamic Endpoints</a></li>
 						</ul>
 					</li>
@@ -89,7 +89,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 {% if user.is_authenticated %}
-                    <p class="navbar-btn"><a href="{% url 'oauth-logout' %}" class="btn btn-default">Logout {{ API_USERNAME }}</a></p>
+                    <p class="navbar-btn"><span id ="navbar-login-username">{{ API_USERNAME }}</span>&nbsp&nbsp</nr><a href="{% url 'oauth-logout' %}" class="btn btn-default">Logout </a></p>
 {% endif %}
 					</li>
 				</ul>
