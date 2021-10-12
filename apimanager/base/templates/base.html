@@ -70,13 +70,15 @@
 					{% url "webui-index" as webui_props_index_url %}
                     {% url "methodrouting-index" as methodrouting_index_url %}
                     {% url "dynamicendpoints-index" as dynamic_endpoints_index_url %}
+                    {% url "apicollections-index" as api_collections_index_url %}
                     <li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Configurations</a>
 						<ul class="dropdown-menu">
 							<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">Config</a></li><hr class="dropdown-hr">
 							<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">Webui Props</a></li><hr class="dropdown-hr">
 							<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li><hr class="dropdown-hr">
-							<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">Dynamic Endpoints</a></li>
+							<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">Dynamic Endpoints</a></li><hr class="dropdown-hr">
+							<li{% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">My Api Collections</a></li>
 						</ul>
 					</li>
 

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}{{ block.super }} / API Collections{% endblock page_title %}
+
+{% block content %}
+    <h1>API Collections</h1>
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">API COLLECTION ID:</label> <br>
+        </div>
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">COLLECTION Name:</label> <br>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+            <label class="form-group">Details:</label> <br>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for api_collection in api_collections %}
+        <div class="runner">
+            <div class="row">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <div class="api_collection_id">{{ api_collection.api_collection_id }}</div></div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <div class="api_collection_name">{{ api_collection.api_collection_name }}</div></div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <textarea cols="40" rows="1" class="form-control api-collection-body">{{api_collection}}</textarea>
+                </div>
+                {%  if forloop.counter0 == 0 %}
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-green forSave">Create </button><span style="display: none;margin-left: 5px;background-color:#00cc00">saved.</span>
+                    </div>
+                </div>
+                {%  endif %}
+                {%  if forloop.counter0 > 0 %}
+                <div class="col-sm-12 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-red forDelete">Delete</button>
+                    </div>
+                </div>
+                {%  endif %}
+                <div class="col-sm-12 col-sm-12">
+                    <div id="jsoneditor{{forloop.counter0}}" style="display: none" ></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </form>
+{% endblock %}
+
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
+{% endblock extrajs %}
