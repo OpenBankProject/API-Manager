@@ -11,3 +11,14 @@ class ApiCollectionsForm(forms.Form):
         ),
         required=False
     )
+
+class ApiCollectionEndpointsForm(forms.Form):
+    operation_id = forms.CharField(
+        label='Operation Id',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )

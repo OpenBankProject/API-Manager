@@ -6,23 +6,25 @@
     <h1>API Collections</h1>
     <div class="row">
         <div class="col-xs-12 col-sm-2">
-            <label class="form-group">API COLLECTION ID:</label> <br>
+            <label class="form-group">Api Collection Id:</label> <br>
         </div>
         <div class="col-xs-12 col-sm-2">
-            <label class="form-group">COLLECTION Name:</label> <br>
+            <label class="form-group">Collection Name:</label> <br>
         </div>
         <div class="col-xs-12 col-sm-8">
-            <label class="form-group">Details:</label> <br>
+            <label class="form-group">Json Body:</label> <br>
         </div>
     </div>
     <form method="post">
         {% csrf_token %}
         {% for api_collection in api_collections %}
+        {% url 'my-api-collection-detail' api_collection.api_collection_id as url_collection_detail %}
         <div class="runner">
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-                        <div class="api_collection_id">{{ api_collection.api_collection_id }}</div></div>
+                        <a class="api_collection_id" href="{{ url_collection_detail }}">{{ api_collection.api_collection_id }}
+                        </a></div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
