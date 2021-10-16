@@ -3,12 +3,16 @@ $(document).ready(function($) {
         e.preventDefault();
         var t = $(this);
         var runner = t.parent().parent().parent();
-        var api_collection_body = $(runner).find('.api-collection-body').val();
+        var api_collection_name = $(runner).find('.api_collection_name').val();
+        var api_collection_is_sharable = $(runner).find('.api_collection_is_sharable').val();
+        var api_collection_description = $(runner).find('.api_collection_description').val();
     
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('save/apicollection', {
-			'api-collection-body': api_collection_body,
+			'api_collection_name': api_collection_name,
+			'api_collection_is_sharable': api_collection_is_sharable,
+			'api_collection_description': api_collection_description,
 		}, function (response) {
 			location.reload(); 
 		});

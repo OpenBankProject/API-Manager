@@ -136,17 +136,21 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
 @exception_handle
 @csrf_exempt
 def apicollections_save(request):
-    api_collection_body = request.POST.get('api-collection-body')
     api = API(request.session.get('obp'))
     urlpath = '/my/api-collections'
-    result = api.post(urlpath, payload =json.loads( api_collection_body))
+    payload = {
+        'api_collection_name': request.POST.get('api_collection_name').strip(),
+        'is_sharable': bool(request.POST.get('api_collection_is_sharable')),
+        'description': request.POST.get('api_collection_description').strip()
+    }
+    result = api.post(urlpath, payload = payload)
     return result
 
 
 @exception_handle
 @csrf_exempt
 def apicollections_delete(request):
-    api_collection_id = request.POST.get('api_collection_id')
+    api_collection_id = request.POST.get('api_collection_id').strip()
 
     api = API(request.session.get('obp'))
     urlpath = '/my/api-collections/{}'.format(api_collection_id)
