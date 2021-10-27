@@ -48,7 +48,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
     """Index view for users"""
     template_name = "users/index.html"
 
-    users = []
     def get_users_rolenames(self, context):
 
         api = API(self.request.session.get('obp'))
@@ -76,6 +75,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         return role_names
 
     def get_context_data(self, **kwargs):
+        users = []
         context = super(IndexView, self).get_context_data(**kwargs)
 
         api = API(self.request.session.get('obp'))
@@ -98,7 +98,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
-                IndexView.users = response
+                users = response
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -106,31 +106,21 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         role_names = self.get_users_rolenames(context)
         try:
-            IndexView.users = FilterRoleName(context, self.request.GET) \
-                .apply([IndexView.users] if username else IndexView.users['users'])
+            users = FilterRoleName(context, self.request.GET) \
+                .apply([users] if username else users['users'])
         except:
-            IndexView.users = []
+            users = []
         context.update({
             'role_names': role_names,
             'statistics': {
-                'users_num': len(IndexView.users),
+                'users_num': len(users),
             },
-            'users': IndexView.users,
+            'users': users,
             'limit': limit,
             'offset': offset,
             'locked_status': lockedstatus
         })
         return context
-
-    def export_scv(request):
-        response = HttpResponse(content_type = 'text/csv')
-        response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
-        writer = csv.writer(response)
-        writer.writerow(["username","user_id","email","provider_id","provider","last_marketing_agreement_signed_date"])
-        for user in IndexView.users:
-            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
-                             user['last_marketing_agreement_signed_date']])
-        return response
 
 
 class DetailView(LoginRequiredMixin, FormView):
@@ -392,3 +382,44 @@ class DeleteUserView(LoginRequiredMixin, View):
             redirect_url = reverse('users-index')
 
         return HttpResponseRedirect(redirect_url)
+
+
+class ExportCsvView(LoginRequiredMixin, View):
+    """View to export the user to csv"""
+    def get(self, request, *args, **kwargs):
+        users = []
+        api = API(self.request.session.get('obp'))
+        limit = self.request.GET.get('limit', 50)
+        offset = self.request.GET.get('offset', 0)
+        email = self.request.GET.get('email')
+        username = self.request.GET.get('username')
+        lockedstatus = self.request.GET.get('locked_status')
+        if lockedstatus is None: lockedstatus = "active"
+
+        if email:
+            urlpath = '/users/email/{}/terminator'.format(email)
+        elif username:
+            urlpath = '/users/username/{}'.format(username)
+        else:
+            urlpath = '/users?limit={}&offset={}&locked_status={}'.format(limit, offset, lockedstatus)
+
+        try:
+            response = api.get(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                users = response['users']
+        except APIError as err:
+            messages.error(self.request, err)
+        except:
+            messages.error(self.request, 'Unknown Error')
+      
+        response = HttpResponse(content_type = 'text/csv')
+        response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
+        writer = csv.writer(response)
+        writer.writerow(["username","user_id","email","provider_id","provider","last_marketing_agreement_signed_date"])
+        for user in users:
+            writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
+                             user['last_marketing_agreement_signed_date']])
+        return response
+

@@ -1,12 +1,12 @@
 <form class="form-inline" method="get">
     <div class="form-group">
         <label for="offset">Offset:</label>
-        <input type="number" class="form-control" name="offset" id="offset" placeholder="0" value="{{  offset }}">
+        <input type="number" class="form-control" name="offset" id="offset" placeholder="0" value="{{ offset }}">
     </div>
     <div class="form-group">
         <label for="limit">Limit:</label>
         <input type="number" class="form-control" name="limit" id="limit" placeholder="50" value="{{ limit }}">
     </div>
-    <button type="submit" class="btn btn-default">Refresh</button>
-    <a href="{% url 'export-csv' %}" class="btn btn-default">Export CSV</a>
+    <input type="submit" class="btn btn-default" value ="Refresh" onclick="javascript: form.action='';"></input>
+    <input type="submit" class="btn btn-default" value ="Export CSV" onclick="javascript: form.action='{% url 'export-csv' %}';"></input>
 </form>
