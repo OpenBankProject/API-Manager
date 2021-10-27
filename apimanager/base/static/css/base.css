@@ -184,6 +184,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	top: 0px;
 	background: #FFFFFF;
 	width: inherit;
+	z-index: 10;
 }
 
 #body-container{
