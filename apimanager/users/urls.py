@@ -5,7 +5,8 @@ URLs for users app
 
 from django.conf.urls import url
 
-from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView,InvitationView, DeleteUserView
+from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView, InvitationView, DeleteUserView, \
+    ExportCsvView
 
 urlpatterns = [
     url(r'^all$',
@@ -27,6 +28,6 @@ urlpatterns = [
         DeleteUserView.as_view(),
         name='users-delete-user'),
     url(r'^export_csv$',
-        IndexView.export_scv,
+        ExportCsvView.as_view(),
         name='export-csv')
 ]
