@@ -116,9 +116,9 @@ class DetailView(LoginRequiredMixin, FormView):
         """Put limits data to API"""
         try:
             data = ''
-            form = ApiConsumersForm(self.request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
+            api_consumers_form = ApiConsumersForm(self.request.POST)
+            if api_consumers_form.is_valid():
+                data = api_consumers_form.cleaned_data
 
             urlpath = '/management/consumers/{}/consumer/calls_limit'.format(data['consumer_id'])
 
@@ -132,16 +132,16 @@ class DetailView(LoginRequiredMixin, FormView):
             user = self.api.put(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
-            return super(DetailView, self).form_invalid(form)
+            return super(DetailView, self).form_invalid(api_consumers_form)
         except Exception as err:
             messages.error(self.request, "{}".format(err))
-            return super(DetailView, self).form_invalid(form)
+            return super(DetailView, self).form_invalid(api_consumers_form)
 
         msg = 'calls limit of consumer {} has been updated successfully.'.format(
             data['consumer_id'])
         messages.success(self.request, msg)
         self.success_url = self.request.path
-        return super(DetailView, self).form_valid(form)
+        return super(DetailView, self).form_valid(api_consumers_form)
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
