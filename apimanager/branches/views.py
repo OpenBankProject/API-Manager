@@ -179,7 +179,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             urlpath = '/banks'
             result = api.get(urlpath)
             if 'banks' in result:
-                return [bank['id'] for bank in result['banks']]
+                return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
             else:
                 return []
         except APIError as err:
