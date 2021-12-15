@@ -169,7 +169,7 @@ class API(object):
         """Gets a list of bank ids and bank ids as used by form choices"""
         choices = [('', 'Choose ...')]
         result = self.get('/banks')
-        for bank in result['banks']:
+        for bank in sorted(result['banks'], key=lambda d: d['id']) :
             choices.append((bank['id'], bank['id']))
         return choices
 
