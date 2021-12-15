@@ -59,6 +59,8 @@ def api_username(request):
                     nametodisplay = email
                 elif "yahoo" in provider:
                     nametodisplay = email
+                elif "microsoft" in provider:
+                    nametodisplay = email
                 else:
                     nametodisplay = username
                 apicaches=cache.set(cache_key, {'API_USERNAME': nametodisplay})
