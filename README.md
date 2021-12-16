@@ -2,11 +2,10 @@
 
 This is a Django project to manage the Open Bank Project API via API Calls.
 
-To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
-
+To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers. In simplest form, for using this app, must be run OBP-API( 
 
 # Installation (development)
-
+Create a new folder e.g. OpenBankProject and cd there. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . \ For running API-Manager, should be login in API-Explorer (https://apiexplorersandbox.openbankproject.com). Redirect to API-Manager or login in API-Manager, need to be register in OBP-APi for get the Consumer  Key. At the end, OBP-API, API-Manager and API-Explorer should be running together. 
 It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-Manager`.
 Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
 The directory tree might look like:
@@ -25,7 +24,7 @@ The directory tree might look like:
 │   └── supervisor.apimanager.conf
 ├── db.sqlite3
 ├── logs
-├── static-collected
+├── static-collected 
 └── venv
 ```
 
@@ -43,8 +42,7 @@ $ sudo apt install python3-tk tk
 ```
 
 ## Configure settings
-
-Create and edit `apimanager/apimanager/local_settings.py`:
+In this step, have to create a new file with the name is local_setting.py inside apimanager directory. Then, update information in local_setting.py file.
 
 ```python
 import os
@@ -57,15 +55,36 @@ API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 # Used internally by Django, can be anything of your choice
 SECRET_KEY = '<random string>'
 # API hostname, e.g. https://api.openbankproject.com
-API_HOST = '<hostname>'
+API_HOST = '<hostname>' 
 # Consumer key + secret to authenticate the _app_ against the API
-OAUTH_CONSUMER_KEY = '<key>'
+OAUTH_CONSUMER_KEY = '<key>' 
 OAUTH_CONSUMER_SECRET = '<secret>'
 # Database filename, default is `../db.sqlite3` relative to this file
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'), 
+        }
+    }
+}
+
+Or other way update a local_setting.py for running locally API-Manager. 
+SECRET_KEY = "abc"
+
+API_HOST = "http://localhost:8080/"
+
+OAUTH_CONSUMER_KEY = '<key>'
+OAUTH_CONSUMER_SECRET = '<secret>'
+
+
+DATABASE = {
+    "default" : {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "write database name",
+        "USER": "postgresql username ",
+        "PASSWORD": "postgresql password",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 ```
