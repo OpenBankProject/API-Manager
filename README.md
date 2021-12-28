@@ -2,12 +2,14 @@
 
 This is a Django project to manage the Open Bank Project API via API Calls.
 
-To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers. In simplest form, for using this app, must be run OBP-API( 
+To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
 
-# Installation (development)
-Create a new folder e.g. OpenBankProject and cd there. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . \ For running API-Manager, should be login in API-Explorer (https://apiexplorersandbox.openbankproject.com). Redirect to API-Manager or login in API-Manager, need to be register in OBP-APi for get the Consumer  Key. At the end, OBP-API, API-Manager and API-Explorer should be running together. 
-It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-Manager`.
-Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
+# Installation (development):
+### These steps are for using this app locally:
+1. Create a new folder e.g. OpenBankProject and cd there. 
+2. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . 
+3. It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-    Manager`.
+4. Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
 The directory tree might look like:
 
 ```bash
@@ -29,20 +31,21 @@ The directory tree might look like:
 ```
 
 ## Install dependencies
-
+5. In this step, create a Virtual Environment(this is to create an isolate enviroment for API-Manager from other projects).
 ```bash
 $ virtualenv --python=python3 ../venv
 $ source ../venv/bin/activate
-(venv)$ pip install -r requirements.txt
+(venv)$ pip install -r requirements.txt  
 ```
 Note: if this fails you may be missing the `python3-tk` and `tk` packages:
 
 ```bash 
 $ sudo apt install python3-tk tk
 ```
+or may be upgrade dependency version, If still facing issue to run **pip install -r requirements.txt**.
 
 ## Configure settings
-In this step, have to create a new file with the name is local_setting.py inside apimanager directory. Then, update information in local_setting.py file.
+5. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. Then, update information in local_setting.py file. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_KEY**. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API).
 
 ```python
 import os
@@ -68,12 +71,12 @@ DATABASES = {
     }
 }
 
-Or other way update a local_setting.py for running locally API-Manager. 
+### Or other way update a local_setting.py for running locally API-Manager. 
 SECRET_KEY = "abc"
 
 API_HOST = "http://localhost:8080/"
 
-OAUTH_CONSUMER_KEY = '<key>'
+OAUTH_CONSUMER_KEY = '<key>' 
 OAUTH_CONSUMER_SECRET = '<secret>'
 
 
@@ -88,6 +91,7 @@ DATABASE = {
     }
 }
 ```
+
 
 Changes to this file will not be overwritten on updates. The settings there can override anything specified in `apimanager/apimanager/settings.py`.
 
