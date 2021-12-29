@@ -1,19 +1,19 @@
 # API Manager
 
-This is a Django project to manage the Open Bank Project API via API Calls.
+This is a Django project to manage the Open Bank Project APIs via API Calls.
 
-To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
+To use this app, you need to authenticate against a sandbox where you have to register an account beforehand. Currently, you can enable or disable consumers.
 
 # Installation (development):
 ### These steps are for using this app locally:
-1. Create a new folder e.g. OpenBankProject and cd there. 
+
+1. Create a new folder e.g. **OpenBankProject** and cd there. 
 2. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . 
 3. It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-    Manager`.
-4. Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
-The directory tree might look like:
+4. Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. The directory tree might look like this:
 
 ```bash
-/var/www/apimanager/
+/OpenBankProject/
 ├── API-Manager
 │   ├── apimanager
 │   ├── apimanager.service 
@@ -31,10 +31,11 @@ The directory tree might look like:
 ```
 
 ## Install dependencies
-5. In this step, create a Virtual Environment(this is to create an isolate enviroment for API-Manager from other projects).
+5. In this step, create a Virtual Environment(this is to create an isolated enviroment for API-Manager from other projects).
 ```bash
 $ virtualenv --python=python3 ../venv
-$ source ../venv/bin/activate
+$ source ../venv/bin/activate 
+(venv)$ cd API-Manager
 (venv)$ pip install -r requirements.txt  
 ```
 Note: if this fails you may be missing the `python3-tk` and `tk` packages:
@@ -42,10 +43,35 @@ Note: if this fails you may be missing the `python3-tk` and `tk` packages:
 ```bash 
 $ sudo apt install python3-tk tk
 ```
-or may be upgrade dependency version, If still facing issue to run **pip install -r requirements.txt**.
+or maybe upgrade dependency version, If still facing issue to run **pip install -r requirements.txt**.
 
 ## Configure settings
-5. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. Then, update information in local_setting.py file. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_KEY**. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API).
+5. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. 
+```bash
+/OpenBankProject/
+├── API-Manager
+│   ├── apimanager
+│   │    ├── apimanager
+│   │        ├──__init__.py
+│   │        ├── local_settings.py
+│   │        ├── setting.py
+│   │        ├── urls.py
+│   │        ├── wsgi.py
+│   ├── apimanager.service 
+│   ├── gunicorn.conf.py
+│   ├── LICENSE
+│   ├── nginx.apimanager.conf
+│   ├── NOTICE
+│   ├── README.md
+│   ├── requirements.txt
+│   └── supervisor.apimanager.conf
+├── db.sqlite3
+├── logs
+├── static-collected 
+└── venv
+```
+6. Then, update information in local_setting.py file, the example is below for updating information. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_SECRET** to run this app. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API). 
+
 
 ```python
 import os
@@ -72,6 +98,8 @@ DATABASES = {
 }
 
 ### Or other way update a local_setting.py for running locally API-Manager. 
+
+
 SECRET_KEY = "abc"
 
 API_HOST = "http://localhost:8080/"
@@ -95,7 +123,7 @@ DATABASE = {
 
 Changes to this file will not be overwritten on updates. The settings there can override anything specified in `apimanager/apimanager/settings.py`.
 
-The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
+The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Pre default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
 
 
 ## Initialise database
