@@ -9,7 +9,7 @@ To use this app, you need to authenticate against a sandbox where you have to re
 
 1. Create a new folder e.g. **OpenBankProject** and cd there. 
 2. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . 
-3. It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-    Manager`.
+3. It is assumed that the git checkout resides inside a project directory, e.g. inside `OpenBankProject` and thus to be found at `/OpenBankProject/API-    Manager`.
 4. Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. The directory tree might look like this:
 
 ```bash
@@ -46,7 +46,8 @@ $ sudo apt install python3-tk tk
 or maybe upgrade dependency version, If still facing issue to run **pip install -r requirements.txt**.
 
 ## Configure settings
-5. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. 
+6. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. 
+
 ```bash
 /OpenBankProject/
 ├── API-Manager
