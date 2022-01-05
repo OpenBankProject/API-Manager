@@ -124,7 +124,7 @@ DATABASE = {
 
 Changes to this file will not be overwritten on updates. The settings there can override anything specified in `apimanager/apimanager/settings.py`.
 
-The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Pre default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
+The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database.By default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
 
 
 ## Initialise database
