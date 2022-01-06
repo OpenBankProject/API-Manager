@@ -32,6 +32,7 @@ To use this app, you need to authenticate against a sandbox where you have to re
 
 ## Install dependencies
 5. In this step, create a Virtual Environment(this is to create an isolated enviroment for API-Manager from other projects).
+
 ```bash
 $ virtualenv --python=python3 ../venv
 $ source ../venv/bin/activate 
