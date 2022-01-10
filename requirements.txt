@@ -6,7 +6,8 @@ requests-oauthlib==0.6.2
 PyJWT==1.5.3
 gunicorn==19.6.0
 matplotlib
-django-bootstrap-datepicker-plus
+django-bootstrap-datepicker-plus==3.0.5
 django-mathfilters
 django-bootstrap3
-psycopg2==2.9.1
+#uncomment below if you cannot / want not install psycopg2 from source or distribution package
+#psycopg2-binary

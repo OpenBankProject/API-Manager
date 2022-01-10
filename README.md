@@ -31,6 +31,15 @@ The directory tree might look like:
 
 ## Install dependencies
 
+
+
+**Either install psycopg2 from source or from your os distribution (preferred), 
+or uncomment #psycopg2-binary to psycopg2-binary:**
+
+```bash
+$ sed -i 's/#psycopg2-binary/psycopg2-binary/' requirements.txt # (optional see above)
+```
+
 ```bash
 $ virtualenv --python=python3 ../venv
 $ source ../venv/bin/activate
