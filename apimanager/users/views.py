@@ -352,21 +352,29 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         return HttpResponseRedirect(redirect_url)
 
 
-class DeleteUserView(LoginRequiredMixin, View):
+class DeleteOrUnlockUserView(LoginRequiredMixin, View):
     """View to delete a user"""
 
     def post(self, request, *args, **kwargs):
         """Deletes a user via API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/users/{}'.format(
-                kwargs['user_id'])
-            result = api.delete(urlpath)
-            if result is not None and 'code' in result and result['code'] >= 400:
-                messages.error(request, result['message'])
+            if(request.POST.get("Delete")):
+                urlpath = '/users/{}'.format(kwargs['user_id'])
+                result = api.delete(urlpath)
+                if result is not None and 'code' in result and result['code'] >= 400:
+                    messages.error(request, result['message'])
+                else:
+                    msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
+                    messages.success(request, msg)
             else:
-                msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
-                messages.success(request, msg)
+                urlpath = '/users/{}/lock-status'.format(kwargs['username'])
+                result = api.put(urlpath, None)
+                if result is not None and 'code' in result and result['code'] >= 400:
+                    messages.error(request, result['message'])
+                else:
+                    msg = 'User {} has been unlocked.'.format(kwargs['username'])
+                    messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
         except:
