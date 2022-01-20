@@ -1,18 +1,19 @@
 # API Manager
 
-This is a Django project to manage the Open Bank Project API via API Calls.
+This is a Django project to manage the Open Bank Project APIs via API Calls.
 
-To use this app, you need to authenticate against a sandbox where you have to have registered an account beforehand. Currently, you can enable or disable consumers.
+To use this app, you need to authenticate against a sandbox where you have to register an account beforehand. Currently, you can enable or disable consumers.
 
+# Installation (development):
+### These steps are for using this app locally:
 
-# Installation (development)
-
-It is assumed that the git checkout resides inside a project directory, e.g. inside `/var/www/apimanager` and thus to be found at `/var/www/apimanager/API-Manager`.
-Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. 
-The directory tree might look like:
+1. Create a new folder e.g. **OpenBankProject** and cd there. 
+2. In the next step, git clone https://github.com/OpenBankProject/API-Manager.git . 
+3. It is assumed that the git checkout resides inside a project directory, e.g. inside `OpenBankProject` and thus to be found at `/OpenBankProject/API-    Manager`.
+4. Paths below are relative to this README. Files produced during installation or at runtime should be outside the git checkout, but inside the project directory, except for Django's local settings. The directory tree might look like this:
 
 ```bash
-/var/www/apimanager/
+/OpenBankProject/
 ├── API-Manager
 │   ├── apimanager
 │   ├── apimanager.service 
@@ -25,11 +26,12 @@ The directory tree might look like:
 │   └── supervisor.apimanager.conf
 ├── db.sqlite3
 ├── logs
-├── static-collected
+├── static-collected 
 └── venv
 ```
 
 ## Install dependencies
+5. In this step, create a Virtual Environment(this is to create an isolated enviroment for API-Manager from other projects).
 
 
 
@@ -42,18 +44,45 @@ $ sed -i 's/#psycopg2-binary/psycopg2-binary/' requirements.txt # (optional see 
 
 ```bash
 $ virtualenv --python=python3 ../venv
-$ source ../venv/bin/activate
-(venv)$ pip install -r requirements.txt
+$ source ../venv/bin/activate 
+(venv)$ cd API-Manager
+(venv)$ pip install -r requirements.txt  
 ```
 Note: if this fails you may be missing the `python3-tk` and `tk` packages:
 
 ```bash 
 $ sudo apt install python3-tk tk
 ```
+or maybe upgrade dependency version, If still facing issue to run **pip install -r requirements.txt**.
 
 ## Configure settings
+6. In this step, have to create a new file with the name is **local_setting.py** inside apimanager directory. 
 
-Create and edit `apimanager/apimanager/local_settings.py`:
+```bash
+/OpenBankProject/
+├── API-Manager
+│   ├── apimanager
+│   │    ├── apimanager
+│   │        ├──__init__.py
+│   │        ├── local_settings.py
+│   │        ├── setting.py
+│   │        ├── urls.py
+│   │        ├── wsgi.py
+│   ├── apimanager.service 
+│   ├── gunicorn.conf.py
+│   ├── LICENSE
+│   ├── nginx.apimanager.conf
+│   ├── NOTICE
+│   ├── README.md
+│   ├── requirements.txt
+│   └── supervisor.apimanager.conf
+├── db.sqlite3
+├── logs
+├── static-collected 
+└── venv
+```
+6. Then, update information in local_setting.py file, the example is below for updating information. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_SECRET** to run this app. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API). 
+
 
 ```python
 import os
@@ -66,22 +95,46 @@ API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 # Used internally by Django, can be anything of your choice
 SECRET_KEY = '<random string>'
 # API hostname, e.g. https://api.openbankproject.com
-API_HOST = '<hostname>'
+API_HOST = '<hostname>' 
 # Consumer key + secret to authenticate the _app_ against the API
-OAUTH_CONSUMER_KEY = '<key>'
+OAUTH_CONSUMER_KEY = '<key>' 
 OAUTH_CONSUMER_SECRET = '<secret>'
 # Database filename, default is `../db.sqlite3` relative to this file
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '..', '..', 'db.sqlite3'), 
+        }
+    }
+}
+
+### Or other way update a local_setting.py for running locally API-Manager. 
+
+
+SECRET_KEY = "abc"
+
+API_HOST = "http://127.0.0.1:8080/"
+
+OAUTH_CONSUMER_KEY = '<key>' 
+OAUTH_CONSUMER_SECRET = '<secret>'
+
+
+DATABASE = {
+    "default" : {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "write database name",
+        "USER": "postgresql username ",
+        "PASSWORD": "postgresql password",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 ```
 
+
 Changes to this file will not be overwritten on updates. The settings there can override anything specified in `apimanager/apimanager/settings.py`.
 
-The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database. Per default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
+The application's authentication is API-driven. However, to make use of Django's authentication framework and sessions, there is a minimal requirement of a database.By default, sqlite is used, but you can configure any Django-supported backend you want. Please lookup the appropriate documentation.
 
 
 ## Initialise database
