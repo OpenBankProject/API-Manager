@@ -37,18 +37,18 @@
         <span>{{ apiuser.is_locked }}</span>
     </div>
  
-    <form action="{% url 'users-delete-user' apiuser.user_id apiuser.username %}" method="post">
+    <form action="{% url 'user-status-update' apiuser.user_id apiuser.username %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}" />
         <input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
 		{% if apiuser.is_deleted %}
 			
 		{% else %}
-			<button type="submit" class="btn btn-primary btn-red" value ="Delete">Delete User</button>
+			<button type="submit" class="btn btn-primary btn-red" value ="Delete" name ="Delete">Delete User</button>
 		{% endif %}
     
         {% if apiuser.is_locked %}
-            <button type="submit" class="btn btn-primary btn-green" value ="Unlock">Unlock User</button>
+            <button type="submit" class="btn btn-primary btn-green" value ="Unlock" name ="Unlock">Unlock User</button>
         {% else %}
 
         {% endif %}

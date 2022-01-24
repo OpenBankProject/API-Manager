@@ -352,7 +352,7 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         return HttpResponseRedirect(redirect_url)
 
 
-class DeleteOrUnlockUserView(LoginRequiredMixin, View):
+class UserStatusUpdateView(LoginRequiredMixin, View):
     """View to delete a user"""
 
     def post(self, request, *args, **kwargs):

@@ -5,7 +5,7 @@ URLs for users app
 
 from django.conf.urls import url
 
-from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView, InvitationView, DeleteOrUnlockUserView, \
+from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView, InvitationView, UserStatusUpdateView, \
     ExportCsvView
 
 urlpatterns = [
@@ -24,9 +24,9 @@ urlpatterns = [
     url(r'^(?P<user_id>[\w-]+)/entitlement/delete/(?P<entitlement_id>[\w-]+)$',
         DeleteEntitlementView.as_view(),
         name='users-delete-entitlement'),
-    url(r'^(?P<user_id>[\w-]+)/deleteOrUnlock/(?P<username>[\w\@\.\+-]+)$',
-        DeleteOrUnlockUserView.as_view(),
-        name='users-delete-user'),
+    url(r'^(?P<user_id>[\w-]+)/userStatusUpdateView/(?P<username>[\w\@\.\+-]+)$',
+        UserStatusUpdateView.as_view(),
+        name='user-status-update'),
     url(r'^export_csv$',
         ExportCsvView.as_view(),
         name='export-csv')
