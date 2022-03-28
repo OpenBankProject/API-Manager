@@ -10,4 +10,4 @@ django-bootstrap-datepicker-plus==3.0.5
 django-mathfilters
 django-bootstrap3
 #uncomment below if you cannot / want not install psycopg2 from source or distribution package
-#psycopg2-binary
+#psycopg2-binary==2.8.6
