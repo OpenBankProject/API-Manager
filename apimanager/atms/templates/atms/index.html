@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Atms{% endblock page_title %}
+
+{% block content %}
+<div id="atms_list">
+	<h1>ATMs</h1>
+
+	<form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.atm_id.errors %}<div class="alert alert-danger">{{ form.atm_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.atm_id.label_tag }}
+                    {{ form.atm_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_id.errors %}<div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.bank_id.label_tag }}
+                    {{ form.bank_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.name.errors %}<div class="alert alert-danger">{{ form.name.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_type.label_tag }}
+                    {{ form.branch_type }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.location_latitude.errors %}<div class="alert alert-danger">{{ form.location_latitude.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.location_latitude.label_tag }}
+                    {{ form.location_latitude }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.location_longitude.errors %}<div class="alert alert-danger">{{ form.location_longitude.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.location_longitude.label_tag }}
+                    {{ form.location_longitude }}
+                </div>
+            </div>
+        </div>
+
+		<div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.meta_license_name.errors %}<div class="alert alert-danger">{{ form.meta_license_name.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.meta_license_name.label_tag }}
+                    {{ form.meta_license_name }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.atm_routing_scheme.errors %}<div class="alert alert-danger">{{ form.atm_routing_scheme.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.atm_routing_scheme.label_tag }}
+                    {{ form.atm_routing_scheme }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.atm_routing_address.errors %}<div class="alert alert-danger">{{ form.atm_routing_address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.atm_routing_address.label_tag }}
+                    {{ form.atm_routing_address }}
+                </div>
+            </div>
+        </div>
+
+		<div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.is_accessible.errors %}<div class="alert alert-danger">{{ form.is_accessible.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.is_accessible.label_tag }}
+                    {{ form.is_accessible }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.accessibleFeatures.errors %}<div class="alert alert-danger">{{ form.accessibleFeatures.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.accessibleFeatures.label_tag }}
+                    {{ form.accessibleFeatures }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.more_info.errors %}<div class="alert alert-danger">{{ form.more_info.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.more_info.label_tag }}
+                    {{ form.more_info }}
+                </div>
+            </div>
+        </div>
+
+		<div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.phone_number.errors %}<div class="alert alert-danger">{{ form.phone_number.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.address.errors %}<div class="alert alert-danger">{{ form.address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.address.label_tag }}
+                    {{ form.address }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.lobby.errors %}<div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.lobby.label_tag }}
+                    {{ form.lobby }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.drive_up.errors %}<div class="alert alert-danger">{{ form.drive_up.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.drive_up.label_tag }}
+                    {{ form.drive_up }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 hidden-xs">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-green">Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+	<div class="table-responsive">
+		<table class="table table-hover tablesorter" id="branches-list" aria-describedby="branches list">
+			<thead>
+				<th scope="col">Atm Id</th>
+				<th scope="col">Bank Id</th>
+				<th scope="col">ATM Name</th>
+				<th scope="col">More_info</th>
+				<th scope="col">Update Button</th>
+			</thead>
+			<tbody>
+			{% for atm in atms_list %}
+				{% url 'atms_update' atm.id atm.bank_id as url_atm_update %}
+				<tr data-atm-id="{{ branch.id }}">
+					<td>{{ atm.id }}</td>
+					<td>{{ atm.bank_id }}</td>
+					<td>{{ atm.name }}</td>
+                    <td>
+                        <div class="popuptext">
+                            <ul>
+                                <li>Address:
+                                    <ul>
+                                        <li>line1: {{atm.address.line_1}}</li>
+                                        <li>line2: {{atm.address.line_2}}</li>
+                                        <li>line3: {{atm.address.line_3}}</li>
+                                        <li>city: {{atm.address.city}}</li>
+                                        <li>county: {{atm.address.county}}</li>
+                                        <li>state: {{atm.address.state}}</li>
+                                        <li>postcode: {{atm.address.postcode}}</li>
+                                        <li>country_code: {{atm.address.country_code}}</li>
+                                    </ul>
+                                </li>
+                                <li>Location:
+                                    <ul>
+                                        <li>latitude: {{atm.location.latitude}}</li>
+                                        <li>longitude: {{atm.location.longitude}}</li>
+                                    </ul>
+                                </li>
+                                <li>Meta License:
+                                    <ul>
+                                        <li>id: {{atm.meta.license.id}}</li>
+                                        <li>name: {{atm.meta.license.name}}</li>
+                                    </ul>
+                                </li>
+                                <li>Branch Routing
+                                    <ul>
+                                        <li>Scheme: {{atm.atm_routing.scheme}}</li>
+                                        <li>Address: {{atm.atm_routing.address}}</li>
+                                    </ul>
+                                </li>
+                                <li>ATM Type: {{atm.branch_type}}</li>
+                                <li>More Info: {{atm.more_info}}</li>
+                                <li>Phone Number: {{atm.phone_number}}</li>
+                                <li>Accessible Features: {{atm.accessibleFeatures}}</li>
+                            </ul>
+                        </div>
+                    </td>
+					<td><a href="{{ url_branch_update }}" class="btn btn-primary">Update</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'branches/js/branches.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'branches/css/branches.css' %}" rel="stylesheet">
+{% endblock extracss %}
