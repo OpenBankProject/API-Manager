@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block page_title %}{{ block.super }} / Atms{% endblock page_title %}
+{% block page_title %}{{ block.super }} / atms{% endblock page_title %}
 
 {% block content %}
 <div id="atms_list">
@@ -41,10 +41,10 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
+                {% if form.atm_type.errors %}<div class="alert alert-danger">{{ form.atm_type.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.branch_type.label_tag }}
-                    {{ form.branch_type }}
+                    {{ form.atm_type.label_tag }}
+                    {{ form.atm_type }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">

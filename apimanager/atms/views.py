@@ -17,7 +17,7 @@ from obp.api import API, APIError
 from .forms import CreateAtmForm
 
 class IndexAtmView(LoginRequiredMixin, FormView):
-    """Index view for atm"""
+    """Index view for ATM"""
     template_name = "atms/index.html"
     form_class = CreateAtmForm
     success_url = reverse_lazy('atms_list')
