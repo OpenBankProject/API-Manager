@@ -184,6 +184,28 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
 
+    located_at = forms.CharField(
+        label='More information',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'short walk to the lake from here',
+                 'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+
+    services = forms.CharField(
+          label='Services',
+          widget=forms.TextInput(
+             attrs={
+                    'placeholder': 'Services Are',
+                     'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(CreateAtmForm, self).__init__(*args, **kwargs)

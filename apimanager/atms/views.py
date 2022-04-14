@@ -157,7 +157,8 @@ class IndexAtmView(LoginRequiredMixin, FormView):
                 "accessibleFeatures": data["accessibleFeatures"] if data["accessibleFeatures"]!="" else "accessible features name",
                 "branch_type": data["branch_type"] if data["branch_type"]!="" else "branch type",
                 "more_info": data["more_info"] if data["more_info"]!="" else "more info",
-                "phone_number": data["phone_number"] if data["phone_number"]!="" else "phone number"
+                "phone_number": data["phone_number"] if data["phone_number"]!="" else "phone number",
+                "services": data["services"] if data["services"]!="" else "services"
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
@@ -251,15 +252,18 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
             fields['meta_license_name'].initial = result['meta']['license']['name']
             fields['atm_routing_scheme'].initial = result['atm_routing']['scheme']
             fields['atm_routing_address'].initial = result['atm_routing']['address']
+            print("This is result", result)
             if result['is_accessible'].lower()=='true':
                 fields['is_accessible'].choices = [(True, True), (False, False)]
             else:
                 fields['is_accessible'].choices = [(False, False), (True, True)]
             fields['accessibleFeatures'].initial = result['accessibleFeatures']
             fields['atm_type'].initial = result['atm_type']
+            fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['phone_number'].initial = result['phone_number']
             fields['lobby'].initial = json.dumps(result['lobby'], indent=4)
+            print(result, "Hello World")
             fields['drive_up'].initial = json.dumps(result['drive_up'], indent=4)
         except APIError as err:
             messages.error(self.request, err)

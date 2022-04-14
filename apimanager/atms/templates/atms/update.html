@@ -132,6 +132,16 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.services.errors %}<div class="alert alert-danger">{{ form.services.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.services.label_tag }}
+                    {{ form.services }}
+                </div>
+            </div>
+        </div>
+
 		<div class="row">
 
             <div class="col-xs-12 col-sm-4">
