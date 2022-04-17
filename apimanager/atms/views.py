@@ -34,7 +34,12 @@ class IndexAtmView(LoginRequiredMixin, FormView):
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('','Choose...'),(True, True), (False, False)]
-            fields['drive_up'].initial = json.dumps({
+            fields['has_deposit_capability'].choices = [('','Choose...'),(True, True), (False, False)]
+            fields['supported_languages'].choices = [('','Choose...'),("en", "en"), ("fr", "fr"), ("de", "de")]
+            fields['notes'].choices = [('','Choose...'),("String1", "String1"), ("String2", "String2")]
+            fields['supported_currencies'].choices = [('','Choose...'),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            fields['location_categories'].choices = [('','Choose...'),("ATBI", "ATBI"), ("ATBE", "ATBE")]
+            """fields['drive_up'].initial = json.dumps({
                 "monday": {
                     "opening_time": "10:00",
                     "closing_time": "18:00"
@@ -63,7 +68,7 @@ class IndexAtmView(LoginRequiredMixin, FormView):
                     "opening_time": "10:00",
                     "closing_time": "18:00"
                 }
-            }, indent=4)
+            }, indent=4)"""
 
             fields['lobby'].initial = json.dumps({
                 "monday": [
@@ -148,17 +153,26 @@ class IndexAtmView(LoginRequiredMixin, FormView):
                     }
                 },
                 "lobby": json.loads(data['lobby']),
-                "drive_up": json.loads(data["drive_up"]),
-                "branch_routing": {
-                    "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"]!="" else "license name",
-                    "address": data["branch_routing_address"] if data["branch_routing_address"]!="" else "license name"
-                },
+                #"drive_up": json.loads(data["drive_up"]),
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
+                "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
+                "supported_languages": data["supported_languages"] if data["supported_languages"]!="" else "false",
+                "supported_currencies": data["supported_currencies"] if data["supported_currencies"]!="" else "false",
+                "notes": data["notes"] if data["notes"]!="" else "false",
+                "location_categories": data["location_categories"] if data["location_categories"]!="" else "false",
                 "accessibleFeatures": data["accessibleFeatures"] if data["accessibleFeatures"]!="" else "accessible features name",
+                "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false",
+                "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
+                "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
+                "site_name": data["site_name"] if data["site_name"]!="" else "false",
+                "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
+                "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
+                "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false",
                 "branch_type": data["branch_type"] if data["branch_type"]!="" else "branch type",
                 "more_info": data["more_info"] if data["more_info"]!="" else "more info",
+                "located_at": data["located_at"] if data["located_at"]!="" else "located_at",
                 "phone_number": data["phone_number"] if data["phone_number"]!="" else "phone number",
-                "services": data["services"] if data["services"]!="" else "services"
+                "services": data["services"] if data["services"]!="" else "services",
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
@@ -250,21 +264,53 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
             fields['location_longitude'].initial = result['location']['longitude']
             fields['meta_license_id'].initial = result['meta']['license']['id']
             fields['meta_license_name'].initial = result['meta']['license']['name']
-            fields['atm_routing_scheme'].initial = result['atm_routing']['scheme']
-            fields['atm_routing_address'].initial = result['atm_routing']['address']
-            print("This is result", result)
+            fields['minimum_withdrawal'].initial = result['minimum_withdrawal']
+            fields['branch_identification'].initial = result['branch_identification']
             if result['is_accessible'].lower()=='true':
                 fields['is_accessible'].choices = [(True, True), (False, False)]
             else:
                 fields['is_accessible'].choices = [(False, False), (True, True)]
-            fields['accessibleFeatures'].initial = result['accessibleFeatures']
-            fields['atm_type'].initial = result['atm_type']
+            if result['has_deposit_capability'].lower()=='true':
+                fields['has_deposit_capability'].choices = [(True, True), (False, False)]
+            else:
+                fields['has_deposit_capability'].choices = [(False, False), (True, True)]
+            fields['has_deposit_capability'].initial = result['accessibleFeatures']
+            fields['site_identification'].initial = result['site_identification']
+            fields['site_name'].initial = result['site_name']
+            fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
+            fields['cash_withdrawal_international_fee'].initial = result['cash_withdrawal_international_fee']
+            fields['balance_inquiry_fee'].initial = result['balance_inquiry_fee']
+            fields['services'].initial = result['services']
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
+            fields['located_at'].initial = result['located_at']
             fields['phone_number'].initial = result['phone_number']
             fields['lobby'].initial = json.dumps(result['lobby'], indent=4)
-            print(result, "Hello World")
-            fields['drive_up'].initial = json.dumps(result['drive_up'], indent=4)
+            if result['supported_languages'].lower()=='en':
+                fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
+            elif result['supported_languages'].lower()=='fr':
+                fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
+            else:
+                fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
+            fields['supported_languages'].initial = result['supported_languages']
+            if result['supported_currencies'].lower()=='eur':
+                  fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            elif result['supported_currencies'].lower()=='mxn':
+                  fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
+            else:
+                  fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
+            fields['supported_currencies'].initial = result['supported_currencies']
+            if result['notes'].lower()=='string1':
+                  fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
+            else:
+                  fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
+            fields['notes'].initial = result['notes']
+            if result['location_categories'].lower()=='atbi':
+                 fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
+            else:
+                 fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
+            fields['location_categories'].initial = result['location_categories']
+            #fields['drive_up'].initial = json.dumps(result['drive_up'], indent=4)
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -291,16 +337,28 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
                 }
             },
             "lobby": json.loads(data["lobby"]),
-            "drive_up": json.loads(data["drive_up"]),
+            #"drive_up": json.loads(data["drive_up"]),
             "branch_routing": {
                 "scheme": data["atm_routing_scheme"] if data["atm_routing_scheme"] != "" else "license name",
                 "address": data["atm_routing_address"] if data["atm_routing_address"] != "" else "license name"
             },
-            "is_accessible": data["is_accessible"],
+            "has_deposit_capability": data["has_deposit_capability"],
             "accessibleFeatures": data["accessibleFeatures"],
-            "atm_type": data["atm_type"],
+            "minimum_withdrawal": data["minimum_withdrawal"],
+            "branch_identification": data["branch_identification"],
+            "site_identification": data["site_identification"],
+            "site_name": data["site_name"],
+            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"],
+            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"],
+            "balance_inquiry_fee": data["balance_inquiry_fee"],
+            "services": data["services"],
             "more_info": data["more_info"],
-            "phone_number": data["phone_number"]
+            "located_at": data["located_at"],
+            "phone_number": data["phone_number"],
+            "supported_languages": data["supported_languages"],
+            "supported_currencies": data["supported_currencies"],
+            "notes": data["notes"],
+            "location_categories": data["location_categories"]
         }
         try:
             result = self.api.put(urlpath, payload=payload)

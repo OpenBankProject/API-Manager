@@ -4,7 +4,7 @@
 {% block page_title %}{{ block.super }} / Atms{% endblock page_title %}
 
 {% block content %}
-<div id="branches">
+<div id="atms">
     <h1>Update atm</h1>
     <h2>{{ bank_id }} : {{ atm_id }}</h2>
     <form method="post">
@@ -58,7 +58,6 @@
         </div>
 
         <div class="row">
-
             <div class="col-xs-12 col-sm-4">
                 {% if form.meta_license_id.errors %}<div class="alert alert-danger">{{ form.meta_license_id.errors }}</div>{% endif %}
                 <div class="form-group">
@@ -73,7 +72,6 @@
                     {{ form.meta_license_name }}
                 </div>
             </div>
-
             <div class="col-xs-12 col-sm-4">
                 {% if form.accessibleFeatures.errors %}<div class="alert alert-danger">{{ form.accessibleFeatures.errors }}</div>{% endif %}
                 <div class="form-group">
@@ -108,12 +106,11 @@
         </div>
 
         <div class="row">
-
             <div class="col-xs-12 col-sm-4">
-                {% if form.atm_type.errors %}<div class="alert alert-danger">{{ form.atm_type.errors }}</div>{% endif %}
+                {% if form.services.errors %}<div class="alert alert-danger">{{ form.services.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.atm_type.label_tag }}
-                    {{ form.atm_type }}
+                    {{ form.services.label_tag }}
+                    {{ form.services }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -124,10 +121,10 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                {% if form.phone_number.errors %}<div class="alert alert-danger">{{ form.phone_number.errors }}</div>{% endif %}
+                {% if form.supported_currencies.errors %}<div class="alert alert-danger">{{ form.supported_currencies.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.phone_number.label_tag }}
-                    {{ form.phone_number }}
+                    {{ form.supported_currencies.label_tag }}
+                    {{ form.supported_currencies }}
                 </div>
             </div>
         </div>
@@ -140,10 +137,16 @@
                     {{ form.services }}
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.has_deposit_capability.errors %}<div class="alert alert-danger">{{ form.has_deposit_capability.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.has_deposit_capability.label_tag }}
+                    {{ form.has_deposit_capability }}
+                </div>
+            </div>
         </div>
 
 		<div class="row">
-
             <div class="col-xs-12 col-sm-4">
                 {% if form.address.errors %}<div class="alert alert-danger">{{ form.address.errors }}</div>{% endif %}
                 <div class="form-group">
@@ -160,13 +163,13 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-4">
+           <!-- <div class="col-xs-12 col-sm-4">
                 {% if form.drive_up.errors %}<div class="alert alert-danger">{{ form.drive_up.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.drive_up.label_tag }}
                     {{ form.drive_up }}
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <input type="submit" value="Update" class="btn btn-primary" />

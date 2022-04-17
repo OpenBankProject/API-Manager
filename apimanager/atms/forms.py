@@ -1,5 +1,5 @@
 """
-Forms of branches app
+Forms of ATM app
 """
 
 from django import forms
@@ -33,7 +33,7 @@ class CreateAtmForm(forms.Form):
         label='Name',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'The name of the branch',
+                'placeholder': 'The name of the ATM',
                 'class': 'form-control',
             }
         ),
@@ -103,7 +103,7 @@ class CreateAtmForm(forms.Form):
         ),
         required=False,
     )
-    drive_up = forms.CharField(
+    """drive_up = forms.CharField(
         label='Drive Up',
         widget=forms.Textarea(
             attrs={
@@ -112,22 +112,12 @@ class CreateAtmForm(forms.Form):
             }
         ),
         required=False,
-    )
-    atm_routing_scheme = forms.CharField(
-        label='Branch Routing Scheme',
+    )"""
+    located_at = forms.CharField(
+        label='ATM location',
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'OBP',
-                'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
-    atm_routing_address = forms.CharField(
-        label='Branch Routing Address',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '123abc',
                 'class': 'form-control',
             }
         ),
@@ -152,11 +142,11 @@ class CreateAtmForm(forms.Form):
         ),
         required=False,
     )
-    atm_type = forms.CharField(
-        label='ATM type',
+    services = forms.CharField(
+        label='Services',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Full service store',
+                'placeholder': 'Service store',
                 'class': 'form-control',
             }
         ),
@@ -173,27 +163,73 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
 
-    phone_number = forms.CharField(
-        label='Mobile Phone Number',
-        widget=forms.TextInput(
+    supported_currencies = forms.ChoiceField(
+        label='Supported Currencies',
+        widget=forms.Select(
             attrs={
-                'placeholder': 'E.g. +49 123 456 78 90 12',
                 'class': 'form-control',
             }
         ),
         required=False,
     )
-
-    located_at = forms.CharField(
-        label='More information',
+    notes = forms.ChoiceField(
+            label='Write Notes',
+            widget=forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+    location_categories = forms.ChoiceField(
+            label='Write location Category',
+            widget=forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+    minimum_withdrawal = forms.CharField(
+        label='Minimum Withdrawal',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'short walk to the lake from here',
+                'placeholder': '5',
                  'class': 'form-control',
             }
         ),
         required=False,
     )
+    site_name = forms.CharField(
+            label='Site Name',
+            widget=forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter your Site Name ',
+                     'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+    branch_identification = forms.CharField(
+                label='Branch Identification',
+                widget=forms.TextInput(
+                    attrs={
+                        'placeholder': 'Enter your Branch Identification',
+                         'class': 'form-control',
+                    }
+                ),
+                required=False,
+            )
+    site_identification = forms.CharField(
+            label='Site Identification',
+            widget=forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter your Site Identification',
+                     'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
 
     services = forms.CharField(
           label='Services',
@@ -205,6 +241,56 @@ class CreateAtmForm(forms.Form):
             ),
             required=False,
         )
+
+    supported_languages = forms.ChoiceField(
+            label='supported_languages',
+            widget=forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+    has_deposit_capability = forms.ChoiceField(
+              label='Deposit Capabilities',
+                widget=forms.Select(
+                    attrs={
+                        'class': 'form-control',
+                    }
+                ),
+                required=False,
+            )
+    cash_withdrawal_national_fee = forms.CharField(
+                label='Cash Withdrawal National fee',
+                widget=forms.TextInput(
+                    attrs={
+                        'placeholder': 'Cash withdrawal national fee',
+                         'class': 'form-control',
+                    }
+                ),
+                required=False,
+            )
+    cash_withdrawal_international_fee = forms.CharField(
+                label='Cash Withdrawal international fee',
+                widget=forms.TextInput(
+                    attrs={
+                        'placeholder': 'Cash withdrawal international fee',
+                         'class': 'form-control',
+                    }
+                ),
+                required=False,
+            )
+    balance_inquiry_fee = forms.CharField(
+                label='Balance Inquiry Fee',
+                widget=forms.TextInput(
+                    attrs={
+                        'placeholder': 'Balance Inquiry Fee',
+                         'class': 'form-control',
+                    }
+                ),
+                required=False,
+            )
+
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
