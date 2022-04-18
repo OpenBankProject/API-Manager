@@ -39,37 +39,6 @@ class IndexAtmView(LoginRequiredMixin, FormView):
             fields['notes'].choices = [('','Choose...'),("String1", "String1"), ("String2", "String2")]
             fields['supported_currencies'].choices = [('','Choose...'),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
             fields['location_categories'].choices = [('','Choose...'),("ATBI", "ATBI"), ("ATBE", "ATBE")]
-            """fields['drive_up'].initial = json.dumps({
-                "monday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "tuesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "wednesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "thursday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "friday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "saturday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "sunday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                }
-            }, indent=4)"""
-
             fields['lobby'].initial = json.dumps({
                 "monday": [
                     {
@@ -153,7 +122,6 @@ class IndexAtmView(LoginRequiredMixin, FormView):
                     }
                 },
                 "lobby": json.loads(data['lobby']),
-                #"drive_up": json.loads(data["drive_up"]),
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
                 "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
                 "supported_languages": data["supported_languages"] if data["supported_languages"]!="" else "false",
@@ -171,7 +139,6 @@ class IndexAtmView(LoginRequiredMixin, FormView):
                 "branch_type": data["branch_type"] if data["branch_type"]!="" else "branch type",
                 "more_info": data["more_info"] if data["more_info"]!="" else "more info",
                 "located_at": data["located_at"] if data["located_at"]!="" else "located_at",
-                "phone_number": data["phone_number"] if data["phone_number"]!="" else "phone number",
                 "services": data["services"] if data["services"]!="" else "services",
             }
             result = self.api.post(urlpath, payload=payload)
@@ -284,7 +251,6 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            fields['phone_number'].initial = result['phone_number']
             fields['lobby'].initial = json.dumps(result['lobby'], indent=4)
             if result['supported_languages'].lower()=='en':
                 fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
@@ -310,7 +276,6 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
             else:
                  fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
             fields['location_categories'].initial = result['location_categories']
-            #fields['drive_up'].initial = json.dumps(result['drive_up'], indent=4)
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -322,7 +287,7 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
         data = form.cleaned_data
         urlpath = '/banks/{}/atms/{}'.format(data["bank_id"], data["atm_id"])
         payload = {
-            #"id": data["branch_id"],
+            #"id": data["atm_id"],
             "bank_id": data["bank_id"],
             "name": data["name"],
             "address": json.loads(data['address']),
@@ -337,11 +302,6 @@ class UpdateAtmView(LoginRequiredMixin, FormView):
                 }
             },
             "lobby": json.loads(data["lobby"]),
-            #"drive_up": json.loads(data["drive_up"]),
-            "branch_routing": {
-                "scheme": data["atm_routing_scheme"] if data["atm_routing_scheme"] != "" else "license name",
-                "address": data["atm_routing_address"] if data["atm_routing_address"] != "" else "license name"
-            },
             "has_deposit_capability": data["has_deposit_capability"],
             "accessibleFeatures": data["accessibleFeatures"],
             "minimum_withdrawal": data["minimum_withdrawal"],

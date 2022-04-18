@@ -6,3 +6,4 @@ apimanager/apimanager/local_settings.py
 API-Manager.iml
 apimanager/.DS_Store
 venv
+.env
