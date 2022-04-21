@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 
 # Create your views here.
@@ -133,6 +132,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
         try:
             data = form.cleaned_data
             urlpath = '/banks/{}/branches'.format(data['bank_id'])
+            print(urlpath)
             payload = {
                 "id": data["branch_id"],
                 "bank_id": data["bank_id"],

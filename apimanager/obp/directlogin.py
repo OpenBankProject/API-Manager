@@ -32,7 +32,7 @@ class DirectLoginAuthenticator(Authenticator):
         requestheaders['consumer_key']=local_settings.OAUTH_CONSUMER_KEY
         #print("hello",local_settings.OAUTH_CONSUMER_KEY)
         url = settings.API_HOST + settings.DIRECTLOGIN_PATH
-        authorization = 'DirectLogin username="{}",password="{}",consumer_key="{}"'.format(  # noqa
+        authorization = 'DirectLogin username="{}",password="{}",consumer_key="{}"'.format(
             requestheaders['username'],
             requestheaders['password'],
             requestheaders['consumer_key']

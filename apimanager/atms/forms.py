@@ -1,5 +1,5 @@
 """
-Forms of ATM app
+Forms of ATMs app
 """
 
 from django import forms
