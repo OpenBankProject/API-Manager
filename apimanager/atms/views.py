@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 
 # Create your views here.
@@ -15,57 +14,31 @@ from django.views.generic import FormView
 
 from obp.api import API, APIError
 
-from .forms import CreateBranchForm
+from .forms import CreateAtmForm
 
-class IndexBranchesView(LoginRequiredMixin, FormView):
-    """Index view for branches"""
-    template_name = "branches/index.html"
-    form_class = CreateBranchForm
-    success_url = reverse_lazy('branches_list')
+class IndexAtmView(LoginRequiredMixin, FormView):
+    """Index view for ATM"""
+    template_name = "atms/index.html"
+    form_class = CreateAtmForm
+    success_url = reverse_lazy('atms_list')
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
-        return super(IndexBranchesView, self).dispatch(request, *args, **kwargs)
+        return super(IndexAtmView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, *args, **kwargs):
-        form = super(IndexBranchesView, self).get_form(*args, **kwargs)
+        form = super(IndexAtmView, self).get_form(*args, **kwargs)
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('','Choose...'),(True, True), (False, False)]
-            fields['drive_up'].initial = json.dumps({
-                "monday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "tuesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "wednesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "thursday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "friday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "saturday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                },
-                "sunday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
-                }
-            }, indent=4)
-
+            fields['has_deposit_capability'].choices = [('','Choose...'),(True, True), (False, False)]
+            fields['supported_languages'].choices = [('','Choose...'),("en", "en"), ("fr", "fr"), ("de", "de")]
+            fields['notes'].choices = [('','Choose...'),("String1", "String1"), ("String2", "String2")]
+            fields['supported_currencies'].choices = [('','Choose...'),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            fields['location_categories'].choices = [('','Choose...'),("ATBI", "ATBI"), ("ATBE", "ATBE")]
             fields['lobby'].initial = json.dumps({
                 "monday": [
                     {
@@ -132,9 +105,9 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            urlpath = '/banks/{}/branches'.format(data['bank_id'])
+            urlpath = '/banks/{}/atms'.format(data['bank_id'])
             payload = {
-                "id": data["branch_id"],
+                "id": data["atm_id"],
                 "bank_id": data["bank_id"],
                 "name": data["name"],
                 "address": json.loads(data['address']),
@@ -149,30 +122,38 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
                     }
                 },
                 "lobby": json.loads(data['lobby']),
-                "drive_up": json.loads(data["drive_up"]),
-                "branch_routing": {
-                    "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"]!="" else "license name",
-                    "address": data["branch_routing_address"] if data["branch_routing_address"]!="" else "license name"
-                },
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
+                "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
+                "supported_languages": data["supported_languages"] if data["supported_languages"]!="" else "false",
+                "supported_currencies": data["supported_currencies"] if data["supported_currencies"]!="" else "false",
+                "notes": data["notes"] if data["notes"]!="" else "false",
+                "location_categories": data["location_categories"] if data["location_categories"]!="" else "false",
                 "accessibleFeatures": data["accessibleFeatures"] if data["accessibleFeatures"]!="" else "accessible features name",
+                "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false",
+                "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
+                "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
+                "site_name": data["site_name"] if data["site_name"]!="" else "false",
+                "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
+                "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
+                "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false",
                 "branch_type": data["branch_type"] if data["branch_type"]!="" else "branch type",
                 "more_info": data["more_info"] if data["more_info"]!="" else "more info",
-                "phone_number": data["phone_number"] if data["phone_number"]!="" else "phone number"
+                "located_at": data["located_at"] if data["located_at"]!="" else "located_at",
+                "services": data["services"] if data["services"]!="" else "services",
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
             error_once_only(self.request, err)
-            return super(IndexBranchesView, self).form_invalid(form)
+            return super(IndexAtmView, self).form_invalid(form)
         except Exception as err:
             error_once_only(self.request, "Unknown Error")
-            return super(IndexBranchesView, self).form_invalid(form)
+            return super(IndexAtmViewView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
             error_once_only(self.request, result['message'])
-            return super(IndexBranchesView, self).form_valid(form)
-        msg = 'Branch {} for Bank {} has been created successfully!'.format(result['id'], result['bank_id'])
+            return super(IndexAtmView, self).form_valid(form)
+        msg = 'Atm {} for Bank {} has been created successfully!'.format(result['id'], result['bank_id'])
         messages.success(self.request, msg)
-        return super(IndexBranchesView, self).form_valid(form)
+        return super(IndexAtmView, self).form_valid(form)
 
     def get_banks(self):
         api = API(self.request.session.get('obp'))
@@ -187,18 +168,18 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
             return []
 
-    def get_branches(self, context):
+    def get_atms(self, context):
 
         api = API(self.request.session.get('obp'))
         try:
             self.bankids = self.get_banks()
-            branches_list = []
+            atms_list = []
             for bank_id in self.bankids:
-                urlpath = '/banks/{}/branches'.format(bank_id)
+                urlpath = '/banks/{}/atms'.format(bank_id)
 
                 result = api.get(urlpath)
-                if 'branches' in result:
-                    branches_list.extend(result['branches'])
+                if 'atms' in result:
+                    atms_list.extend(result['atms'])
         except APIError as err:
             messages.error(self.request, err)
             return []
@@ -206,33 +187,33 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return []
 
-        return branches_list
+        return atms_list
 
     def get_context_data(self, **kwargs):
-        context = super(IndexBranchesView, self).get_context_data(**kwargs)
-        branches_list = self.get_branches(context)
+        context = super(IndexAtmView, self).get_context_data(**kwargs)
+        atms_list = self.get_atms(context)
         context.update({
-            'branches_list': branches_list,
+            'atms_list': atms_list,
             'bankids': self.bankids
         })
         return context
 
 
-class UpdateBranchesView(LoginRequiredMixin, FormView):
-    template_name = "branches/update.html"
-    success_url = '/branches/'
-    form_class = CreateBranchForm
+class UpdateAtmView(LoginRequiredMixin, FormView):
+    template_name = "atms/update.html"
+    success_url = '/atms/'
+    form_class = CreateAtmForm
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
-        return super(UpdateBranchesView, self).dispatch(request, *args, **kwargs)
+        return super(UpdateAtmView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, *args, **kwargs):
-        form = super(UpdateBranchesView, self).get_form(*args, **kwargs)
+        form = super(UpdateAtmView, self).get_form(*args, **kwargs)
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
-        urlpath = "/banks/{}/branches/{}".format(self.kwargs['bank_id'], self.kwargs['branch_id'])
+        urlpath = "/banks/{}/atms/{}".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
 
@@ -243,25 +224,58 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
         try:
             result = self.api.get(urlpath)
             fields['bank_id'].initial = self.kwargs['bank_id']
-            fields['branch_id'].initial = self.kwargs['branch_id']
+            fields['atm_id'].initial = self.kwargs['atm_id']
             fields['name'].initial = result['name']
             fields['address'].initial = json.dumps(result['address'], indent=4)
             fields['location_latitude'].initial = result['location']['latitude']
             fields['location_longitude'].initial = result['location']['longitude']
             fields['meta_license_id'].initial = result['meta']['license']['id']
             fields['meta_license_name'].initial = result['meta']['license']['name']
-            fields['branch_routing_scheme'].initial = result['branch_routing']['scheme']
-            fields['branch_routing_address'].initial = result['branch_routing']['address']
+            fields['minimum_withdrawal'].initial = result['minimum_withdrawal']
+            fields['branch_identification'].initial = result['branch_identification']
             if result['is_accessible'].lower()=='true':
                 fields['is_accessible'].choices = [(True, True), (False, False)]
             else:
                 fields['is_accessible'].choices = [(False, False), (True, True)]
-            fields['accessibleFeatures'].initial = result['accessibleFeatures']
-            fields['branch_type'].initial = result['branch_type']
+            if result['has_deposit_capability'].lower()=='true':
+                fields['has_deposit_capability'].choices = [(True, True), (False, False)]
+            else:
+                fields['has_deposit_capability'].choices = [(False, False), (True, True)]
+            fields['has_deposit_capability'].initial = result['accessibleFeatures']
+            fields['site_identification'].initial = result['site_identification']
+            fields['site_name'].initial = result['site_name']
+            fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
+            fields['cash_withdrawal_international_fee'].initial = result['cash_withdrawal_international_fee']
+            fields['balance_inquiry_fee'].initial = result['balance_inquiry_fee']
+            fields['services'].initial = result['services']
+            fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
-            fields['phone_number'].initial = result['phone_number']
+            fields['located_at'].initial = result['located_at']
             fields['lobby'].initial = json.dumps(result['lobby'], indent=4)
-            fields['drive_up'].initial = json.dumps(result['drive_up'], indent=4)
+            if result['supported_languages'].lower()=='en':
+                fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
+            elif result['supported_languages'].lower()=='fr':
+                fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
+            else:
+                fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
+            fields['supported_languages'].initial = result['supported_languages']
+            if result['supported_currencies'].lower()=='eur':
+                  fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            elif result['supported_currencies'].lower()=='mxn':
+                  fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
+            else:
+                  fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
+            fields['supported_currencies'].initial = result['supported_currencies']
+            if result['notes'].lower()=='string1':
+                  fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
+            else:
+                  fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
+            fields['notes'].initial = result['notes']
+            if result['location_categories'].lower()=='atbi':
+                 fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
+            else:
+                 fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
+            fields['location_categories'].initial = result['location_categories']
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -271,9 +285,9 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-        urlpath = '/banks/{}/branches/{}'.format(data["bank_id"], data["branch_id"])
+        urlpath = '/banks/{}/atms/{}'.format(data["bank_id"], data["atm_id"])
         payload = {
-            #"id": data["branch_id"],
+            #"id": data["atm_id"],
             "bank_id": data["bank_id"],
             "name": data["name"],
             "address": json.loads(data['address']),
@@ -288,39 +302,46 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
                 }
             },
             "lobby": json.loads(data["lobby"]),
-            "drive_up": json.loads(data["drive_up"]),
-            "branch_routing": {
-                "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"] != "" else "license name",
-                "address": data["branch_routing_address"] if data["branch_routing_address"] != "" else "license name"
-            },
-            "is_accessible": data["is_accessible"],
+            "has_deposit_capability": data["has_deposit_capability"],
             "accessibleFeatures": data["accessibleFeatures"],
-            "branch_type": data["branch_type"],
+            "minimum_withdrawal": data["minimum_withdrawal"],
+            "branch_identification": data["branch_identification"],
+            "site_identification": data["site_identification"],
+            "site_name": data["site_name"],
+            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"],
+            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"],
+            "balance_inquiry_fee": data["balance_inquiry_fee"],
+            "services": data["services"],
             "more_info": data["more_info"],
-            "phone_number": data["phone_number"]
+            "located_at": data["located_at"],
+            "phone_number": data["phone_number"],
+            "supported_languages": data["supported_languages"],
+            "supported_currencies": data["supported_currencies"],
+            "notes": data["notes"],
+            "location_categories": data["location_categories"]
         }
         try:
             result = self.api.put(urlpath, payload=payload)
             if 'code' in result and result['code']>=400:
                 error_once_only(self.request, result['message'])
-                return super(UpdateBranchesView, self).form_invalid(form)
+                return super(UpdateAtmView, self).form_invalid(form)
         except APIError as err:
             messages.error(self.request, err)
-            return super(UpdateBranchesView, self).form_invalid(form)
+            return super(UpdateAtmView, self).form_invalid(form)
         except:
             messages.error(self.request, "Unknown Error")
-            return super(UpdateBranchesView, self).form_invalid(form)
-        msg = 'Branch {} for Bank {} has been created successfully!'.format(  # noqa
-            data["branch_id"], data["bank_id"])
+            return super(UpdateAtmView, self).form_invalid(form)
+        msg = 'Atm {} for Bank {} has been created successfully!'.format(  # noqa
+            data["atm_id"], data["bank_id"])
         messages.success(self.request, msg)
-        return super(UpdateBranchesView, self).form_valid(form)
+        return super(UpdateAtmView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(UpdateBranchesView, self).get_context_data(**kwargs)
+        context = super(UpdateAtmView, self).get_context_data(**kwargs)
         self.bank_id = self.kwargs['bank_id']
-        self.branch_id = self.kwargs['branch_id']
+        self.atm_id = self.kwargs['atm_id']
         context.update({
-            'branch_id': self.branch_id,
+            'atm_id': self.atm_id,
             'bank_id': self.bank_id
         })
         return context

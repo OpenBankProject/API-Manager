@@ -15,8 +15,8 @@ class DirectLoginForm(forms.Form):
         attrs={'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
-    consumer_key = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
+    #consumer_key = forms.CharField(widget=forms.TextInput(
+        #attrs={'class': 'form-control'}))
 
     def clean(self):
         """
