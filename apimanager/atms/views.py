@@ -32,6 +32,8 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
         form.api = self.api
         fields = form.fields
         try:
+
+            #fields["atm_id"]=
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('','Choose...'),(True, True), (False, False)]
             fields['has_deposit_capability'].choices = [('','Choose...'),(True, True), (False, False)]
@@ -40,17 +42,13 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['supported_currencies'].choices = [('','Choose...'),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
             fields['location_categories'].choices = [('','Choose...'),("ATBI", "ATBI"), ("ATBE", "ATBE")]
             #fields['lobby'].initial = json.dumps({
-            fields["monday"].initial={"opening_time": "10:00","closing_time": "18:00"}
-            fields["tuesday"].initial={
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
-                                }
-
-            fields["wednesday"].initial={"opening_time": "10:00", "closing_time": "18:00"}
-            fields["thursday"].initial={"opening_time": "10:00", "closing_time": "18:00"}
-            fields["friday"].initial={"opening_time": "10:00", "closing_time": "18:00"}
-            fields["saturday"].initial={"opening_time": "10:00", "closing_time": "18:00"}
-            fields["sunday"].initial={"opening_time": "10:00", "closing_time": "18:00"}
+            fields["monday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["tuesday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["wednesday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["thursday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["friday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["saturday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
+            fields["sunday"].initial=json.dumps({"opening_time": "10:00","closing_time": "18:00"})
             #}, indent=4)
 
             fields['address'].initial = json.dumps({
@@ -63,18 +61,19 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 "postcode":"13359",
                 "country_code":"DE"
             }, indent=4)
-
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         return form
 
     def form_valid(self, form):
         try:
             data = form.cleaned_data
+            #print(data["id"], "This is a id from data")
             urlpath = '/banks/{}/atms'.format(data['bank_id'])
+            print(data["atm_id"], "This is a atm_id")
             payload = {
                "id": data["atm_id"],
                 "bank_id": data["bank_id"],
@@ -90,7 +89,6 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                         "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
                     }
                 },
-                #"lobby": json.loads(data['lobby']),
                 "monday":data["monday"] if data["monday"]!= "" else "false",
                 "tuesday":data["tuesday"] if data["tuesday"]!= "" else "false",
                 "wednesday":data["wednesday"] if data["wednesday"]!= "" else "false",
@@ -116,8 +114,9 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 "located_at": data["located_at"] if data["located_at"]!="" else "false",
                 "services": data["services"] if data["services"]!="" else "false",
             }
+            #payload=json.dumps(payload)
             result = self.api.post(urlpath, payload=payload)
-            print(result, "Mohit are you listening me, tell me?")
+            print(result, "Hello World")
         except APIError as err:
             messages.error(self.request, err)
             return super(IndexAtmsView, self).form_invalid(form)
@@ -126,6 +125,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             return super(IndexAtmsView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
             messages.error(self.request, "result Unknown Error")
+            print(result, "Result is")
             return super(IndexAtmsView, self).form_valid(form)
         #msg = ("Record has been created successfully!")
         msg = 'atm {} for Bank {} has been created successfully!', result['bank_id']

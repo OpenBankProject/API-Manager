@@ -95,7 +95,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
 
-    lobby = forms.CharField(
+    """ lobby = forms.CharField(
         label=' Lobby Opening Hours',
         widget=forms.Textarea(
             attrs={
@@ -104,8 +104,77 @@ class CreateAtmForm(forms.Form):
             }
         ),
         required=False,
-    )
-
+    )"""
+    monday = forms.CharField(
+           label=' Monday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    tuesday = forms.CharField(
+           label='Tuesday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    wednesday = forms.CharField(
+           label=' Wednesday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    thursday = forms.CharField(
+           label=' Thursday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    friday = forms.CharField(
+           label=' Friday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    saturday = forms.CharField(
+           label=' Saturday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
+    sunday = forms.CharField(
+           label=' Sunday',
+           widget=forms.Textarea(
+               attrs={
+                   'placeholder': 'None',
+                   'class': 'form-control',
+               }
+           ),
+           required=False,
+       )
     located_at = forms.CharField(
         label='ATM location',
         widget=forms.TextInput(
