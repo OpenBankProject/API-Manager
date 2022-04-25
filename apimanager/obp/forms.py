@@ -15,6 +15,7 @@ class DirectLoginForm(forms.Form):
         attrs={'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+    # We are now getting consumer_key from settings
     #consumer_key = forms.CharField(widget=forms.TextInput(
         #attrs={'class': 'form-control'}))
 
