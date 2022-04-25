@@ -8,7 +8,6 @@
             {{ form.non_field_errors }}
         </div>
         {% endif %}
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.atm_id.errors %}
@@ -32,7 +31,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.services.errors %}
@@ -58,7 +56,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.meta_license_name.errors %}
@@ -83,7 +80,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.is_accessible.errors %}
@@ -94,11 +90,11 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                {% if form.accessibleFeatures.errors %}
-                <div class="alert alert-danger">{{ form.accessibleFeatures.errors }}
+                {% if form.accessibility_features.errors %}
+                <div class="alert alert-danger">{{ form.accessibility_features.errors }}
                 </div>{% endif %}
                 <div class="form-group">
-                    {{ form.accessibleFeatures.label_tag }} {{ form.accessibleFeatures }}
+                    {{ form.accessibility_features.label_tag }} {{ form.accessibility_features }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -109,7 +105,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.notes.errors %}
@@ -270,7 +265,6 @@
                                 </li>
                                 <li>ATM Type: {{atm.branch_type}}</li>
                                 <li>More Info: {{atm.more_info}}</li>
-                                <!-- <li>Phone Number: {{atm.phone_number}}</li>-->
                                 <li>Accessible Features: {{atm.accessibleFeatures}}</li>
                             </ul>
                         </div>
