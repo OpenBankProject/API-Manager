@@ -273,6 +273,8 @@ API_EXPLORER_APP_NAME = 'API Explorer'
 LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
 OVERRIDE_CSS_URL = None
 
+VERIFY = True if API_HOST.startswith("https") else False
+
 # Local settings can override anything in here
 try:
     from apimanager.local_settings import *  # noqa
@@ -283,8 +285,6 @@ except ImportError:
 API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
 # For some reason, swagger is not available at the latest API version
 API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
-
-VERIFY = True if API_HOST.startswith("https") else False
 
 if not OAUTH_CONSUMER_KEY:
     raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
