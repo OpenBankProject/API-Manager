@@ -277,9 +277,11 @@ VERIFY = True if API_HOST.startswith("https") else False
 
 # Local settings can override anything in here
 try:
-    from apimanager.local_settings import *  # noqa
+    from apimanager.local_settings import *
 except ImportError:
     pass
+# EVERYTHING BELOW HERE WILL NOT BE OVERWRITTEN BY LOCALSETTINGS!
+# DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
 # Settings here might use parts overwritten in local settings
 API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
