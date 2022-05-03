@@ -273,11 +273,11 @@ API_EXPLORER_APP_NAME = 'API Explorer'
 LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
 OVERRIDE_CSS_URL = None
 
-VERIFY = True if API_HOST.startswith("https") else False
+VERIFY = True
 
 # Local settings can override anything in here
 try:
-    from apimanager.local_settings import *
+    from apimanager.local_settings import *     # noqa
 except ImportError:
     pass
 # EVERYTHING BELOW HERE WILL NOT BE OVERWRITTEN BY LOCALSETTINGS!
