@@ -6,6 +6,6 @@ App config for users app
 from django.apps import AppConfig
 
 
-class UsersConfig(AppConfig):
-    """Config for users"""
-    name = 'users'
+class BranchesConfig(AppConfig):
+    """Config for branches"""
+    name = 'branches'

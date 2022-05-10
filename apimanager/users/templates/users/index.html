@@ -8,10 +8,19 @@
 	<h1>Users</h1>
 
     <div id="users-filters">
+        <h4>Filters</h4>
         <div class="hidden-xs">
             {% include "users/includes/filter_role.html" %}
             {% include "users/includes/filter_email.html" %}
             {% include "users/includes/filter_username.html" %}
+			<div id="filter-time" class="filter">
+				<div class="btn-group hidden-sm hidden-xs filter-time" role="group" aria-label="filter-time">
+					{% include "users/includes/filter_locked.html" %}
+				</div>
+				<div class="btn-group-vertical visible-sm visible-xs filter-time" role="group" aria-label="filter-time">
+					{% include "users/includes/filter_locked.html" %}
+				</div>
+			</div>
         </div>
         <div class="hidden-sm hidden-md hidden-lg">
             <div class="row">
@@ -28,18 +37,27 @@
         </div>
     </div>
 
-	<h2>Statistics</h2>
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <h4>Pagination</h4>
+                {% include "users/includes/filter_pagination.html" %}
+        </div>
+    </div>
+
+	<h4>Statistics</h4>
 	<ul id="statistics">
 		<li>Total number of users: {{ statistics.users_num }}
 	</ul>
 
 	<div class="table-responsive">
-		<table class="table table-hover tablesorter" id="users-list">
+		<table class="table table-hover tablesorter" id="users-list" aria-describedby="users list">
 			<thead>
-				<th>User Id</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Action</th>
+				<th scope="col">User Id</th>
+				<th scope="col">Username</th>
+				<th scope="col">Email</th>
+				<th scope="col">Action</th>
 			</thead>
 			<tbody>
 			{% for user in users %}

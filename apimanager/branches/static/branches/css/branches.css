@@ -1,0 +1,18 @@
+#branches_list div {
+	margin: 5px 0;
+}
+
+/* The actual popup (appears on top) */
+.popuptext {
+  width: 250px;
+  background-color: #555;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px 0;
+  z-index: 1;
+  /*bottom: 125%;*/
+  top:100%
+  left: 50%;
+  margin-left: -80px;
+}

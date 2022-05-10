@@ -25,6 +25,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             messages.error(self.request, err)
             config = {}
+        except:
+            messages.error(self.request, "Unknown Error")
+            config = {}
 
         context.update({
             'config_json': json.dumps(config, indent=4),

@@ -8,7 +8,9 @@ Group=deploy
 SyslogIdentifier=API-Manager
 Restart=always
 WorkingDirectory=/var/www/apimanager/API-Manager/apimanager
-ExecStart=/var/www/apimanager/venv/bin/gunicorn --user deploy --group deploy --config /var/www/apimanager/API-Manager/gunicorn.conf.py apimanager.wsgi
+ExecStart=/var/www/apimanager/venv/bin/gunicorn -t 3000 --user deploy --group deploy --config /var/www/apimanager/API-Manager/gunicorn.conf.py apimanager.wsgi
+
+# set -t <secs> to higher value to avoid timeouts with KPI Dashboard / API Metrics etc.
 
 [Install]
 WantedBy=multi-user.target

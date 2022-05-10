@@ -42,7 +42,7 @@
 		</div>
 	</div>
 
-	<h2>Statistics</h2>
+	<h4>Statistics</h4>
 	<ul id="statistics">
 		<li>Total number of consumers: {{ statistics.consumers_num }}</li>
 		<li>Total number of unique developer email addresses: {{ statistics.unique_developer_email_num }}</li>
@@ -50,13 +50,13 @@
 	</ul>
 
 	<div class="table-responsive">
-		<table class="table table-hover tablesorter" id="consumer-list">
+		<table class="table table-hover tablesorter" id="consumer-list" aria-describedby="consumer list">
 			<thead>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Created</th>
-				<th>Action</th>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Description</th>
+				<th scope="col">Created</th>
+				<th scope="col">Action</th>
 			</thead>
 
 			<tbody>

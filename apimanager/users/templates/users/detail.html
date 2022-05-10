@@ -26,6 +26,35 @@
 		<strong>Provider ID</strong><br />
 		<span>{{ apiuser.provider_id }}</span>
 	</div>
+	
+	<div id="users-detail-deleted">
+		<strong>Deleted</strong><br />
+		<span>{{ apiuser.is_deleted }}</span>
+	</div>
+
+    <div id="users-detail-locked">
+        <strong>Locked</strong><br />
+        <span>{{ apiuser.is_locked }}</span>
+    </div>
+ 
+    <form action="{% url 'user-status-update' apiuser.user_id apiuser.username %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        <input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
+		{% if apiuser.is_deleted %}
+			
+		{% else %}
+			<button type="submit" class="btn btn-primary btn-red" value ="Delete" name ="Delete">Delete User</button>
+		{% endif %}
+    
+        {% if apiuser.is_locked %}
+            <button type="submit" class="btn btn-primary btn-green" value ="Unlock" name ="Unlock">Unlock User</button>
+        {% else %}
+
+        {% endif %}
+
+		
+    </form>
 
 
 {% if apiuser.user_id %}
@@ -64,11 +93,11 @@
 
 		<h2>Entitlements</h2>
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped" aria-describedby="uses table">
 				<thead>
-					<th>Role name</th>
-					<th>Bank Id</th>
-					<th>Action</th>
+					<th scope="col">Role name</th>
+					<th scope="col">Bank Id</th>
+					<th scope="col">Action</th>
 				</thead>
 				<tbody>
 				{% for entitlement in apiuser.entitlements.list %}

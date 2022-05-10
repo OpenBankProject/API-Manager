@@ -33,12 +33,19 @@ class IndexView(LoginRequiredMixin, TemplateView):
         try:
             urlpath = '/entitlement-requests'
             entitlement_requests = api.get(urlpath)
-            entitlement_requests = entitlement_requests['entitlement_requests']
-            entitlement_requests = FilterTime(context, self.request.GET, 'created') \
-                .apply(entitlement_requests)
-            entitlement_requests = self.scrub(entitlement_requests)
+            if 'code' in entitlement_requests and entitlement_requests['code']>=400:
+                messages.error(self.request, entitlement_requests['message'])
+                entitlement_requests = []
+            else:
+                entitlement_requests = entitlement_requests['entitlement_requests']
+                entitlement_requests = FilterTime(context, self.request.GET, 'created') \
+                    .apply(entitlement_requests)
+                entitlement_requests = self.scrub(entitlement_requests)
+                entitlement_requests = sorted(entitlement_requests, key=lambda k: k['created'], reverse=True)
         except APIError as err:
             messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         context.update({
             'entitlementrequests': entitlement_requests,
@@ -54,15 +61,19 @@ class RejectEntitlementRequest(LoginRequiredMixin, View):
         try:
             urlpath = '/entitlement-requests/{}'.format(
                 kwargs['entitlement_request_id'])
-            api.delete(urlpath)
-            msg = 'Entitlement Request with role {} has been deleted.'.format(
-                request.POST.get('role_name', '<undefined>'))
-            messages.success(request, msg)
+            response = api.delete(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                msg = 'Entitlement Request with role {} has been deleted.'.format(
+                    request.POST.get('role_name', '<undefined>'))
+                messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
-        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
-        return HttpResponseRedirect(redirect_url)
+        return HttpResponseRedirect(reverse('entitlementrequests-index'))
 
 
 class AcceptEntitlementRequest(LoginRequiredMixin, View):
@@ -78,20 +89,29 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
                 'bank_id': request.POST.get('bank_id', '<undefined>'),
                 'role_name': request.POST.get('role_name', '<undefined>'),
             }
-            api.post(urlpath, payload=payload)
-            msg = 'Entitlement with role {} has been added.'.format(request.POST.get('role_name', '<undefined>'))
-            messages.success(request, msg)
+            response = api.post(urlpath, payload=payload)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                msg = 'Entitlement with role {} has been added.'.format(request.POST.get('role_name', '<undefined>'))
+                messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
         try:
             urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', '<undefined>'))
-            api.delete(urlpath)
-            msg = 'Entitlement Request with role {} has been deleted.'.format(
-                request.POST.get('role_name', '<undefined>'))
-            messages.success(request, msg)
+            response = api.delete(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                msg = 'Entitlement Request with role {} has been deleted.'.format(
+                    request.POST.get('role_name', '<undefined>'))
+                messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
 
-        redirect_url = request.POST.get('next', reverse('entitlementrequests-index'))
-        return HttpResponseRedirect(redirect_url)
+        return HttpResponseRedirect(reverse('entitlementrequests-index'))

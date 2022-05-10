@@ -18,17 +18,17 @@
 
     		<div class="row">
     			<div class="col-xs-6 col-sm-3">
-    				{% if form.start_date.errors %}<div class="alert alert-danger">{{ form.start_date.errors }}</div>{% endif %}
+    				{% if form.from_date.errors %}<div class="alert alert-danger">{{ form.from_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.start_date.label_tag }}
-    					{{ form.start_date }}
+    					{{ form.from_date.label_tag }}
+    					{{ form.from_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
-    				{% if form.end_date.errors %}<div class="alert alert-danger">{{ form.end_date.errors }}</div>{% endif %}
+    				{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.end_date.label_tag }}
-    					{{ form.end_date }}
+    					{{ form.to_date.label_tag }}
+    					{{ form.to_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
@@ -135,15 +135,15 @@
     		{% block tab_content %}
     		<div class="tab-pane active">
     			<div class="table-responsive">
-    				<table class="table table-hover tablesorter">
+    				<table class="table table-hover tablesorter" aria-describedby="api list">
     					<thead>
     					<tr>
-    						<th>#</th>
-    						<th>Verb</th>
-    						<th>URL</th>
-    						<th>Date</th>
-							<th>Duration(ms)</th>
-    						<th>Details</th>
+    						<th scope="col">#</th>
+    						<th scope="col">Verb</th>
+    						<th scope="col">URL</th>
+    						<th scope="col">Date</th>
+							<th scope="col">Duration(ms)</th>
+    						<th scope="col">Details</th>
     					</tr>
     					</thead>
     					<tbody>

@@ -33,12 +33,12 @@ footer a:hover, .footer a:focus {
 
 
 .navbar-brand img {
-	width: 20px;
 	height: 20px;
 }
 
 
 .navbar-default {
+	top: 89px;
 	background-color: #53c4ef;
 	border: none;
 }
@@ -70,6 +70,7 @@ footer a:hover, .footer a:focus {
 
 .navbar-btn {
     margin-left: 15px;
+	margin-top: -6px;
 }
 
 /*.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:active {*/
@@ -121,7 +122,7 @@ footer a:hover, .footer a:focus {
 
 
 .messages {
-	margin-top: 30px;
+	margin-top: 90px;
 }
 
 
@@ -164,4 +165,47 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 .authentication-method {
 	display: none;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+.dropdown-hr{
+	margin:0px;
+	padding: 0px;
+}
+.dropdown-menu{
+	padding: 0;
+}
+
+#header{
+	position: fixed;
+	top: 0px;
+	background: #FFFFFF;
+	width: inherit;
+	z-index: 10;
+}
+
+#body-container{
+	margin-top: 89px;
+}
+
+#logo-left{
+	height: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#left-logo img{
+	height:40px;
+}
+
+.navbar-btn .btn-default {
+	font-size: 16px;
+	text-align: center;
+	line-height: 24px;
+	border-radius: 0;
+	padding: 9px 20px 11px;
+	border: 1px solid #333333;
 }

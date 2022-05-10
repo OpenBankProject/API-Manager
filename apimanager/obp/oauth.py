@@ -35,13 +35,13 @@ class OAuthAuthenticator(Authenticator):
         )
         try:
             url = settings.API_HOST + settings.OAUTH_TOKEN_PATH
-            response = session.fetch_request_token(url)
+            response = session.fetch_request_token(url, verify=settings.VERIFY)
         except (ValueError, TokenRequestDenied, ConnectionError) as err:
             raise AuthenticatorError(err)
         else:
             self.token = response.get('oauth_token')
             self.secret = response.get('oauth_token_secret')
-        url = settings.API_HOST + settings.OAUTH_AUTHORIZATION_PATH
+        url = settings.API_PORTAL + settings.OAUTH_AUTHORIZATION_PATH
         authorization_url = session.authorization_url(url)
         LOGGER.log(logging.INFO, 'Initial token {}, secret {}'.format(
             self.token, self.secret))

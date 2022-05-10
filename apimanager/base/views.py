@@ -17,6 +17,8 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context.update({
             'API_HOST': settings.API_HOST,
+            'logo_url': settings.LOGO_URL,
+            'override_css_url': settings.OVERRIDE_CSS_URL,
             'directlogin_form': DirectLoginForm(),
             'gatewaylogin_form': GatewayLoginForm(),
         })
