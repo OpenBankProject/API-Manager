@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-10 12:10+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: base/templates/base.html:48
+msgid "Home"
+msgstr "Casa"
+
+#: base/templates/base.html:50
+msgid "Consumers"
+msgstr "Consumidoras"
+
+#: base/templates/base.html:52
+msgid "Entitlement Requests"
+msgstr "Solicitudes de derechos"
+
+#: base/templates/base.html:57
+msgid "Users"
+msgstr "Usuarias"
+
+#: base/templates/base.html:59
+msgid "All"
+msgstr "Todos"
+
+#: base/templates/base.html:60
+#, fuzzy
+#| msgid "Users"
+msgid "My User"
+msgstr "Mi usuaria"
+
+#: base/templates/base.html:61
+msgid "Invite Developer"
+msgstr "Invitar a desarrollador"
+
+#: base/templates/base.html:68
+msgid "Metrics"
+msgstr "Métrica"
+
+#: base/templates/base.html:70
+#, fuzzy
+#| msgid "Metrics"
+msgid "API Metrics"
+msgstr "Métricas de la API"
+
+#: base/templates/base.html:71
+msgid "Connector Metrics"
+msgstr "Métricas del conector"
+
+#: base/templates/base.html:72
+msgid "KPI Dashboard"
+msgstr "Panel de KPI"
+
+#: base/templates/base.html:79
+msgid "Resources"
+msgstr "Recursos"
+
+#: base/templates/base.html:81
+#, fuzzy
+#| msgid "Consumers"
+msgid "Customers"
+msgstr "Consumidoras"
+
+#: base/templates/base.html:82
+msgid "Branches"
+msgstr "Sucursales"
+
+#: base/templates/base.html:83
+msgid "ATMs"
+msgstr "cajeros automáticos"
+
+#: base/templates/base.html:92
+msgid "Configurations"
+msgstr "Configuraciones"
+
+#: base/templates/base.html:94
+#, fuzzy
+#| msgid "Configurations"
+msgid "Config"
+msgstr "Configuraciones"
+
+#: base/templates/base.html:95
+msgid "Webui Props"
+msgstr "Accesorios webui"
+
+#: base/templates/base.html:96
+msgid "Method Routings"
+msgstr "Enrutamiento de métodos"
+
+#: base/templates/base.html:97
+msgid "Dynamic Endpoints"
+msgstr "Puntos finales dinámicos"
+
+#: base/templates/base.html:98
+msgid "My API Collections"
+msgstr "Mis colecciones de API"
+
+#: base/templates/home.html:5
+msgid "Welcome to API Manager"
+msgstr "Bienvenido al Administrador de API"
