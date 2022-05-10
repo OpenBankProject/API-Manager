@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}{{ block.super }} / Branches{% endblock page_title %}
+
+{% block content %}
+<div id="branches">
+    <h1>Update Branch</h1>
+    <h2>{{ bank_id }} : {{ branch_id }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        <div class="row" style="display: None">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_id.errors %}<div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.bank_id.label_tag }}
+                    {{ form.bank_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_id.errors %}<div class="alert alert-danger">{{ form.branch_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_id.label_tag }}
+                    {{ form.branch_id }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.name.errors %}<div class="alert alert-danger">{{ form.name.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.location_latitude.errors %}<div class="alert alert-danger">{{ form.location_latitude.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.location_latitude.label_tag }}
+                    {{ form.location_latitude }}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.location_longitude.errors %}<div class="alert alert-danger">{{ form.location_longitude.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.location_longitude.label_tag }}
+                    {{ form.location_longitude }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.meta_license_id.errors %}<div class="alert alert-danger">{{ form.meta_license_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.meta_license_id.label_tag }}
+                    {{ form.meta_license_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.meta_license_name.errors %}<div class="alert alert-danger">{{ form.meta_license_name.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.meta_license_name.label_tag }}
+                    {{ form.meta_license_name }}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.accessibleFeatures.errors %}<div class="alert alert-danger">{{ form.accessibleFeatures.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.accessibleFeatures.label_tag }}
+                    {{ form.accessibleFeatures }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_routing_scheme.errors %}<div class="alert alert-danger">{{ form.branch_routing_scheme.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_routing_scheme.label_tag }}
+                    {{ form.branch_routing_scheme }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_routing_address.errors %}<div class="alert alert-danger">{{ form.branch_routing_address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_routing_address.label_tag }}
+                    {{ form.branch_routing_address }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.is_accessible.errors %}<div class="alert alert-danger">{{ form.is_accessible.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.is_accessible.label_tag }}
+                    {{ form.is_accessible }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.branch_type.errors %}<div class="alert alert-danger">{{ form.branch_type.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.branch_type.label_tag }}
+                    {{ form.branch_type }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.more_info.errors %}<div class="alert alert-danger">{{ form.more_info.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.more_info.label_tag }}
+                    {{ form.more_info }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.phone_number.errors %}<div class="alert alert-danger">{{ form.phone_number.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+            </div>
+        </div>
+
+		<div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.address.errors %}<div class="alert alert-danger">{{ form.address.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.address.label_tag }}
+                    {{ form.address }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.lobby.errors %}<div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.lobby.label_tag }}
+                    {{ form.lobby }}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                {% if form.drive_up.errors %}<div class="alert alert-danger">{{ form.drive_up.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.drive_up.label_tag }}
+                    {{ form.drive_up }}
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" value="Update" class="btn btn-primary" />
+    </form>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'branches/js/branches.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'branches/css/branches.css' %}" rel="stylesheet">
+{% endblock extracss %}
+

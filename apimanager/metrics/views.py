@@ -7,15 +7,20 @@ import json
 import hashlib
 import operator
 from datetime import datetime, timedelta
+from enum import Enum
 
 from django.conf import settings
-from apimanager.local_settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
+from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-from obp.api import API, APIError
-from .forms import APIMetricsForm, ConnectorMetricsForm, MetricsSummaryForm, CustomSummaryForm
+from base.utils import error_once_only, get_cache_key_for_current_call, convert_form_date_to_obpapi_datetime_format, \
+    return_to_days_ago
+from obp.api import API, APIError, LOGGER
+from .forms import APIMetricsForm, ConnectorMetricsForm, MonthlyMetricsSummaryForm, CustomSummaryForm
 from pylab import *
+from django.core.cache import cache
+import traceback
 try:
     # Python 2
     import cStringIO
@@ -26,7 +31,6 @@ from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 import statistics
-
 
 def get_random_color(to_hash):
     hashed = str(int(hashlib.md5(to_hash.encode('utf-8')).hexdigest(), 16))
@@ -66,6 +70,14 @@ def get_barchart_data(metrics, fieldname):
     return data
 
 
+class SummaryType(Enum):
+    YEARLY = 1
+    QUARTERLY = 2
+    MONTHLY = 3
+    WEEKLY = 4
+    DAYLY = 5
+    CUSTOM = 6
+ 
 class MetricsView(LoginRequiredMixin, TemplateView):
     """View for metrics (sort of abstract base class)"""
     form_class = None
@@ -96,7 +108,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.datetime.strptime(
-                metric['date'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                metric['date'], settings.API_DATETIMEFORMAT)
         return metrics
 
     def to_api(self, cleaned_data):
@@ -130,7 +142,11 @@ class MetricsView(LoginRequiredMixin, TemplateView):
             metrics = api.get(urlpath)
             metrics = self.to_django(metrics['metrics'])
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
+        except KeyError as err:
+            error_once_only(self.request, metrics['message'])
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
         return metrics
 
     def get_context_data(self, **kwargs):
@@ -174,10 +190,10 @@ class ConnectorMetricsView(MetricsView):
     template_name = 'metrics/connector.html'
     api_urlpath = '/management/connector/metrics'
 
-class MetricsSummaryView(LoginRequiredMixin, TemplateView):
+class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     """View for metrics summary (sort of abstract base class)"""
-    form_class = MetricsSummaryForm
-    template_name = 'metrics/summary.html'
+    form_class = MonthlyMetricsSummaryForm
+    template_name = 'metrics/monthly_summary.html'
     api_urlpath = None
 
     def get_form(self):
@@ -205,7 +221,7 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.datetime.strptime(
-                metric['date'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                metric['date'], API_DATEFORMAT)
         return metrics
 
     def to_api(self, cleaned_data):
@@ -228,111 +244,104 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         return params
 
 
-    def get_aggregate_metrics(self, cleaned_data, from_date, to_date):
+    def get_aggregate_metrics(self, from_date, to_date, is_included_obp_apps, only_show_api_explorer_metrics = False):
         """
-        Gets the metrics from the API, using given cleaned form data.
+        Gets the metrics from the API, using given parameters,
+        There are different use cases, so we accept different parameters.
+        only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer. 
         """
-        form = self.get_form()
-        metrics = []
-        api_calls_total = 0
-        average_response_time = 0
-
-        # If Include OBP Apps is selected
-        if cleaned_data.get('include_obp_apps'):
-            urlpath = '/management/aggregate-metrics?from_date={}&to_date={}'.format(from_date, to_date)
-            api = API(self.request.session.get('obp'))
+        try:
+            api_calls_total = 0
+            average_response_time = 0
+            urlpath = '/management/aggregate-metrics'
+            if only_show_api_explorer_metrics:
+                urlpath = urlpath + '?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
+            elif ((not only_show_api_explorer_metrics) and (not is_included_obp_apps)):
+                urlpath = urlpath + '?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+                    from_date, to_date, ",".join(EXCLUDE_APPS),",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+            else:
+                urlpath =  urlpath + '?from_date={}&to_date={}'.format(from_date, to_date)
+            cache_key = get_cache_key_for_current_call(self.request, urlpath)
+            apicaches = None
             try:
+                apicaches = cache.get(cache_key)
+            except Exception as err:
+                apicaches = None
+            if not apicaches is None:
+                metrics = apicaches 
+            else:    
+                api = API(self.request.session.get('obp'))
                 metrics = api.get(urlpath)
-                # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
-            except APIError as err:
-                messages.error(self.request, err)
+                apicaches = cache.set(cache_key, metrics)
+                LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
+                LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
+                
+            api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
+                api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, urlpath)
+            return api_calls_total, average_response_time, int(average_calls_per_day)
+        except APIError as err:
+            error_once_only(self.request, err)
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
-        else:
-            urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                from_date, to_date, ",".join(EXCLUDE_APPS),
-                ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-            api = API(self.request.session.get('obp'))
-            try:
-                metrics = api.get(urlpath)
-                # metrics = self.to_django(metrics)
-                api_calls_total = metrics[0]["count"]
-                average_response_time = metrics[0]["average_response_time"]
-            except APIError as err:
-                messages.error(self.request, err)
+        
 
-
+    def get_internal_api_call_metrics(self, api_calls_total, average_response_time, cache_key, from_date, metrics,
+                                      to_date, urlpath):
+        api_calls_total = metrics[0]["count"]
+        average_response_time = metrics[0]["average_response_time"]
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         number_of_days = abs((to_date - from_date).days)
-        average_calls_per_day = api_calls_total / number_of_days
-
-        return api_calls_total, average_response_time, int(average_calls_per_day)
+        # if number_of_days= 0, then it means calls_per_hour
+        average_calls_per_day = api_calls_total if (number_of_days == 0) else api_calls_total / number_of_days
+        return api_calls_total, average_calls_per_day, average_response_time
 
     def get_aggregate_metrics_api_explorer(self, from_date, to_date):
+        return self.get_aggregate_metrics(from_date, to_date, True, True)
+
+    def get_active_apps(self, is_included_obp_apps, from_date, to_date):
         """
-        Gets the metrics from the API, using given cleaned form data.
-        """
-        form = self.get_form()
-        metrics = []
-        api_calls_total = 0
-        average_response_time = 0
-
-        urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
-        api = API(self.request.session.get('obp'))
-        try:
-            metrics = api.get(urlpath)
-            api_calls_total = metrics[0]["count"]
-            average_response_time = metrics[0]["average_response_time"]
-        except APIError as err:
-            messages.error(self.request, err)
-
-
-        to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
-        from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
-        number_of_days = abs((to_date - from_date).days)
-        average_calls_per_day = api_calls_total / number_of_days
-
-        return api_calls_total, average_response_time, int(average_calls_per_day)
-
-    def get_active_apps(self, cleaned_data, from_date, to_date):
+         Gets the metrics from the API, using given parameters,
+         There are different use cases, so we accept different parameters.
+         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer. 
+         """
         apps = []
         form = self.get_form()
         active_apps_list = []
-        if cleaned_data.get('include_obp_apps'):
+        if is_included_obp_apps:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                if apps is not None and 'code' in apps and apps['code']==403:
+                    error_once_only(self.request, apps['message'])
+                else:
+                    active_apps_list = list(apps)
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
-                active_apps_list = list(apps)
+                active_apps_list = list(apps['top_consumers'])
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         return active_apps_list
 
 
     def get_total_number_of_apps(self, cleaned_data, from_date, to_date):
         apps = []
-        apps_list = []
         from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
         to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
-        urlpath='/management/consumers'
-        api = API(self.request.session.get('obp'))
-        try:
-            apps = api.get(urlpath)
-            apps_list = apps["list"]
-        except APIError as err:
-            messages.error(self.request, err)
+        apps_list =  self.get_all_consumers()
 
         for app in apps_list:
             app_created_date = datetime.datetime.strptime(app["created"], '%Y-%m-%dT%H:%M:%SZ')
@@ -369,78 +378,79 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email
 
-    def calls_per_delta(self, cleaned_data, from_date, to_date, **delta ):
+    def get_all_consumers(self):
+        urlpath = '/management/consumers'
+        api = API(self.request.session.get('obp'))
+        cache_key = get_cache_key_for_current_call(self.request, urlpath)
+        apicaches = None
+        try:
+            apicaches = cache.get(cache_key)
+        except Exception as err:
+            apicaches = None
+        if not apicaches is None:
+            apps_list = apicaches
+        else:
+            try:
+                apps = api.get(urlpath)
+                apps_list = apps["consumers"]
+                cache.set(cache_key, apps_list, 60 * 60)  # for the consumers we cache for 1 hour, consumers may be increased 
+                LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
+                LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+        return apps_list
+
+    def calls_per_delta(self, is_included_obp_apps, from_date_string, to_date_string, **delta ):
         """
-        Prints how many calls were made in total per given delta
+        return how many calls were made in total per given delta.
+        Here we need to convert date_string to datetime object, and calculate the dates.
         """
-        form = self.get_form()
-        to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
+        
+        # we need to convert string to datetime object, then we can calculate the date
+        from_datetime_object = datetime.datetime.strptime(from_date_string, API_DATEFORMAT)
+        to_datetime_object = datetime.datetime.strptime(to_date_string , API_DATEFORMAT)
+        time_delta_in_loop = from_datetime_object + timedelta(**delta)
 
-        from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
-
-        date_from = from_date
-        date_to = from_date + timedelta(**delta)
-
-        sum = 0
-        metrics = []
         result_list = []
         result_list_pure = []
         date_list = []
-        date_list.append(date_from)
+        while time_delta_in_loop <= to_datetime_object:
+            try:
+                # here we need to first convert datetime object to String
+                form_date= from_datetime_object.strftime(API_DATEFORMAT)
+                to_date= time_delta_in_loop.strftime(API_DATEFORMAT)
+                aggregate_metrics = self.get_aggregate_metrics(form_date, to_date, is_included_obp_apps)
+                result = aggregate_metrics[0]
+                result_list_pure.append(result)
+                result_list.append('{} - {} # {}'.format(from_datetime_object, time_delta_in_loop, result))
+                date_list.append(from_datetime_object)
+            except Exception as err:
+                break
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+                
+            from_datetime_object = time_delta_in_loop
+            time_delta_in_loop = time_delta_in_loop + timedelta(**delta)
 
-        # If include_obp_apps is selected
-        if cleaned_data.get('include_obp_apps'):
-            while date_to <= to_date:
-                urlpath = '/management/aggregate-metrics?from_date={}&to_date={}'.format(
-                    date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT))
-                api = API(self.request.session.get('obp'))
-                try:
-                    metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
-                except APIError as err:
-                    messages.error(self.request, err)
+        return (result_list, result_list_pure, date_list)
+        
 
-                date_from = date_to
-                date_list.append(date_from)
-                date_to = date_to + timedelta(**delta)
-        else:
-            while date_to <= to_date:
-                urlpath = '/management/aggregate-metrics?from_date={}&to_date={}&exclude_app_names={}'.format(
-                    date_from.strftime(API_DATEFORMAT), date_to.strftime(API_DATEFORMAT), ",".join(EXCLUDE_APPS))
-                api = API(self.request.session.get('obp'))
-                try:
-                    metrics = api.get(urlpath)
-                    result = metrics[0]["count"]
-                    result_list_pure.append(result)
-                    result_list.append('{} - {} # {}'.format(date_from, date_to, result))
-                    sum += result
-                except APIError as err:
-                    messages.error(self.request, err)
-
-                date_from = date_to
-                date_list.append(date_from)
-                date_to = date_to + timedelta(**delta)
-        return result_list, result_list_pure, date_list
-
-
-    def calls_per_month(self, cleaned_data, from_date, to_date):
+    def calls_per_month(self, is_included_obp_apps, from_date, to_date):
         """
         Convenience function to print number of calls per month
         It is actually 30 days, not a month
         """
-        calls_per_month_list, calls_per_month, month_list = self.calls_per_delta(cleaned_data, from_date, to_date, days=30)
+        calls_per_month_list, calls_per_month, month_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, days=30)
         return calls_per_month_list, calls_per_month, month_list
 
 
-    def calls_per_day(self, cleaned_data, from_date, to_date):
+    def calls_per_day(self, is_included_obp_apps, from_date, to_date):
         """
         Convenience function to print number of calls per day
         """
         index = []
-        calls_per_day, calls_per_day_pure, date_list = self.calls_per_delta(cleaned_data, from_date, to_date, days=1)
+        calls_per_day, calls_per_day_pure, date_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, days=1)
 
         if len(calls_per_day) >= 90:
             calls_per_day = calls_per_day[-90:]
@@ -454,18 +464,18 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return calls_per_day, calls_per_day_pure, date_list
 
-    def calls_per_half_day(self, cleaned_data, from_date):
+    def calls_per_half_day(self, is_included_obp_apps, from_date):
         """
         Convenience function to print number of calls per half day
         """
-        return self.calls_per_delta(cleaned_data, from_date, hours=12)
+        return self.calls_per_delta(is_included_obp_apps, from_date, hours=12)
 
 
-    def calls_per_hour(self, cleaned_data, from_date, to_date):
+    def calls_per_hour(self, is_included_obp_apps, from_date, to_date):
         """
         Convenience function to print number of calls per hour
         """
-        calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_delta(cleaned_data, from_date, to_date, hours=1)
+        calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, hours=1)
         return calls_per_hour_list, calls_per_hour, hour_list
 
     def plot_line_chart(self, plot_data, date_month_list, period):
@@ -548,28 +558,59 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         # Clear the previous plot.
         plt.gcf().clear()
         return image_base64
+        
+    def plot_topconsumer_bar_chart(self, data):
+        x = []
+        y = []
+        for item in data:
+            y.append(item['count'])
+            x.append(item['app_name'])
+        plt.barh(x, y)
+        plt.title("Top consumers", fontsize=10)
+        plt.xlabel("Number of API Calls", fontsize=8)
+        plt.xticks([])
+        plt.ylabel("Consumers", fontsize=8)
+        plt.tick_params(axis='y', labelsize=8)
+        for i, j in zip(y, x):
+            plt.text(i, j, str(i), clip_on=True, ha='center',va='center', fontsize=8)
+        plt.tight_layout()
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+        buf.close()
+        # Clear the previous plot.
+        plt.gcf().clear()
+        return image_base64
 
     def get_users_cansearchwarehouse(self):
         users = []
+        users_with_cansearchwarehouse = []
+        email_with_cansearchwarehouse = []
         api = API(self.request.session.get('obp'))
         try:
             urlpath = '/users'
             users = api.get(urlpath)
+            if users is not None and 'code' in users and users['code'] == 403:
+                error_once_only(self.request, users['message'])
+            if 'users' not in users:
+                users['users']=[]
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
-        users_with_cansearchwarehouse = []
-        email_with_cansearchwarehouse = []
-
-        try:
-            for user in users['users']:
-                for entitlement in user['entitlements']['list']:
-                    if 'CanSearchWarehouse' in entitlement['role_name']:
-                        users_with_cansearchwarehouse.append(user["username"])
-                        email_with_cansearchwarehouse.append(user["email"])
-        # fail gracefully in case API provides new structure
-        except KeyError as err:
-            messages.error(self.request, 'KeyError: {}'.format(err))
+        else:
+            try:
+                for user in users['users']:
+                    for entitlement in user['entitlements']['list']:
+                        if 'CanSearchWarehouse' in entitlement['role_name']:
+                            users_with_cansearchwarehouse.append(user["username"])
+                            email_with_cansearchwarehouse.append(user["email"])
+            # fail gracefully in case API provides new structure
+            except KeyError as err:
+                messages.error(self.request, 'KeyError: {}'.format(err))
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
         number_of_users_with_cansearchwarehouse = len(user_email_cansearchwarehouse)
@@ -583,16 +624,30 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
             api = API(self.request.session.get('obp'))
             try:
                 top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
         else:
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 top_apis = api.get(urlpath)
+                if top_apis is not None and 'code' in top_apis and top_apis['code']==403:
+                    error_once_only(self.request, top_apis['message'])
+                    top_apis=[]
+                else:
+                    top_apis = top_apis['top_apis']
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         for api in top_apis:
             if api['Implemented_by_partial_function'] == "":
@@ -604,6 +659,47 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         top_apis = reversed(top_apis)
 
         return top_apis
+        
+    def get_top_consumers(self, cleaned_data, from_date, to_date):
+        top_consumers = []
+        form = self.get_form()
+        if cleaned_data.get('include_obp_apps'):
+            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
+            api = API(self.request.session.get('obp'))
+            try:
+                top_consumers = api.get(urlpath)
+                if top_consumers is not None and 'code' in top_consumers and top_consumers['code']==403:
+                    error_once_only(self.request, top_consumers['message'])
+                    top_consumers=[]
+                else:
+                    top_consumers = top_consumers['top_consumers']
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+        else:
+            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+                from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+            api = API(self.request.session.get('obp'))
+            try:
+                top_consumers = api.get(urlpath)
+                if top_consumers is not None and 'code' in top_consumers and top_consumers['code']==403:
+                    error_once_only(self.request, top_consumers['message'])
+                    top_consumers=[]
+                else:
+                    top_consumers = top_consumers['top_consumers']
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+        for consumer in top_consumers:
+            if consumer['app_name'] == "":
+                top_consumers.remove(consumer)
+
+        top_consumers = top_consumers[:10]
+        top_consumers = reversed(top_consumers)
+
+        return top_consumers
 
     def get_top_warehouse_calls(self, cleaned_data, from_date, to_date):
         try:
@@ -613,7 +709,9 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
                 if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
                     top_warehouse_calls.append(api)
         except APIError as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
         return top_warehouse_calls
 
     def get_top_apps_using_warehouse(self, from_date, to_date):
@@ -625,28 +723,25 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
         api = API(self.request.session.get('obp'))
         try:
             top_apps_using_warehouse = api.get(urlpath)
+            if top_apps_using_warehouse is not None and 'code' in top_apps_using_warehouse and top_apps_using_warehouse['code']==403:
+                error_once_only(self.request, top_apps_using_warehouse['message'])
+                top_apps_using_warehouse = []
+            else:
+                top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
         except APIError as err:
-            messages.error(self.request, err)
-
-        top_apps_using_warehouse = top_apps_using_warehouse[:10]
-
-
+            error_once_only(self.request, err)
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         return top_apps_using_warehouse
 
     def median_time_to_first_api_call(self, from_date, to_date):
+        return 0 #TODO this cost too much time, do not use this at the moment.
         form = self.get_form()
         new_apps_list = []
         apps = []
-        apps_list = []
+        apps_list = self.get_all_consumers()
 
-        urlpath_consumers = '/management/consumers'
-        api = API(self.request.session.get('obp'))
-        try:
-            apps = api.get(urlpath_consumers)
-            apps_list = apps["list"]
-        except APIError as err:
-            messages.error(self.request, err)
 
         for app in apps_list:
             created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
@@ -657,20 +752,44 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         times_to_first_call = []
 
+        strfrom_date=datetime.datetime.strptime(from_date, API_DATEFORMAT)
+        strto_date=datetime.datetime.strptime(to_date, API_DATEFORMAT)
         for app in new_apps_list:
             urlpath_metrics = '/management/metrics?from_date={}&to_date={}&consumer_id={}&sort_by={}&direction={}&limit={}'.format(
                 from_date, to_date, app['consumer_id'], 'date', 'asc', '1')
+            cache_key = get_cache_key_for_current_call(self.request, urlpath_metrics)
             api = API(self.request.session.get('obp'))
             try:
-                metrics = api.get(urlpath_metrics)
-                metrics = list(metrics['metrics'])
+                apicaches=None
+                try:
+                    apicaches=cache.get(cache_key)
+                except Exception as err:
+                    apicaches=None
+                metrics=[]
+                if not apicaches is None:
+                    metrics=apicaches
+                else:
+                    metrics = api.get(urlpath_metrics)
+                    
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                        if(metrics['message'].startswith('OBP-20006')):
+                            break
+                        metrics = []
+                    else:
+                        metrics = list(metrics['metrics'])
+                        cache.set(cache_key, metrics)
+                        LOGGER.warning('The cache is setting, url is: {}'.format(urlpath_metrics))
+                        LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
                 if metrics:
                     time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
                     times_to_first_call.append(time_difference.total_seconds())
 
 
             except APIError as err:
-                messages.error(self.request, err)
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         if times_to_first_call:
             median = statistics.median(times_to_first_call)
@@ -680,317 +799,135 @@ class MetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         return delta
 
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.MONTHLY)
+        
+    def prepare_general_context(self, web_page_type,  **kwargs):
+        try:
+            form = self.get_form()
+            per_day_chart=[]
+            calls_per_month_list=[]
+            per_month_chart=[]
+            calls_per_hour_list=[]
+            per_hour_chart=[]
+            if form.is_valid():
+                is_included_obp_apps = form.cleaned_data.get('include_obp_apps')
+                form_to_date_string = form.data['to_date']
+                to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
 
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
+                if (web_page_type == SummaryType.DAYLY):
+                    # for one day, the from_date is 1 day ago.
+                    from_date = return_to_days_ago(to_date, 1)
+                    calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(is_included_obp_apps, from_date, to_date)
+                    per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list, 'hour')
+                    
+                if (web_page_type == SummaryType.WEEKLY):
+                    # for one month, the from_date is 7 days ago.
+                    from_date = return_to_days_ago(to_date, 7)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    
+                if (web_page_type == SummaryType.MONTHLY):
+                    # for one month, the from_date is 30 days ago.
+                    from_date = return_to_days_ago(to_date, 30)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
 
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(30)).strftime(API_DATEFORMAT)
-        context = super(MetricsSummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
+                if (web_page_type == SummaryType.QUARTERLY):
+                    # for one quarter, the from_date is 90 days ago.
+                    from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
+                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date)
+                    per_month_chart = self.plot_line_chart(calls_per_month, month_list, 'month')
 
-        if form.is_valid():
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_month_list, calls_per_month, date_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
-            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_list = self.get_active_apps(form.cleaned_data, from_date, to_date)
+                if (web_page_type == SummaryType.YEARLY):
+                    from_date = return_to_days_ago(to_date, 365)
+                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date)
+                    per_month_chart = self.plot_line_chart(calls_per_month, month_list, "month")
 
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_month_list': calls_per_month_list,
-            'per_day_chart': per_day_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_list': active_apps_list,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            'form': form,
-        })
-        return context
+                if (web_page_type == SummaryType.CUSTOM):
+                    # for one month, the from_date is x day ago.
+                    form_from_date_string = form.data['from_date_custom']
+                    from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    
+                api_host_name = API_HOST
+                top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
+                user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
+                median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
-class YearlySummaryView(MetricsSummaryView):
+                top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
+                top_apis_bar_chart = self.plot_bar_chart(top_apis)
+                top_consumers = self.get_top_consumers(form.cleaned_data, from_date, to_date)
+                top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
+                top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
+                api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(from_date, to_date,is_included_obp_apps)
+                calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(
+                    from_date, to_date)
+
+                unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
+                    form.cleaned_data, from_date, to_date)
+                active_apps_list = self.get_active_apps(is_included_obp_apps, from_date, to_date)
+
+                context = super(MonthlyMetricsSummaryView, self).get_context_data(**kwargs)
+
+                context.update({
+                    'form': form,
+                    'api_calls': api_calls,
+                    'calls_by_api_explorer': calls_by_api_explorer,
+                    'calls_per_month_list': calls_per_month_list,
+                    'per_month_chart': per_month_chart,
+                    'per_day_chart': per_day_chart,
+                    'calls_per_hour_list': calls_per_hour_list,
+                    'per_hour_chart': per_hour_chart,
+                    'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
+                    'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
+                    'active_apps_list': active_apps_list,
+                    'average_calls_per_day': average_calls_per_day,
+                    'average_response_time': average_response_time,
+                    'top_warehouse_calls': top_warehouse_calls,
+                    'top_apps_using_warehouse': top_apps_using_warehouse,
+                    'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
+                    'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
+                    'api_host_name': api_host_name,
+                    'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
+                    'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
+                    'top_apis': top_apis,
+                    'top_apis_bar_chart': top_apis_bar_chart,
+                    'top_consumers_bar_chart': top_consumers_bar_chart,
+                    'median_time_to_first_api_call': median_time_to_first_api_call,
+                    'excluded_apps': EXCLUDE_APPS,
+                    'excluded_functions': EXCLUDE_FUNCTIONS,
+                    'excluded_url_pattern': EXCLUDE_URL_PATTERN,
+                })
+                return context
+            else:
+                error_once_only(self.request, form.errors)
+        except Exception as err:
+            error_once_only(self.request, 'Unknown Error. {}'.format(err))
+
+
+class YearlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/yearly_summary.html'
-
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(365)).strftime(API_DATEFORMAT)
-
-        context = super(YearlySummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
-        if form.is_valid():
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_month_list, calls_per_month, month_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
-            per_month_chart = self.plot_line_chart(calls_per_month, month_list[1:], "month")
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_month_list': calls_per_month_list,
-            'per_month_chart': per_month_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_names': active_apps_names,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            'form': form,
-        })
-        return context
-
-class QuarterlySummaryView(MetricsSummaryView):
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.YEARLY, **kwargs)
+      
+class QuarterlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/quarterly_summary.html'
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.QUARTERLY, **kwargs)
+       
 
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
-
-        context = super(QuarterlySummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
-        if form.is_valid():
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_month_list, calls_per_month, month_list = self.calls_per_month(form.cleaned_data, from_date, to_date)
-            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_month_chart = self.plot_line_chart(calls_per_month, month_list[1:], 'month')
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list, 'day')
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_month_list': calls_per_month_list,
-            'per_month_chart': per_month_chart,
-            'per_day_chart': per_day_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_names': active_apps_names,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            #'from_date': from_date.strftime('%Y-%m-%d'),
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            'form': form,
-        })
-        return context
-
-class WeeklySummaryView(MetricsSummaryView):
+class WeeklySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/weekly_summary.html'
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.WEEKLY, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(7)).strftime(API_DATEFORMAT)
-
-        context = super(WeeklySummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        # calls_per_half_day = self.calls_per_half_day()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
-        if form.is_valid():
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'per_day_chart': per_day_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_names': active_apps_names,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            # ##'calls_per_half_day': calls_per_half_day,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            'form': form,
-        })
-        return context
-
-
-class DailySummaryView(MetricsSummaryView):
+class DailySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/daily_summary.html'
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.DAYLY, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-        from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(1)).strftime(API_DATEFORMAT)
-
-        context = super(DailySummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
-        if form.is_valid():
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(form.cleaned_data, from_date, to_date)
-            per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list[1:], 'hour')
- #           calls_per_hour_list, calls_per_hour = self.calls_per_hour(form.cleaned_data, from_date)
- #           per_hour_chart = self.get_per_hour_chart(form.cleaned_data, from_date)
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'calls_per_hour_list': calls_per_hour_list,
-            'per_hour_chart': per_hour_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_names': active_apps_names,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            'form': form,
-        })
-        return context
-
-class HourlySummaryView(MetricsSummaryView):
+class HourlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/hourly_summary.html'
 
-class CustomSummaryView(MetricsSummaryView):
+class CustomSummaryView(MonthlyMetricsSummaryView):
     form_class = CustomSummaryForm
     template_name = 'metrics/custom_summary.html'
 
-    def get_context_data(self, **kwargs):
-        form = self.get_form()
-
-        to_date = datetime.datetime.strptime(form.data['to_date'], '%Y-%m-%d %H:%M:%S')
-        to_date = to_date.strftime(API_DATEFORMAT)
-
-        from_date = datetime.datetime.strptime(form.data['from_date_custom'], '%Y-%m-%d %H:%M:%S')
-        from_date = from_date.strftime(API_DATEFORMAT)
-        context = super(CustomSummaryView, self).get_context_data(**kwargs)
-        api_host_name = API_HOST
-        top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-        user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
-        # calls_per_day = self.calls_per_day(from_date)
-        # calls_per_half_day = self.calls_per_half_day()
-        median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
-
-        if form.is_valid():
-            api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(form.cleaned_data, from_date, to_date)
-            calls_by_api_explorer, average_response_time_api_explorer, average_calls_per_day_api_explorer = self.get_aggregate_metrics_api_explorer(from_date, to_date)
-            calls_per_day_list, calls_per_day, date_list = self.calls_per_day(form.cleaned_data, from_date, to_date)
-            per_day_chart = self.plot_line_chart(calls_per_day, date_list[1:], 'day')
-            unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(form.cleaned_data, from_date, to_date)
-            active_apps_names = self.get_active_apps(form.cleaned_data, from_date, to_date)
-            top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
-            top_apis_bar_chart = self.plot_bar_chart(top_apis)
-            top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
-
-        context.update({
-            'api_calls': api_calls,
-            'calls_by_api_explorer': calls_by_api_explorer,
-            'per_day_chart': per_day_chart,
-            'number_of_apps_with_unique_app_name': number_of_apps_with_unique_app_name,
-            'number_of_apps_with_unique_developer_email': number_of_apps_with_unique_developer_email,
-            'active_apps_names': active_apps_names,
-            'average_calls_per_day': average_calls_per_day,
-            'average_response_time': average_response_time,
-            'top_apis': top_apis,
-            'top_warehouse_calls': top_warehouse_calls,
-            'top_apps_using_warehouse': top_apps_using_warehouse,
-            'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-            'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
-            'api_host_name': api_host_name,
-            'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-            'top_apis_bar_chart': top_apis_bar_chart,
-            'median_time_to_first_api_call': median_time_to_first_api_call,
-            # ##'calls_per_day': calls_per_day,
-            # ##'calls_per_half_day': calls_per_half_day,
-            'form': form,
-        })
-        return context
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.CUSTOM, **kwargs)

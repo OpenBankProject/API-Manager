@@ -6,29 +6,31 @@ Forms of metrics app
 from django import forms
 from django.conf import settings
 from datetime import date
-from django.forms.widgets import SelectMultiple,CheckboxInput,CheckboxSelectMultiple
+from django.forms.widgets import SelectMultiple, CheckboxInput, CheckboxSelectMultiple
 from datetime import datetime, timedelta
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
+
 class MetricsForm(forms.Form):
-    start_date = forms.DateTimeField(
-        label='Start Date',
+    from_date = forms.DateTimeField(
+        label='From Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
+        initial='2020-01-01T00:00:00.000Z',
         required=False,
     )
-    end_date = forms.DateTimeField(
-        label='End Date',
+    to_date = forms.DateTimeField(
+        label='To Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
@@ -166,17 +168,17 @@ class APIMetricsForm(MetricsForm):
 
 
 class ConnectorMetricsForm(MetricsForm):
-    # override start_date until API returns values without given date
-    start_date = forms.DateTimeField(
-        label='Start Date',
+    # override from_date until API returns values without given date
+    from_date = forms.DateTimeField(
+        label='From Date',
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': 'yyyy-mm-dd',
+                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 'class': 'form-control',
             }
         ),
-        initial='1970-01-01',
+        initial='2020-01-01T00:00:00.000Z',
         required=True,
     )
     connector_name = forms.CharField(
@@ -207,33 +209,34 @@ class ConnectorMetricsForm(MetricsForm):
         required=False,
     )
 
+
 class CustomSummaryForm(forms.Form):
-    to_date = forms.DateTimeField(
+    to_date = forms.DateField(
         label='To Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+        initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
-    from_date_custom = forms.DateTimeField(
+    from_date_custom = forms.DateField(
         label='From Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        initial= (datetime.now() - timedelta(6)).strftime('%Y-%m-%d %H:%M:%S'),
+        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
@@ -242,24 +245,25 @@ class CustomSummaryForm(forms.Form):
         kwargs.setdefault('label_suffix', '')
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
-class MetricsSummaryForm(forms.Form):
-    to_date = forms.DateTimeField(
+
+class MonthlyMetricsSummaryForm(forms.Form):
+    to_date = forms.DateField(
         label='To Date',
-        #input_formats=[settings.API_DATEFORMAT],
+        # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
         #         'class': 'form-control',
         #     }
         # ),
-        widget=DateTimePickerInput(format='%Y-%m-%d %H:%M:%S'),
+        widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        #initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+        initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
     include_obp_apps = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super(MetricsSummaryForm, self).__init__(*args, **kwargs)
+        super(MonthlyMetricsSummaryForm, self).__init__(*args, **kwargs)

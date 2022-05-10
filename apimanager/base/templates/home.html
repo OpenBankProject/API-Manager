@@ -18,7 +18,7 @@
 			<div class="col-xs-12 col-sm-3">
 				<select class="form-control" id="authentication-select">
 					<option value="">Choose ...</option>
-					<option value="oauth">OAuth 1</option>
+					<option value="oauth">OAuth 1/OpenID Connect</option>
 					<option value="directlogin">DirectLogin</option>
 					<option value="gatewaylogin">GatewayLogin</option>
 				</select>
@@ -39,10 +39,10 @@
 							<label for="password">Password:</label>
 							{{ directlogin_form.password }}
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group"style="visibility:hidden">
 							<label for="consumer-key">Consumer Key:</label>
 							{{ directlogin_form.consumer_key }}
-						</div>
+						</div>-->
 						<button class="btn btn-primary">Login</button>
 					</form>
 				</div>
@@ -65,13 +65,6 @@
 		</div>
 	</div>
 {% endif %}
-
-	<div id="logo-full" class="row">
-		<div class="col-xs-1"></div>
-		<div class="col-xs-10">
-			<a href="https://openbankproject.com"><img class="img-responsive" src="https://static.openbankproject.com/images/OBP/OBP_full_web.png" alt="OBP logo" /></a>
-		</div>
-		<div class="col-xs-1"></div>
-	</div>
+	
 </div>
 {% endblock %}

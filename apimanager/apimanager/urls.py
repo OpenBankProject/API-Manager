@@ -20,6 +20,8 @@ urlpatterns = [
     # backward compatibility
     url(r'^oauth/initiate$',
         OAuthInitiateView.as_view(), name='oauth-initiate'),
+    url(r'^single-sign-on',
+        OAuthInitiateView.as_view(), name='single-sign-on'),
     url(r'^oauth/authorize$',
         OAuthAuthorizeView.as_view(), name='oauth-authorize'),
     url(r'^directlogin$',
@@ -31,7 +33,13 @@ urlpatterns = [
     url(r'^consumers/', include('consumers.urls')),
     url(r'^entitlementrequests/', include('entitlementrequests.urls')),
     url(r'^users/', include('users.urls')),
+    url(r'^branches/', include('branches.urls')),
+    url(r'^atms/', include('atms.urls')),
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),
+    url(r'^webui/', include('webui.urls')),
+    url(r'^methodrouting/', include('methodrouting.urls')),
+    url(r'^dynamicendpoints/', include('dynamicendpoints.urls')),
+    url(r'^apicollections/', include('apicollections.urls')),
 ]

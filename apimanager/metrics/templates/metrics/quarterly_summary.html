@@ -68,6 +68,10 @@
     			<h2>Period : From {{ from_date }} to {{ to_date }}</h2>
 
 		<table border="1">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
 			<tr>
 				<td>Total API calls:</td>
 				<td>{{ api_calls }}</td>
@@ -81,10 +85,10 @@
 				<td>Calls per month:</td>
 				<td><img src="data:image/png;base64, {{ per_month_chart }}" alt="somealt" /></td>
 			</tr>
-			<tr>
-				<td>Calls per day:</td>
-				<td><img src="data:image/png;base64, {{ per_day_chart }}" alt="somealt" /></td>
-			</tr>
+{#			<tr>#}
+{#				<td>Calls per day:</td>#}
+{#				<td><img src="data:image/png;base64, {{ per_day_chart }}" alt="somealt" /></td>#}
+{#			</tr>#}
 			<tr>
 				<td>Average number of calls per day: </td>
 				<td>{{ average_calls_per_day }}</td>
@@ -115,6 +119,10 @@
 			<tr>
 				<td>Top 10 APIs:</td>
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
+			</tr>
+			<tr>
+				<td>Top 10 Consumers:</td>
+				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
 				<td>Top Warehouse APIs:</td>

@@ -69,6 +69,10 @@
     			<h2>Period : From {{ from_date }} to {{ to_date }}</h2>
 
 		<table border="1">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
 			<tr>
 				<td>Total API calls:</td>
 				<td>{{ api_calls }}</td>
@@ -112,6 +116,10 @@
 			<tr>
 				<td>Top 10 APIs:</td>
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
+			</tr>
+			<tr>
+				<td>Top 10 Consumers:</td>
+				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
 				<td>Top Warehouse APIs:</td>

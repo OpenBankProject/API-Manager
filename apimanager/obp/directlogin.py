@@ -5,6 +5,7 @@ DirectLogin authenticator for OBP app
 
 
 import requests
+from apimanager import local_settings
 
 from django.conf import settings
 
@@ -19,27 +20,43 @@ class DirectLoginAuthenticator(Authenticator):
     def __init__(self, token=None):
         self.token = token
 
-    def login_to_api(self, data):
+    # This method will call '/my/logins/direct' endpoint and get the directLogin token back, store it to self.token filed.
+    # the requestheaders are from the home.html form. eg:
+    # username="susan.uk.29@example.com",password="2b78e8", consumer_key="my5qhma1cfig5wstj5poa355onjchk0enkf3boq4"
+    def prepare_direct_login_token(self, requestheaders):
         """
         Logs into the API and returns the token
 
         data is a dict which contains keys username, password and consumer_key
         """
+        requestheaders['consumer_key']=local_settings.OAUTH_CONSUMER_KEY
+        #print("hello",local_settings.OAUTH_CONSUMER_KEY)
         url = settings.API_HOST + settings.DIRECTLOGIN_PATH
-        authorization = 'DirectLogin username="{}",password="{}",consumer_key="{}"'.format(  # noqa
-            data['username'],
-            data['password'],
-            data['consumer_key'])
+        authorization = 'DirectLogin username="{}",password="{}",consumer_key="{}"'.format(
+            requestheaders['username'],
+            requestheaders['password'],
+            requestheaders['consumer_key']
+            )
         headers = {'Authorization': authorization}
 
         try:
+            # 'http://127.0.0.1:8080/my/logins/direct'
+            # Headers:{'Authorization': 'DirectLogin username="susan.uk.29@example.com",password="2b78e8",
+            # consumer_key="my5qhma1cfig5wstj5poa355onjchk0enkf3boq4"'}
+            # This will get the directLogin Token back.
             response = requests.post(url, headers=headers)
         except requests.exceptions.ConnectionError as err:
-            raise AuthenticatorError(err)
+            raise AuthenticatorError(Exception("The OBP-API server is not running or does not respond properly."
+                                               "Please check OBP-API server.    "
+                                               "Details: "+str(err)))
+        except BaseException as err:
+            raise AuthenticatorError(Exception("Unknown Error. Details:"+ str(err)))
 
+        # This is the direct-Login Token:
+        # <class 'dict'>: {'token': 'eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.HURJVvyGgcPcjvrfRCSbRyk1_ssjlAUk8fP0leKx8kw'}
         result = response.json()
         if response.status_code != 201:
-            raise AuthenticatorError(result['error'])
+            raise AuthenticatorError(result['message'])
         else:
             self.token = result['token']
 

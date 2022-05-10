@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div id="api-collection-detail">
+        <h2>Add Endpoint to API Collection</h2>
+        <form class="form" action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group">
+                        {{ form.operation_id.label_tag}}
+                        {{ form.operation_id }}
+                    </div>
+                    <input type="text" class="hidden" name="api-collection-id" value={{ api_collection_id }} >
+                    <button type="submit" class="btn btn-primary btn-green">Add</button>
+                </div>
+            </div>
+        </form>
+
+        <h2>Endpoints</h2>
+        <div class="table-responsive">
+            <table class="table table-striped" aria-describedby="api collection">
+                <thead>
+                <th scope="col">Operation Ids</th>
+                </thead>
+                <tbody>
+                {% for api_collection_endpoint in api_collection_endpoints %}
+                    <tr>
+                        <td>{{ api_collection_endpoint.operation_id }}</td>
+                        <td>
+                            <form action="{% url 'delete-api-collection-endpoint' api_collection_endpoint.api_collection_id api_collection_endpoint.operation_id %}"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-red">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

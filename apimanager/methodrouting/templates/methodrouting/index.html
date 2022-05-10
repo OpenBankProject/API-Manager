@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}{{ block.super }} / Method Routings{% endblock page_title %}
+
+{% block content %}
+    <h1>Method Routing</h1>
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">Method Name:</label> <br>
+        </div>
+        <div class="col-xs-12 col-sm-2">
+            <label class="form-group">Connector Name:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-1">
+            <label class="form-group">Pattern:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-1">
+            <label class="form-group">Is Match:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Parameters:</label> <br>
+        </div>
+        <div class="col-sm-12 col-sm-2">
+            <label class="form-group">Method ID:</label> <br>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for method_routing in method_routings %}
+        <div class="runner">
+            <div class="row">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <div class="method_name"><a href="{{methodSwaggerUrl}}obp.{{method_routing.method_name}}">{{method_routing.method_name}}</a></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <select class="connector_name form-control " }>
+                        {% if method_routing.connector_name == "mapped" %}
+                            <option value="mapped">mapped</option> # This will be selected
+                            <option value="internal">internal</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                        {% elif method_routing.connector_name == "internal" %}
+                            <option value="internal">internal</option>
+                            <option value="mapped">mapped</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                        {% elif method_routing.connector_name == "kafka_vSept2018" %}
+                            <option value="kafka_vSept2018">kafka_vSept2018</option> # This will be selected
+                            <option value="mapped">mapped</option>
+                            <option value="internal">internal</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                        {% elif method_routing.connector_name == "akka_vDec2018" %}
+                            <option value="akka_vDec2018">akka_vDec2018</option> # This will be selected
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                        {% elif method_routing.connector_name == "rest_vMar2019" %}
+                            <option value="rest_vMar2019">rest_vMar2019</option> # This will be selected
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                        {% elif method_routing.connector_name == "kafka_vMay2019" %}
+                            <option value="kafka_vMay2019">kafka_vMay2019</option> # This will be selected
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="internal">internal</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                        {% elif method_routing.connector_name == "stored_procedure_vDec2019" %}
+                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option> # This will be selected
+                            <option value="kafka_vMay2019">kafka_vMay2019</option>
+                            <option value="rest_vMar2019">rest_vMar2019</option>
+                            <option value="kafka_vSept2018">kafka_vSept2018</option>
+                            <option value="mapped">mapped</option>
+                            <option value="internal">internal</option>
+                            <option value="akka_vDec2018">akka_vDec2018</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-1">
+                    <textarea class="form-control" rows="1"
+                              name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
+                </div>
+                <div class="col-xs-12 col-sm-1" align="center">
+                    <select class="is_bank_id_exact_match form-control">
+                        {% if method_routing.is_bank_id_exact_match == False %}
+                            <option value="False">False</option>
+                            <option value="True">True</option>
+                        {% else %}
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <textarea readonly cols="40" rows="1" class="form-control parameters"
+                              name="parameters">{{ method_routing.parameters }}</textarea>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1"><div
+                            class="method_routing_id">{{ method_routing.method_routing_id }}</div></div>
+                </div>
+                <div class="col-sm-12 col-sm-2">
+                    {% if method_routing.method_routing_id == "" %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-green forSave">Create New </button>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-bule forSave">Update</button>
+                            <button class="btn btn-primary btn-red forDelete">Delete</button>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-sm-12">
+                    <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </form>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'methodrouting/js/methodrouting.js' %}"></script>
+{% endblock extrajs %}

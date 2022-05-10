@@ -51,13 +51,20 @@ INSTALLED_APPS = [
     'obp',
     'consumers',
     'users',
+    'branches',
+    'atms',
     'entitlementrequests',
     'customers',
     'metrics',
     'config',
+    'webui',
+    'methodrouting',
+    'dynamicendpoints',
+    'apicollections'
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,7 +72,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+#cache the view page, we set 60s = 1m, 
+# CACHE_MIDDLEWARE_SECONDS = 60
+
+# TIMEOUT is 31104000 seconds = 60*60*24*30*12 (1 year)
+# MAX_ENTRIES is 1000000 entities
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 31104000,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000000
+        }
+    }
+}
 
 ROOT_URLCONF = 'apimanager.urls'
 
@@ -84,6 +108,9 @@ TEMPLATES = [
                 'base.context_processors.api_username',
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
+                'base.context_processors.portal_page',
+                'base.context_processors.logo_url',
+                'base.context_processors.override_css_url'
             ],
         },
     },
@@ -192,15 +219,20 @@ LOGGING = {
 
 LOGIN_URL = reverse_lazy('home')
 
-
+#Map Java: yyyy-MM-dd'T'HH:mm'Z'
 API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
-#API_DATEFORMAT = '%Y-%m-%d'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S'
+#Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+
+# the API_Manager the web form date format, eg: 2020-10-11
+API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 
 API_HOST = 'http://127.0.0.1:8080'
+# Only override this if you have a separate portal instance
+API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
-API_VERSION = '3.1.0'
+API_VERSION = '4.0.0'
 
 # URL to API Tester if it is running on API_HOST
 API_TESTER_URL = ''
@@ -223,30 +255,40 @@ DIRECTLOGIN_PATH = '/my/logins/direct'
 # Set to true if the API is connected to a core banking system
 GATEWAYLOGIN_HAS_CBS = False
 
+
+# Use BOOTSTRAP3 if you are using Bootstrap 3
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
+
+# Apps to exclude when request to OBP-API's api
+EXCLUDE_APPS = []
+# Functions to exclude when request to OBP-API's api
+EXCLUDE_FUNCTIONS = []
+# Url Patterns to exclude when reqeust to OBP-API's api
+EXCLUDE_URL_PATTERN = []
+# App Name to aggregate metrics
+API_EXPLORER_APP_NAME = 'API Explorer'
+
+LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
+OVERRIDE_CSS_URL = None
+
+VERIFY = True
+
 # Local settings can override anything in here
 try:
-    from apimanager.local_settings import *  # noqa
+    from apimanager.local_settings import *     # noqa
 except ImportError:
     pass
-
-if not OAUTH_CONSUMER_KEY:
-    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
-if not OAUTH_CONSUMER_SECRET:
-    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_SECRET')
+# EVERYTHING BELOW HERE WILL NOT BE OVERWRITTEN BY LOCALSETTINGS!
+# DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
 # Settings here might use parts overwritten in local settings
 API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
 # For some reason, swagger is not available at the latest API version
 API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
-    }
-}
-
-# Use BOOTSTRAP3 if you are using Bootstrap 3
-BOOTSTRAP4 = {
-    'include_jquery': True,
-}
+if not OAUTH_CONSUMER_KEY:
+    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
+if not OAUTH_CONSUMER_SECRET:
+    raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_SECRET')

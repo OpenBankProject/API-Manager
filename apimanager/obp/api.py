@@ -53,9 +53,9 @@ class API(object):
         time_start = time.time()
         try:
             if payload:
-                response = session.request(method, url, json=payload)
+                response = session.request(method, url, json=payload, verify=settings.VERIFY)
             else:
-                response = session.request(method, url)
+                response = session.request(method, url, json={}, verify=settings.VERIFY)
         except ConnectionError as err:
             raise APIError(err)
         time_end = time.time()
@@ -71,8 +71,11 @@ class API(object):
         Convenience call which uses API_ROOT from settings
         """
         url = settings.API_ROOT + urlpath
-        response = self.call('GET', url)
-        return self.handle_response(response)
+        response = self.handle_response(self.call('GET', url))
+        if response is not None and 'code' in response:
+            raise APIError(response['message'])
+        else:    
+            return response
 
     def delete(self, urlpath):
         """
@@ -104,20 +107,17 @@ class API(object):
         response = self.call('PUT', url, payload)
         return self.handle_response(response)
 
-    def handle_response_404(self, response, prefix):
-        # Stripping HTML body ...
-        if response.text.find('body'):
-            msg = response.text.split('<body>')[1].split('</body>')[0]
-        msg = '{} {}: {}'.format(
-            prefix, response.status_code, msg)
-        log(logging.ERROR, msg)
-        raise APIError(msg)
-
-    def handle_response_500(self, response, prefix):
-        msg = '{} {}: {}'.format(
-            prefix, response.status_code, response.text)
-        log(logging.ERROR, msg)
-        raise APIError(msg)
+    # def handle_response_404(self, response, prefix):
+    #     msg = '{} {}: {}'.format(
+    #         prefix, response.status_code, response.text)
+    #     log(logging.ERROR, msg)
+    #     raise APIError(msg)
+    # 
+    # def handle_response_500(self, response, prefix):
+    #     msg = '{} {}: {}'.format(
+    #         prefix, response.status_code, response.text)
+    #     log(logging.ERROR, msg)
+    #     raise APIError(msg)
 
     def handle_response_error(self, prefix, error):
         if 'Invalid or expired access token' in error:
@@ -128,17 +128,13 @@ class API(object):
     def handle_response(self, response):
         """Handles the response, e.g. errors or conversion to JSON"""
         prefix = 'APIError'
-        if response.status_code == 404:
-            self.handle_response_404(response, prefix)
-        elif response.status_code == 500:
-            self.handle_response_500(response, prefix)
-        elif response.status_code in [204]:
+        if response.status_code in [204]:
             return response.text
         else:
             data = response.json()
-            if 'error' in data:
+            if isinstance(data,dict) and 'error' in data:
                 self.handle_response_error(prefix, data['error'])
-            return data
+        return data
 
     def start_session(self, session_data):
         """
@@ -173,7 +169,7 @@ class API(object):
         """Gets a list of bank ids and bank ids as used by form choices"""
         choices = [('', 'Choose ...')]
         result = self.get('/banks')
-        for bank in result['banks']:
+        for bank in sorted(result['banks'], key=lambda d: d['id']) :
             choices.append((bank['id'], bank['id']))
         return choices
 
