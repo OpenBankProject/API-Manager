@@ -67,6 +67,7 @@ MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,7 +153,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
+#LANGUAGE_CODE = 'en-gb'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'Europe/Berlin'
 
@@ -167,6 +169,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+from django.utils.translation import gettext_lazy as _
+
+#LANGUAGES = (
+#    ("en", _("English")),
+#    ("fr", _("French")),
+#)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale/"),
+)
 
 # Set this to your local directory for static files
 STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static-collected')
