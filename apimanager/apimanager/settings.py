@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Set this to e.g. ['127.0.0.1', 'localhost'] if DEBUG = False
 ALLOWED_HOSTS = []
@@ -194,6 +194,7 @@ LOGIN_URL = reverse_lazy('home')
 
 
 API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+#API_DATEFORMAT = '%Y-%m-%d'
 API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S'
 
 
