@@ -116,7 +116,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 },
                 "meta": {
                     "license": {
-                    "id": "PDDL",
+                    "id": "ODbL-1.0",
                     "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
                     }
                 },
@@ -149,7 +149,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                     "closing_time": "18:00"
                 },
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
-                "located_at": data["located_at"] if data["located_at"]!="" else "false",
+                "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
                 "more_info": data["more_info"] if data["more_info"]!="" else "false",
                 "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
                 "supported_languages":[data["supported_languages"]],
@@ -201,8 +201,8 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             atms_list = []
             for bank_id in self.bankids:
                 urlpath = '/banks/{}/atms'.format(bank_id)
-
                 result = api.get(urlpath)
+                #print(result)
                 if 'atms' in result:
                     atms_list.extend(result['atms'])
         except APIError as err:
@@ -226,6 +226,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
 class UpdateAtmsView(LoginRequiredMixin, FormView):
     template_name = "atms/update.html"
     success_url = '/atms/'
+    print(success_url)
     form_class = CreateAtmForm
 
     def dispatch(self, request, *args, **kwargs):
