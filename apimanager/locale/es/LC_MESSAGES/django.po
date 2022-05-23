@@ -1,0 +1,439 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-23 08:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: atms/templates/atms/index.html:4 base/templates/base.html:83
+msgid "ATMs"
+msgstr "Cajeros automáticos"
+
+#: atms/templates/atms/index.html:17 atms/templates/atms/index.html:24
+#: atms/templates/atms/index.html:222
+msgid "ATM Id"
+msgstr "Identificación del cajero automático"
+
+#: atms/templates/atms/index.html:31
+msgid "name"
+msgstr "nombre"
+
+#: atms/templates/atms/index.html:40
+msgid "services"
+msgstr "servicios"
+
+#: atms/templates/atms/index.html:48
+msgid "location_latitude"
+msgstr "ubicación_latitud"
+
+#: atms/templates/atms/index.html:56
+msgid "location_longitude"
+msgstr "ubicación longitud"
+
+#: atms/templates/atms/index.html:66
+msgid "meta_license_name"
+msgstr "nombre de la metalicencia"
+
+#: atms/templates/atms/index.html:73
+msgid "located_at"
+msgstr "situado en"
+
+#: atms/templates/atms/index.html:80
+msgid "has_deposit_capability"
+msgstr "tiene_capacidad_depósito"
+
+#: atms/templates/atms/index.html:90
+msgid "is_accessible"
+msgstr "es_accesible"
+
+#: atms/templates/atms/index.html:98
+msgid "accessibility_features"
+msgstr "funciones de accesibilidad"
+
+#: atms/templates/atms/index.html:105
+msgid "more_info"
+msgstr "más información"
+
+#: atms/templates/atms/index.html:114
+msgid "notes"
+msgstr "notas"
+
+#: atms/templates/atms/index.html:121
+msgid "supported_languages"
+msgstr "idiomas soportados"
+
+#: atms/templates/atms/index.html:128
+msgid "supported_currencies"
+msgstr "monedas admitidas"
+
+#: atms/templates/atms/index.html:137
+msgid "location_categories"
+msgstr "categorías_de_ubicación"
+
+#: atms/templates/atms/index.html:145
+msgid "minimum_withdrawal"
+msgstr "retiro mínimo"
+
+#: atms/templates/atms/index.html:152
+msgid "site_name"
+msgstr "nombre del sitio"
+
+#: atms/templates/atms/index.html:161
+msgid "branch_identification"
+msgstr "sucursal_identificación"
+
+#: atms/templates/atms/index.html:168
+msgid "site_identification"
+msgstr "identificación_del_sitio"
+
+#: atms/templates/atms/index.html:173
+msgid "cash_withdrawal_national_fee"
+msgstr "tasa nacional retirada de efectivo"
+
+#: atms/templates/atms/index.html:183
+msgid "balance_inquiry_fee"
+msgstr "tarifa de consulta de saldo"
+
+#: atms/templates/atms/index.html:190
+msgid "cash_withdrawal_international_fee"
+msgstr "retiro de efectivo tarifa_internacional"
+
+#: atms/templates/atms/index.html:199
+msgid "address"
+msgstr ""
+
+#: atms/templates/atms/index.html:206
+msgid "lobby"
+msgstr ""
+
+#: atms/templates/atms/index.html:223 users/templates/users/detail.html:99
+msgid "Bank Id"
+msgstr ""
+
+#: atms/templates/atms/index.html:224
+msgid "ATM Name"
+msgstr ""
+
+#: atms/templates/atms/index.html:225
+msgid "More info"
+msgstr ""
+
+#: atms/templates/atms/index.html:226
+msgid "Update Button"
+msgstr ""
+
+#: base/templates/base.html:11
+msgid "API Manager"
+msgstr ""
+
+#: base/templates/base.html:48
+msgid "Home"
+msgstr ""
+
+#: base/templates/base.html:50 consumers/templates/consumers/index.html:10
+msgid "Consumers"
+msgstr ""
+
+#: base/templates/base.html:52
+#: entitlementrequests/templates/entitlementrequests/index.html:8
+msgid "Entitlement Requests"
+msgstr ""
+
+#: base/templates/base.html:57 users/templates/users/index.html:8
+msgid "Users"
+msgstr ""
+
+#: base/templates/base.html:59
+#: consumers/templates/consumers/includes/filter_apptype.html:4
+#: consumers/templates/consumers/includes/filter_enabled.html:4
+#: consumers/templates/consumers/includes/filter_time.html:7
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:7
+msgid "All"
+msgstr ""
+
+#: base/templates/base.html:60
+msgid "My User"
+msgstr ""
+
+#: base/templates/base.html:61 users/templates/users/invitation.html:8
+msgid "Invite Developer"
+msgstr ""
+
+#: base/templates/base.html:68
+msgid "Metrics"
+msgstr ""
+
+#: base/templates/base.html:70
+msgid "API Metrics"
+msgstr ""
+
+#: base/templates/base.html:71
+msgid "Connector Metrics"
+msgstr ""
+
+#: base/templates/base.html:72
+msgid "KPI Dashboard"
+msgstr ""
+
+#: base/templates/base.html:79
+msgid "Resources"
+msgstr ""
+
+#: base/templates/base.html:81
+msgid "Customers"
+msgstr ""
+
+#: base/templates/base.html:82
+msgid "Branches"
+msgstr ""
+
+#: base/templates/base.html:92
+msgid "Configurations"
+msgstr ""
+
+#: base/templates/base.html:94
+msgid "Config"
+msgstr ""
+
+#: base/templates/base.html:95
+msgid "Webui Props"
+msgstr ""
+
+#: base/templates/base.html:96
+msgid "Method Routings"
+msgstr ""
+
+#: base/templates/base.html:97
+msgid "Dynamic Endpoints"
+msgstr ""
+
+#: base/templates/base.html:98
+msgid "My API Collections"
+msgstr ""
+
+#: base/templates/home.html:5
+msgid "Welcome to API Manager"
+msgstr ""
+
+#: base/templates/home.html:10
+msgid ""
+"This app gives you access to management functionality for the sandbox at"
+msgstr ""
+
+#: base/templates/home.html:10
+msgid "You have to"
+msgstr ""
+
+#: base/templates/home.html:10
+msgid "register"
+msgstr ""
+
+#: base/templates/home.html:10
+msgid ""
+"an account before being able to proceed. The logged-in user needs to have "
+"specific roles granted to use the functionality."
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_apptype.html:2
+msgid "Web"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_apptype.html:3
+msgid "Mobile"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_enabled.html:2
+msgid "Enabled"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_enabled.html:3
+msgid "Disabled"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_time.html:2
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:2
+msgid "Last Hour"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_time.html:3
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:3
+msgid "Last Day"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_time.html:4
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:4
+msgid "Last Week"
+msgstr "Semana Pasada"
+
+#: consumers/templates/consumers/includes/filter_time.html:5
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:5
+msgid "Last Month"
+msgstr ""
+
+#: consumers/templates/consumers/includes/filter_time.html:6
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:6
+msgid "Last Year"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:47
+#: users/templates/users/index.html:49
+msgid "Statistics"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:49
+msgid "Total number of consumers"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:50
+msgid "Total number of unique developer email addresses"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:51
+msgid "Total number of unique consumer names"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:57
+msgid "ID"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:58
+msgid "Name"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:59
+msgid "Description"
+msgstr ""
+
+#: consumers/templates/consumers/index.html:60
+#: entitlementrequests/templates/entitlementrequests/index.html:30
+msgid "Created"
+msgstr "Creado"
+
+#: consumers/templates/consumers/index.html:61
+#: entitlementrequests/templates/entitlementrequests/index.html:31
+#: entitlementrequests/templates/entitlementrequests/index.html:32
+#: users/templates/users/detail.html:100 users/templates/users/index.html:60
+msgid "Action"
+msgstr ""
+
+#: entitlementrequests/templates/entitlementrequests/index.html:27
+msgid "Role Name"
+msgstr ""
+
+#: entitlementrequests/templates/entitlementrequests/index.html:28
+msgid "User name"
+msgstr ""
+
+#: entitlementrequests/templates/entitlementrequests/index.html:29
+msgid "Bank ID"
+msgstr ""
+
+#: users/templates/users/detail.html:8
+msgid "User"
+msgstr ""
+
+#: users/templates/users/detail.html:11
+msgid "User ID"
+msgstr ""
+
+#: users/templates/users/detail.html:16 users/templates/users/index.html:59
+#: users/templates/users/invitation.html:71
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: users/templates/users/detail.html:21
+msgid "Provider"
+msgstr "Proveedor"
+
+#: users/templates/users/detail.html:26
+msgid "Provider ID"
+msgstr "ID de es proveedor"
+
+#: users/templates/users/detail.html:31
+msgid "Deleted"
+msgstr "Eliminado"
+
+#: users/templates/users/detail.html:36
+msgid "Locked"
+msgstr "Bloqueado"
+
+#: users/templates/users/detail.html:47
+msgid "Delete User"
+msgstr "Eliminar usuario"
+
+#: users/templates/users/detail.html:51
+msgid "Unlock User"
+msgstr "Desbloquear usuario"
+
+#: users/templates/users/detail.html:62
+msgid "Add Entitlement"
+msgstr "Agregar derecho"
+
+#: users/templates/users/detail.html:83 users/templates/users/detail.html:88
+msgid "Add"
+msgstr "Agregar"
+
+#: users/templates/users/detail.html:94
+msgid "Entitlements"
+msgstr "Derechos"
+
+#: users/templates/users/detail.html:98
+msgid "Role name"
+msgstr "Nombre de rol"
+
+#: users/templates/users/detail.html:114
+msgid "Delete"
+msgstr "Eliminar"
+
+#: users/templates/users/index.html:11
+msgid "Filters"
+msgstr "Filtros"
+
+#: users/templates/users/index.html:44
+msgid "Pagination"
+msgstr "Paginación"
+
+#: users/templates/users/index.html:51
+msgid "Total number of users"
+msgstr "Total de usuarios"
+
+#: users/templates/users/index.html:57
+msgid "User Id"
+msgstr "Id de usuario"
+
+#: users/templates/users/index.html:58
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: users/templates/users/invitation.html:69
+msgid "First Name"
+msgstr "Nombre"
+
+#: users/templates/users/invitation.html:70
+msgid "Last Name"
+msgstr "Apellido"
+
+#: users/templates/users/invitation.html:72
+msgid "company"
+msgstr "empresa"
+
+#: users/templates/users/invitation.html:73
+msgid "country"
+msgstr "países"
+
+#: users/templates/users/invitation.html:74
+msgid "status"
+msgstr "estado"
