@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="An application consuming the Open Bank Project API to manage consumers, users, customers, metrics and config">
 	<meta name="author" content="TESOBE, Sebastian Henschel">
-	<title>{% block page_title %}API Manager{% endblock page_title %}</title>
+	<title>{% block page_title %} {% trans "API Manager" %}{% endblock page_title %}</title>
 	<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
 	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 	<link href="{% static 'css/base.css' %}" rel="stylesheet">
@@ -122,6 +122,15 @@
 
 <div class="container" id="body-container">
 	{% block content %}{% endblock content %}
+	<div class="footer-content-wrapper" data-lift="WebUI.homePage">
+		<span>Language </span>
+		<span> | </span>
+		<a id="uk" href="/en" >EN</a>
+		<span> | </span>
+		<a id="es" href="/es" >ES</a>
+		<span> | </span>
+		<a id="fr" href="/fr" >FR</a>
+	</div>
 </div>
 
 <footer>

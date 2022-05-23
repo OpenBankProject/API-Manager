@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^$',
         IndexAtmsView.as_view(),
         name='atms_list'),
-    url(r'^update/(?P<atm_id>[0-9\w\@\.\+-]+)/bank/(?P<bank_id>[0-9\w\@\.\+-]+)/$',
+    url(r'^update/(?P<atm_id>[ 0-9\w|\W\@\.\+-]+)/bank/(?P<bank_id>[0-9\w\@\.\+-]+)/$',
         UpdateAtmsView.as_view(),
         name='atms_update')
 ]

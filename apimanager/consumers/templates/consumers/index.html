@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
 {% load humanize static %}
 
 {% block page_title %}{{ block.super }} / Consumers{% endblock page_title %}
 
 {% block content %}
 <div id="consumers">
-	<h1>Consumers</h1>
+	<h1>{% trans "Consumers" %}</h1>
 
 	<div class="row">
 		<div class="col-xs-12 col-md-6">
@@ -42,21 +44,21 @@
 		</div>
 	</div>
 
-	<h4>Statistics</h4>
+	<h4>{% trans "Statistics" %}</h4>
 	<ul id="statistics">
-		<li>Total number of consumers: {{ statistics.consumers_num }}</li>
-		<li>Total number of unique developer email addresses: {{ statistics.unique_developer_email_num }}</li>
-		<li>Total number of unique consumer names: {{ statistics.unique_name_num }}</li>
+		<li>{% trans "Total number of consumers" %}: {{ statistics.consumers_num }} </li>
+		<li>{% trans "Total number of unique developer email addresses" %}: {{ statistics.unique_developer_email_num }}</li>
+		<li>{% trans "Total number of unique consumer names" %}: {{ statistics.unique_name_num }}</li>
 	</ul>
 
 	<div class="table-responsive">
 		<table class="table table-hover tablesorter" id="consumer-list" aria-describedby="consumer list">
 			<thead>
-				<th scope="col">ID</th>
-				<th scope="col">Name</th>
-				<th scope="col">Description</th>
-				<th scope="col">Created</th>
-				<th scope="col">Action</th>
+				<th scope="col">{% trans "ID" %}</th>
+				<th scope="col">{% trans "Name" %}</th>
+				<th scope="col">{% trans "Description" %}</th>
+				<th scope="col">{% trans "Created" %}</th>
+				<th scope="col">{% trans "Action" %}</th>
 			</thead>
 
 			<tbody>

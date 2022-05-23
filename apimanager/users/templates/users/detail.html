@@ -1,39 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block page_title %}{{ block.super }} / {{ apiuser.username }}{% endblock page_title %}
 
 {% block content %}
 <div id="users-detail">
-	<h1>User {{ apiuser.username }}</h1>
+	<h1>{% trans "User" %} {{ apiuser.username }}</h1>
 
 	<div id="users-detail-user_id">
-		<strong>User ID</strong><br />
+		<strong>{% trans "User ID" %}</strong><br />
 		<span>{{ apiuser.user_id }}</span>
 	</div>
 
 	<div id="users-detail-email">
-		<strong>Email</strong><br />
+		<strong>{% trans "Email" %}</strong><br />
 		<span>{{ apiuser.email }}</span>
 	</div>
 
 	<div id="users-detail-provider">
-		<strong>Provider</strong><br />
+		<strong>{% trans "Provider" %}</strong><br />
 		<span>{{ apiuser.provider }}</span>
 	</div>
 
 	<div id="users-detail-provider_id">
-		<strong>Provider ID</strong><br />
+		<strong>{% trans "Provider ID" %}</strong><br />
 		<span>{{ apiuser.provider_id }}</span>
 	</div>
 	
 	<div id="users-detail-deleted">
-		<strong>Deleted</strong><br />
+		<strong>{% trans "Deleted" %}</strong><br />
 		<span>{{ apiuser.is_deleted }}</span>
 	</div>
 
     <div id="users-detail-locked">
-        <strong>Locked</strong><br />
+        <strong>{% trans "Locked" %}</strong><br />
         <span>{{ apiuser.is_locked }}</span>
     </div>
  
@@ -44,11 +44,11 @@
 		{% if apiuser.is_deleted %}
 			
 		{% else %}
-			<button type="submit" class="btn btn-primary btn-red" value ="Delete" name ="Delete">Delete User</button>
+			<button type="submit" class="btn btn-primary btn-red" value ="Delete" name ="Delete">{% trans "Delete User" %}</button>
 		{% endif %}
     
         {% if apiuser.is_locked %}
-            <button type="submit" class="btn btn-primary btn-green" value ="Unlock" name ="Unlock">Unlock User</button>
+            <button type="submit" class="btn btn-primary btn-green" value ="Unlock" name ="Unlock">{% trans "Unlock User" %}</button>
         {% else %}
 
         {% endif %}
@@ -59,7 +59,7 @@
 
 {% if apiuser.user_id %}
 	<div id="users-detail-entitlements">
-		<h2>Add Entitlement</h2>
+		<h2>{% trans "Add Entitlement" %}</h2>
 		<form class="form" action="" method="post">
 			{% csrf_token %}
 			{{ form.user_id }}
@@ -80,24 +80,24 @@
 			<div class="row">
 				<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-green form-control">Add</button>
+						<button type="submit" class="btn btn-primary btn-green form-control">{% trans "Add" %}</button>
 					</div>
 				</div>
 				<div class="col-sm-12 hidden-xs">
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-green">Add</button>
+						<button type="submit" class="btn btn-primary btn-green">{% trans "Add" %}</button>
 					</div>
 				</div>
 			</div>
 		</form>
 
-		<h2>Entitlements</h2>
+		<h2>{% trans "Entitlements" %}</h2>
 		<div class="table-responsive">
 			<table class="table table-striped" aria-describedby="uses table">
 				<thead>
-					<th scope="col">Role name</th>
-					<th scope="col">Bank Id</th>
-					<th scope="col">Action</th>
+					<th scope="col">{% trans "Role name" %}</th>
+					<th scope="col">{% trans "Bank Id" %}</th>
+					<th scope="col">{% trans "Action" %}</th>
 				</thead>
 				<tbody>
 				{% for entitlement in apiuser.entitlements.list %}
@@ -111,7 +111,7 @@
 								{% csrf_token %}
 								<input type="hidden" name="next" value="{{ request.path }}" />
 								<input type="hidden" name="role_name" value="{{ entitlement.role_name }}" />
-								<button type="submit" class="btn btn-primary btn-red">Delete</button>
+								<button type="submit" class="btn btn-primary btn-red">{% trans "Delete" %}</button>
 							</form>
 						{% endif %}
 						</td>

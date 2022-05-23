@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load humanize static %}
-
+{% load i18n %}
 {% block page_title %}{{ block.super }} / Entitlement Requests {% endblock page_title %}
 
 {% block content %}
 <div id="entitlementrequests">
-	<h1>Entitlement Requests</h1>
+	<h1>{% trans "Entitlement Requests" %}</h1>
 
 	<div class="row">
 		<div class="col-xs-12 col-md-6">
@@ -24,12 +24,12 @@
 	<div class="table-responsive">
 		<table class="table table-hover tablesorter" id="entitementrequests-list" aria-describedby="entitlement requests list">
 			<thead>
-				<th scope="col">Role Name</th>
-				<th scope="col">User name</th>
-				<th scope="col">Bank ID</th>
-				<th scope="col">Created</th>
-				<th scope="col">Action</th>
-				<th scope="col">Action</th>
+				<th scope="col">{% trans "Role Name" %}</th>
+				<th scope="col">{% trans "User name" %}</th>
+				<th scope="col">{% trans "Bank ID" %}</th>
+				<th scope="col">{% trans "Created" %}</th>
+				<th scope="col">{% trans "Action" %}</th>
+				<th scope="col">{% trans "Action" %}</th>
 			</thead>
 
 			<tbody>

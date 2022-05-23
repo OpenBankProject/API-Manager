@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
-
 
 {% block content %}
     <div id="user-invitation">
-        <h1>Invite Developer</h1>
+        <h1>{% trans "Invite Developer" %}</h1>
 
         <form action="{% url 'my-user-invitation' %}" method="post">
             {% csrf_token %}
@@ -67,12 +66,12 @@
             <div class="table-responsive">
                 <table class="table table-hover tablesorter" id="invitation-list" aria-describedby="invitation list">
                     <thead>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">company</th>
-                    <th scope="col">country</th>
-                    <th scope="col">status</th>
+                    <th scope="col">{% trans "First Name" %}</th>
+                    <th scope="col">{% trans "Last Name" %}</th>
+                    <th scope="col">{% trans "Email" %}</th>
+                    <th scope="col">{% trans "company" %}</th>
+                    <th scope="col">{% trans "country" %}</th>
+                    <th scope="col">{% trans "status" %}</th>
                     </thead>
                     <tbody>
                     {% for invitation in invitations %}
