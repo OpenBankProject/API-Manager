@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / API Metrics{% endblock page_title %}
 
 {% block content %}
 <div id="metrics">
-	<h1>API Metrics</h1>
+	<h1>{% trans "API Metrics" %}</h1>
 
     <div id="metrics-filter">
-    	<h2>Filter</h2>
+    	<h2>{% trans "Filter" %}</h2>
     	<form action="" method="get">
     		{% if form.non_field_errors %}
     		<div class="alert alert-danger">
@@ -119,15 +120,15 @@
     		</div>
 
 
-    		<button type="submit" class="btn btn-primary">Update filter</button>
+    		<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
     	</form>
     </div>
 
     <div id="metrics-data">
     	<ul class="nav nav-tabs">
     	{% block nav_tabs %}
-    		<li class="active"><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">List</a></li>
-    		<li><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">Summary by Partial Function</a></li>
+    		<li class="active"><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">{% trans "List" %}</a></li>
+    		<li><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">{% trans "Summary by Partial Function" %}</a></li>
     	{% endblock nav_tabs %}
     	</ul>
 
@@ -139,11 +140,11 @@
     					<thead>
     					<tr>
     						<th scope="col">#</th>
-    						<th scope="col">Verb</th>
-    						<th scope="col">URL</th>
-    						<th scope="col">Date</th>
-							<th scope="col">Duration(ms)</th>
-    						<th scope="col">Details</th>
+    						<th scope="col">{% trans "Verb" %}</th>
+    						<th scope="col">{% trans "URL" %}</th>
+    						<th scope="col">{% trans "Date" %}</th>
+							<th scope="col">{% trans "Duration(ms)" %}</th>
+    						<th scope="col">{% trans "Details" %}</th>
     					</tr>
     					</thead>
     					<tbody>
@@ -158,13 +159,13 @@
 								<td>{{ metric.duration }}</td>
     							<td>
     								<ul>
-    									<li>User Name: {{ metric.user_name }}</li>
-    									<li>User ID: {{ metric.user_id }}</li>
-    									<li>Developer Email: {{ metric.developer_email }}</li>
-    									<li>App Name: {{ metric.app_name }}</li>
-    									<li>Consumer ID: {{ metric.consumer_id }}</li>
-    									<li>Implemented by Partial Function: {{ metric.implemented_by_partial_function }}</li>
-    									<li>Implemented In Version: {{ metric.implemented_in_version }}</li>
+    									<li>{% trans "User Name" %}: {{ metric.user_name }}</li>
+    									<li>{% trans "User ID" %}: {{ metric.user_id }}</li>
+    									<li>{% trans "Developer Email" %}: {{ metric.developer_email }}</li>
+    									<li>{% trans "App Name" %}: {{ metric.app_name }}</li>
+    									<li>{% trans "Consumer ID" %}: {{ metric.consumer_id }}</li>
+    									<li>{% trans "Implemented by Partial Function" %}: {{ metric.implemented_by_partial_function }}</li>
+    									<li>{% trans "Implemented In Version" %}: {{ metric.implemented_in_version }}</li>
     								</ul>
     							</td>
     						</tr>

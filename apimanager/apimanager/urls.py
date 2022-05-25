@@ -14,10 +14,7 @@ from obp.views import (
     LogoutView,
 )
 
-
 urlpatterns = [
-
-
     # Defining authentication URLs here and not including oauth.urls for
     # backward compatibility
 ]
