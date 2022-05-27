@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block page_title %}{{ block.super }} / Atms{% endblock page_title %} {% block content %}
 <div id="atms">
-    <h1>Update atm</h1>
+    <h1>Update Atm</h1>
     <h2>{{ bank_id }} : {{ atm_id }}</h2>
     <form method="post">
         {% csrf_token %} {% if form.non_field_errors %}
@@ -10,17 +10,17 @@
         {% endif %}
         <div class="row" style="display: None">
             <div class="col-xs-12 col-sm-4">
-                {% if form.atm_id.errors %}
-                <div class="alert alert-danger">{{ form.atm_id.errors }}</div>{% endif %}
-                <div class="form-group">
-                    {{ form.atm_id.label_tag }} {{ form.atm_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
                 {% if form.bank_id.errors %}
                 <div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.bank_id.label_tag }} {{ form.bank_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.atm_id.errors %}
+                <div class="alert alert-danger">{{ form.atm_id.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.atm_id.label_tag }} {{ form.atm_id }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -215,8 +215,8 @@
     </form>
 </div>
 {% endblock content %} {% block extrajs %} {% comment %}
-<script type="text/javascript" src="{% static 'branches/js/branches.js' %}"></script>
+<script type="text/javascript" src="{% static 'atms/js/atms.js' %}"></script>
 <script type="text/javascript">
 </script>
 {% endcomment %} {% endblock extrajs %} {% block extracss %}
-<link href="{% static 'branches/css/branches.css' %}" rel="stylesheet"> {% endblock extracss %}
+<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}

@@ -6,21 +6,21 @@
 {% block content %}
 
 <div id="metrics">
-	<h1>API Usage Report</h1>
-	<h2>API instance : {{ api_host_name }}</h2>
+	<h1>{% trans "API Usage Report" %}</h1>
+	<h2>{% trans "API instance" %}: {{ api_host_name }}</h2>
 
 
 
     <div id="metrics-data">
     	<ul class="nav nav-tabs">
     	{% block nav_tabs %}
-    		<li><a href="{% url 'yearly-summary' %}?{{ request.GET.urlencode }}">Year</a></li>
-			<li><a href="{% url 'quarterly-summary' %}?{{ request.GET.urlencode }}">Quarter</a></li>
-			<li><a href="{% url 'metrics-summary' %}?{{ request.GET.urlencode }}">Month</a></li>
-    		<li class="active"><a href="{% url 'weekly-summary' %}?{{ request.GET.urlencode }}">Week</a></li>
-			<li><a href="{% url 'daily-summary' %}?{{ request.GET.urlencode }}">Day</a></li>
+    		<li><a href="{% url 'yearly-summary' %}?{{ request.GET.urlencode }}">{% trans "Year" %}</a></li>
+			<li><a href="{% url 'quarterly-summary' %}?{{ request.GET.urlencode }}">{% trans "Quarter" %}</a></li>
+			<li><a href="{% url 'metrics-summary' %}?{{ request.GET.urlencode }}">{% trans "Month" %}</a></li>
+    		<li class="active"><a href="{% url 'weekly-summary' %}?{{ request.GET.urlencode }}">{% trans "Week" %}</a></li>
+			<li><a href="{% url 'daily-summary' %}?{{ request.GET.urlencode }}">{% trans "Day" %}</a></li>
 			<!--<li><a href="{% url 'hourly-summary' %}?{{ request.GET.urlencode }}">Hour</a></li>-->
-			<li><a href="{% url 'custom-summary' %}?{{ request.GET.urlencode }}">Custom</a></li>
+			<li><a href="{% url 'custom-summary' %}?{{ request.GET.urlencode }}">{% trans "Custom" %}</a></li>
     	{% endblock nav_tabs %}
     	</ul>
 
@@ -54,12 +54,12 @@
 
 				<div class="col-xs-6 col-sm-3">
 					<div class="form-group">
-						{{ form.include_obp_apps }} Include System Calls
+						{{ form.include_obp_apps }} {% trans "Include System Calls" %}
 					</div>
 				</div>
 
 			</div>
-			<button type="submit" class="btn btn-primary">Update filter</button>
+			<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
 		</form>
 
 	</div>
@@ -67,7 +67,7 @@
     	<div class="tab-content">
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<h2>Period : From {{ from_date }} to {{ to_date }}</h2>
+    			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
 
 		<table border="1">
             <tr>
@@ -75,68 +75,68 @@
                 <th></th>
             </tr>
 			<tr>
-				<td>Total API calls:</td>
+				<td>{% trans "Total API calls" %}:</td>
 				<td>{{ api_calls }}</td>
 			</tr>
 			<tr>
-				<td>API calls made using API Explorer:</td>
+				<td>{% trans "API calls made using API Explorer" %}:</td>
 				<td>{{ calls_by_api_explorer }} ({% widthratio calls_by_api_explorer api_calls 100 %} %)</td>
 			</tr>
 
 			<tr>
-				<td>Calls per day:</td>
+				<td>{% trans "Calls per day" %}:</td>
 				<td><img src="data:image/png;base64, {{ per_day_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
-				<td>Average number of calls per day: </td>
+				<td>{% trans "Average number of calls per day" %}: </td>
 				<td>{{ average_calls_per_day }}</td>
 			</tr>
 			<tr>
-				<td>Average response time (ms):</td>
+				<td>{% trans "Average response time (ms)" %}:</td>
 				<td>{{ average_response_time }}</td>
 			</tr>
 
 			<tr>
-				<td>Median time from consumer registration to first API call:</td>
+				<td>{% trans "Median time from consumer registration to first API call" %}:</td>
 				<td>{{ median_time_to_first_api_call }}</td>
 			</tr>
 
 			<tr>
-				<td>Apps with distinct names:</td>
+				<td>{% trans "Apps with distinct names" %}:</td>
 				<td>{{ number_of_apps_with_unique_app_name }}</td>
 			</tr>
 			<tr>
-				<td>Apps with distinct developer email addresses:</td>
+				<td>{% trans "Apps with distinct developer email addresses" %}:</td>
 				<td>{{ number_of_apps_with_unique_developer_email }}</td>
 			</tr>
 
 			<tr>
-				<td>Active Apps (at least one API call in the period):</td>
+				<td>{% trans "Active Apps (at least one API call in the period)" %}:</td>
 				<td>{%for item in active_apps_list%} <p>{{item.app_name}} ({{ item.developer_email }})</p> {% endfor %}</td>
 			</tr>
 			<tr>
-				<td>Top 10 APIs:</td>
+				<td>{% trans "Top 10 APIs" %}:</td>
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
-				<td>Top 10 Consumers:</td>
+				<td>{% trans "Top 10 Consumers" %}:</td>
 				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
-				<td>Top Warehouse APIs:</td>
+				<td>{% trans "Top Warehouse APIs" %}:</td>
 				<td>{% if top_warehouse_apis %}{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 			<tr>
-				<td>Top Apps using data warehouse:</td>
+				<td>{% trans "Top Apps using data warehouse" %}:</td>
 				<td>{% if top_apps_using_warehouse %}{%for element in top_apps_using_warehouse%} <p>{{ element.app_name }} ({{ element.developer_email }}) : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 			<tr>
-				<td>Total number of CanSearchWarehouse users:</td>
+				<td>{% trans "Total number of CanSearchWarehouse users" %}:</td>
 				<td>{{number_of_users_with_cansearchwarehouse}}</td>
 			</tr>
 
 			<tr>
-				<td>Users with role CanSearchWarehouse:</td>
+				<td>{% trans "Users with role CanSearchWarehouse" %}:</td>
 				<td>{% if user_email_cansearchwarehouse %}{% for key, value in user_email_cansearchwarehouse.items %} {{key}}, {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
 

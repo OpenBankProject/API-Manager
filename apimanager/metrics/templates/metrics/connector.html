@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Connector Metrics{% endblock page_title %}
 
 {% block content %}
 <div id="metrics">
-	<h1>Connector Metrics</h1>
+	<h1>{% trans "Connector Metrics" %}</h1>
 
 	<div id="metrics-filter">
 		<h2>Filter</h2>
@@ -71,7 +72,7 @@
 				</div>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Update filter</button>
+			<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
 		</form>
 	</div>
 
@@ -82,11 +83,11 @@
 				<thead>
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date</th>
-					<th scope="col">Connector Name</th>
-					<th scope="col">Function Name</th>
-					<th scope="col">Correlation ID</th>
-					<th scope="col">Duration (ms)</th>
+					<th scope="col">{% trans "Date" %}</th>
+					<th scope="col">{% trans "Connector Name" %}</th>
+					<th scope="col">{% trans "Function Name" %}</th>
+					<th scope="col">{% trans "Correlation ID" %}</th>
+					<th scope="col">{% trans "Duration (ms)" %}</th>
 				</tr>
 				</thead>
 				<tbody>

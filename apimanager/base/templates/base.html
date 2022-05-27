@@ -1,144 +1,154 @@
-{% load static %}
+{% load static i18n %}
+
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="An application consuming the Open Bank Project API to manage consumers, users, customers, metrics and config">
-		<meta name="author" content="TESOBE, Sebastian Henschel">
-		<title>{% block page_title %}API Manager{% endblock page_title %}</title>
-		<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
-		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-		<link href="{% static 'css/base.css' %}" rel="stylesheet">
-		<link href="{% static 'css/jsoneditor.min.css' %}" rel="stylesheet">
-		<link href="{% static 'css/obpjsoneditor.css' %}" rel="stylesheet">
-		<link href="{{ override_css_url }}" rel="stylesheet">
-		{% block extracss %}{% endblock extracss %}
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="An application consuming the Open Bank Project API to manage consumers, users, customers, metrics and config">
+	<meta name="author" content="TESOBE, Sebastian Henschel">
+	<title>{% block page_title %} {% trans "API Manager" %}{% endblock page_title %}</title>
+	<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/base.css' %}" rel="stylesheet">
+	<link href="{% static 'css/jsoneditor.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/obpjsoneditor.css' %}" rel="stylesheet">
+	<link href="{{ override_css_url }}" rel="stylesheet">
+	{% block extracss %}{% endblock extracss %}
+</head>
 <body>
-    <div class="container">
-        <div id="header" >
-            <div id="logo-left" class="logo-box">
-                <a href="{% url 'home' %}" aria-label="Home Page" id="left-logo"><img src="{{ logo_url }}" alt="brand"></a>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        {% if user.is_authenticated %}
-                            <p class="navbar-btn"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a
-                                    href="/logout" class="btn btn-default">Logout </a></p>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="{{ API_PORTAL }}" >Home</a></li>
-					{% url "consumers-index" as consumers_index_url %}
-					<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">Consumers</a></li>
-					{% url "entitlementrequests-index" as entitlementrequests_index_url %}
-					<li{% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">Entitlement Requests</a></li>
-					{% url "users-index" as users_index_url %}
-					{% url 'my-user-detail' API_USER_ID as url_users_detail %}
-					{% url "my-user-invitation" as my_user_invitation %}
-					<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path or my_user_invitation in request.path %} active{% endif %}">
-						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Users</a>
-						<ul class="dropdown-menu">
-							<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">All</a></li><hr class="dropdown-hr">
-							<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">My User</a></li><hr class="dropdown-hr">
-							<li{% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">Invite Developer</a></li>
-						</ul>
-					</li>
-					{% url "api-metrics" as api_metrics_url %}
-					{% url "connector-metrics" as connector_metrics_url %}
-					{% url "metrics-summary" as metrics_summary_url %}
-					<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
-						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Metrics</a>
-						<ul class="dropdown-menu">
-							<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">API Metrics</a></li><hr class="dropdown-hr">
-							<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">Connector Metrics</a></li><hr class="dropdown-hr">
-							<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">KPI Dashboard</a></li>
-						</ul>
-					</li>
-					{% url "branches_list" as branches_list_url %}
-					{% url "customers-create" as customers_create_url %}
-					{% url "atms_list" as atms_list_url %}
-					<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
-						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Resources</a>
-						<ul class="dropdown-menu">
-							<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">Customers</a></li><hr class="dropdown-hr">
-							<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">Branches</a></li>
-							<li{% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">ATMs</a></li>
-						</ul>
-					</li>
-					{% url "config-index" as config_index_url %}
-					{% url "webui-index" as webui_props_index_url %}
-                    {% url "methodrouting-index" as methodrouting_index_url %}
-                    {% url "dynamicendpoints-index" as dynamic_endpoints_index_url %}
-                    {% url "apicollections-index" as api_collections_index_url %}
-                    <li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
-						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Configurations</a>
-						<ul class="dropdown-menu">
-							<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">Config</a></li><hr class="dropdown-hr">
-							<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">Webui Props</a></li><hr class="dropdown-hr">
-							<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">Method Routings</a></li><hr class="dropdown-hr">
-							<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">Dynamic Endpoints</a></li><hr class="dropdown-hr">
-							<li{% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">My API Collections</a></li>
-						</ul>
-					</li>
+<div class="container">
+	<div id="header" >
+		<div id="logo-left" class="logo-box">
+			<a href="{% url 'home' %}" aria-label="Home Page" id="left-logo"><img src="{{ logo_url }}" alt="brand"></a>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					{% if user.is_authenticated %}
+					<p class="navbar-btn"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a
+							href="/logout" class="btn btn-default">Logout </a></p>
+					{% endif %}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="{{ API_PORTAL }}" >{% trans "Home" %}</a></li>
+				{% url "consumers-index" as consumers_index_url %}
+				<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">{% trans "Consumers" %}</a></li>
+				{% url "entitlementrequests-index" as entitlementrequests_index_url %}
+				<li{% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">{% trans "Entitlement Requests" %}</a></li>
+				{% url "users-index" as users_index_url %}
+				{% url 'my-user-detail' API_USER_ID as url_users_detail %}
+				{% url "my-user-invitation" as my_user_invitation %}
+				<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path or my_user_invitation in request.path %} active{% endif %}">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Users" %}</a>
+					<ul class="dropdown-menu">
+						<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">{% trans "All" %}</a></li><hr class="dropdown-hr">
+						<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">{% trans "My User" %}</a></li><hr class="dropdown-hr">
+						<li{% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite Developer" %}</a></li>
+					</ul>
+				</li>
+				{% url "api-metrics" as api_metrics_url %}
+				{% url "connector-metrics" as connector_metrics_url %}
+				{% url "metrics-summary" as metrics_summary_url %}
+				<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Metrics" %}</a>
+					<ul class="dropdown-menu">
+						<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">{% trans "API Metrics" %}</a></li><hr class="dropdown-hr">
+						<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">{% trans "Connector Metrics" %}</a></li><hr class="dropdown-hr">
+						<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">{% trans "KPI Dashboard" %}</a></li>
+					</ul>
+				</li>
+				{% url "branches_list" as branches_list_url %}
+				{% url "customers-create" as customers_create_url %}
+				{% url "atms_list" as atms_list_url %}
+				<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
+					<ul class="dropdown-menu">
+						<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li><hr class="dropdown-hr">
+						<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
+						<li{% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">{% trans "ATMs" %}</a></li>
+					</ul>
+				</li>
+				{% url "config-index" as config_index_url %}
+				{% url "webui-index" as webui_props_index_url %}
+				{% url "methodrouting-index" as methodrouting_index_url %}
+				{% url "dynamicendpoints-index" as dynamic_endpoints_index_url %}
+				{% url "apicollections-index" as api_collections_index_url %}
+				<li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Configurations" %}</a>
+					<ul class="dropdown-menu">
+						<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">{% trans "Config" %}</a></li><hr class="dropdown-hr">
+						<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">{% trans "Webui Props" %}</a></li><hr class="dropdown-hr">
+						<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">{% trans "Method Routings" %}</a></li><hr class="dropdown-hr">
+						<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">{% trans "Dynamic Endpoints" %}</a></li><hr class="dropdown-hr">
+						<li{% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
+					</ul>
+				</li>
 
 				{% if API_TESTER_URL %}
-					<li>
-						<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>
-					</li>
+				<li>
+					<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>
+				</li>
 				{% endif %}
-				</ul>
-			</div><!--/.nav-collapse -->
-		</div>
-	</nav>
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</nav>
 
 {% if messages %}
-	<div class="container messages">
+<div class="container messages">
 	{% for message in messages %}
 	<div class="alert alert-dismissible{% ifequal message.tags "error" %} alert-danger{% else %}{% ifequal message.tags "debug" %} alert-info{% else %} alert-{{ message.tags }}{% endifequal %}{% endifequal %}" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			{{ message }}
-		</div>
-	{% endfor %}
-	</div>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	{{ message }}
+</div>
+{% endfor %}
+</div>
 {% endif %}
 
-	<div class="container" id="body-container">
-{% block content %}{% endblock content %}
+<div class="container" id="body-container">
+	{% block content %}{% endblock content %}
+	<div class="footer-content-wrapper" data-lift="WebUI.homePage">
+		<span>Language </span>
+		<span> | </span>
+		<a id="uk" href="/en" >EN</a>
+		<span> | </span>
+		<a id="es" href="/es" >ES</a>
+		<span> | </span>
+		<a id="fr" href="/fr" >FR</a>
 	</div>
+</div>
 
-	<footer>
-		<div class="container">
-			<p class="text-muted">
-				<a title="API ROOT" href="{{ API_ROOT }}">API ROOT: {{ API_ROOT }}</a> |
-				<a title="Open Bank Project" href="https://openbankproject.com">Open Bank Project</a> |
-				Powered by <a title="TESOBE" href="http://tesobe.com">TESOBE</a> |
-				<small>Copyright &copy; 2016 - 2020</small>
-			</p>
-		</div>
-	</footer>
+<footer>
+	<div class="container">
+		<p class="text-muted">
+			<a title="API ROOT" href="{{ API_ROOT }}">API ROOT: {{ API_ROOT }}</a> |
+			<a title="Open Bank Project" href="https://openbankproject.com">Open Bank Project</a> |
+			Powered by <a title="TESOBE" href="http://tesobe.com">TESOBE</a> |
+			<small>Copyright &copy; 2016 - 2020</small>
+		</p>
+	</div>
+</footer>
 
-	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
-	<script src="{% static 'js/base.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/jsoneditor.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+<script src="{% static 'js/base.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jsoneditor.min.js' %}"></script>
 {% block extrajs %}{% endblock extrajs %}
 </body>
 </html>

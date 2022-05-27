@@ -234,7 +234,6 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
         urlpath = "/banks/{}/branches/{}".format(self.kwargs['bank_id'], self.kwargs['branch_id'])
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
-
         except APIError as err:
             messages.error(self.request, err)
         except:
@@ -265,9 +264,7 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
-
         return form
-
     def form_valid(self, form):
         data = form.cleaned_data
         urlpath = '/banks/{}/branches/{}'.format(data["bank_id"], data["branch_id"])

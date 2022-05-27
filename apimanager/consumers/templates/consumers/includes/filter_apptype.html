@@ -1,3 +1,4 @@
-<a href="?app_type=Web&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_Web %} active{% endif %}">Web</a>
-<a href="?app_type=Mobile&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_Mobile %} active{% endif %}">Mobile</a>
-<a href="?app_type=All&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_all %} active{% endif %}">All</a>
+{% load i18n %}
+<a href="?app_type=Web&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_Web %} active{% endif %}">{% trans "Web" %}</a>
+<a href="?app_type=Mobile&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_Mobile %} active{% endif %}">{% trans "Mobile" %}</a>
+<a href="?app_type=All&time={{ request.GET.time }}&enabled={{ request.GET.enabled }}" class="btn btn-default{% if active_app_type_all %} active{% endif %}">{% trans "All" %}</a>

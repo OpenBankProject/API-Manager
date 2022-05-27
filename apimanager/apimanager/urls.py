@@ -4,6 +4,7 @@ URLs for apimanager
 """
 
 from django.conf.urls import url, include
+from django.conf.urls.i18n import i18n_patterns
 
 from base.views import HomeView
 from obp.views import (
@@ -13,11 +14,12 @@ from obp.views import (
     LogoutView,
 )
 
-
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name="home"),
     # Defining authentication URLs here and not including oauth.urls for
     # backward compatibility
+]
+urlpatterns += i18n_patterns(
+    url(r'^$', HomeView.as_view(), name="home"),
     url(r'^oauth/initiate$',
         OAuthInitiateView.as_view(), name='oauth-initiate'),
     url(r'^single-sign-on',
@@ -42,4 +44,6 @@ urlpatterns = [
     url(r'^methodrouting/', include('methodrouting.urls')),
     url(r'^dynamicendpoints/', include('dynamicendpoints.urls')),
     url(r'^apicollections/', include('apicollections.urls')),
-]
+)
+    #prefix_default_language=False,
+#)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
