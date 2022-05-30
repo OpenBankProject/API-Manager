@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block page_title %}{{ block.super }} / Atms{% endblock page_title %} {% block content %}
 <div id="atms">
-    <h1>Update Atm</h1>
+    <h1>ATM Detail</h1>
     <h2>{{ bank_id }} : {{ atm_id }}</h2>
     <form method="post">
         {% csrf_token %} {% if form.non_field_errors %}

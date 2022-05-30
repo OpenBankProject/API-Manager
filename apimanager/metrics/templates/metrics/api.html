@@ -21,28 +21,28 @@
     			<div class="col-xs-6 col-sm-3">
     				{% if form.from_date.errors %}<div class="alert alert-danger">{{ form.from_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.from_date.label_tag }}
+						<strong>{% trans "from_date" %} </strong>
     					{{ form.from_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
     				{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.to_date.label_tag }}
+						<strong>{% trans "to_date" %} </strong>
     					{{ form.to_date }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
     				{% if form.limit.errors %}<div class="alert alert-danger">{{ form.limit.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.limit.label_tag }}
+						<strong>{% trans "limit" %} </strong>
     					{{ form.limit }}
     				</div>
     			</div>
     			<div class="col-xs-6 col-sm-3">
     				{% if form.offset.errors %}<div class="alert alert-danger">{{ form.offset.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.offset.label_tag }}
+						<strong>{% trans "offset" %} </strong>
     					{{ form.offset }}
     				</div>
     			</div>
@@ -52,7 +52,7 @@
     			<div class="col-xs-6 col-sm-3">
     				{% if form.consumer_id.errors %}<div class="alert alert-danger">{{ form.consumer_id.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.consumer_id.label_tag }}
+						<strong>{% trans "consumer_id" %} </strong>
     					{{ form.consumer_id }}
     				</div>
     			</div>
@@ -60,7 +60,7 @@
     			<div class="col-xs-6 col-sm-3">
     				{% if form.user_id.errors %}<div class="alert alert-danger">{{ form.user_id.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.user_id.label_tag }}
+						<strong>{% trans "user_id" %} </strong>
     					{{ form.user_id }}
     				</div>
     			</div>
@@ -68,7 +68,7 @@
     			<div class="col-xs-6 col-sm-3">
     				{% if form.anon.errors %}<div class="alert alert-danger">{{ form.anon.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.anon.label_tag }}
+						<strong>{% trans "anon" %} </strong>
     					{{ form.anon }}
     				</div>
     			</div>
@@ -76,7 +76,7 @@
     			<div class="col-xs-6 col-sm-3">
     				{% if form.app_name.errors %}<div class="alert alert-danger">{{ form.app_name.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.app_name.label_tag }}
+						<strong>{% trans "app_name" %} </strong>
     					{{ form.app_name }}
     				</div>
     			</div>
@@ -87,7 +87,7 @@
     			<div class="col-xs-2">
     				{% if form.verb.errors %}<div class="alert alert-danger">{{ form.verb.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.verb.label_tag }}
+						<strong>{% trans "verb" %} </strong>
     					{{ form.verb }}
     				</div>
     			</div>
@@ -95,7 +95,7 @@
     			<div class="col-xs-10">
     				{% if form.url.errors %}<div class="alert alert-danger">{{ form.url.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.url.label_tag }}
+						<strong>{% trans "url" %} </strong>
     					{{ form.url }}
     				</div>
     			</div>
@@ -105,7 +105,7 @@
     			<div class="col-xs-7">
     				{% if form.implemented_by_partial_function.errors %}<div class="alert alert-danger">{{ form.implemented_by_partial_function.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.implemented_by_partial_function.label_tag }}
+						<strong>{% trans "implemented_by_partial_function" %} </strong>
     					{{ form.implemented_by_partial_function }}
     				</div>
     			</div>
@@ -113,7 +113,7 @@
     			<div class="col-xs-5">
     				{% if form.implemented_in_version.errors %}<div class="alert alert-danger">{{ form.implemented_in_version.errors }}</div>{% endif %}
     				<div class="form-group">
-    					{{ form.implemented_in_version.label_tag }}
+						<strong>{% trans "implemented_in_version" %} </strong>
     					{{ form.implemented_in_version }}
     				</div>
     			</div>

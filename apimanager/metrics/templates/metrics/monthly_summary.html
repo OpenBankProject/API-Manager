@@ -48,7 +48,7 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.to_date.label_tag }}
+						<strong>{% trans "to_date" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>

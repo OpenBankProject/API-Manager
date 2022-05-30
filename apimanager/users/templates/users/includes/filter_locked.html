@@ -1,3 +1,4 @@
-<a href="?locked_status=active&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "active" %} active{% endif %}">Active</a>
-<a href="?locked_status=locked&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "locked" %} active{% endif %}">Locked</a>
-<a href="?locked_status=all&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "all" %} active{% endif %}">All</a>
+{% load i18n %}
+<a href="?locked_status=active&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "active" %} active{% endif %}">{% trans "Active" %}</a>
+<a href="?locked_status=locked&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "locked" %} active{% endif %}">{% trans "Locked" %}</a>
+<a href="?locked_status=all&role_name={{ request.GET.role_name }}" class="btn btn-default{% if locked_status == "all" %} active{% endif %}">{% trans "All" %}</a>
