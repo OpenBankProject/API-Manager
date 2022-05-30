@@ -9,7 +9,7 @@
 	<h1>{% trans "Connector Metrics" %}</h1>
 
 	<div id="metrics-filter">
-		<h2>Filter</h2>
+		<h2>{% trans "Filter" %}</h2>
 		<form action="{% url 'connector-metrics' %}" method="get">
 			{% if form.non_field_errors %}
 			<div class="alert alert-danger">
@@ -21,28 +21,28 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.from_date.errors %}<div class="alert alert-danger">{{ form.from_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.from_date.label_tag }}
+						<strong>{% trans "from_date" %} </strong>
 						{{ form.from_date }}
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.to_date.label_tag }}
+						<strong>{% trans "to_date" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					{% if form.limit.errors %}<div class="alert alert-danger">{{ form.limit.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.limit.label_tag }}
+						<strong>{% trans "limit" %} </strong>
 						{{ form.limit }}
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					{% if form.offset.errors %}<div class="alert alert-danger">{{ form.offset.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.offset.label_tag }}
+						<strong>{% trans "offset" %} </strong>
 						{{ form.offset }}
 					</div>
 				</div>
@@ -52,21 +52,21 @@
 				<div class="col-xs-12 col-sm-4">
 					{% if form.connector_name.errors %}<div class="alert alert-danger">{{ form.connector_name.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.connector_name.label_tag }}
+						<strong>{% trans "connector_name" %} </strong>
 						{{ form.connector_name }}
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					{% if form.function_name.errors %}<div class="alert alert-danger">{{ form.function_name.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.function_name.label_tag }}
+						<strong>{% trans "function_name" %} </strong>
 						{{ form.function_name }}
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					{% if form.correlation_id.errors %}<div class="alert alert-danger">{{ form.correlation_id.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.correlation_id.label_tag }}
+						<strong>{% trans "correlation_id" %} </strong>
 						{{ form.correlation_id }}
 					</div>
 				</div>

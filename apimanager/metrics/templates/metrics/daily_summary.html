@@ -47,7 +47,7 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.to_date.label_tag }}
+						<strong>{% trans "to_date" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>
@@ -67,7 +67,7 @@
     	<div class="tab-content">
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<h2>Period : From {{ from_date }} to {{ to_date }}</h2>
+    			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
 
 		<table border="1">
             <tr>

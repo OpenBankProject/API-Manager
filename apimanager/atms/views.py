@@ -42,44 +42,44 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['lobby'].initial = json.dumps({
                             "monday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "tuesday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "wednesday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "thursday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "friday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "saturday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "sunday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ]
                         }, indent=4)
@@ -111,8 +111,8 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 "name": data["name"],
                 "address": json.loads(data['address']),
                 "location": {
-                    "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else 37.0,
-                    "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else 110.0
+                    "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
+                    "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
                 },
                 "meta": {
                     "license": {
@@ -121,32 +121,32 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                     }
                 },
                 "monday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "tuesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "wednesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "thursday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "friday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "saturday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "sunday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
                 "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
@@ -202,7 +202,6 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             for bank_id in self.bankids:
                 urlpath = '/banks/{}/atms'.format(bank_id)
                 result = api.get(urlpath)
-                #print(result)
                 if 'atms' in result:
                     atms_list.extend(result['atms'])
         except APIError as err:
@@ -234,7 +233,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
 
     def get_form(self, *args, **kwargs):
         form = super(UpdateAtmsView, self).get_form(*args, **kwargs)
-        print("Hello World")
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
@@ -275,7 +273,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            #lofields['lobby'].initial = json.dumps(result['lobby'], indent=4)
             if result['supported_languages'][0].lower()=='en':
                 fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
             elif result['supported_languages'][0].lower()=='fr':
@@ -314,8 +311,8 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             "name": data["name"],
             "address": json.loads(data['address']),
             "location": {
-                "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else 37.0,
-                "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else 110.0
+                "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
+                "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
             },
             "meta": {
                 "license": {
@@ -324,8 +321,8 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
                 }
             },
             "monday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": "",
+                "closing_time": ""
             },
             "tuesday": {
                 "opening_time": "10:00",

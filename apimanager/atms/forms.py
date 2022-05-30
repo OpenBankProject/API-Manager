@@ -55,7 +55,7 @@ class CreateAtmForm(forms.Form):
         label='Latitude',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 37.0,
+                'placeholder': " ",
                 'class': 'form-control',
             }
         ),
@@ -66,7 +66,7 @@ class CreateAtmForm(forms.Form):
         label='Longitude',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 110.0,
+                'placeholder': " ",
                 'class': 'form-control',
             }
         ),

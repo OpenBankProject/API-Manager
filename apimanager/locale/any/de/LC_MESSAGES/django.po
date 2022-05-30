@@ -1,0 +1,115 @@
+# Open Bank Project API Manager i18n files.
+# Copyright (C) 2022 TESOBE GmbH
+# This file is distributed under the AGPL. Commercial licences are available from TESOBE.
+# FIRST AUTHOR <reena AT tesobe DOT com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-12 04:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: base/templates/base.html:48
+msgid "Home"
+msgstr "Startseite"
+
+#: base/templates/base.html:50 consumers/templates/consumers/index.html:10
+msgid "Consumers"
+msgstr "Verbraucher"
+
+#: base/templates/base.html:52
+msgid "Entitlement Requests"
+msgstr "Berechtigungsanfragen"
+
+#: base/templates/base.html:57
+msgid "Users"
+msgstr "Verbindung zu WP-Benutzern"
+
+#: base/templates/base.html:59
+msgid "All"
+msgstr "Alle"
+
+#: base/templates/base.html:60
+msgid "My User"
+msgstr "Mein Benutzer"
+
+#: base/templates/base.html:61
+msgid "Invite Developer"
+msgstr "Entwickler einladen"
+
+#: base/templates/base.html:68
+msgid "Metrics"
+msgstr "Metriken"
+
+#: base/templates/base.html:70
+msgid "API Metrics"
+msgstr "API-Metriken"
+
+#: base/templates/base.html:71
+msgid "Connector Metrics"
+msgstr "Konnektor-Metriken"
+
+#: base/templates/base.html:72
+msgid "KPI Dashboard"
+msgstr "KPI Dashboard"
+
+#: base/templates/base.html:79
+msgid "Resources"
+msgstr "Ressourcen"
+
+#: base/templates/base.html:81
+msgid "Customers"
+msgstr "Kunden"
+
+#: base/templates/base.html:82
+msgid "Branches"
+msgstr "Niederlassungen"
+
+#: base/templates/base.html:83
+msgid "ATMs"
+msgstr "ATMs"
+
+#: base/templates/base.html:92
+msgid "Configurations"
+msgstr "Konfigurationen"
+
+#: base/templates/base.html:94
+msgid "Config"
+msgstr "Konfig."
+
+#: base/templates/base.html:95
+msgid "Webui Props"
+msgstr "Webui Requisiten"
+
+#: base/templates/base.html:96
+msgid "Method Routings"
+msgstr "Methoden-Routings"
+
+#: base/templates/base.html:97
+msgid "Dynamic Endpoints"
+msgstr "Dynamische Endpunkte"
+
+#: base/templates/base.html:98
+msgid "My API Collections"
+msgstr "Meine API-Sammlungen"
+
+#: base/templates/home.html:5
+msgid "Welcome to API Manager"
+msgstr "Willkommen bei API Manager"
+
+#: consumers/templates/consumers/index.html:47
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: consumers/templates/consumers/index.html:49
+msgid "Total number of consumers"
+msgstr "Gesamtzahl der Verbraucher"

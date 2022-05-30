@@ -190,7 +190,7 @@ msgstr "Bienvenue dans API Manager"
 
 #: consumers/templates/consumers/includes/filter_time.html:2
 msgid "Last Hour"
-msgstr "Dernière heure"
+msgstr ""
 
 #: consumers/templates/consumers/index.html:47
 msgid "Statistics"
@@ -202,7 +202,7 @@ msgstr "Nombre total de consommateurs"
 
 #: consumers/templates/consumers/index.html:50
 msgid "Total number of unique developer email addresses"
-msgstr "Nombre total d'adresses e-mail uniques des développeurs"
+msgstr ""
 
 #: consumers/templates/consumers/index.html:51
 #, fuzzy

@@ -47,14 +47,14 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.from_date_custom.errors %}<div class="alert alert-danger">{{ form.from_date_custom.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.from_date_custom.label_tag }}
+						<strong>{% trans "from_date_custom" %} </strong>
 						{{ form.from_date_custom }}
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.to_date.label_tag }}
+						<strong>{% trans "to_date" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>
