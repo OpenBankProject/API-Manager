@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% load humanize static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Consumer {{ consumer.app_name }}{% endblock page_title %}
 
 {% block content %}
 <div id="consumers-detail">
-	<h1>Consumer {{ consumer.app_name }}</h1>
+	<h1>{% trans "Consumer" %} {{ consumer.app_name }}</h1>
 
 
     <div class="row">
         <div class="col-xs-12">
 
-            <h2>Params</h2>
+            <h2>{% trans "Params" %}</h2>
             <form action="" method="post">
                 {% csrf_token %}
                 {{ form.consumer_id }}
@@ -60,7 +61,7 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">Update Consumer</button>
+                <button type="submit" class="btn btn-primary">{% trans "Update Consumer" %}</button>
             </form>
         </div>
     </div>
@@ -76,14 +77,14 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-app_name">
-				<strong>App Name</strong><br />
+				<strong>{% trans "App Name" %}</strong><br />
 				<span>{{ consumer.app_name }}</span>
 			</div>
 		</div>
 
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-app_type">
-				<strong>App Type</strong><br />
+				<strong>{% trans "App Type" %}</strong><br />
 				<span>{{ consumer.app_type }}</span>
 			</div>
 		</div>
@@ -92,14 +93,14 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-developer_email">
-				<strong>Developer Email</strong><br />
+				<strong>{% trans "Developer Email" %}</strong><br />
 				<span>{{ consumer.developer_email }}</span>
 			</div>
 		</div>
 
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-user_email">
-				<strong>User Email</strong><br />
+				<strong>{% trans "User Email" %}</strong><br />
 				<span>{% if consumer.created_by_user.user_id %}<a href="{% url 'users-detail' consumer.created_by_user.user_id %}">{{ consumer.created_by_user.email }}</a>{% else %}{{ consumer.created_by_user.email }}{% endif %}</span>
 			</div>
 		</div>
@@ -108,14 +109,14 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-created">
-				<strong>Created</strong><br />
+				<strong>{% trans "Created" %}</strong><br />
 				<span>{{ consumer.created|naturaltime }}</span>
 			</div>
 		</div>
 
 		<div class="col-xs-12 col-sm-6">
 			<div id="consumers-detail-created_by_user_id">
-				<strong>Created By User ID</strong><br />
+				<strong>{% trans "Created By User ID" %}</strong><br />
 				<span>{{ consumer.created_by_user_id }}</span>
 			</div>
 		</div>
@@ -124,13 +125,13 @@
 	<div class="row">
 		<div class="col-xs-6 col-sm-6">
 			<div id="consumers-detail-redirect_url">
-				<strong>Redirect URL</strong><br />
+				<strong>{% trans "Redirect URL" %}</strong><br />
 				<span>{{ consumer.redirect_url }}</span>
 			</div>
 		</div>
         <div class="col-xs-6 col-sm-6">
             <div id="consumers-per_minute_call_limit ">
-                <strong>Per minute call limit </strong><br />
+                <strong>{% trans "Per minute call limit" %}</strong><br />
                 <span>{{ consumer.per_minute_call_limit }}</span>
             </div>
         </div>
@@ -139,13 +140,13 @@
     <div class="row">
         <div class="col-xs-6 col-sm-6">
             <div id="consumers-per_hour_call_limit ">
-                <strong>Per hour call limit </strong><br />
+                <strong>{% trans "Per hour call limit" %} </strong><br />
                 <span>{{ consumer.per_hour_call_limit }}</span>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6">
             <div id="consumers-per_day_call_limit">
-                <strong>Per day call limit</strong><br />
+                <strong>{% trans "Per day call limit" %}</strong><br />
                 <span>{{ consumer.per_day_call_limit }}</span>
             </div>
         </div>
@@ -155,13 +156,13 @@
     <div class="row">
         <div class="col-xs-6 col-sm-6">
             <div id="consumers-per_week_call_limit">
-                <strong>Per week call limit</strong><br />
+                <strong>{% trans "Per week call limit" %}</strong><br />
                 <span>{{ consumer.per_week_call_limit }}</span>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6">
             <div id="consumers-per_month_call_limit">
-                <strong>Per month call limit</strong><br />
+                <strong>{% trans "Per month call limit" %}</strong><br />
                 <span>{{ consumer.per_month_call_limit }}</span>
             </div>
         </div>
@@ -171,7 +172,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div id="consumers-detail-description">
-				<strong>Description</strong><br />
+				<strong>{% trans "Description" %}</strong><br />
 				<div class="well">{{ consumer.description }}</div>
 			</div>
 		</div>
@@ -190,9 +191,9 @@
 					<input type="hidden" name="next" value="{{ request.path }}" />
 					<div class="form-group">
 					{% if consumer.enabled %}
-						<button type="submit" class="btn btn-primary btn-red">Disable</a>
+						<button type="submit" class="btn btn-primary btn-red">{% trans "Disable" %}</a>
 					{% else %}
-						<button type="submit" class="btn btn-primary btn-green">Enable</a>
+						<button type="submit" class="btn btn-primary btn-green">{% trans "Enable" %}</a>
 					{% endif %}
 					</div>
 				</form>

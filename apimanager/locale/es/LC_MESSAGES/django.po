@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-10 12:10+0200\n"
+"POT-Creation-Date: 2022-05-31 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,160 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: atms/templates/atms/index.html:4 base/templates/base.html:83
+msgid "ATMs"
+msgstr "cajeros automáticos"
+
+#: atms/templates/atms/index.html:17 atms/templates/atms/index.html:222
+msgid "ATM Id"
+msgstr "ID del cajero automático"
+
+#: atms/templates/atms/index.html:24 atms/templates/atms/index.html:223
+#: branches/templates/branches/index.html:161
+#: customers/templates/customers/create.html:24
+#: users/templates/users/detail.html:99
+#: users/templates/users/invitation.html:22
+msgid "Bank Id"
+msgstr "Id. de banco"
+
+#: atms/templates/atms/index.html:31
+#: consumers/templates/consumers/index.html:58
+msgid "Name"
+msgstr "Nombre"
+
+#: atms/templates/atms/index.html:40
+msgid "Services"
+msgstr "Servicios"
+
+#: atms/templates/atms/index.html:48
+msgid "Location Latitude"
+msgstr "Ubicación Latitud"
+
+#: atms/templates/atms/index.html:56
+msgid "Location Longitude"
+msgstr "Longitud de la ubicación"
+
+#: atms/templates/atms/index.html:66
+msgid "Meta License Name"
+msgstr "Nombre de la Licencia"
+
+#: atms/templates/atms/index.html:73
+msgid "Located At"
+msgstr "La página de presentación, que está ubicada en"
+
+#: atms/templates/atms/index.html:80
+msgid "Has Deposit Capability"
+msgstr "Tiene capacidad de depósito"
+
+#: atms/templates/atms/index.html:90
+msgid "Is Accessible"
+msgstr "producción y validación es"
+
+#: atms/templates/atms/index.html:98
+msgid "Accessibility Features"
+msgstr "Características de accesibilidad"
+
+#: atms/templates/atms/index.html:105
+#: branches/templates/branches/index.html:207
+msgid "More Info"
+msgstr "Más información"
+
+#: atms/templates/atms/index.html:114
+msgid "Notes"
+msgstr "Notas:"
+
+#: atms/templates/atms/index.html:121
+msgid "Supported Languages"
+msgstr "Idiomas admitidos"
+
+#: atms/templates/atms/index.html:128
+msgid "Supported Currencies"
+msgstr "Divisas Soportadas"
+
+#: atms/templates/atms/index.html:137
+msgid "Location Categories"
+msgstr "Categorías de ubicación"
+
+#: atms/templates/atms/index.html:145
+msgid "Minimum Withdrawal"
+msgstr "El retiro mínimo"
+
+#: atms/templates/atms/index.html:152
+msgid "Site Name"
+msgstr "Nobre del sitio"
+
+#: atms/templates/atms/index.html:161
+msgid "Branch Identification"
+msgstr "Identificación de la sucursal"
+
+#: atms/templates/atms/index.html:168
+msgid "Site Identification"
+msgstr "IDENTIFICACIÓN DEL LUGAR"
+
+#: atms/templates/atms/index.html:173
+msgid "Cash Withdrawal National Fee"
+msgstr "Cargo Nacional por Retiro de Efectivo"
+
+#: atms/templates/atms/index.html:183
+msgid "Balance Inquiry Fee"
+msgstr "Cargo por consulta de saldo"
+
+#: atms/templates/atms/index.html:190
+msgid "Cash Withdrawal International Fee"
+msgstr "Cargo internacional por retiro de efectivo"
+
+#: atms/templates/atms/index.html:199
+#: branches/templates/branches/index.html:176
+#: branches/templates/branches/index.html:203
+msgid "Address"
+msgstr "Dirección"
+
+#: atms/templates/atms/index.html:206
+msgid "Lobby"
+msgstr "Sala de espera"
+
+#: atms/templates/atms/index.html:224
+msgid "ATM Name"
+msgstr "Nombre del cajero automático"
+
+#: atms/templates/atms/index.html:225
+msgid "More info"
+msgstr "Más información"
+
+#: atms/templates/atms/index.html:226
+#: branches/templates/branches/index.html:164
+msgid "Update Button"
+msgstr "Botón Actualizar"
+
+#: base/templates/base.html:11
+#, fuzzy
+#| msgid "Welcome to API Manager"
+msgid "API Manager"
+msgstr "Bienvenido al Administrador de API"
+
 #: base/templates/base.html:48
 msgid "Home"
 msgstr "Casa"
 
-#: base/templates/base.html:50
+#: base/templates/base.html:50 consumers/templates/consumers/index.html:10
 msgid "Consumers"
 msgstr "Consumidoras"
 
 #: base/templates/base.html:52
+#: entitlementrequests/templates/entitlementrequests/index.html:8
 msgid "Entitlement Requests"
 msgstr "Solicitudes de derechos"
 
-#: base/templates/base.html:57
+#: base/templates/base.html:57 users/templates/users/index.html:8
 msgid "Users"
 msgstr "Usuarias"
 
 #: base/templates/base.html:59
+#: consumers/templates/consumers/includes/filter_apptype.html:4
+#: consumers/templates/consumers/includes/filter_enabled.html:4
+#: consumers/templates/consumers/includes/filter_time.html:7
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:7
+#: users/templates/users/includes/filter_locked.html:4
 msgid "All"
 msgstr "Todos"
 
@@ -44,7 +181,7 @@ msgstr "Todos"
 msgid "My User"
 msgstr "Mi usuaria"
 
-#: base/templates/base.html:61
+#: base/templates/base.html:61 users/templates/users/invitation.html:8
 msgid "Invite Developer"
 msgstr "Invitar a desarrollador"
 
@@ -52,13 +189,13 @@ msgstr "Invitar a desarrollador"
 msgid "Metrics"
 msgstr "Métrica"
 
-#: base/templates/base.html:70
+#: base/templates/base.html:70 metrics/templates/metrics/api.html:9
 #, fuzzy
 #| msgid "Metrics"
 msgid "API Metrics"
 msgstr "Métricas de la API"
 
-#: base/templates/base.html:71
+#: base/templates/base.html:71 metrics/templates/metrics/connector.html:9
 msgid "Connector Metrics"
 msgstr "Métricas del conector"
 
@@ -76,19 +213,15 @@ msgstr "Recursos"
 msgid "Customers"
 msgstr "Consumidoras"
 
-#: base/templates/base.html:82
+#: base/templates/base.html:82 branches/templates/branches/index.html:9
 msgid "Branches"
 msgstr "Sucursales"
-
-#: base/templates/base.html:83
-msgid "ATMs"
-msgstr "cajeros automáticos"
 
 #: base/templates/base.html:92
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:94
+#: base/templates/base.html:94 config/templates/config/index.html:9
 #, fuzzy
 #| msgid "Configurations"
 msgid "Config"
@@ -103,6 +236,7 @@ msgid "Method Routings"
 msgstr "Enrutamiento de métodos"
 
 #: base/templates/base.html:97
+#: dynamicendpoints/templates/dynamicendpoints/index.html:7
 msgid "Dynamic Endpoints"
 msgstr "Puntos finales dinámicos"
 
@@ -113,3 +247,1227 @@ msgstr "Mis colecciones de API"
 #: base/templates/home.html:5
 msgid "Welcome to API Manager"
 msgstr "Bienvenido al Administrador de API"
+
+#: base/templates/home.html:10
+msgid ""
+"This app gives you access to management functionality for the OBP instance at"
+msgstr ""
+"Esta aplicación le brinda acceso a la funcionalidad de administración para "
+"la instancia de OBP en"
+
+#: base/templates/home.html:10
+msgid "You have to"
+msgstr "Tienes que"
+
+#: base/templates/home.html:10
+msgid "register"
+msgstr "Registrarse"
+
+#: base/templates/home.html:10
+msgid "an account before being able to proceed"
+msgstr "una cuenta antes de poder continuar"
+
+#: base/templates/home.html:10
+msgid ""
+"The logged-in user needs to have specific roles granted to use the "
+"functionality."
+msgstr ""
+"El usuario que inició sesión debe tener roles específicos otorgados para "
+"usar la funcionalidad."
+
+#: branches/templates/branches/index.html:22
+#, fuzzy
+#| msgid "Branches"
+msgid "Branch_Id"
+msgstr "ID_sucursal"
+
+#: branches/templates/branches/index.html:29
+#: users/templates/users/detail.html:75
+msgid "bank_id"
+msgstr "bank_id"
+
+#: branches/templates/branches/index.html:36
+#: branches/templates/branches/index.html:197
+msgid "name"
+msgstr "nombre"
+
+#: branches/templates/branches/index.html:46
+#, fuzzy
+#| msgid "Branches"
+msgid "branch_type"
+msgstr "Sucursales"
+
+#: branches/templates/branches/index.html:53
+msgid "location_latitude"
+msgstr "ubicación_latitud"
+
+#: branches/templates/branches/index.html:60
+msgid "location_longitude"
+msgstr "ubicación longitud"
+
+#: branches/templates/branches/index.html:70
+msgid "meta_license_name"
+msgstr "nombre de la metalicencia"
+
+#: branches/templates/branches/index.html:77
+msgid "branch_routing_scheme"
+msgstr "esquema_de_rama_de_enrutamiento"
+
+#: branches/templates/branches/index.html:84
+msgid "branch_routing_address"
+msgstr "dirección_enrutamiento_sucursal"
+
+#: branches/templates/branches/index.html:94
+msgid "is_accessible"
+msgstr "producción y validación es"
+
+#: branches/templates/branches/index.html:101
+#, fuzzy
+#| msgid "accessible Features"
+msgid "accessibleFeatures"
+msgstr "Funciones accesibles"
+
+#: branches/templates/branches/index.html:108
+msgid "more_info"
+msgstr "más información"
+
+#: branches/templates/branches/index.html:118
+msgid "phone_number"
+msgstr "número_de_teléfono"
+
+#: branches/templates/branches/index.html:128
+msgid "address"
+msgstr "dirección"
+
+#: branches/templates/branches/index.html:135
+msgid "lobby"
+msgstr "ejercer presión"
+
+#: branches/templates/branches/index.html:142
+msgid "drive_up"
+msgstr "subir"
+
+#: branches/templates/branches/index.html:151
+#: users/templates/users/detail.html:83 users/templates/users/detail.html:88
+msgid "Add"
+msgstr "Agregar"
+
+#: branches/templates/branches/index.html:160
+#, fuzzy
+#| msgid "Branches"
+msgid "Branch Id"
+msgstr "Identificación de la sucursal"
+
+#: branches/templates/branches/index.html:162
+#, fuzzy
+#| msgid "Branches"
+msgid "Branch Name"
+msgstr "Nombre de la sucursal"
+
+#: branches/templates/branches/index.html:163
+msgid "More_info"
+msgstr "Más información"
+
+#: branches/templates/branches/index.html:178
+msgid "line1"
+msgstr "Apartado 1"
+
+#: branches/templates/branches/index.html:179
+msgid "line2"
+msgstr "Apartado 2"
+
+#: branches/templates/branches/index.html:180
+msgid "line3"
+msgstr "Apartado 3"
+
+#: branches/templates/branches/index.html:181
+msgid "city"
+msgstr "población"
+
+#: branches/templates/branches/index.html:182
+msgid "county"
+msgstr "Hajdú-Bihar"
+
+#: branches/templates/branches/index.html:183
+msgid "state"
+msgstr "estado"
+
+#: branches/templates/branches/index.html:184
+msgid "postcode"
+msgstr "código postal"
+
+#: branches/templates/branches/index.html:185
+msgid "country_code"
+msgstr "código de país"
+
+#: branches/templates/branches/index.html:188
+msgid "Location"
+msgstr "Ubicación"
+
+#: branches/templates/branches/index.html:190
+msgid "latitude"
+msgstr "latitud"
+
+#: branches/templates/branches/index.html:191
+msgid "longitude"
+msgstr "longitud"
+
+#: branches/templates/branches/index.html:194
+msgid "Meta License"
+msgstr "Meta Licencia"
+
+#: branches/templates/branches/index.html:196
+msgid "id"
+msgstr "identificación"
+
+#: branches/templates/branches/index.html:200
+#, fuzzy
+#| msgid "Method Routings"
+msgid "Branch Routing"
+msgstr "Enrutamiento de sucursales"
+
+#: branches/templates/branches/index.html:202
+msgid "Scheme"
+msgstr "Pauta"
+
+#: branches/templates/branches/index.html:206
+#, fuzzy
+#| msgid "Branches"
+msgid "Branch Type"
+msgstr "Sucursales"
+
+#: branches/templates/branches/index.html:208
+msgid "Phone Number"
+msgstr "Número de teléfono"
+
+#: branches/templates/branches/index.html:209
+msgid "Accessible Features"
+msgstr "Características accesibles"
+
+#: config/templates/config/index.html:11
+msgid "The configuration of the API"
+msgstr "La configuración de la API"
+
+#: consumers/templates/consumers/detail.html:9
+#, fuzzy
+#| msgid "Consumers"
+msgid "Consumer"
+msgstr "Consumidoras"
+
+#: consumers/templates/consumers/detail.html:15
+#, fuzzy
+#| msgid "Parameters"
+msgid "Params"
+msgstr "Parámetros"
+
+
+#: consumers/templates/consumers/detail.html:64
+#, fuzzy
+#| msgid "Consumers"
+msgid "Update Consumer"
+msgstr "Consumidoras"
+
+#: consumers/templates/consumers/detail.html:80
+#: metrics/templates/metrics/api.html:165
+msgid "App Name"
+msgstr "Nombre de la aplicación"
+
+#: consumers/templates/consumers/detail.html:87
+#, fuzzy
+#| msgid "App Name"
+msgid "App Type"
+msgstr "Nombre de la aplicación"
+
+#: consumers/templates/consumers/detail.html:96
+#: metrics/templates/metrics/api.html:164
+msgid "Developer Email"
+msgstr "Correo electrónico del desarrollador"
+
+#: consumers/templates/consumers/detail.html:103
+#, fuzzy
+#| msgid "Email"
+msgid "User Email"
+msgstr "Correo electrónico"
+
+#: consumers/templates/consumers/detail.html:112
+#: consumers/templates/consumers/index.html:60
+#: entitlementrequests/templates/entitlementrequests/index.html:30
+msgid "Created"
+msgstr "Creado"
+
+#: consumers/templates/consumers/detail.html:119
+#, fuzzy
+msgid "Created By User ID"
+msgstr "Crear cliente"
+
+#: consumers/templates/consumers/detail.html:128
+msgid "Redirect URL"
+msgstr "Redireccionar URL"
+
+#: consumers/templates/consumers/detail.html:134
+msgid "Per minute call limit"
+msgstr "Límite de llamadas por minuto"
+
+#: consumers/templates/consumers/detail.html:143
+msgid "Per hour call limit"
+msgstr "Límite de llamadas por hora"
+
+#: consumers/templates/consumers/detail.html:149
+msgid "Per day call limit"
+msgstr "Límite de llamadas por día"
+
+#: consumers/templates/consumers/detail.html:159
+msgid "Per week call limit"
+msgstr "Límite de llamadas por semana"
+
+#: consumers/templates/consumers/detail.html:165
+msgid "Per month call limit"
+msgstr "Límite de llamadas por mes"
+
+#: consumers/templates/consumers/detail.html:175
+#: consumers/templates/consumers/index.html:59
+msgid "Description"
+msgstr "Descripción"
+
+#: consumers/templates/consumers/detail.html:194
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disable"
+msgstr "Deshabilitado"
+
+#: consumers/templates/consumers/detail.html:196
+#, fuzzy
+#| msgid "Enabled"
+msgid "Enable"
+msgstr "Habilitado"
+
+#: consumers/templates/consumers/includes/filter_apptype.html:2
+msgid "Web"
+msgstr "Web"
+
+#: consumers/templates/consumers/includes/filter_apptype.html:3
+msgid "Mobile"
+msgstr "Móvil"
+
+#: consumers/templates/consumers/includes/filter_enabled.html:2
+msgid "Enabled"
+msgstr "Habilitado"
+
+#: consumers/templates/consumers/includes/filter_enabled.html:3
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#: consumers/templates/consumers/includes/filter_time.html:2
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:2
+msgid "Last Hour"
+msgstr "Última hora"
+
+#: consumers/templates/consumers/includes/filter_time.html:3
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:3
+msgid "Last Day"
+msgstr "Último día"
+
+#: consumers/templates/consumers/includes/filter_time.html:4
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:4
+msgid "Last Week"
+msgstr "La semana pasada"
+
+#: consumers/templates/consumers/includes/filter_time.html:5
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:5
+msgid "Last Month"
+msgstr "Último mes"
+
+#: consumers/templates/consumers/includes/filter_time.html:6
+#: entitlementrequests/templates/entitlementrequests/includes/filter_time.html:6
+msgid "Last Year"
+msgstr "El año pasado"
+
+#: consumers/templates/consumers/index.html:47
+#: users/templates/users/index.html:49
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: consumers/templates/consumers/index.html:49
+msgid "Total number of consumers"
+msgstr "Número total de consumidores"
+
+#: consumers/templates/consumers/index.html:50
+msgid "Total number of unique developer email addresses"
+msgstr "Número total de direcciones de correo electrónico de desarrolladores únicas"
+
+#: consumers/templates/consumers/index.html:51
+msgid "Total number of unique consumer names"
+msgstr "Número total de nombres de consumidores únicos"
+
+#: consumers/templates/consumers/index.html:57
+msgid "ID"
+msgstr "Identificación"
+
+#: consumers/templates/consumers/index.html:61
+#: entitlementrequests/templates/entitlementrequests/index.html:31
+#: entitlementrequests/templates/entitlementrequests/index.html:32
+#: users/templates/users/detail.html:100 users/templates/users/index.html:60
+msgid "Action"
+msgstr "Acción"
+
+#: customers/templates/customers/create.html:10
+#, fuzzy
+msgid "Create Customer"
+msgstr "Crear cliente"
+
+#: customers/templates/customers/create.html:31
+msgid "username"
+msgstr "nombre de usuario"
+
+#: customers/templates/customers/create.html:38
+msgid "customer number"
+msgstr "número de cliente"
+
+#: customers/templates/customers/create.html:48
+#, fuzzy
+#| msgid "legal_name"
+msgid "legal name"
+msgstr "Nombre_juridico"
+
+#: customers/templates/customers/create.html:55
+msgid "mobile phone number"
+msgstr "teléfono móvil"
+
+#: customers/templates/customers/create.html:62
+#: users/templates/users/invitation.html:45
+msgid "email"
+msgstr "correo electrónico"
+
+#: customers/templates/customers/create.html:72
+#, fuzzy
+#| msgid "face_image_url"
+msgid "face image url"
+msgstr "URL de la imagen de la cara"
+
+#: customers/templates/customers/create.html:79
+#, fuzzy
+#| msgid "face_image_date"
+msgid "face image date"
+msgstr "fecha de la imagen de la cara"
+
+#: customers/templates/customers/create.html:89
+#, fuzzy
+#| msgid "date_of_birth"
+msgid "date of birth"
+msgstr "fecha de nacimiento"
+
+#: customers/templates/customers/create.html:96
+#, fuzzy
+#| msgid "relationship_status"
+msgid "relationship status"
+msgstr "estado civil"
+
+#: customers/templates/customers/create.html:106
+msgid "dependants"
+msgstr "personas a cargo"
+
+#: customers/templates/customers/create.html:113
+#, fuzzy
+#| msgid "dob_of_dependants"
+msgid "dob of dependants"
+msgstr "dob de dependientes"
+
+#: customers/templates/customers/create.html:123
+#, fuzzy
+#| msgid "credit_rating_rating"
+msgid "credit rating rating"
+msgstr "calificación crediticia"
+
+#: customers/templates/customers/create.html:130
+#, fuzzy
+#| msgid "credit_rating_source"
+msgid "credit rating source"
+msgstr "fuente de calificación crediticia"
+
+#: customers/templates/customers/create.html:138
+#, fuzzy
+#| msgid "credit_limit_currency"
+msgid "credit limit currency"
+msgstr "moneda límite de crédito"
+
+#: customers/templates/customers/create.html:145
+#, fuzzy
+#| msgid "credit_limit_amount"
+msgid "credit limit amount"
+msgstr "importe del límite de crédito"
+
+#: customers/templates/customers/create.html:155
+#, fuzzy
+#| msgid "highest_education_attained"
+msgid "highest education attained"
+msgstr "mayor_educación_alcanzada"
+
+#: customers/templates/customers/create.html:162
+#, fuzzy
+#| msgid "employment_status"
+msgid "employment status"
+msgstr "Estado de Empleo"
+
+#: customers/templates/customers/create.html:172
+#, fuzzy
+#| msgid "kyc_status"
+msgid "kyc status"
+msgstr "estado de kyc"
+
+#: customers/templates/customers/create.html:179
+#, fuzzy
+#| msgid "last_ok_date"
+msgid "last ok date"
+msgstr "última fecha aceptable"
+
+#: dynamicendpoints/templates/dynamicendpoints/index.html:10
+msgid "ENDPOINT ID"
+msgstr "ID DE PUNTO FINAL"
+
+#: dynamicendpoints/templates/dynamicendpoints/index.html:13
+msgid "SWAGGER STRING"
+msgstr "CUERDA SWAGGER"
+
+#: dynamicendpoints/templates/dynamicendpoints/index.html:33
+#, fuzzy
+#| msgid "Created"
+msgid "Create"
+msgstr "Creado"
+
+#: dynamicendpoints/templates/dynamicendpoints/index.html:33
+msgid "saved."
+msgstr "salvado."
+
+#: dynamicendpoints/templates/dynamicendpoints/index.html:40
+#: users/templates/users/detail.html:114 webui/templates/webui/index.html:49
+msgid "Delete"
+msgstr "Eliminar"
+
+#: entitlementrequests/templates/entitlementrequests/index.html:27
+msgid "Role Name"
+msgstr "Nombre del Papel"
+
+#: entitlementrequests/templates/entitlementrequests/index.html:28
+msgid "User name"
+msgstr "Nombre de usuario"
+
+#: entitlementrequests/templates/entitlementrequests/index.html:29
+msgid "Bank ID"
+msgstr "Id. de banco"
+
+#: methodrouting/templates/methodrouting/index.html:7
+#, fuzzy
+#| msgid "Method Routings"
+msgid "Method Routing"
+msgstr "Enrutamiento de métodos"
+
+#: methodrouting/templates/methodrouting/index.html:10
+#, fuzzy
+#| msgid "Connector Metrics"
+msgid "Method Name"
+msgstr "Métricas del conector"
+
+#: methodrouting/templates/methodrouting/index.html:13
+#: metrics/templates/metrics/connector.html:87
+#, fuzzy
+#| msgid "Connector Metrics"
+msgid "Connector Name"
+msgstr "Métricas del conector"
+
+#: methodrouting/templates/methodrouting/index.html:16
+msgid "Pattern"
+msgstr "Patrona"
+
+#: methodrouting/templates/methodrouting/index.html:19
+msgid "Is Match"
+msgstr "es partido"
+
+#: methodrouting/templates/methodrouting/index.html:22
+msgid "Parameters"
+msgstr "Parámetros"
+
+#: methodrouting/templates/methodrouting/index.html:25
+msgid "Method ID"
+msgstr "Identificación del método"
+
+#: methodrouting/templates/methodrouting/index.html:41
+#: methodrouting/templates/methodrouting/index.html:50
+#: methodrouting/templates/methodrouting/index.html:55
+#: methodrouting/templates/methodrouting/index.html:59
+msgid "mapped"
+msgstr "mapeada"
+
+
+#: methodrouting/templates/methodrouting/index.html:42
+#: methodrouting/templates/methodrouting/index.html:49
+#: methodrouting/templates/methodrouting/index.html:60
+msgid "internal"
+msgstr "interna"
+
+#: methodrouting/templates/methodrouting/index.html:43
+#: methodrouting/templates/methodrouting/index.html:54
+#: methodrouting/templates/methodrouting/index.html:58
+msgid "kafka_vSept2018"
+msgstr "kafka_vseptiembre2018"
+
+
+#: methodrouting/templates/methodrouting/index.html:44
+#: methodrouting/templates/methodrouting/index.html:56
+#: methodrouting/templates/methodrouting/index.html:61
+msgid "akka_vDec2018"
+msgstr "akka_vdiciembre2018"
+
+
+#: methodrouting/templates/methodrouting/index.html:45
+#: methodrouting/templates/methodrouting/index.html:53
+#: methodrouting/templates/methodrouting/index.html:62
+msgid "rest_vMar2019"
+msgstr "rest_vMar2019"
+
+#: methodrouting/templates/methodrouting/index.html:46
+#: methodrouting/templates/methodrouting/index.html:52
+#: methodrouting/templates/methodrouting/index.html:63
+msgid "kafka_vMay2019"
+msgstr "kafka_vmayo2019"
+
+
+#: methodrouting/templates/methodrouting/index.html:47
+#: methodrouting/templates/methodrouting/index.html:51
+msgid "stored_procedure_vDec2019"
+msgstr "procedimiento_almacenado_vdic2019"
+
+
+#: metrics/templates/metrics/api.html:12
+#: metrics/templates/metrics/connector.html:12
+#: metrics/templates/metrics/custom_summary.html:38
+#: metrics/templates/metrics/daily_summary.html:37
+#: metrics/templates/metrics/hourly_summary.html:35
+#: metrics/templates/metrics/monthly_summary.html:38
+#: metrics/templates/metrics/quarterly_summary.html:36
+#: metrics/templates/metrics/yearly_summary.html:38
+msgid "Filter"
+msgstr "Filtrar"
+
+#: metrics/templates/metrics/api.html:24
+msgid "from date"
+msgstr "desde fecha"
+
+#: metrics/templates/metrics/api.html:31
+#: metrics/templates/metrics/connector.html:31
+#: metrics/templates/metrics/custom_summary.html:57
+#: metrics/templates/metrics/daily_summary.html:50
+#: metrics/templates/metrics/hourly_summary.html:48
+#: metrics/templates/metrics/monthly_summary.html:51
+msgid "to_date"
+msgstr "fecha hasta"
+
+#: metrics/templates/metrics/api.html:38
+#: metrics/templates/metrics/connector.html:38
+msgid "limit"
+msgstr "Límite"
+
+#: metrics/templates/metrics/api.html:45
+#: metrics/templates/metrics/connector.html:45
+msgid "offset"
+msgstr "compensación"
+
+#: metrics/templates/metrics/api.html:55
+#, fuzzy
+#| msgid "Consumers"
+msgid "consumer id"
+msgstr "Consumidoras"
+
+#: metrics/templates/metrics/api.html:63
+msgid "user_id"
+msgstr "id_usuario"
+
+#: metrics/templates/metrics/api.html:71
+msgid "anon"
+msgstr "Anón"
+
+#: metrics/templates/metrics/api.html:79
+msgid "app_name"
+msgstr "nombre de la aplicación"
+
+#: metrics/templates/metrics/api.html:90
+msgid "verb"
+msgstr "verbo"
+
+#: metrics/templates/metrics/api.html:98
+msgid "url"
+msgstr "url"
+
+#: metrics/templates/metrics/api.html:108
+msgid "implemented by partial function"
+msgstr "implementado por función parcial"
+
+#: metrics/templates/metrics/api.html:116
+msgid "implemented in version"
+msgstr "implementado en versión"
+
+#: metrics/templates/metrics/api.html:123
+#: metrics/templates/metrics/connector.html:75
+#: metrics/templates/metrics/custom_summary.html:69
+#: metrics/templates/metrics/daily_summary.html:62
+#: metrics/templates/metrics/hourly_summary.html:60
+#: metrics/templates/metrics/monthly_summary.html:72
+#: metrics/templates/metrics/quarterly_summary.html:61
+#: metrics/templates/metrics/weekly_summary.html:63
+#: metrics/templates/metrics/yearly_summary.html:63
+msgid "Update filter"
+msgstr "Actualizar Filtro"
+
+#: metrics/templates/metrics/api.html:130
+#: metrics/templates/metrics/api_summary_partial_function.html:6
+msgid "List"
+msgstr "Lista"
+
+#: metrics/templates/metrics/api.html:131
+#: metrics/templates/metrics/api_summary_partial_function.html:7
+msgid "Summary by Partial Function"
+msgstr "Resumen por Función Parcial"
+
+#: metrics/templates/metrics/api.html:143
+msgid "Verb"
+msgstr "Verbo"
+
+#: metrics/templates/metrics/api.html:144
+msgid "URL"
+msgstr "URL"
+
+#: metrics/templates/metrics/api.html:145
+#: metrics/templates/metrics/connector.html:86
+msgid "Date"
+msgstr "Fecha"
+
+#: metrics/templates/metrics/api.html:146
+#, fuzzy
+#| msgid "Configurations"
+msgid "Duration(ms)"
+msgstr "Configuraciones"
+
+#: metrics/templates/metrics/api.html:147
+msgid "Details"
+msgstr "Descripción"
+
+#: metrics/templates/metrics/api.html:162
+msgid "User Name"
+msgstr "Nombre de Usuario"
+
+#: metrics/templates/metrics/api.html:163 users/templates/users/detail.html:11
+#, fuzzy
+#| msgid "Users"
+msgid "User ID"
+msgstr "Usuarias"
+
+#: metrics/templates/metrics/api.html:166
+#, fuzzy
+#| msgid "Consumers"
+msgid "Consumer ID"
+msgstr "Consumidoras"
+
+#: metrics/templates/metrics/api.html:167
+msgid "Implemented by Partial Function"
+msgstr "Implementado por Función Parcial"
+
+#: metrics/templates/metrics/api.html:168
+msgid "Implemented In Version"
+msgstr "Implementado en versión"
+
+#: metrics/templates/metrics/connector.html:24
+msgid "from_date"
+msgstr "partir de la fecha"
+
+#: metrics/templates/metrics/connector.html:55
+msgid "connector_name"
+msgstr "conector_nombre"
+
+#: metrics/templates/metrics/connector.html:62
+msgid "function_name"
+msgstr "nombre de la función"
+
+#: metrics/templates/metrics/connector.html:69
+msgid "correlation_id"
+msgstr "correlación_id"
+
+#: metrics/templates/metrics/connector.html:88
+msgid "Function Name"
+msgstr "Nombre de la función"
+
+#: metrics/templates/metrics/connector.html:89
+msgid "Correlation ID"
+msgstr "Id. de correlación"
+
+#: metrics/templates/metrics/connector.html:90
+msgid "Duration (ms)"
+msgstr "Duración (ms)"
+
+#: metrics/templates/metrics/custom_summary.html:10
+#: metrics/templates/metrics/daily_summary.html:11
+#: metrics/templates/metrics/hourly_summary.html:9
+#: metrics/templates/metrics/monthly_summary.html:10
+#: metrics/templates/metrics/quarterly_summary.html:10
+#: metrics/templates/metrics/weekly_summary.html:10
+#: metrics/templates/metrics/yearly_summary.html:10
+msgid "API Usage Report"
+msgstr "LACC usage report"
+
+#: metrics/templates/metrics/custom_summary.html:11
+#: metrics/templates/metrics/daily_summary.html:12
+#: metrics/templates/metrics/hourly_summary.html:10
+#: metrics/templates/metrics/monthly_summary.html:11
+#: metrics/templates/metrics/weekly_summary.html:11
+#: metrics/templates/metrics/yearly_summary.html:11
+msgid "API instance"
+msgstr "Instancia de API"
+
+#: metrics/templates/metrics/custom_summary.html:18
+#: metrics/templates/metrics/daily_summary.html:17
+#: metrics/templates/metrics/hourly_summary.html:15
+#: metrics/templates/metrics/monthly_summary.html:18
+#: metrics/templates/metrics/quarterly_summary.html:16
+#: metrics/templates/metrics/weekly_summary.html:18
+#: metrics/templates/metrics/yearly_summary.html:18
+msgid "Year"
+msgstr "Lo que va"
+
+#: metrics/templates/metrics/custom_summary.html:19
+#: metrics/templates/metrics/daily_summary.html:18
+#: metrics/templates/metrics/hourly_summary.html:16
+#: metrics/templates/metrics/monthly_summary.html:19
+#: metrics/templates/metrics/quarterly_summary.html:17
+#: metrics/templates/metrics/weekly_summary.html:19
+#: metrics/templates/metrics/yearly_summary.html:19
+msgid "Quarter"
+msgstr "Trimestre"
+
+#: metrics/templates/metrics/custom_summary.html:20
+#: metrics/templates/metrics/daily_summary.html:19
+#: metrics/templates/metrics/hourly_summary.html:17
+#: metrics/templates/metrics/monthly_summary.html:20
+#: metrics/templates/metrics/quarterly_summary.html:18
+#: metrics/templates/metrics/weekly_summary.html:20
+#: metrics/templates/metrics/yearly_summary.html:20
+msgid "Month"
+msgstr "Mes"
+
+#: metrics/templates/metrics/custom_summary.html:21
+#: metrics/templates/metrics/daily_summary.html:20
+#: metrics/templates/metrics/hourly_summary.html:18
+#: metrics/templates/metrics/monthly_summary.html:21
+#: metrics/templates/metrics/quarterly_summary.html:19
+#: metrics/templates/metrics/weekly_summary.html:21
+#: metrics/templates/metrics/yearly_summary.html:21
+msgid "Week"
+msgstr "Semana"
+
+#: metrics/templates/metrics/custom_summary.html:22
+#: metrics/templates/metrics/daily_summary.html:21
+#: metrics/templates/metrics/hourly_summary.html:19
+#: metrics/templates/metrics/monthly_summary.html:22
+#: metrics/templates/metrics/quarterly_summary.html:20
+#: metrics/templates/metrics/weekly_summary.html:22
+#: metrics/templates/metrics/yearly_summary.html:22
+msgid "Day"
+msgstr "Dia"
+
+#: metrics/templates/metrics/custom_summary.html:24
+#: metrics/templates/metrics/daily_summary.html:23
+#: metrics/templates/metrics/hourly_summary.html:21
+#: metrics/templates/metrics/monthly_summary.html:24
+#: metrics/templates/metrics/quarterly_summary.html:22
+#: metrics/templates/metrics/weekly_summary.html:24
+#: metrics/templates/metrics/yearly_summary.html:24
+#, fuzzy
+#| msgid "Consumers"
+msgid "Custom"
+msgstr "Consumidoras"
+
+#: metrics/templates/metrics/custom_summary.html:50
+msgid "from_date_custom"
+msgstr "desde la fecha personalizada"
+
+#: metrics/templates/metrics/custom_summary.html:64
+#: metrics/templates/metrics/daily_summary.html:57
+#: metrics/templates/metrics/hourly_summary.html:55
+#: metrics/templates/metrics/monthly_summary.html:58
+#: metrics/templates/metrics/quarterly_summary.html:56
+#: metrics/templates/metrics/weekly_summary.html:58
+#: metrics/templates/metrics/yearly_summary.html:58
+msgid "Include System Calls"
+msgstr "Incluir llamadas del sistema"
+
+#: metrics/templates/metrics/custom_summary.html:85
+#: metrics/templates/metrics/daily_summary.html:78
+#: metrics/templates/metrics/monthly_summary.html:88
+#: metrics/templates/metrics/quarterly_summary.html:77
+#: metrics/templates/metrics/weekly_summary.html:79
+#: metrics/templates/metrics/yearly_summary.html:79
+msgid "Total API calls"
+msgstr "Total de llamadas de API"
+
+#: metrics/templates/metrics/custom_summary.html:89
+#: metrics/templates/metrics/daily_summary.html:82
+#: metrics/templates/metrics/hourly_summary.html:80
+#: metrics/templates/metrics/monthly_summary.html:92
+#: metrics/templates/metrics/quarterly_summary.html:81
+#: metrics/templates/metrics/weekly_summary.html:83
+#: metrics/templates/metrics/yearly_summary.html:83
+msgid "API calls made using API Explorer"
+msgstr "Llamadas API realizadas con API Explorer"
+
+#: metrics/templates/metrics/custom_summary.html:94
+msgid "Calls per day (last 30 days)"
+msgstr "Llamadas por día (últimos 30 días)"
+
+#: metrics/templates/metrics/custom_summary.html:98
+#: metrics/templates/metrics/monthly_summary.html:101
+#: metrics/templates/metrics/quarterly_summary.html:94
+#: metrics/templates/metrics/weekly_summary.html:92
+#: metrics/templates/metrics/yearly_summary.html:92
+msgid "Average number of calls per day"
+msgstr "Número promedio de llamadas"
+
+#: metrics/templates/metrics/custom_summary.html:102
+#: metrics/templates/metrics/daily_summary.html:95
+#: metrics/templates/metrics/hourly_summary.html:96
+#: metrics/templates/metrics/monthly_summary.html:105
+#: metrics/templates/metrics/quarterly_summary.html:98
+#: metrics/templates/metrics/weekly_summary.html:96
+#: metrics/templates/metrics/yearly_summary.html:96
+msgid "Average response time (ms)"
+msgstr "Tiempo de Respuesta Promedio(ms)"
+
+#: metrics/templates/metrics/custom_summary.html:106
+#: metrics/templates/metrics/daily_summary.html:100
+#: metrics/templates/metrics/hourly_summary.html:101
+#: metrics/templates/metrics/monthly_summary.html:109
+#: metrics/templates/metrics/quarterly_summary.html:103
+#: metrics/templates/metrics/weekly_summary.html:101
+#: metrics/templates/metrics/yearly_summary.html:101
+msgid "Median time from consumer registration to first API call"
+msgstr "Tiempo medio desde el registro del consumidor hasta la primera llamada a la API"
+
+
+#: metrics/templates/metrics/custom_summary.html:111
+#: metrics/templates/metrics/daily_summary.html:105
+#: metrics/templates/metrics/hourly_summary.html:106
+#: metrics/templates/metrics/monthly_summary.html:114
+#: metrics/templates/metrics/quarterly_summary.html:108
+#: metrics/templates/metrics/weekly_summary.html:106
+#: metrics/templates/metrics/yearly_summary.html:106
+msgid "Apps with distinct names"
+msgstr "Aplicaciones con nombres distintos"
+
+#: metrics/templates/metrics/custom_summary.html:115
+#: metrics/templates/metrics/monthly_summary.html:118
+msgid "Distinct developer email addresses"
+msgstr "Distintas direcciones de correo electrónico para desarrolladores"
+
+#: metrics/templates/metrics/custom_summary.html:120
+#: metrics/templates/metrics/daily_summary.html:114
+#: metrics/templates/metrics/hourly_summary.html:115
+#: metrics/templates/metrics/monthly_summary.html:123
+#: metrics/templates/metrics/quarterly_summary.html:117
+#: metrics/templates/metrics/weekly_summary.html:115
+#: metrics/templates/metrics/yearly_summary.html:115
+msgid "Active Apps (at least one API call in the period)"
+msgstr "Aplicaciones activas (al menos una llamada API en el periodo)"
+
+#: metrics/templates/metrics/custom_summary.html:124
+#: metrics/templates/metrics/daily_summary.html:118
+#: metrics/templates/metrics/monthly_summary.html:127
+#: metrics/templates/metrics/quarterly_summary.html:121
+#: metrics/templates/metrics/weekly_summary.html:119
+#: metrics/templates/metrics/yearly_summary.html:119
+msgid "Top 10 APIs"
+msgstr "Las 10 mejores API"
+
+#: metrics/templates/metrics/custom_summary.html:128
+#: metrics/templates/metrics/daily_summary.html:122
+#: metrics/templates/metrics/monthly_summary.html:131
+#: metrics/templates/metrics/quarterly_summary.html:125
+#: metrics/templates/metrics/weekly_summary.html:123
+#: metrics/templates/metrics/yearly_summary.html:123
+#, fuzzy
+#| msgid "Consumers"
+msgid "Top 10 Consumers"
+msgstr "Las 10 principales consumidoras"
+
+#: metrics/templates/metrics/custom_summary.html:132
+#: metrics/templates/metrics/daily_summary.html:126
+#: metrics/templates/metrics/hourly_summary.html:123
+#: metrics/templates/metrics/monthly_summary.html:135
+#: metrics/templates/metrics/quarterly_summary.html:129
+#: metrics/templates/metrics/weekly_summary.html:127
+#: metrics/templates/metrics/yearly_summary.html:127
+msgid "Top Warehouse APIs"
+msgstr "Principales API de almacén"
+
+#: metrics/templates/metrics/custom_summary.html:136
+#: metrics/templates/metrics/daily_summary.html:130
+#: metrics/templates/metrics/monthly_summary.html:139
+#: metrics/templates/metrics/quarterly_summary.html:133
+#: metrics/templates/metrics/weekly_summary.html:131
+#: metrics/templates/metrics/yearly_summary.html:131
+msgid "Top Apps using data warehouse"
+msgstr "Principales aplicaciones que utilizan el almacén de datos"
+
+#: metrics/templates/metrics/custom_summary.html:140
+#: metrics/templates/metrics/daily_summary.html:134
+#: metrics/templates/metrics/monthly_summary.html:143
+#: metrics/templates/metrics/quarterly_summary.html:137
+#: metrics/templates/metrics/weekly_summary.html:135
+#: metrics/templates/metrics/yearly_summary.html:135
+msgid "Total number of CanSearchWarehouse users"
+msgstr "Número total de usuarios de CanSearchWarehouse"
+
+#: metrics/templates/metrics/custom_summary.html:145
+#: metrics/templates/metrics/daily_summary.html:139
+#: metrics/templates/metrics/hourly_summary.html:132
+#: metrics/templates/metrics/monthly_summary.html:148
+#: metrics/templates/metrics/quarterly_summary.html:142
+#: metrics/templates/metrics/weekly_summary.html:140
+#: metrics/templates/metrics/yearly_summary.html:140
+msgid "Users with role CanSearchWarehouse"
+msgstr "Usuarios con rol CanSearchWarehouse"
+
+#: metrics/templates/metrics/custom_summary.html:146
+msgid "N/A"
+msgstr "N/A"
+
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "Period"
+msgstr "Período"
+
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "From"
+msgstr "Desde"
+
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "to"
+msgstr "a"
+
+#: metrics/templates/metrics/daily_summary.html:87
+msgid "Calls per hour"
+msgstr "Llamadas por Hora"
+
+#: metrics/templates/metrics/daily_summary.html:91
+msgid "Average number of calls per hour"
+msgstr "Número promedio de llamadas"
+
+#: metrics/templates/metrics/daily_summary.html:109
+#: metrics/templates/metrics/hourly_summary.html:110
+#: metrics/templates/metrics/quarterly_summary.html:112
+#: metrics/templates/metrics/weekly_summary.html:110
+msgid "Apps with distinct developer email addresses"
+msgstr "Aplicaciones con distintas direcciones de correo electrónico de desarrollador"
+
+
+#: metrics/templates/metrics/hourly_summary.html:20
+msgid "Hour"
+msgstr "Hora"
+
+#: metrics/templates/metrics/hourly_summary.html:76
+#, fuzzy
+#| msgid "Metrics"
+msgid "API calls"
+msgstr "Métricas de la API"
+
+#: metrics/templates/metrics/hourly_summary.html:84
+#: metrics/templates/metrics/hourly_summary.html:88
+msgid "Calls per minute"
+msgstr "Llamadas por minuto"
+
+#: metrics/templates/metrics/hourly_summary.html:92
+msgid "Average number of calls hour"
+msgstr "Número promedio de llamadas"
+
+#: metrics/templates/metrics/hourly_summary.html:119
+msgid "Top APIs"
+msgstr "Principales APIs"
+
+#: metrics/templates/metrics/hourly_summary.html:127
+msgid "Top apps using the data warehouse"
+msgstr "Principales aplicaciones que utilizan el almacén de datos"
+
+#: metrics/templates/metrics/hourly_summary.html:137
+msgid "CanSearchWarehouse users"
+msgstr "Usuarios de CanSearchWarehouse"
+
+#: metrics/templates/metrics/monthly_summary.html:97
+#: metrics/templates/metrics/weekly_summary.html:88
+msgid "Calls per day"
+msgstr "Maximo de llamadas por día"
+
+#: metrics/templates/metrics/quarterly_summary.html:86
+#: metrics/templates/metrics/yearly_summary.html:88
+msgid "Calls per month"
+msgstr "llamadas por mes"
+
+#: users/templates/users/detail.html:8
+#, fuzzy
+#| msgid "Users"
+msgid "User"
+msgstr "Usuarias"
+
+#: users/templates/users/detail.html:16 users/templates/users/index.html:59
+#: users/templates/users/invitation.html:71
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: users/templates/users/detail.html:21
+msgid "Provider"
+msgstr "Proveedor"
+
+#: users/templates/users/detail.html:26
+msgid "Provider ID"
+msgstr "ID de es proveedor"
+
+#: users/templates/users/detail.html:31
+msgid "Deleted"
+msgstr "Eliminado"
+
+#: users/templates/users/detail.html:36
+#: users/templates/users/includes/filter_locked.html:3
+msgid "Locked"
+msgstr "Bloqueado"
+
+#: users/templates/users/detail.html:47
+msgid "Delete User"
+msgstr "Eliminar usuario"
+
+#: users/templates/users/detail.html:51
+msgid "Unlock User"
+msgstr "Desbloquear usuario"
+
+#: users/templates/users/detail.html:62
+#, fuzzy
+#| msgid "Entitlement Requests"
+msgid "Add Entitlement"
+msgstr "Solicitudes de derechos"
+
+#: users/templates/users/detail.html:69 users/templates/users/detail.html:98
+msgid "Role name"
+msgstr "Nombre de rol"
+
+#: users/templates/users/detail.html:94
+#, fuzzy
+#| msgid "Entitlement Requests"
+msgid "Entitlements"
+msgstr "Solicitudes de derechos"
+
+#: users/templates/users/includes/filter_locked.html:2
+msgid "Active"
+msgstr "Activo"
+
+#: users/templates/users/includes/filter_pagination.html:4
+msgid "Offset"
+msgstr "Desplazamiento"
+
+#: users/templates/users/includes/filter_pagination.html:8
+msgid "Limit"
+msgstr "Límite"
+
+#: users/templates/users/includes/filter_role.html:8
+msgid "All Roles"
+msgstr "Todas las Funciones"
+
+#: users/templates/users/index.html:11
+msgid "Filters"
+msgstr "Filtros"
+
+#: users/templates/users/index.html:44
+msgid "Pagination"
+msgstr "Paginación"
+
+#: users/templates/users/index.html:51
+msgid "Total number of users"
+msgstr "Total de usuarios"
+
+#: users/templates/users/index.html:57
+#, fuzzy
+#| msgid "Users"
+msgid "User Id"
+msgstr "Usuarias"
+
+#: users/templates/users/index.html:58
+#, fuzzy
+#| msgid "Users"
+msgid "Username"
+msgstr "Usuarias"
+
+#: users/templates/users/index.html:69
+msgid "View"
+msgstr "Ver"
+
+#: users/templates/users/invitation.html:29
+#: users/templates/users/invitation.html:69
+msgid "First Name"
+msgstr "Nombre"
+
+#: users/templates/users/invitation.html:36
+#: users/templates/users/invitation.html:70
+msgid "Last Name"
+msgstr "Apellido"
+
+#: users/templates/users/invitation.html:52
+#: users/templates/users/invitation.html:72
+msgid "company"
+msgstr "empresa"
+
+#: users/templates/users/invitation.html:59
+#: users/templates/users/invitation.html:73
+msgid "country"
+msgstr "países"
+
+#: users/templates/users/invitation.html:74
+msgid "status"
+msgstr "estado"
+
+#: webui/templates/webui/index.html:10
+msgid "WEBUI"
+msgstr "WEBUI"
+
+#: webui/templates/webui/index.html:13
+#, fuzzy
+#| msgid "Webui Props"
+msgid "Web UI Props Name"
+msgstr "Accesorios webui"
+
+#: webui/templates/webui/index.html:16
+#, fuzzy
+#| msgid "Webui Props"
+msgid "Web UI Props Value"
+msgstr "Accesorios webui"
+
+#: webui/templates/webui/index.html:19
+#, fuzzy
+#| msgid "Webui Props"
+msgid "Web UI Props Id"
+msgstr "Accesorios webui"
+
+#: webui/templates/webui/index.html:22
+msgid "Save Value"
+msgstr "Guardar valor"
+
+
+#: webui/templates/webui/index.html:48
+msgid "Save"
+msgstr "Ahorrar"
+

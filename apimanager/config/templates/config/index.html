@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
 {% block content %}
 <div id="config">
-	<h1>Config</h1>
+	<h1>{% trans "Config" %}</h1>
 
-	<p>The configuration of the API</p>
+	<p>{% trans "The configuration of the API" %}</p>
 
 	<pre id="config-json">
 	</pre>

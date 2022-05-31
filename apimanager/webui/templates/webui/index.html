@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
 {% block content %}
     <div id="webui">
         <div id="webui_list">
-            <h1>WEBUI</h1>
+            <h1>{% trans "WEBUI" %}</h1>
             <div class="row">
                 <div class="col-xs-12 col-sm-3">
-                    <label class="form-group">Web UI Props Name:</label> <br>
+                    <label class="form-group">{% trans "Web UI Props Name" %}:</label> <br>
                 </div>
                 <div class="col-xs-12 col-sm-3">
-                    <label class="form-group">Web UI Props Value:</label> <br>
+                    <label class="form-group">{% trans "Web UI Props Value" %}:</label> <br>
                 </div>
 				<div class="col-xs-12 col-sm-3">
-                    <label class="form-group">Web UI Props Id:</label> <br>
+                    <label class="form-group">{% trans "Web UI Props Id" %}:</label> <br>
                 </div>
                 <div class="col-sm-12 col-sm-3">
-                    <label class="form-group">Save Value:</label> <br>
+                    <label class="form-group">{% trans "Save Value" %}:</label> <br>
                 </div>
             </div>
             <form method="post">
@@ -44,8 +45,8 @@
 							</div>
                             <div class="col-sm-12 col-sm-3">
                                 <div class="form-group">
-                                    <button class="btn btn-primary btn-green forSave">Save</button>
-                                    <button class="btn btn-primary btn-red forDelete">Delete</button>
+                                    <button class="btn btn-primary btn-green forSave">{% trans "Save" %}</button>
+                                    <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
                                 </div>
                             </div>
                         </div>
