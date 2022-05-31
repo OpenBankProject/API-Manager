@@ -20,96 +20,96 @@ msgstr ""
 
 #: base/templates/base.html:48
 msgid "Home"
-msgstr "होमपेज"
+msgstr "Startseite"
 
 #: base/templates/base.html:50 consumers/templates/consumers/index.html:10
 msgid "Consumers"
-msgstr "उपभोक्‍ता"
+msgstr "Verbraucher"
 
 #: base/templates/base.html:52
 msgid "Entitlement Requests"
-msgstr "एंटाइटेलमेंट अनुरोध"
+msgstr "Berechtigungsanfragen"
 
 #: base/templates/base.html:57
 msgid "Users"
-msgstr "उपयोगकर्ता"
+msgstr "Verbindung zu WP-Benutzern"
 
 #: base/templates/base.html:59
 msgid "All"
-msgstr "सभी"
+msgstr "Alle"
 
 #: base/templates/base.html:60
 msgid "My User"
-msgstr "मेरा उपयोगकर्ता"
+msgstr "Mein Benutzer"
 
 #: base/templates/base.html:61
 msgid "Invite Developer"
-msgstr "डेवलपर को आमंत्रित करें"
+msgstr "Entwickler einladen"
 
 #: base/templates/base.html:68
 msgid "Metrics"
-msgstr "मेट्रिक्स"
+msgstr "Metriken"
 
 #: base/templates/base.html:70
 msgid "API Metrics"
-msgstr "एपीआई मेट्रिक्स"
+msgstr "API-Metriken"
 
 #: base/templates/base.html:71
 msgid "Connector Metrics"
-msgstr "कनेक्टर मेट्रिक्स"
+msgstr "Konnektor-Metriken"
 
 #: base/templates/base.html:72
 msgid "KPI Dashboard"
-msgstr "केपीआई डैशबोर्ड"
+msgstr "KPI Dashboard"
 
 #: base/templates/base.html:79
 msgid "Resources"
-msgstr "संसाधन"
+msgstr "Ressourcen"
 
 #: base/templates/base.html:81
 msgid "Customers"
-msgstr "ग्राहक"
+msgstr "Kunden"
 
 #: base/templates/base.html:82
 msgid "Branches"
-msgstr "कार्यालयों की शाखाए"
+msgstr "Niederlassungen"
 
 #: base/templates/base.html:83
 msgid "ATMs"
-msgstr "एटीएम"
+msgstr "ATMs"
 
 #: base/templates/base.html:92
 msgid "Configurations"
-msgstr "कॉन्फ़िगरेशंस"
+msgstr "Konfigurationen"
 
 #: base/templates/base.html:94
 msgid "Config"
-msgstr "कॉन्फ़िग"
+msgstr "Konfig."
 
 #: base/templates/base.html:95
 msgid "Webui Props"
-msgstr "Webui प्रॉप्स"
+msgstr "Webui Requisiten"
 
 #: base/templates/base.html:96
 msgid "Method Routings"
-msgstr "विधि रूटिंग"
+msgstr "Methoden-Routings"
 
 #: base/templates/base.html:97
 msgid "Dynamic Endpoints"
-msgstr "डायनामिक एंडपॉइंट्स"
+msgstr "Dynamische Endpunkte"
 
 #: base/templates/base.html:98
 msgid "My API Collections"
-msgstr "मेरे एपीआई संग्रह"
+msgstr "Meine API-Sammlungen"
 
 #: base/templates/home.html:5
 msgid "Welcome to API Manager"
-msgstr "एपीआई प्रबंधक में आपका स्वागत है"
+msgstr "Willkommen bei API Manager"
 
 #: consumers/templates/consumers/index.html:47
 msgid "Statistics"
-msgstr "आँकड़े"
+msgstr "Statistiken"
 
 #: consumers/templates/consumers/index.html:49
 msgid "Total number of consumers"
-msgstr "उपभोक्ताओं की कुल संख्या"
+msgstr "Gesamtzahl der Verbraucher"

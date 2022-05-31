@@ -42,44 +42,44 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['lobby'].initial = json.dumps({
                             "monday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "tuesday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "wednesday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "thursday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "friday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "saturday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ],
                             "sunday": [
                                 {
-                                    "opening_time": "10:00",
-                                    "closing_time": "18:00"
+                                    "opening_time": "",
+                                    "closing_time": ""
                                 }
                             ]
                         }, indent=4)
@@ -106,13 +106,13 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             data = form.cleaned_data
             urlpath = '/banks/{}/atms'.format(data['bank_id'])
             payload ={
-                    "id": data["atm_id"],
+                "id": data["atm_id"],
                 "bank_id": data["bank_id"],
                 "name": data["name"],
                 "address": json.loads(data['address']),
                 "location": {
-                    "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else 37.0,
-                    "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else 110.0
+                    "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
+                    "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
                 },
                 "meta": {
                     "license": {
@@ -121,32 +121,32 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                     }
                 },
                 "monday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "tuesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "wednesday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "thursday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "friday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "saturday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "sunday": {
-                    "opening_time": "10:00",
-                    "closing_time": "18:00"
+                    "opening_time": "",
+                    "closing_time": ""
                 },
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
                 "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
@@ -275,27 +275,26 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            fields['lobby'].initial = json.dumps(result['lobby'], indent=4)
-            if result['supported_languages'].lower()=='en':
+            if result['supported_languages'][0].lower()=='en':
                 fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
-            elif result['supported_languages'].lower()=='fr':
+            elif result['supported_languages'][0].lower()=='fr':
                 fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
             else:
                 fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
             fields['supported_languages'].initial = result['supported_languages']
-            if result['supported_currencies'].lower()=='eur':
+            if result['supported_currencies'][0].lower()=='eur':
                   fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
-            elif result['supported_currencies'].lower()=='mxn':
+            elif result['supported_currencies'][0].lower()=='mxn':
                   fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
             else:
                   fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
             fields['supported_currencies'].initial = result['supported_currencies']
-            if result['notes'].lower()=='string1':
+            if result['notes'][0].lower()=='string1':
                   fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
             else:
                   fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
             fields['notes'].initial = result['notes']
-            if result['location_categories'].lower()=='atbi':
+            if result['location_categories'][0].lower()=='atbi':
                  fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
             else:
                  fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
@@ -309,48 +308,76 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         data = form.cleaned_data
         urlpath = '/banks/{}/atms/{}'.format(data["bank_id"],data["atm_id"])
         payload = {
-            #"id": data["atm_id"],
+            "id": data["atm_id"],
             "bank_id": data["bank_id"],
             "name": data["name"],
             "address": json.loads(data['address']),
             "location": {
-                "latitude": float(data["location_latitude"]),
-                "longitude": float(data["location_longitude"])
+                "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
+                "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
             },
             "meta": {
                 "license": {
-                    "id": data["meta_license_id"],
-                    "name": data["meta_license_name"]
+                "id": "ODbL-1.0",
+                "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
                 }
             },
-            "has_deposit_capability": data["has_deposit_capability"],
-            "accessibility_features": data["accessibility_features"],
-            "minimum_withdrawal": data["minimum_withdrawal"],
-            "branch_identification": data["branch_identification"],
-            "site_identification": data["site_identification"],
-            "site_name": data["site_name"],
-            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"],
-            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"],
-            "balance_inquiry_fee": data["balance_inquiry_fee"],
-            "services": data["services"],
-            "more_info": data["more_info"],
-            "located_at": data["located_at"],
-            "phone_number": data["phone_number"],
-            "supported_languages": data["supported_languages"],
-            "supported_currencies": data["supported_currencies"],
-            "notes": data["notes"],
-            "location_categories": data["location_categories"]
+            "monday": {
+                "opening_time": "",
+                "closing_time": ""
+            },
+            "tuesday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "wednesday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "thursday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "friday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "saturday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "sunday": {
+                "opening_time": "10:00",
+                "closing_time": "18:00"
+            },
+            "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
+            "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
+            "more_info": data["more_info"] if data["more_info"]!="" else "false",
+            "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
+            "supported_languages":[data["supported_languages"]],
+            "services":[data["services"]],
+            "accessibility_features":[data["accessibility_features"]],
+            "supported_currencies":[data["supported_currencies"]],
+            "notes":[data["notes"]],
+            "location_categories":[data["location_categories"]],
+            "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false",
+            "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
+            "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
+            "site_name": data["site_name"] if data["site_name"]!="" else "false",
+            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
+            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
+            "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false",
         }
         try:
             result = self.api.put(urlpath, payload=payload)
             if 'code' in result and result['code']>=400:
-                error_once_only(self.request, result['message'])
+                messages.error(self.request, result['message'])
                 return super(UpdateAtmsView, self).form_invalid(form)
         except APIError as err:
             messages.error(self.request, err)
             return super(UpdateAtmsView, self).form_invalid(form)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as e:
+            messages.error(self.request, e)
             return super(UpdateAtmsView, self).form_invalid(form)
         msg = 'Atm {} for Bank {} has been created successfully!'.format(  # noqa
             data["atm_id"], data["bank_id"])

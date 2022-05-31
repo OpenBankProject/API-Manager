@@ -1,9 +1,10 @@
 {% extends 'metrics/api.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block nav_tabs %}
-	<li><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">List</a></li>
-	<li class="active"><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">Summary by Partial Function</a></li>
+	<li><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">{% trans "List" %}</a></li>
+	<li class="active"><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">{% trans "Summary by Partial Function" %}</a></li>
 {% endblock nav_tabs %}
 
 {% block tab_content %}

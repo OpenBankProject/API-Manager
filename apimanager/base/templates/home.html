@@ -1,70 +1,70 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block content %}
-	<div class="home">
-		<h1>{% trans "Welcome to API Manager" %}</h1>
+<div class="home">
+	<h1>{% trans "Welcome to API Manager" %}</h1>
 
-		<!--<h1>Welcome to API Manager</h1>-->
-		<div class="well" id="intro">
-			<p>
-			This app gives you access to management functionality for the sandbox at <a href="{{ API_HOST }}">{{ API_HOST }}</a>. You have to <a href="{{ API_HOST }}/user_mgt/sign_up" title="Register at {{ API_HOST }}">register</a> an account before being able to proceed. The logged-in user needs to have specific roles granted to use the functionality.
-			</p>
-		</div>
+	<!--<h1>Welcome to API Manager</h1>-->
+	<div class="well" id="intro">
+		<p>
+			{% trans "This app gives you access to management functionality for the OBP instance at" %} <a href="{{ API_HOST }}">{{ API_HOST }}</a>. {% trans "You have to" %}<a href="{{ API_HOST }}/user_mgt/sign_up" title="Register at {{ API_HOST }}"> {% trans "register" %} </a> {% trans "an account before being able to proceed" %}.{% trans "The logged-in user needs to have specific roles granted to use the functionality." %}
+		</p>
+	</div>
 
 	{% if not user.is_authenticated %}
-		<div id="login">
-			<label for="authentication-select"><h2>Authenticate</h2></label>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3">
-					<select class="form-control" id="authentication-select">
-						<option value="">Choose ...</option>
-						<option value="oauth">OAuth 1/OpenID Connect</option>
-						<option value="directlogin">DirectLogin</option>
-						<option value="gatewaylogin">GatewayLogin</option>
-					</select>
+	<div id="login">
+		<label for="authentication-select"><h2>Authenticate</h2></label>
+		<div class="row">
+			<div class="col-xs-12 col-sm-3">
+				<select class="form-control" id="authentication-select">
+					<option value="">Choose ...</option>
+					<option value="oauth">OAuth 1/OpenID Connect</option>
+					<option value="directlogin">DirectLogin</option>
+					<option value="gatewaylogin">GatewayLogin</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 col-sm-9">
+				<div class="authentication-method" id="authenticate-oauth">
+					<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed to authentication server</a>
 				</div>
+				<div class="authentication-method" id="authenticate-directlogin">
+					<form action="{% url 'directlogin' %}" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username">Username:</label>
+							{{ directlogin_form.username }}
+						</div>
+						<div class="form-group">
+							<label for="password">Password:</label>
+							{{ directlogin_form.password }}
+						</div>
+						<!--<div class="form-group"style="visibility:hidden">
+                            <label for="consumer-key">Consumer Key:</label>
+                            {{ directlogin_form.consumer_key }}
+                        </div>-->
+						<button class="btn btn-primary">Login</button>
+					</form>
+				</div>
+				<div class="authentication-method" id="authenticate-gatewaylogin">
+					<form action="{% url 'gatewaylogin' %}" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username">Username:</label>
+							{{ gatewaylogin_form.username }}
+						</div>
+						<div class="form-group">
+							<label for="secret">Secret:</label>
+							{{ gatewaylogin_form.secret }}
+						</div>
+						<button class="btn btn-primary">Login</button>
+					</form>
 
-				<div class="col-xs-12 col-sm-9">
-					<div class="authentication-method" id="authenticate-oauth">
-						<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed to authentication server</a>
-					</div>
-					<div class="authentication-method" id="authenticate-directlogin">
-						<form action="{% url 'directlogin' %}" method="post">
-							{% csrf_token %}
-							<div class="form-group">
-								<label for="username">Username:</label>
-								{{ directlogin_form.username }}
-							</div>
-							<div class="form-group">
-								<label for="password">Password:</label>
-								{{ directlogin_form.password }}
-							</div>
-							<!--<div class="form-group"style="visibility:hidden">
-								<label for="consumer-key">Consumer Key:</label>
-								{{ directlogin_form.consumer_key }}
-							</div>-->
-							<button class="btn btn-primary">Login</button>
-						</form>
-					</div>
-					<div class="authentication-method" id="authenticate-gatewaylogin">
-						<form action="{% url 'gatewaylogin' %}" method="post">
-							{% csrf_token %}
-							<div class="form-group">
-								<label for="username">Username:</label>
-								{{ gatewaylogin_form.username }}
-							</div>
-							<div class="form-group">
-								<label for="secret">Secret:</label>
-								{{ gatewaylogin_form.secret }}
-							</div>
-							<button class="btn btn-primary">Login</button>
-						</form>
-
-					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	{% endif %}
 
-	</div>
-	{% endblock %}
+</div>
+{% endblock %}

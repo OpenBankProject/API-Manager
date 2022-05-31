@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Customers{% endblock page_title %}
 
 
 {% block content %}
 <div id="customers">
-    <h1>Create Customer</h1>
+    <h1>{% trans "Create Customer" %}</h1>
 
     <form action="{% url 'customers-create' %}" method="post">
         {% csrf_token %}
@@ -20,21 +21,21 @@
             <div class="col-xs-12 col-sm-4">
                 {% if form.bank_id.errors %}<div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.bank_id.label_tag }}
+                    <strong>{% trans "bank_id" %}</strong>
                     {{ form.bank_id }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
                 {% if form.username.errors %}<div class="alert alert-danger">{{ form.username.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.username.label_tag }}
+                    <strong>{% trans "username" %}</strong>
                     {{ form.username }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
                 {% if form.customer_number.errors %}<div class="alert alert-danger">{{ form.customer_number.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.customer_number.label_tag }}
+                    <strong>{% trans "customer_number" %}</strong>
                     {{ form.customer_number }}
                 </div>
             </div>
@@ -44,21 +45,21 @@
             <div class="col-xs-12 col-sm-4">
                 {% if form.legal_name.errors %}<div class="alert alert-danger">{{ form.legal_name.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.legal_name.label_tag }}
+                    <strong>{% trans "legal_name" %}</strong>
                     {{ form.legal_name }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
                 {% if form.mobile_phone_number.errors %}<div class="alert alert-danger">{{ form.mobile_phone_number.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.mobile_phone_number.label_tag }}
+                    <strong>{% trans "mobile_phone_number" %}</strong>
                     {{ form.mobile_phone_number }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
                 {% if form.email.errors %}<div class="alert alert-danger">{{ form.email.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.email.label_tag }}
+                    <strong>{% trans "email" %}</strong>
                     {{ form.email }}
                 </div>
             </div>
@@ -68,14 +69,14 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.face_image_url.errors %}<div class="alert alert-danger">{{ form.face_image_url.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.face_image_url.label_tag }}
+                    <strong>{% trans "face_image_url" %}</strong>
                     {{ form.face_image_url }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if form.face_image_date.errors %}<div class="alert alert-danger">{{ form.face_image_date.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.face_image_date.label_tag }}
+                    <strong>{% trans "face_image_date" %}</strong>
                     {{ form.face_image_date }}
                 </div>
             </div>
@@ -85,14 +86,14 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.date_of_birth.errors %}<div class="alert alert-danger">{{ form.date_of_birth.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.date_of_birth.label_tag }}
+                    <strong>{% trans "date_of_birth" %}</strong>
                     {{ form.date_of_birth }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if form.relationship_status.errors %}<div class="alert alert-danger">{{ form.relationship_status.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.relationship_status.label_tag }}
+                    <strong>{% trans "relationship_status" %}</strong>
                     {{ form.relationship_status }}
                 </div>
             </div>
@@ -102,14 +103,14 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.dependants.errors %}<div class="alert alert-danger">{{ form.dependants.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.dependants.label_tag }}
+                    <strong>{% trans "dependants" %}</strong>
                     {{ form.dependants }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if form.dob_of_dependants.errors %}<div class="alert alert-danger">{{ form.dob_of_dependants.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.dob_of_dependants.label_tag }}
+                    <strong>{% trans "dob_of_dependants" %}</strong>
                     {{ form.dob_of_dependants }}
                 </div>
             </div>
@@ -119,14 +120,14 @@
             <div class="col-xs-12 col-sm-6 col-md-3">
                 {% if form.credit_rating_rating.errors %}<div class="alert alert-danger">{{ form.credit_rating_rating.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.credit_rating_rating.label_tag }}
+                    <strong>{% trans "credit_rating_rating" %}</strong>
                     {{ form.credit_rating_rating }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
                 {% if form.credit_rating_source.errors %}<div class="alert alert-danger">{{ form.credit_rating_source.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.credit_rating_source.label_tag }}
+                    <strong>{% trans "credit_rating_source" %}</strong>
                     {{ form.credit_rating_source }}
                 </div>
             </div>
@@ -134,14 +135,14 @@
             <div class="col-xs-12 col-sm-6 col-md-3">
                 {% if form.credit_limit_currency.errors %}<div class="alert alert-danger">{{ form.credit_limit_currency.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.credit_limit_currency.label_tag }}
+                    <strong>{% trans "credit_limit_currency" %}</strong>
                     {{ form.credit_limit_currency }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
                 {% if form.credit_limit_amount.errors %}<div class="alert alert-danger">{{ form.credit_limit_amount.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.credit_limit_amount.label_tag }}
+                    <strong>{% trans "credit_limit_amount" %}</strong>
                     {{ form.credit_limit_amount }}
                 </div>
             </div>
@@ -151,14 +152,14 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.highest_education_attained.errors %}<div class="alert alert-danger">{{ form.highest_education_attained.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.highest_education_attained.label_tag }}
+                    <strong>{% trans "highest_education_attained" %}</strong>
                     {{ form.highest_education_attained }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if form.employment_status.errors %}<div class="alert alert-danger">{{ form.employment_status.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.employment_status.label_tag }}
+                    <strong>{% trans "employment_status" %}</strong>
                     {{ form.employment_status }}
                 </div>
             </div>
@@ -168,14 +169,14 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.kyc_status.errors %}<div class="alert alert-danger">{{ form.kyc_status.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.kyc_status.label_tag }}
+                    <strong>{% trans "kyc_status" %}</strong>
                     {{ form.kyc_status }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if form.last_ok_date.errors %}<div class="alert alert-danger">{{ form.last_ok_date.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.last_ok_date.label_tag }}
+                    <strong>{% trans "last_ok_date" %}</strong>
                     {{ form.last_ok_date }}
                 </div>
             </div>
