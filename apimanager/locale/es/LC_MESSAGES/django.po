@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 17:31+0200\n"
+"POT-Creation-Date: 2022-05-31 12:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,7 @@ msgstr "ID del cajero automático"
 #: atms/templates/atms/index.html:24 atms/templates/atms/index.html:223
 #: branches/templates/branches/index.html:161
 #: users/templates/users/detail.html:99
+#: users/templates/users/invitation.html:22
 msgid "Bank Id"
 msgstr "Id. de banco"
 
@@ -55,7 +56,7 @@ msgstr "Nombre de la Licencia"
 
 #: atms/templates/atms/index.html:73
 msgid "Located At"
-msgstr "La página de presentación, que está ubicada en"
+msgstr "La página de presentación"
 
 #: atms/templates/atms/index.html:80
 msgid "Has Deposit Capability"
@@ -251,10 +252,16 @@ msgid "register"
 msgstr "Registrarse"
 
 #: base/templates/home.html:10
+msgid "an account before being able to proceed"
+msgstr "una cuenta antes de poder continuar"
+
+#: base/templates/home.html:10
 msgid ""
-"an account before being able to proceed. The logged-in user needs to have "
-"specific roles granted to use the functionality."
+"The logged-in user needs to have specific roles granted to use the "
+"functionality."
 msgstr ""
+"El usuario que inició sesión debe tener roles específicos otorgados para "
+"usar la funcionalidad."
 
 #: branches/templates/branches/index.html:22
 msgid "Branch_Id"
@@ -263,7 +270,6 @@ msgstr "ID_sucursal"
 #: branches/templates/branches/index.html:29
 #: customers/templates/customers/create.html:24
 #: users/templates/users/detail.html:75
-#: users/templates/users/invitation.html:22
 msgid "bank_id"
 msgstr "bank_id"
 
@@ -466,7 +472,10 @@ msgstr "Número total de consumidores"
 #: consumers/templates/consumers/index.html:50
 msgid "Total number of unique developer email addresses"
 msgstr ""
-"Número total de direcciones de correo electrónico únicas para desarrolladores"
+"Número total de direcciones de correo electrónico únicas para "
+"desarrolladoresNúmero total de direcciones de correo electrónico únicas para "
+"desarrolladoresNúmero total de direcciones de correo electrónico de "
+"desarrollador únicas"
 
 #: consumers/templates/consumers/index.html:51
 msgid "Total number of unique consumer names"
@@ -547,73 +556,43 @@ msgstr "credit_rating_rating"
 
 #: customers/templates/customers/create.html:130
 msgid "credit_rating_source"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 04 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "credit_rating_source"
 
 #: customers/templates/customers/create.html:138
 msgid "credit_limit_currency"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 04 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "credit_limit_currency"
 
 #: customers/templates/customers/create.html:145
 msgid "credit_limit_amount"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "credit_limit_amount"
 
 #: customers/templates/customers/create.html:155
 msgid "highest_education_attained"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "highest_education_attained"
 
 #: customers/templates/customers/create.html:162
 msgid "employment_status"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 02 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "employment_status"
 
 #: customers/templates/customers/create.html:172
 msgid "kyc_status"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 01 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "kyc_status"
 
 #: customers/templates/customers/create.html:179
 msgid "last_ok_date"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 01 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "last_ok_date"
 
 #: entitlementrequests/templates/entitlementrequests/index.html:27
 msgid "Role Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 34 MINUTES 00 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre del Papel"
 
 #: entitlementrequests/templates/entitlementrequests/index.html:28
 msgid "User name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 59 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de usuario"
 
 #: entitlementrequests/templates/entitlementrequests/index.html:29
 msgid "Bank ID"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 59 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Id. de banco"
 
 #: metrics/templates/metrics/api.html:12
 #: metrics/templates/metrics/connector.html:12
@@ -624,18 +603,13 @@ msgstr ""
 #: metrics/templates/metrics/quarterly_summary.html:36
 #: metrics/templates/metrics/yearly_summary.html:38
 msgid "Filter"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 58 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Filtrar"
 
 #: metrics/templates/metrics/api.html:24
-#: metrics/templates/metrics/connector.html:24
-msgid "from_date"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 58 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#, fuzzy
+#| msgid "from date"
+msgid "from date"
+msgstr "from_date"
 
 #: metrics/templates/metrics/api.html:31
 #: metrics/templates/metrics/connector.html:31
@@ -644,82 +618,55 @@ msgstr ""
 #: metrics/templates/metrics/hourly_summary.html:48
 #: metrics/templates/metrics/monthly_summary.html:51
 msgid "to_date"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 57 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "fecha hasta"
 
 #: metrics/templates/metrics/api.html:38
 #: metrics/templates/metrics/connector.html:38
 msgid "limit"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 56 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Límite"
 
 #: metrics/templates/metrics/api.html:45
 #: metrics/templates/metrics/connector.html:45
 msgid "offset"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 56 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "compensación"
 
 #: metrics/templates/metrics/api.html:55
-msgid "consumer_id"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 55 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#, fuzzy
+#| msgid "Consumer ID"
+msgid "consumer id"
+msgstr "IDENTIFICACIÓN DEL CONSUMIDOR"
 
 #: metrics/templates/metrics/api.html:63
 msgid "user_id"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 55 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "id_usuario"
 
 #: metrics/templates/metrics/api.html:71
 msgid "anon"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 54 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Anón"
 
 #: metrics/templates/metrics/api.html:79
 msgid "app_name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 52 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "nombre de la aplicación"
 
 #: metrics/templates/metrics/api.html:90
 msgid "verb"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 52 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "verbo"
 
 #: metrics/templates/metrics/api.html:98
 msgid "url"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 51 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "url"
 
 #: metrics/templates/metrics/api.html:108
-msgid "implemented_by_partial_function"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 51 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#, fuzzy
+#| msgid "Implemented by Partial Function"
+msgid "implemented by partial function"
+msgstr "Implementado por función parcial"
 
 #: metrics/templates/metrics/api.html:116
-msgid "implemented_in_version"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 50 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#, fuzzy
+#| msgid "Implemented In Version"
+msgid "implemented in version"
+msgstr "Implementado en versión"
 
 #: metrics/templates/metrics/api.html:123
 #: metrics/templates/metrics/connector.html:75
@@ -731,160 +678,100 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:63
 #: metrics/templates/metrics/yearly_summary.html:63
 msgid "Update filter"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 49 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Actualizar Filtro"
 
 #: metrics/templates/metrics/api.html:130
 #: metrics/templates/metrics/api_summary_partial_function.html:6
 msgid "List"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 49 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Lista"
 
 #: metrics/templates/metrics/api.html:131
 #: metrics/templates/metrics/api_summary_partial_function.html:7
 msgid "Summary by Partial Function"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 48 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Resumen por función parcial"
 
 #: metrics/templates/metrics/api.html:143
 msgid "Verb"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 47 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Verbo"
 
 #: metrics/templates/metrics/api.html:144
 msgid "URL"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 47 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "URL"
 
 #: metrics/templates/metrics/api.html:145
 #: metrics/templates/metrics/connector.html:86
 msgid "Date"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 46 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Fecha"
 
 #: metrics/templates/metrics/api.html:146
 msgid "Duration(ms)"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 46 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Duración (ms)"
 
 #: metrics/templates/metrics/api.html:147
 msgid "Details"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 45 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Descripción"
 
 #: metrics/templates/metrics/api.html:162
 msgid "User Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 44 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de Usuario"
 
 #: metrics/templates/metrics/api.html:163 users/templates/users/detail.html:11
 msgid "User ID"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 44 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "ID del usuario"
 
 #: metrics/templates/metrics/api.html:164
 msgid "Developer Email"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 43 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Correo electrónico del desarrollador"
 
 #: metrics/templates/metrics/api.html:165
 msgid "App Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 43 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de la aplicación"
 
 #: metrics/templates/metrics/api.html:166
 msgid "Consumer ID"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 42 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "IDENTIFICACIÓN DEL CONSUMIDOR"
 
 #: metrics/templates/metrics/api.html:167
 msgid "Implemented by Partial Function"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 41 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Implementado por función parcial"
 
 #: metrics/templates/metrics/api.html:168
 msgid "Implemented In Version"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 41 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Implementado en versión"
+
+#: metrics/templates/metrics/connector.html:24
+#, fuzzy
+#| msgid "from date"
+msgid "from_date"
+msgstr "partir de la fecha"
 
 #: metrics/templates/metrics/connector.html:55
 msgid "connector_name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 40 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "nombre del conector"
 
 #: metrics/templates/metrics/connector.html:62
 msgid "function_name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 40 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "nombre de la función"
 
 #: metrics/templates/metrics/connector.html:69
 msgid "correlation_id"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 39 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "identificación de correlación"
 
 #: metrics/templates/metrics/connector.html:87
 msgid "Connector Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 38 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de la conexión"
 
 #: metrics/templates/metrics/connector.html:88
 msgid "Function Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 38 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de la función"
 
 #: metrics/templates/metrics/connector.html:89
 msgid "Correlation ID"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 37 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Id. de correlación"
 
 #: metrics/templates/metrics/connector.html:90
 msgid "Duration (ms)"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 36 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Duración (ms)"
 
 #: metrics/templates/metrics/custom_summary.html:10
 #: metrics/templates/metrics/daily_summary.html:11
@@ -894,10 +781,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:10
 #: metrics/templates/metrics/yearly_summary.html:10
 msgid "API Usage Report"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 36 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "LACC usage report"
 
 #: metrics/templates/metrics/custom_summary.html:11
 #: metrics/templates/metrics/daily_summary.html:12
@@ -906,10 +790,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:11
 #: metrics/templates/metrics/yearly_summary.html:11
 msgid "API instance"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 34 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Instancia de API"
 
 #: metrics/templates/metrics/custom_summary.html:18
 #: metrics/templates/metrics/daily_summary.html:17
@@ -919,10 +800,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:18
 #: metrics/templates/metrics/yearly_summary.html:18
 msgid "Year"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 34 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Lo que va"
 
 #: metrics/templates/metrics/custom_summary.html:19
 #: metrics/templates/metrics/daily_summary.html:18
@@ -932,10 +810,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:19
 #: metrics/templates/metrics/yearly_summary.html:19
 msgid "Quarter"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 33 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Trimestre"
 
 #: metrics/templates/metrics/custom_summary.html:20
 #: metrics/templates/metrics/daily_summary.html:19
@@ -945,10 +820,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:20
 #: metrics/templates/metrics/yearly_summary.html:20
 msgid "Month"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 32 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Mes"
 
 #: metrics/templates/metrics/custom_summary.html:21
 #: metrics/templates/metrics/daily_summary.html:20
@@ -958,10 +830,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:21
 #: metrics/templates/metrics/yearly_summary.html:21
 msgid "Week"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 32 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Semana"
 
 #: metrics/templates/metrics/custom_summary.html:22
 #: metrics/templates/metrics/daily_summary.html:21
@@ -971,10 +840,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:22
 #: metrics/templates/metrics/yearly_summary.html:22
 msgid "Day"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 31 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Dia"
 
 #: metrics/templates/metrics/custom_summary.html:24
 #: metrics/templates/metrics/daily_summary.html:23
@@ -984,17 +850,11 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:24
 #: metrics/templates/metrics/yearly_summary.html:24
 msgid "Custom"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 31 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Custom"
 
 #: metrics/templates/metrics/custom_summary.html:50
 msgid "from_date_custom"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 30 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "from_date_custom"
 
 #: metrics/templates/metrics/custom_summary.html:64
 #: metrics/templates/metrics/daily_summary.html:57
@@ -1004,10 +864,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:58
 #: metrics/templates/metrics/yearly_summary.html:58
 msgid "Include System Calls"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 29 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Incluir llamadas al sistema"
 
 #: metrics/templates/metrics/custom_summary.html:85
 #: metrics/templates/metrics/daily_summary.html:78
@@ -1016,10 +873,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:79
 #: metrics/templates/metrics/yearly_summary.html:79
 msgid "Total API calls"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 29 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Total de llamadas de API"
 
 #: metrics/templates/metrics/custom_summary.html:89
 #: metrics/templates/metrics/daily_summary.html:82
@@ -1029,17 +883,11 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:83
 #: metrics/templates/metrics/yearly_summary.html:83
 msgid "API calls made using API Explorer"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 28 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Llamadas a la API realizadas con el Explorador de API"
 
 #: metrics/templates/metrics/custom_summary.html:94
 msgid "Calls per day (last 30 days)"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 27 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Llamadas por día (últimos 30 días)"
 
 #: metrics/templates/metrics/custom_summary.html:98
 #: metrics/templates/metrics/monthly_summary.html:101
@@ -1047,10 +895,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:92
 #: metrics/templates/metrics/yearly_summary.html:92
 msgid "Average number of calls per day"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 27 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Número promedio de llamadas"
 
 #: metrics/templates/metrics/custom_summary.html:102
 #: metrics/templates/metrics/daily_summary.html:95
@@ -1060,10 +905,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:96
 #: metrics/templates/metrics/yearly_summary.html:96
 msgid "Average response time (ms)"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 26 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Tiempo de Respuesta Promedio(ms)"
 
 #: metrics/templates/metrics/custom_summary.html:106
 #: metrics/templates/metrics/daily_summary.html:100
@@ -1074,9 +916,10 @@ msgstr ""
 #: metrics/templates/metrics/yearly_summary.html:101
 msgid "Median time from consumer registration to first API call"
 msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 26 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+"Mediana de tiempo desde el registro del consumidor hasta la primera llamada "
+"APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APITiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la API"
 
 #: metrics/templates/metrics/custom_summary.html:111
 #: metrics/templates/metrics/daily_summary.html:105
@@ -1086,18 +929,12 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:106
 #: metrics/templates/metrics/yearly_summary.html:106
 msgid "Apps with distinct names"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 25 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Aplicaciones con nombres distintos"
 
 #: metrics/templates/metrics/custom_summary.html:115
 #: metrics/templates/metrics/monthly_summary.html:118
 msgid "Distinct developer email addresses"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 24 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Direcciones de correo electrónico de desarrollador distintas"
 
 #: metrics/templates/metrics/custom_summary.html:120
 #: metrics/templates/metrics/daily_summary.html:114
@@ -1107,10 +944,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:115
 #: metrics/templates/metrics/yearly_summary.html:115
 msgid "Active Apps (at least one API call in the period)"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 24 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Aplicaciones activas (al menos una llamada a la API en el período)"
 
 #: metrics/templates/metrics/custom_summary.html:124
 #: metrics/templates/metrics/daily_summary.html:118
@@ -1119,10 +953,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:119
 #: metrics/templates/metrics/yearly_summary.html:119
 msgid "Top 10 APIs"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 23 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Las 10 mejores API"
 
 #: metrics/templates/metrics/custom_summary.html:128
 #: metrics/templates/metrics/daily_summary.html:122
@@ -1131,10 +962,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:123
 #: metrics/templates/metrics/yearly_summary.html:123
 msgid "Top 10 Consumers"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 22 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Los 10 principales consumidores"
 
 #: metrics/templates/metrics/custom_summary.html:132
 #: metrics/templates/metrics/daily_summary.html:126
@@ -1144,10 +972,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:127
 #: metrics/templates/metrics/yearly_summary.html:127
 msgid "Top Warehouse APIs"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 22 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Principales API de almacén"
 
 #: metrics/templates/metrics/custom_summary.html:136
 #: metrics/templates/metrics/daily_summary.html:130
@@ -1156,10 +981,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:131
 #: metrics/templates/metrics/yearly_summary.html:131
 msgid "Top Apps using data warehouse"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 21 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Principales aplicaciones que usan el almacén de datos"
 
 #: metrics/templates/metrics/custom_summary.html:140
 #: metrics/templates/metrics/daily_summary.html:134
@@ -1168,10 +990,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:135
 #: metrics/templates/metrics/yearly_summary.html:135
 msgid "Total number of CanSearchWarehouse users"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 21 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Número total de usuarios de CanSearchWarehouse"
 
 #: metrics/templates/metrics/custom_summary.html:145
 #: metrics/templates/metrics/daily_summary.html:139
@@ -1181,17 +1000,11 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:140
 #: metrics/templates/metrics/yearly_summary.html:140
 msgid "Users with role CanSearchWarehouse"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 20 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Usuarios con rol CanSearchWarehouse"
 
 #: metrics/templates/metrics/custom_summary.html:146
 msgid "N/A"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 19 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "N/A"
 
 #: metrics/templates/metrics/daily_summary.html:70
 #: metrics/templates/metrics/hourly_summary.html:68
@@ -1200,10 +1013,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:71
 #: metrics/templates/metrics/yearly_summary.html:71
 msgid "Period"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 19 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Período"
 
 #: metrics/templates/metrics/daily_summary.html:70
 #: metrics/templates/metrics/hourly_summary.html:68
@@ -1212,10 +1022,7 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:71
 #: metrics/templates/metrics/yearly_summary.html:71
 msgid "From"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 18 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Desde"
 
 #: metrics/templates/metrics/daily_summary.html:70
 #: metrics/templates/metrics/hourly_summary.html:68
@@ -1224,24 +1031,15 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:71
 #: metrics/templates/metrics/yearly_summary.html:71
 msgid "to"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 17 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "a"
 
 #: metrics/templates/metrics/daily_summary.html:87
 msgid "Calls per hour"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 16 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Llamadas por Hora"
 
 #: metrics/templates/metrics/daily_summary.html:91
 msgid "Average number of calls per hour"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 16 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Número promedio de llamadas"
 
 #: metrics/templates/metrics/daily_summary.html:109
 #: metrics/templates/metrics/hourly_summary.html:110
@@ -1249,279 +1047,178 @@ msgstr ""
 #: metrics/templates/metrics/weekly_summary.html:110
 msgid "Apps with distinct developer email addresses"
 msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 15 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+"Aplicaciones con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintas"
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 15 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Hora"
 
 #: metrics/templates/metrics/hourly_summary.html:76
 msgid "API calls"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Llamadas de API"
 
 #: metrics/templates/metrics/hourly_summary.html:84
 #: metrics/templates/metrics/hourly_summary.html:88
 msgid "Calls per minute"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 13 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Llamadas por minuto"
 
 #: metrics/templates/metrics/hourly_summary.html:92
 msgid "Average number of calls hour"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 12 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Número promedio de llamadas"
 
 #: metrics/templates/metrics/hourly_summary.html:119
 msgid "Top APIs"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 11 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Principales API"
 
 #: metrics/templates/metrics/hourly_summary.html:127
 msgid "Top apps using the data warehouse"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 10 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Principales aplicaciones que utilizan el almacén de datos"
 
 #: metrics/templates/metrics/hourly_summary.html:137
 msgid "CanSearchWarehouse users"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 10 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Usuarios de CanSearchWarehouse"
 
 #: metrics/templates/metrics/monthly_summary.html:97
 #: metrics/templates/metrics/weekly_summary.html:88
 msgid "Calls per day"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 09 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Maximo de llamadas por día"
 
 #: metrics/templates/metrics/quarterly_summary.html:86
 #: metrics/templates/metrics/yearly_summary.html:88
 msgid "Calls per month"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 08 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "llamadas por mes"
 
 #: users/templates/users/detail.html:8
 msgid "User"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 07 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Usuario"
 
 #: users/templates/users/detail.html:16 users/templates/users/index.html:59
 #: users/templates/users/invitation.html:71
 msgid "Email"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 07 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Correo electrónico"
 
 #: users/templates/users/detail.html:21
 msgid "Provider"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 06 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Proveedor"
 
 #: users/templates/users/detail.html:26
 msgid "Provider ID"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 06 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "ID de es proveedor"
 
 #: users/templates/users/detail.html:31
 msgid "Deleted"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 05 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Eliminado"
 
 #: users/templates/users/detail.html:36
 #: users/templates/users/includes/filter_locked.html:3
 msgid "Locked"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 04 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Bloqueado"
 
 #: users/templates/users/detail.html:47
 msgid "Delete User"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 04 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Eliminar usuario"
 
 #: users/templates/users/detail.html:51
 msgid "Unlock User"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Desbloquear usuario"
 
 #: users/templates/users/detail.html:62
 msgid "Add Entitlement"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Agregar derecho"
 
 #: users/templates/users/detail.html:69 users/templates/users/detail.html:98
 msgid "Role name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 02 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de rol"
 
 #: users/templates/users/detail.html:94
 msgid "Entitlements"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 01 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Derechos"
 
 #: users/templates/users/detail.html:114
 msgid "Delete"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 01 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Eliminar"
 
 #: users/templates/users/includes/filter_locked.html:2
 msgid "Active"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 33 MINUTES 00 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Activo"
 
 #: users/templates/users/includes/filter_pagination.html:4
 msgid "Offset"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 59 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Desplazamiento"
 
 #: users/templates/users/includes/filter_pagination.html:8
 msgid "Limit"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 59 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Límite"
 
 #: users/templates/users/includes/filter_role.html:8
 msgid "All Roles"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 58 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Todas las Funciones"
 
 #: users/templates/users/index.html:11
 msgid "Filters"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 58 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Filtros"
 
 #: users/templates/users/index.html:44
 msgid "Pagination"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 57 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Paginación"
 
 #: users/templates/users/index.html:51
 msgid "Total number of users"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 56 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Total de usuarios"
 
 #: users/templates/users/index.html:57
 msgid "User Id"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 56 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Id de usuario"
 
 #: users/templates/users/index.html:58
 msgid "Username"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 55 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Nombre de usuario"
 
 #: users/templates/users/index.html:69
 msgid "View"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 55 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "Ver"
 
 #: users/templates/users/invitation.html:29
-msgid "first_name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 54 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#: users/templates/users/invitation.html:69
+msgid "First Name"
+msgstr "Nombre"
 
 #: users/templates/users/invitation.html:36
-msgid "last_name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 53 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+#: users/templates/users/invitation.html:70
+msgid "Last Name"
+msgstr "Apellido"
 
 #: users/templates/users/invitation.html:52
 #: users/templates/users/invitation.html:72
 msgid "company"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 53 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "empresa"
 
 #: users/templates/users/invitation.html:59
 #: users/templates/users/invitation.html:73
 msgid "country"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 52 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
-
-#: users/templates/users/invitation.html:69
-msgid "First Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 52 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
-
-#: users/templates/users/invitation.html:70
-msgid "Last Name"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 51 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "países"
 
 #: users/templates/users/invitation.html:74
 msgid "status"
-msgstr ""
-"MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT "
-"AVAILABLE IN  17 HOURS 32 MINUTES 50 SECONDS VISIT HTTPS://MYMEMORY."
-"TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
+msgstr "estado"
+
+#~ msgid "implemented_by_partial_function"
+#~ msgstr "implemented_by_partial_function"
+
+#, fuzzy
+#~| msgid "bank_id"
+#~ msgid "bank id"
+#~ msgstr "bank_id"
+
+#, fuzzy
+#~| msgid "first_name"
+#~ msgid "first name"
+#~ msgstr "first_name"
+
+#, fuzzy
+#~| msgid "last_name"
+#~ msgid "last name"
+#~ msgstr "last_name"
