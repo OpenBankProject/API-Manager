@@ -19,7 +19,9 @@ urlpatterns = [
     # backward compatibility
 ]
 urlpatterns += i18n_patterns(
+#urlpatterns = (
     url(r'^$', HomeView.as_view(), name="home"),
+
     url(r'^oauth/initiate$',
         OAuthInitiateView.as_view(), name='oauth-initiate'),
     url(r'^single-sign-on',

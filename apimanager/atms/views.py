@@ -180,7 +180,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
         messages.success(self.request, msg)
         return super(IndexAtmsView, self).form_valid(form)
 
-    def get_banks(self):
+    """def get_banks(self):
         api = API(self.request.session.get('obp'))
         try:
             urlpath = '/banks'
@@ -221,12 +221,11 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             'atms_list': atms_list,
             'bankids': self.bankids
         })
-        return context
+        return context"""
 
 class UpdateAtmsView(LoginRequiredMixin, FormView):
     template_name = "atms/update.html"
     success_url = '/atms/'
-    print(success_url)
     form_class = CreateAtmForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -323,32 +322,32 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
                 }
             },
             "monday": {
-                "opening_time": "",
-                "closing_time": ""
+                "opening_time": " ",
+                "closing_time": " "
             },
             "tuesday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "wednesday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "thursday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "friday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "saturday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "sunday": {
-                "opening_time": "10:00",
-                "closing_time": "18:00"
+                "opening_time": " ",
+                "closing_time": " "
             },
             "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
             "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
@@ -393,3 +392,47 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             'bank_id': self.bank_id
         })
         return context
+
+class atmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
+    template_name = "atms/atm_List.html"
+    success_url = '/atms/'
+    def get_banks(self):
+                api = API(self.request.session.get('obp'))
+                try:
+                    urlpath = '/banks'
+                    result = api.get(urlpath)
+                    if 'banks' in result:
+                        return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
+                    else:
+                        return []
+                except APIError as err:
+                    messages.error(self.request, err)
+                    return []
+
+    def get_atms(self, context):
+            api = API(self.request.session.get('obp'))
+            try:
+                self.bankids = self.get_banks()
+                atms_list = []
+                for bank_id in self.bankids:
+                    urlpath = '/banks/{}/atms'.format(bank_id)
+                    result = api.get(urlpath)
+                    #print(result)
+                    if 'atms' in result:
+                        atms_list.extend(result['atms'])
+            except APIError as err:
+                messages.error(self.request, err)
+                return []
+            except Exception as inst:
+                messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
+                return []
+
+            return atms_list
+    def get_context_data(self, **kwargs):
+            context = super(IndexAtmsView, self).get_context_data(**kwargs)
+            atms_list = self.get_atms(context)
+            context.update({
+                'atms_list': atms_list,
+                'bankids': self.bankids
+            })
+            return context

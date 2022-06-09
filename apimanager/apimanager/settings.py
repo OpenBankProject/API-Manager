@@ -171,10 +171,11 @@ STATIC_URL = '/static/'
 
 from django.utils.translation import gettext_lazy as _
 
-#LANGUAGES = (
-#    ("en", _("English")),
-#    ("fr", _("French")),
-#)
+LANGUAGES = (
+    ("en", _("English")),
+    ("fr", _("French")),
+    ("es", _("Spanish"))
+)
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, "locale/"),

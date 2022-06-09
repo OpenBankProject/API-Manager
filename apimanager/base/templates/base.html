@@ -81,6 +81,7 @@
 						<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li><hr class="dropdown-hr">
 						<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
 						<li{% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">{% trans "ATMs" %}</a></li>
+						<li{% if all_atms_url in request.path  %} class="active"{% endif %}><a href="http://127.0.0.1:8000/en/atms/atmlist/">{% trans "ATMs View" %}</a></li>
 					</ul>
 				</li>
 				{% url "config-index" as config_index_url %}
@@ -130,7 +131,6 @@
 		<a id="es" href="/es" >ES</a>
 	</div>
 </div>
-
 <footer>
 	<div class="container">
 		<p class="text-muted">

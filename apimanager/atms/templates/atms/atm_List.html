@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block page_title %}{{ block.super }} / atms{% endblock page_title %} {% block content %}
+<div id="atms">
+    <h1>ATM Detail</h1>
+<div class="table-responsive">
+    <table class="table table-hover tablesorter" id="atms-list" aria-describedby="atms list">
+        <thead>
+        <th scope="col">{% trans "ATM Id" %}</th>
+        <th scope="col">{% trans "Bank Id" %}</th>
+        <th scope="col">{% trans "ATM Name" %}</th>
+        <th scope="col">{% trans "More info" %}</th>
+        <!--<th scope="col">{% trans "Update Button" %}</th>-->
+        </thead>
+        <tbody>
+        {% for atm in atms_list %}
+
+        {% url 'atms_update' atm.id atm.bank_id as url_atm_update %}
+        <tr data-atm-id="{{ atm.id }}">
+            <td>{{ atm.id }}</td>
+            <td>{{ atm.bank_id }}</td>
+            <td>{{ atm.name }}</td>
+            <td>
+                <div class="popuptext">
+                    <ul>
+                        <li>Address:
+                            <ul>
+                                <li>line1: {{atm.address.line_1}}</li>
+                            </ul>
+                        </li>
+                        <!-- <li>line2: {{atm.address.line_2}}</li>
+                                <li>line3: {{atm.address.line_3}}</li>
+                                <li>city: {{atm.address.city}}</li>
+                                <li>county: {{atm.address.county}}</li>
+                                <li>state: {{atm.address.state}}</li>
+                                <li>postcode: {{atm.address.postcode}}</li>
+                                <li>country_code: {{atm.address.country_code}}</li>
+                            </ul>
+                        </li>
+                        <li>Location:
+                            <ul>
+                                <li>latitude: {{atm.location.latitude}}</li>
+                                <li>longitude: {{atm.location.longitude}}</li>
+                            </ul>
+                        </li>
+                        <li>Meta License:
+                            <ul>
+                                <li>id: {{atm.meta.license.id}}</li>
+                                <li>name: {{atm.meta.license.name}}</li>
+                            </ul>
+                        </li>
+                        <li>ATM Routing
+                            <ul>
+                                <li>Scheme: {{atm.atm_routing.scheme}}</li>
+                                <li>Address: {{atm.atm_routing.address}}</li>
+                            </ul>
+                        </li>
+                        <li>ATM Type: {{atm.branch_type}}</li>
+                        <li>More Info: {{atm.more_info}}</li>
+                        <li>Accessible Features: {{atm.accessibleFeatures}}</li>-->
+                    </ul>
+                </div>
+            </td>
+            <td><a href="{{ url_atm_update }}" class="btn btn-primary">View</a></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}

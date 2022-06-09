@@ -1,14 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Open Bank Project API Manager i18n files.
+# Copyright (C) 2022 TESOBE GmbH
+# This file is distributed under the AGPL. Commercial licences are available from TESOBE.
+# FIRST AUTHOR <reena AT tesobe DOT com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 18:02+0200\n"
+"POT-Creation-Date: 2022-06-09 06:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: atms/templates/atms/index.html:4 base/templates/base.html:83
-msgid "ATMs"
-msgstr "cajeros automáticos"
+#: apimanager/settings.py:175
+msgid "English"
+msgstr "Inglés"
 
-#: atms/templates/atms/index.html:17 atms/templates/atms/index.html:222
+#: apimanager/settings.py:176
+msgid "French"
+msgstr "francés"
+
+#: apimanager/settings.py:177
+msgid "Spanish"
+msgstr "español"
+
+#: atms/templates/atms/atm_List.html:8 atms/templates/atms/index.html:17
 msgid "ATM Id"
 msgstr "ID del cajero automático"
 
-#: atms/templates/atms/index.html:24 atms/templates/atms/index.html:223
+#: atms/templates/atms/atm_List.html:9 atms/templates/atms/index.html:24
 #: branches/templates/branches/index.html:161
 #: customers/templates/customers/create.html:24
 #: users/templates/users/detail.html:99
 #: users/templates/users/invitation.html:22
 msgid "Bank Id"
 msgstr "Id. de banco"
+
+#: atms/templates/atms/atm_List.html:10
+msgid "ATM Name"
+msgstr "Nombre del cajero automático"
+
+#: atms/templates/atms/atm_List.html:11
+msgid "More info"
+msgstr "Más información"
+
+#: atms/templates/atms/atm_List.html:12
+#: branches/templates/branches/index.html:164
+msgid "Update Button"
+msgstr "Botón Actualizar"
+
+#: atms/templates/atms/index.html:4 base/templates/base.html:83
+msgid "ATMs"
+msgstr "cajeros automáticos"
 
 #: atms/templates/atms/index.html:31
 #: consumers/templates/consumers/index.html:58
@@ -130,24 +154,15 @@ msgstr "Dirección"
 msgid "Lobby"
 msgstr "Sala de espera"
 
-#: atms/templates/atms/index.html:224
-msgid "ATM Name"
-msgstr "Nombre del cajero automático"
-
-#: atms/templates/atms/index.html:225
-msgid "More info"
-msgstr "Más información"
-
-#: atms/templates/atms/index.html:226
-#: branches/templates/branches/index.html:164
-msgid "Update Button"
-msgstr "Botón Actualizar"
+#: atms/templates/atms/index.html:213
+#: branches/templates/branches/index.html:151
+#: users/templates/users/detail.html:83 users/templates/users/detail.html:88
+msgid "Add"
+msgstr "Agregar"
 
 #: base/templates/base.html:11
-#, fuzzy
-#| msgid "Welcome to API Manager"
 msgid "API Manager"
-msgstr "Bienvenido al Administrador de API"
+msgstr "Administrador de API"
 
 #: base/templates/base.html:48
 msgid "Home"
@@ -176,8 +191,6 @@ msgid "All"
 msgstr "Todos"
 
 #: base/templates/base.html:60
-#, fuzzy
-#| msgid "Users"
 msgid "My User"
 msgstr "Mi usuaria"
 
@@ -190,8 +203,6 @@ msgid "Metrics"
 msgstr "Métrica"
 
 #: base/templates/base.html:70 metrics/templates/metrics/api.html:9
-#, fuzzy
-#| msgid "Metrics"
 msgid "API Metrics"
 msgstr "Métricas de la API"
 
@@ -207,9 +218,7 @@ msgstr "Panel de KPI"
 msgid "Resources"
 msgstr "Recursos"
 
-#: base/templates/base.html:81
-#, fuzzy
-#| msgid "Consumers"
+#: base/templates/base.html:81 customers/templates/customers/create.html:5
 msgid "Customers"
 msgstr "Consumidoras"
 
@@ -217,30 +226,32 @@ msgstr "Consumidoras"
 msgid "Branches"
 msgstr "Sucursales"
 
-#: base/templates/base.html:92
+#: base/templates/base.html:84
+msgid "ATMs View"
+msgstr "Vista de cajeros automáticos"
+
+#: base/templates/base.html:93
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:94 config/templates/config/index.html:9
-#, fuzzy
-#| msgid "Configurations"
+#: base/templates/base.html:95 config/templates/config/index.html:9
 msgid "Config"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:95
+#: base/templates/base.html:96
 msgid "Webui Props"
 msgstr "Accesorios webui"
 
-#: base/templates/base.html:96
+#: base/templates/base.html:97
 msgid "Method Routings"
 msgstr "Enrutamiento de métodos"
 
-#: base/templates/base.html:97
+#: base/templates/base.html:98
 #: dynamicendpoints/templates/dynamicendpoints/index.html:7
 msgid "Dynamic Endpoints"
 msgstr "Puntos finales dinámicos"
 
-#: base/templates/base.html:98
+#: base/templates/base.html:99
 msgid "My API Collections"
 msgstr "Mis colecciones de API"
 
@@ -276,13 +287,10 @@ msgstr ""
 "usar la funcionalidad."
 
 #: branches/templates/branches/index.html:22
-#, fuzzy
-#| msgid "Branches"
 msgid "Branch_Id"
 msgstr "ID_sucursal"
 
 #: branches/templates/branches/index.html:29
-#: users/templates/users/detail.html:75
 msgid "bank_id"
 msgstr "bank_id"
 
@@ -292,8 +300,6 @@ msgid "name"
 msgstr "nombre"
 
 #: branches/templates/branches/index.html:46
-#, fuzzy
-#| msgid "Branches"
 msgid "branch_type"
 msgstr "Sucursales"
 
@@ -322,8 +328,6 @@ msgid "is_accessible"
 msgstr "producción y validación es"
 
 #: branches/templates/branches/index.html:101
-#, fuzzy
-#| msgid "accessible Features"
 msgid "accessibleFeatures"
 msgstr "Funciones accesibles"
 
@@ -347,20 +351,11 @@ msgstr "ejercer presión"
 msgid "drive_up"
 msgstr "subir"
 
-#: branches/templates/branches/index.html:151
-#: users/templates/users/detail.html:83 users/templates/users/detail.html:88
-msgid "Add"
-msgstr "Agregar"
-
 #: branches/templates/branches/index.html:160
-#, fuzzy
-#| msgid "Branches"
 msgid "Branch Id"
 msgstr "Identificación de la sucursal"
 
 #: branches/templates/branches/index.html:162
-#, fuzzy
-#| msgid "Branches"
 msgid "Branch Name"
 msgstr "Nombre de la sucursal"
 
@@ -421,8 +416,6 @@ msgid "id"
 msgstr "identificación"
 
 #: branches/templates/branches/index.html:200
-#, fuzzy
-#| msgid "Method Routings"
 msgid "Branch Routing"
 msgstr "Enrutamiento de sucursales"
 
@@ -431,8 +424,6 @@ msgid "Scheme"
 msgstr "Pauta"
 
 #: branches/templates/branches/index.html:206
-#, fuzzy
-#| msgid "Branches"
 msgid "Branch Type"
 msgstr "Sucursales"
 
@@ -449,21 +440,14 @@ msgid "The configuration of the API"
 msgstr "La configuración de la API"
 
 #: consumers/templates/consumers/detail.html:9
-#, fuzzy
-#| msgid "Consumers"
 msgid "Consumer"
 msgstr "Consumidoras"
 
 #: consumers/templates/consumers/detail.html:15
-#, fuzzy
-#| msgid "Parameters"
 msgid "Params"
 msgstr "Parámetros"
 
-
 #: consumers/templates/consumers/detail.html:64
-#, fuzzy
-#| msgid "Consumers"
 msgid "Update Consumer"
 msgstr "Consumidoras"
 
@@ -473,8 +457,6 @@ msgid "App Name"
 msgstr "Nombre de la aplicación"
 
 #: consumers/templates/consumers/detail.html:87
-#, fuzzy
-#| msgid "App Name"
 msgid "App Type"
 msgstr "Nombre de la aplicación"
 
@@ -484,8 +466,6 @@ msgid "Developer Email"
 msgstr "Correo electrónico del desarrollador"
 
 #: consumers/templates/consumers/detail.html:103
-#, fuzzy
-#| msgid "Email"
 msgid "User Email"
 msgstr "Correo electrónico"
 
@@ -496,7 +476,6 @@ msgid "Created"
 msgstr "Creado"
 
 #: consumers/templates/consumers/detail.html:119
-#, fuzzy
 msgid "Created By User ID"
 msgstr "Crear cliente"
 
@@ -530,14 +509,10 @@ msgid "Description"
 msgstr "Descripción"
 
 #: consumers/templates/consumers/detail.html:194
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disable"
 msgstr "Deshabilitado"
 
 #: consumers/templates/consumers/detail.html:196
-#, fuzzy
-#| msgid "Enabled"
 msgid "Enable"
 msgstr "Habilitado"
 
@@ -593,7 +568,7 @@ msgstr "Número total de consumidores"
 
 #: consumers/templates/consumers/index.html:50
 msgid "Total number of unique developer email addresses"
-msgstr "Número total de direcciones de correo electrónico de desarrolladores únicas"
+msgstr "Número total de direcciones de correo electrónico únicas para "
 
 #: consumers/templates/consumers/index.html:51
 msgid "Total number of unique consumer names"
@@ -611,7 +586,6 @@ msgid "Action"
 msgstr "Acción"
 
 #: customers/templates/customers/create.html:10
-#, fuzzy
 msgid "Create Customer"
 msgstr "Crear cliente"
 
@@ -624,8 +598,6 @@ msgid "customer number"
 msgstr "número de cliente"
 
 #: customers/templates/customers/create.html:48
-#, fuzzy
-#| msgid "legal_name"
 msgid "legal name"
 msgstr "Nombre_juridico"
 
@@ -636,29 +608,21 @@ msgstr "teléfono móvil"
 #: customers/templates/customers/create.html:62
 #: users/templates/users/invitation.html:45
 msgid "email"
-msgstr "correo electrónico"
+msgstr "Email"
 
 #: customers/templates/customers/create.html:72
-#, fuzzy
-#| msgid "face_image_url"
-msgid "face image url"
+msgid "face_image_url"
 msgstr "URL de la imagen de la cara"
 
 #: customers/templates/customers/create.html:79
-#, fuzzy
-#| msgid "face_image_date"
 msgid "face image date"
 msgstr "fecha de la imagen de la cara"
 
 #: customers/templates/customers/create.html:89
-#, fuzzy
-#| msgid "date_of_birth"
 msgid "date of birth"
 msgstr "fecha de nacimiento"
 
 #: customers/templates/customers/create.html:96
-#, fuzzy
-#| msgid "relationship_status"
 msgid "relationship status"
 msgstr "estado civil"
 
@@ -667,56 +631,38 @@ msgid "dependants"
 msgstr "personas a cargo"
 
 #: customers/templates/customers/create.html:113
-#, fuzzy
-#| msgid "dob_of_dependants"
 msgid "dob of dependants"
 msgstr "dob de dependientes"
 
 #: customers/templates/customers/create.html:123
-#, fuzzy
-#| msgid "credit_rating_rating"
 msgid "credit rating rating"
 msgstr "calificación crediticia"
 
 #: customers/templates/customers/create.html:130
-#, fuzzy
-#| msgid "credit_rating_source"
 msgid "credit rating source"
 msgstr "fuente de calificación crediticia"
 
 #: customers/templates/customers/create.html:138
-#, fuzzy
-#| msgid "credit_limit_currency"
 msgid "credit limit currency"
 msgstr "moneda límite de crédito"
 
 #: customers/templates/customers/create.html:145
-#, fuzzy
-#| msgid "credit_limit_amount"
 msgid "credit limit amount"
 msgstr "importe del límite de crédito"
 
 #: customers/templates/customers/create.html:155
-#, fuzzy
-#| msgid "highest_education_attained"
 msgid "highest education attained"
 msgstr "mayor_educación_alcanzada"
 
 #: customers/templates/customers/create.html:162
-#, fuzzy
-#| msgid "employment_status"
 msgid "employment status"
 msgstr "Estado de Empleo"
 
 #: customers/templates/customers/create.html:172
-#, fuzzy
-#| msgid "kyc_status"
 msgid "kyc status"
 msgstr "estado de kyc"
 
 #: customers/templates/customers/create.html:179
-#, fuzzy
-#| msgid "last_ok_date"
 msgid "last ok date"
 msgstr "última fecha aceptable"
 
@@ -729,10 +675,8 @@ msgid "SWAGGER STRING"
 msgstr "CUERDA SWAGGER"
 
 #: dynamicendpoints/templates/dynamicendpoints/index.html:33
-#, fuzzy
-#| msgid "Created"
 msgid "Create"
-msgstr "Creado"
+msgstr "Creada"
 
 #: dynamicendpoints/templates/dynamicendpoints/index.html:33
 msgid "saved."
@@ -756,21 +700,15 @@ msgid "Bank ID"
 msgstr "Id. de banco"
 
 #: methodrouting/templates/methodrouting/index.html:7
-#, fuzzy
-#| msgid "Method Routings"
 msgid "Method Routing"
 msgstr "Enrutamiento de métodos"
 
 #: methodrouting/templates/methodrouting/index.html:10
-#, fuzzy
-#| msgid "Connector Metrics"
 msgid "Method Name"
 msgstr "Métricas del conector"
 
 #: methodrouting/templates/methodrouting/index.html:13
 #: metrics/templates/metrics/connector.html:87
-#, fuzzy
-#| msgid "Connector Metrics"
 msgid "Connector Name"
 msgstr "Métricas del conector"
 
@@ -797,7 +735,6 @@ msgstr "Identificación del método"
 msgid "mapped"
 msgstr "mapeada"
 
-
 #: methodrouting/templates/methodrouting/index.html:42
 #: methodrouting/templates/methodrouting/index.html:49
 #: methodrouting/templates/methodrouting/index.html:60
@@ -810,13 +747,11 @@ msgstr "interna"
 msgid "kafka_vSept2018"
 msgstr "kafka_vseptiembre2018"
 
-
 #: methodrouting/templates/methodrouting/index.html:44
 #: methodrouting/templates/methodrouting/index.html:56
 #: methodrouting/templates/methodrouting/index.html:61
 msgid "akka_vDec2018"
 msgstr "akka_vdiciembre2018"
-
 
 #: methodrouting/templates/methodrouting/index.html:45
 #: methodrouting/templates/methodrouting/index.html:53
@@ -830,12 +765,10 @@ msgstr "rest_vMar2019"
 msgid "kafka_vMay2019"
 msgstr "kafka_vmayo2019"
 
-
 #: methodrouting/templates/methodrouting/index.html:47
 #: methodrouting/templates/methodrouting/index.html:51
 msgid "stored_procedure_vDec2019"
 msgstr "procedimiento_almacenado_vdic2019"
-
 
 #: metrics/templates/metrics/api.html:12
 #: metrics/templates/metrics/connector.html:12
@@ -872,10 +805,8 @@ msgid "offset"
 msgstr "compensación"
 
 #: metrics/templates/metrics/api.html:55
-#, fuzzy
-#| msgid "Consumers"
 msgid "consumer id"
-msgstr "Consumidoras"
+msgstr "identificación del consumidor"
 
 #: metrics/templates/metrics/api.html:63
 msgid "user_id"
@@ -941,8 +872,6 @@ msgid "Date"
 msgstr "Fecha"
 
 #: metrics/templates/metrics/api.html:146
-#, fuzzy
-#| msgid "Configurations"
 msgid "Duration(ms)"
 msgstr "Configuraciones"
 
@@ -955,16 +884,12 @@ msgid "User Name"
 msgstr "Nombre de Usuario"
 
 #: metrics/templates/metrics/api.html:163 users/templates/users/detail.html:11
-#, fuzzy
-#| msgid "Users"
 msgid "User ID"
-msgstr "Usuarias"
+msgstr "Identificación de usuario"
 
 #: metrics/templates/metrics/api.html:166
-#, fuzzy
-#| msgid "Consumers"
 msgid "Consumer ID"
-msgstr "Consumidoras"
+msgstr "identificación del consumidor"
 
 #: metrics/templates/metrics/api.html:167
 msgid "Implemented by Partial Function"
@@ -1078,10 +1003,8 @@ msgstr "Dia"
 #: metrics/templates/metrics/quarterly_summary.html:22
 #: metrics/templates/metrics/weekly_summary.html:24
 #: metrics/templates/metrics/yearly_summary.html:24
-#, fuzzy
-#| msgid "Consumers"
 msgid "Custom"
-msgstr "Consumidoras"
+msgstr "Disfraz"
 
 #: metrics/templates/metrics/custom_summary.html:50
 msgid "from_date_custom"
@@ -1146,8 +1069,22 @@ msgstr "Tiempo de Respuesta Promedio(ms)"
 #: metrics/templates/metrics/weekly_summary.html:101
 #: metrics/templates/metrics/yearly_summary.html:101
 msgid "Median time from consumer registration to first API call"
-msgstr "Tiempo medio desde el registro del consumidor hasta la primera llamada a la API"
-
+msgstr ""
+"Tiempo medio desde el registro del consumidor hasta la primera llamada a la "
+"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
+"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
+"a la APITiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la APItiempo medio hasta la primeraTiempo medio desde el registro "
+"del consumidor hasta la primera llamada a la APIMediana de tiempo desde el "
+"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
+"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
+"desde el registro del consumidor hasta la primera llamada APIMediana de "
+"tiempo desde el registro del consumidor hasta la primera llamada APITiempo "
+"medio desde el registro del consumidor hasta la primera llamada a la "
+"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
+"la APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APITiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la API"
 
 #: metrics/templates/metrics/custom_summary.html:111
 #: metrics/templates/metrics/daily_summary.html:105
@@ -1189,8 +1126,6 @@ msgstr "Las 10 mejores API"
 #: metrics/templates/metrics/quarterly_summary.html:125
 #: metrics/templates/metrics/weekly_summary.html:123
 #: metrics/templates/metrics/yearly_summary.html:123
-#, fuzzy
-#| msgid "Consumers"
 msgid "Top 10 Consumers"
 msgstr "Las 10 principales consumidoras"
 
@@ -1276,16 +1211,27 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/quarterly_summary.html:112
 #: metrics/templates/metrics/weekly_summary.html:110
 msgid "Apps with distinct developer email addresses"
-msgstr "Aplicaciones con distintas direcciones de correo electrónico de desarrollador"
-
+msgstr ""
+"Aplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasDirecciones de correo electrónicoAplicaciones con direcciones de "
+"correo electrónico de desarrollador distintasDirecciones de correo "
+"electrónicoAplicaciones con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con direcciones de "
+"correo electrónico de desarrollador distintasAplicaciones con direcciones de "
+"correo electrónico de desarrollador distintasAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico de desarrollador"
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
 msgstr "Hora"
 
 #: metrics/templates/metrics/hourly_summary.html:76
-#, fuzzy
-#| msgid "Metrics"
 msgid "API calls"
 msgstr "Métricas de la API"
 
@@ -1321,10 +1267,8 @@ msgid "Calls per month"
 msgstr "llamadas por mes"
 
 #: users/templates/users/detail.html:8
-#, fuzzy
-#| msgid "Users"
 msgid "User"
-msgstr "Usuarias"
+msgstr "Usuaria"
 
 #: users/templates/users/detail.html:16 users/templates/users/index.html:59
 #: users/templates/users/invitation.html:71
@@ -1357,20 +1301,20 @@ msgid "Unlock User"
 msgstr "Desbloquear usuario"
 
 #: users/templates/users/detail.html:62
-#, fuzzy
-#| msgid "Entitlement Requests"
 msgid "Add Entitlement"
-msgstr "Solicitudes de derechos"
+msgstr "Agregar derecho"
 
 #: users/templates/users/detail.html:69 users/templates/users/detail.html:98
 msgid "Role name"
 msgstr "Nombre de rol"
 
+#: users/templates/users/detail.html:75
+msgid "bank id"
+msgstr "identificación bancaria"
+
 #: users/templates/users/detail.html:94
-#, fuzzy
-#| msgid "Entitlement Requests"
 msgid "Entitlements"
-msgstr "Solicitudes de derechos"
+msgstr "Derechos"
 
 #: users/templates/users/includes/filter_locked.html:2
 msgid "Active"
@@ -1401,16 +1345,12 @@ msgid "Total number of users"
 msgstr "Total de usuarios"
 
 #: users/templates/users/index.html:57
-#, fuzzy
-#| msgid "Users"
 msgid "User Id"
-msgstr "Usuarias"
+msgstr "Identificación de usuario"
 
 #: users/templates/users/index.html:58
-#, fuzzy
-#| msgid "Users"
 msgid "Username"
-msgstr "Usuarias"
+msgstr "Nombre de usuario"
 
 #: users/templates/users/index.html:69
 msgid "View"
@@ -1445,20 +1385,14 @@ msgid "WEBUI"
 msgstr "WEBUI"
 
 #: webui/templates/webui/index.html:13
-#, fuzzy
-#| msgid "Webui Props"
 msgid "Web UI Props Name"
 msgstr "Accesorios webui"
 
 #: webui/templates/webui/index.html:16
-#, fuzzy
-#| msgid "Webui Props"
 msgid "Web UI Props Value"
 msgstr "Accesorios webui"
 
 #: webui/templates/webui/index.html:19
-#, fuzzy
-#| msgid "Webui Props"
 msgid "Web UI Props Id"
 msgstr "Accesorios webui"
 
@@ -1466,8 +1400,6 @@ msgstr "Accesorios webui"
 msgid "Save Value"
 msgstr "Guardar valor"
 
-
 #: webui/templates/webui/index.html:48
 msgid "Save"
 msgstr "Ahorrar"
-

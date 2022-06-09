@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{{ block.super }} / Customers{% endblock page_title %}
+{% block page_title %}{{ block.super }} / {% trans "Customers" %}{% endblock page_title %}
 
 
 {% block content %}
@@ -69,7 +69,7 @@
             <div class="col-xs-12 col-sm-6">
                 {% if form.face_image_url.errors %}<div class="alert alert-danger">{{ form.face_image_url.errors }}</div>{% endif %}
                 <div class="form-group">
-                    <strong>{% trans "face image url" %}</strong>
+                    <strong>{% trans "face_image_url" %}</strong>
                     {{ form.face_image_url }}
                 </div>
             </div>
