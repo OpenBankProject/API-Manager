@@ -1,3 +1,4 @@
-<a href="?enabled=true&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_true %} active{% endif %}">Enabled</a>
-<a href="?enabled=false&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_false %} active{% endif %}">Disabled</a>
-<a href="?enabled=All&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_all %} active{% endif %}">All</a>
+{% load i18n %}
+<a href="?enabled=true&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_true %} active{% endif %}">{% trans "Enabled" %}</a>
+<a href="?enabled=false&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_false %} active{% endif %}">{% trans "Disabled" %}</a>
+<a href="?enabled=All&app_type={{ request.GET.app_type }}&time={{ request.GET.time }}" class="btn btn-default{% if active_enabled_all %} active{% endif %}">{% trans "All" %}</a>

@@ -5,7 +5,7 @@ Views for base app
 
 from django.conf import settings
 from django.views.generic import TemplateView
-
+from django.shortcuts import render
 from obp.forms import DirectLoginForm, GatewayLoginForm
 
 
@@ -23,3 +23,6 @@ class HomeView(TemplateView):
             'gatewaylogin_form': GatewayLoginForm(),
         })
         return context
+
+
+

@@ -67,6 +67,7 @@ MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,7 +76,7 @@ MIDDLEWARE = [
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
-#cache the view page, we set 60s = 1m, 
+#cache the view page, we set 60s = 1m,
 # CACHE_MIDDLEWARE_SECONDS = 60
 
 # TIMEOUT is 31104000 seconds = 60*60*24*30*12 (1 year)
@@ -167,6 +168,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = (
+    ("en", _("English")),
+    ("fr", _("French")),
+    ("es", _("Spanish"))
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale/"),
+)
 
 # Set this to your local directory for static files
 STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static-collected')

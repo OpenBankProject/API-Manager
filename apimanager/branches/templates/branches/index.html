@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ block.super }} / Branches{% endblock page_title %}
 
 {% block content %}
 <div id="branches_list">
-	<h1>Branches</h1>
+	<h1>{% trans "Branches" %}</h1>
 
 	<form method="post">
         {% csrf_token %}
@@ -14,7 +15,6 @@
             {{ form.non_field_errors }}
         </div>
         {% endif %}
-
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.branch_id.errors %}<div class="alert alert-danger">{{ form.branch_id.errors }}</div>{% endif %}
@@ -26,7 +26,7 @@
             <div class="col-xs-12 col-sm-4">
                 {% if form.bank_id.errors %}<div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.bank_id.label_tag }}
+                    <strong>{% trans "bank_id" %} </strong>
                     {{ form.bank_id }}
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="col-xs-12 col-sm-4">
                 {% if form.location_latitude.errors %}<div class="alert alert-danger">{{ form.location_latitude.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.location_latitude.label_tag }}
+                    <strong>{% trans "location_latitude" %} </strong>
                     {{ form.location_latitude }}
                 </div>
             </div>
@@ -148,7 +148,7 @@
         <div class="row">
             <div class="col-sm-12 hidden-xs">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-green">Add</button>
+                    <button type="submit" class="btn btn-primary btn-green">{% trans "Add" %}</button>
                 </div>
             </div>
         </div>
@@ -157,11 +157,11 @@
 	<div class="table-responsive">
 		<table class="table table-hover tablesorter" id="branches-list" aria-describedby="branches list">
 			<thead>
-				<th scope="col">Branch Id</th>
-				<th scope="col">Bank Id</th>
-				<th scope="col">Branch Name</th>
-				<th scope="col">More_info</th>
-				<th scope="col">Update Button</th>
+				<th scope="col">{% trans "Branch Id" %}</th>
+				<th scope="col">{% trans "Bank Id" %}</th>
+				<th scope="col">{% trans "Branch Name" %}</th>
+				<th scope="col">{% trans "More_info" %}</th>
+				<th scope="col">{% trans "Update Button" %}</th>
 			</thead>
 			<tbody>
 			{% for branch in branches_list %}
@@ -173,40 +173,40 @@
                     <td>
                         <div class="popuptext">
                             <ul>
-                                <li>Address:
+                                <li>{% trans "Address" %}:
                                     <ul>
-                                        <li>line1: {{branch.address.line_1}}</li>
-                                        <li>line2: {{branch.address.line_2}}</li>
-                                        <li>line3: {{branch.address.line_3}}</li>
-                                        <li>city: {{branch.address.city}}</li>
-                                        <li>county: {{branch.address.county}}</li>
-                                        <li>state: {{branch.address.state}}</li>
-                                        <li>postcode: {{branch.address.postcode}}</li>
-                                        <li>country_code: {{branch.address.country_code}}</li>
+                                        <li>{% trans "line1" %}: {{branch.address.line_1}}</li>
+                                        <li>{% trans "line2" %}: {{branch.address.line_2}}</li>
+                                        <li>{% trans "line3" %}: {{branch.address.line_3}}</li>
+                                        <li>{% trans "city" %}: {{branch.address.city}}</li>
+                                        <li>{% trans "county" %}: {{branch.address.county}}</li>
+                                        <li>{% trans "state" %}: {{branch.address.state}}</li>
+                                        <li>{% trans "postcode" %}: {{branch.address.postcode}}</li>
+                                        <li>{% trans "country_code" %}: {{branch.address.country_code}}</li>
                                     </ul>
                                 </li>
-                                <li>Location:
+                                <li>{% trans "Location" %}:
                                     <ul>
-                                        <li>latitude: {{branch.location.latitude}}</li>
-                                        <li>longitude: {{branch.location.longitude}}</li>
+                                        <li>{% trans "latitude" %}: {{branch.location.latitude}}</li>
+                                        <li>{% trans "longitude" %}: {{branch.location.longitude}}</li>
                                     </ul>
                                 </li>
-                                <li>Meta License:
+                                <li>{% trans "Meta License" %}:
                                     <ul>
-                                        <li>id: {{branch.meta.license.id}}</li>
-                                        <li>name: {{branch.meta.license.name}}</li>
+                                        <li>{% trans "id" %}: {{branch.meta.license.id}}</li>
+                                        <li>{% trans "name" %}: {{branch.meta.license.name}}</li>
                                     </ul>
                                 </li>
-                                <li>Branch Routing
+                                <li>{% trans "Branch Routing" %}
                                     <ul>
-                                        <li>Scheme: {{branch.branch_routing.scheme}}</li>
-                                        <li>Address: {{branch.branch_routing.address}}</li>
+                                        <li>{% trans "Scheme" %}: {{branch.branch_routing.scheme}}</li>
+                                        <li>{% trans "Address" %}: {{branch.branch_routing.address}}</li>
                                     </ul>
                                 </li>
-                                <li>Branch Type: {{branch.branch_type}}</li>
-                                <li>More Info: {{branch.more_info}}</li>
-                                <li>Phone Number: {{branch.phone_number}}</li>
-                                <li>Accessible Features: {{branch.accessibleFeatures}}</li>
+                                <li>{% trans "Branch Type" %}: {{branch.branch_type}}</li>
+                                <li>{% trans "More Info" %}: {{branch.more_info}}</li>
+                                <li>{% trans "Phone Number" %}: {{branch.phone_number}}</li>
+                                <li>{% trans "Accessible Features" %}: {{branch.accessibleFeatures}}</li>
                             </ul>
                         </div>
                     </td>

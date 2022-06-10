@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block page_title %}{{ block.super }} / Users{% endblock page_title %}
 
 {% block content %}
 <div id="users">
-	<h1>Users</h1>
+	<h1>{% trans "Users" %}</h1>
 
     <div id="users-filters">
-        <h4>Filters</h4>
+        <h4>{% trans "Filters" %}</h4>
         <div class="hidden-xs">
             {% include "users/includes/filter_role.html" %}
             {% include "users/includes/filter_email.html" %}
@@ -41,23 +41,23 @@
     <div class="row">
         <div class="col-xs-12">
 
-            <h4>Pagination</h4>
+            <h4>{% trans "Pagination" %}</h4>
                 {% include "users/includes/filter_pagination.html" %}
         </div>
     </div>
 
-	<h4>Statistics</h4>
+	<h4>{% trans "Statistics" %}</h4>
 	<ul id="statistics">
-		<li>Total number of users: {{ statistics.users_num }}
+		<li>{% trans "Total number of users" %}: {{ statistics.users_num }}
 	</ul>
 
 	<div class="table-responsive">
 		<table class="table table-hover tablesorter" id="users-list" aria-describedby="users list">
 			<thead>
-				<th scope="col">User Id</th>
-				<th scope="col">Username</th>
-				<th scope="col">Email</th>
-				<th scope="col">Action</th>
+				<th scope="col">{% trans "User Id" %}</th>
+				<th scope="col">{% trans "Username" %}</th>
+				<th scope="col">{% trans "Email" %}</th>
+				<th scope="col">{% trans "Action" %}</th>
 			</thead>
 			<tbody>
 			{% for user in users %}
@@ -66,7 +66,7 @@
 					<td><a href="{{ url_users_detail }}">{{ user.user_id }}</td>
 					<td>{{ user.username }}</td>
 					<td>{{ user.email }}</td>
-					<td><a href="{{ url_users_detail }}" class="btn btn-primary">View</a></td>
+					<td><a href="{{ url_users_detail }}" class="btn btn-primary">{% trans "View" %}</a></td>
 				</tr>
 			{% endfor %}
 			</tbody>

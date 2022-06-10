@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block page_title %}{{ block.super }} / Customers{% endblock page_title %}
+{% block page_title %}{{ block.super }} / {% trans "Customers" %}{% endblock page_title %}
 
 
 {% block content %}
 <div id="customers">
-    <h1>Create Customer</h1>
+    <h1>{% trans "Create Customer" %}</h1>
 
     <form action="{% url 'customers-create' %}" method="post">
         {% csrf_token %}
