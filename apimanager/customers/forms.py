@@ -5,13 +5,14 @@ Forms of customers app
 
 from django import forms
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from obp.api import APIError
 
 
 class CreateCustomerForm(forms.Form):
     bank_id = forms.ChoiceField(
-        label='Bank',
+        label=_('Bank'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -20,7 +21,7 @@ class CreateCustomerForm(forms.Form):
         choices=[],
     )
     username = forms.CharField(
-        label='Username',
+        label=_('Username'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'The name of the user',
@@ -29,7 +30,7 @@ class CreateCustomerForm(forms.Form):
         ),
     )
     customer_number = forms.CharField(
-        label='Customer Number',
+        label=_('Customer Number'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'E.g. `007`',
@@ -38,7 +39,7 @@ class CreateCustomerForm(forms.Form):
         ),
     )
     legal_name = forms.CharField(
-        label='Legal Name',
+        label=_('Legal Name'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'NONE',
@@ -48,7 +49,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     mobile_phone_number = forms.CharField(
-        label='Mobile Phone Number',
+        label=_('Mobile Phone Number'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'E.g. +49 123 456 78 90 12',
@@ -58,7 +59,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     email = forms.CharField(
-        label='Email',
+        label=_('Email'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'E.g. person@example.com',
@@ -68,7 +69,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     face_image_url = forms.CharField(
-        label='Face Image URL',
+        label=_('Face Image URL'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'https://static.openbankproject.com/images/OBP/favicon.png',  # noqa
@@ -78,7 +79,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     face_image_date = forms.DateTimeField(
-        label='Face Image Date',
+        label=_('Face Image Date'),
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -89,7 +90,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     date_of_birth = forms.DateTimeField(
-        label='Date of Birth',
+        label=_('Date of Birth'),
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -100,7 +101,7 @@ class CreateCustomerForm(forms.Form):
         required=True,
     )
     relationship_status = forms.CharField(
-        label='Relationship Status',
+        label=_('Relationship Status'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Single',
@@ -110,7 +111,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     dependants = forms.IntegerField(
-        label='Dependants',
+        label=_('Dependants'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '0',
@@ -121,7 +122,7 @@ class CreateCustomerForm(forms.Form):
         required=True,
     )
     dob_of_dependants = forms.CharField(
-        label='Date of Birth of Dependants',
+        label=_('Date of Birth of Dependants'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '2013-01-22T00:08:00Z, 2010-01-22T00:08:00Z',
@@ -131,7 +132,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     credit_rating_rating = forms.CharField(
-        label='Credit Rating (Rating)',
+        label=_('Credit Rating (Rating)'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'OBP',
@@ -141,7 +142,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     credit_rating_source = forms.CharField(
-        label='Credit Rating (Source)',
+        label=_('Credit Rating (Source)'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'OBP',
@@ -151,7 +152,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     credit_limit_currency = forms.CharField(
-        label='Credit Limit (Currency)',
+        label=_('Credit Limit (Currency)'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'EUR',
@@ -161,7 +162,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     credit_limit_amount = forms.CharField(
-        label='Credit Limit (Amount)',
+        label=_('Credit Limit (Amount)'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '10',
@@ -171,7 +172,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     highest_education_attained = forms.CharField(
-        label='Highest Education Attained',
+        label=_('Highest Education Attained'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Bachelor’s Degree',
@@ -181,7 +182,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     employment_status = forms.CharField(
-        label='Employment Status',
+        label=_('Employment Status'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Employed',
@@ -191,7 +192,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     kyc_status = forms.BooleanField(
-        label='KYC Status',
+        label=_('KYC Status'),
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-control',
@@ -201,7 +202,7 @@ class CreateCustomerForm(forms.Form):
         required=False,
     )
     last_ok_date = forms.DateTimeField(
-        label='Last OK Date',
+        label=_('Last OK Date'),
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={

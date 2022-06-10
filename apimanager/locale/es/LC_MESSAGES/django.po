@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 06:06+0200\n"
+"POT-Creation-Date: 2022-06-10 12:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,17 +29,144 @@ msgstr "francés"
 msgid "Spanish"
 msgstr "español"
 
-#: atms/templates/atms/atm_List.html:8 atms/templates/atms/index.html:17
+#: atms/forms.py:14 atms/templates/atms/atm_List.html:8
 msgid "ATM Id"
 msgstr "ID del cajero automático"
 
-#: atms/templates/atms/atm_List.html:9 atms/templates/atms/index.html:24
+#: atms/forms.py:25 atms/templates/atms/atm_List.html:9
 #: branches/templates/branches/index.html:161
-#: customers/templates/customers/create.html:24
 #: users/templates/users/detail.html:99
 #: users/templates/users/invitation.html:22
 msgid "Bank Id"
 msgstr "Id. de banco"
+
+#: atms/forms.py:35 branches/forms.py:33
+#: consumers/templates/consumers/index.html:58
+msgid "Name"
+msgstr "Nombre"
+
+#: atms/forms.py:46 branches/forms.py:43
+#: branches/templates/branches/index.html:176
+#: branches/templates/branches/index.html:203
+msgid "Address"
+msgstr "Dirección"
+
+#: atms/forms.py:56 branches/forms.py:53
+msgid "Latitude"
+msgstr "latitud"
+
+#: atms/forms.py:67 branches/forms.py:64
+msgid "Longitude"
+msgstr "longitud"
+
+#: atms/forms.py:78
+msgid "Meta License Id"
+msgstr "Meta Licencia"
+
+#: atms/forms.py:89
+msgid "Meta License Name"
+msgstr "Nombre de la Licencia"
+
+#: atms/forms.py:100
+msgid "Opening Hours"
+msgstr "Horario de atención"
+
+#: atms/forms.py:110
+msgid " Monday"
+msgstr "Lunes"
+
+#: atms/forms.py:120
+msgid "Tuesday"
+msgstr "Martes"
+
+#: atms/forms.py:130
+msgid " Wednesday"
+msgstr "Wednesday"
+
+#: atms/forms.py:140
+msgid " Thursday"
+msgstr "Jueves"
+
+#: atms/forms.py:150
+msgid " Friday"
+msgstr "Viernes"
+
+#: atms/forms.py:160
+msgid " Saturday"
+msgstr "Sábado"
+
+#: atms/forms.py:170
+msgid " Sunday"
+msgstr "Sunday"
+
+#: atms/forms.py:180
+msgid "Is Accessible"
+msgstr "producción y validación es"
+
+#: atms/forms.py:189
+msgid "ATM location"
+msgstr "Ubicación"
+
+#: atms/forms.py:199 branches/forms.py:166
+msgid "More information"
+msgstr "Más información"
+
+#: atms/forms.py:209
+msgid "Deposit Capabilities"
+msgstr "Tiene capacidad de depósito"
+
+#: atms/forms.py:218
+msgid "Supported Languages"
+msgstr "Idiomas admitidos"
+
+#: atms/forms.py:227
+msgid "Services"
+msgstr "Servicios"
+
+#: atms/forms.py:237 branches/forms.py:146
+#: branches/templates/branches/index.html:209
+msgid "Accessible Features"
+msgstr "Características accesibles"
+
+#: atms/forms.py:247
+msgid "Supported Currencies"
+msgstr "Divisas Soportadas"
+
+#: atms/forms.py:256
+msgid "Write Notes"
+msgstr "Notas:"
+
+#: atms/forms.py:265
+msgid "Write location Category"
+msgstr "Categorías de ubicación"
+
+#: atms/forms.py:274
+msgid "Minimum Withdrawal"
+msgstr "El retiro mínimo"
+
+#: atms/forms.py:284
+msgid "Branch Identification"
+msgstr "Identificación de la sucursal"
+
+#: atms/forms.py:294
+msgid "Site Identification"
+msgstr "IDENTIFICACIÓN DEL LUGAR"
+
+#: atms/forms.py:304
+msgid "Site Name"
+msgstr "Nobre del sitio"
+
+#: atms/forms.py:324
+msgid "Cash Withdrawal National fee"
+msgstr "Cargo Nacional por Retiro de Efectivo"
+
+#: atms/forms.py:334
+msgid "Cash Withdrawal international fee"
+msgstr "Cargo internacional por retiro de efectivo"
+
+#: atms/forms.py:344
+msgid "Balance Inquiry Fee"
+msgstr "Cargo por consulta de saldo"
 
 #: atms/templates/atms/atm_List.html:10
 msgid "ATM Name"
@@ -58,103 +185,7 @@ msgstr "Botón Actualizar"
 msgid "ATMs"
 msgstr "cajeros automáticos"
 
-#: atms/templates/atms/index.html:31
-#: consumers/templates/consumers/index.html:58
-msgid "Name"
-msgstr "Nombre"
-
-#: atms/templates/atms/index.html:40
-msgid "Services"
-msgstr "Servicios"
-
-#: atms/templates/atms/index.html:48
-msgid "Location Latitude"
-msgstr "Ubicación Latitud"
-
-#: atms/templates/atms/index.html:56
-msgid "Location Longitude"
-msgstr "Longitud de la ubicación"
-
-#: atms/templates/atms/index.html:66
-msgid "Meta License Name"
-msgstr "Nombre de la Licencia"
-
-#: atms/templates/atms/index.html:73
-msgid "Located At"
-msgstr "La página de presentación, que está ubicada en"
-
-#: atms/templates/atms/index.html:80
-msgid "Has Deposit Capability"
-msgstr "Tiene capacidad de depósito"
-
-#: atms/templates/atms/index.html:90
-msgid "Is Accessible"
-msgstr "producción y validación es"
-
-#: atms/templates/atms/index.html:98
-msgid "Accessibility Features"
-msgstr "Características de accesibilidad"
-
-#: atms/templates/atms/index.html:105
-#: branches/templates/branches/index.html:207
-msgid "More Info"
-msgstr "Más información"
-
-#: atms/templates/atms/index.html:114
-msgid "Notes"
-msgstr "Notas:"
-
-#: atms/templates/atms/index.html:121
-msgid "Supported Languages"
-msgstr "Idiomas admitidos"
-
-#: atms/templates/atms/index.html:128
-msgid "Supported Currencies"
-msgstr "Divisas Soportadas"
-
-#: atms/templates/atms/index.html:137
-msgid "Location Categories"
-msgstr "Categorías de ubicación"
-
-#: atms/templates/atms/index.html:145
-msgid "Minimum Withdrawal"
-msgstr "El retiro mínimo"
-
-#: atms/templates/atms/index.html:152
-msgid "Site Name"
-msgstr "Nobre del sitio"
-
-#: atms/templates/atms/index.html:161
-msgid "Branch Identification"
-msgstr "Identificación de la sucursal"
-
-#: atms/templates/atms/index.html:168
-msgid "Site Identification"
-msgstr "IDENTIFICACIÓN DEL LUGAR"
-
-#: atms/templates/atms/index.html:173
-msgid "Cash Withdrawal National Fee"
-msgstr "Cargo Nacional por Retiro de Efectivo"
-
-#: atms/templates/atms/index.html:183
-msgid "Balance Inquiry Fee"
-msgstr "Cargo por consulta de saldo"
-
-#: atms/templates/atms/index.html:190
-msgid "Cash Withdrawal International Fee"
-msgstr "Cargo internacional por retiro de efectivo"
-
-#: atms/templates/atms/index.html:199
-#: branches/templates/branches/index.html:176
-#: branches/templates/branches/index.html:203
-msgid "Address"
-msgstr "Dirección"
-
-#: atms/templates/atms/index.html:206
-msgid "Lobby"
-msgstr "Sala de espera"
-
-#: atms/templates/atms/index.html:213
+#: atms/templates/atms/index.html:251
 #: branches/templates/branches/index.html:151
 #: users/templates/users/detail.html:83 users/templates/users/detail.html:88
 msgid "Add"
@@ -286,74 +317,57 @@ msgstr ""
 "El usuario que inició sesión debe tener roles específicos otorgados para "
 "usar la funcionalidad."
 
-#: branches/templates/branches/index.html:22
-msgid "Branch_Id"
-msgstr "ID_sucursal"
+#: branches/forms.py:13 branches/templates/branches/index.html:160
+msgid "Branch Id"
+msgstr "Identificación de la sucursal"
+
+#: branches/forms.py:24 customers/forms.py:15
+msgid "Bank"
+msgstr "Banco"
+
+#: branches/forms.py:75
+msgid "meta_license_id"
+msgstr "nombre de la metalicencia"
+
+#: branches/forms.py:86
+msgid "meta_license_name"
+msgstr "nombre de la metalicencia"
+
+#: branches/forms.py:97
+msgid " Lobby Opening Hours"
+msgstr "Horario de atención"
+
+#: branches/forms.py:107
+msgid "Drive Up"
+msgstr "subir"
+
+#: branches/forms.py:117
+msgid "Branch Routing Scheme"
+msgstr "Enrutamiento de sucursales"
+
+#: branches/forms.py:127
+msgid "Branch Routing Address"
+msgstr "Enrutamiento de sucursales"
+
+#: branches/forms.py:137
+msgid "is accessible"
+msgstr "producción y validación es"
+
+#: branches/forms.py:156
+msgid "Branch type"
+msgstr "Sucursales"
+
+#: branches/forms.py:177 customers/forms.py:52
+msgid "Mobile Phone Number"
+msgstr "teléfono móvil"
 
 #: branches/templates/branches/index.html:29
 msgid "bank_id"
-msgstr "bank_id"
-
-#: branches/templates/branches/index.html:36
-#: branches/templates/branches/index.html:197
-msgid "name"
-msgstr "nombre"
-
-#: branches/templates/branches/index.html:46
-msgid "branch_type"
-msgstr "Sucursales"
+msgstr "id_banco"
 
 #: branches/templates/branches/index.html:53
 msgid "location_latitude"
 msgstr "ubicación_latitud"
-
-#: branches/templates/branches/index.html:60
-msgid "location_longitude"
-msgstr "ubicación longitud"
-
-#: branches/templates/branches/index.html:70
-msgid "meta_license_name"
-msgstr "nombre de la metalicencia"
-
-#: branches/templates/branches/index.html:77
-msgid "branch_routing_scheme"
-msgstr "esquema_de_rama_de_enrutamiento"
-
-#: branches/templates/branches/index.html:84
-msgid "branch_routing_address"
-msgstr "dirección_enrutamiento_sucursal"
-
-#: branches/templates/branches/index.html:94
-msgid "is_accessible"
-msgstr "producción y validación es"
-
-#: branches/templates/branches/index.html:101
-msgid "accessibleFeatures"
-msgstr "Funciones accesibles"
-
-#: branches/templates/branches/index.html:108
-msgid "more_info"
-msgstr "más información"
-
-#: branches/templates/branches/index.html:118
-msgid "phone_number"
-msgstr "número_de_teléfono"
-
-#: branches/templates/branches/index.html:128
-msgid "address"
-msgstr "dirección"
-
-#: branches/templates/branches/index.html:135
-msgid "lobby"
-msgstr "ejercer presión"
-
-#: branches/templates/branches/index.html:142
-msgid "drive_up"
-msgstr "subir"
-
-#: branches/templates/branches/index.html:160
-msgid "Branch Id"
-msgstr "Identificación de la sucursal"
 
 #: branches/templates/branches/index.html:162
 msgid "Branch Name"
@@ -415,6 +429,10 @@ msgstr "Meta Licencia"
 msgid "id"
 msgstr "identificación"
 
+#: branches/templates/branches/index.html:197
+msgid "name"
+msgstr "nombre"
+
 #: branches/templates/branches/index.html:200
 msgid "Branch Routing"
 msgstr "Enrutamiento de sucursales"
@@ -427,13 +445,13 @@ msgstr "Pauta"
 msgid "Branch Type"
 msgstr "Sucursales"
 
+#: branches/templates/branches/index.html:207
+msgid "More Info"
+msgstr "Más información"
+
 #: branches/templates/branches/index.html:208
 msgid "Phone Number"
 msgstr "Número de teléfono"
-
-#: branches/templates/branches/index.html:209
-msgid "Accessible Features"
-msgstr "Características accesibles"
 
 #: config/templates/config/index.html:11
 msgid "The configuration of the API"
@@ -509,10 +527,12 @@ msgid "Description"
 msgstr "Descripción"
 
 #: consumers/templates/consumers/detail.html:194
+#: consumers/templates/consumers/index.html:75
 msgid "Disable"
 msgstr "Deshabilitado"
 
 #: consumers/templates/consumers/detail.html:196
+#: consumers/templates/consumers/index.html:75
 msgid "Enable"
 msgstr "Habilitado"
 
@@ -585,86 +605,87 @@ msgstr "Identificación"
 msgid "Action"
 msgstr "Acción"
 
+#: consumers/templates/consumers/index.html:76
+#: users/templates/users/index.html:69
+msgid "View"
+msgstr "Ver"
+
+#: customers/forms.py:24 users/templates/users/index.html:58
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: customers/forms.py:33
+msgid "Customer Number"
+msgstr "número de cliente"
+
+#: customers/forms.py:42
+msgid "Legal Name"
+msgstr "Nombre_juridico"
+
+#: customers/forms.py:62 users/templates/users/detail.html:16
+#: users/templates/users/index.html:59 users/templates/users/invitation.html:71
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: customers/forms.py:72
+msgid "Face Image URL"
+msgstr "fecha de la imagen de la cara"
+
+#: customers/forms.py:82
+msgid "Face Image Date"
+msgstr "fecha de la imagen de la cara"
+
+#: customers/forms.py:93
+msgid "Date of Birth"
+msgstr "fecha de nacimiento"
+
+#: customers/forms.py:104
+msgid "Relationship Status"
+msgstr "estado civil"
+
+#: customers/forms.py:114
+msgid "Dependants"
+msgstr "personas a cargo"
+
+#: customers/forms.py:125
+msgid "Date of Birth of Dependants"
+msgstr "dob de dependientes"
+
+#: customers/forms.py:135
+msgid "Credit Rating (Rating)"
+msgstr "calificación crediticia"
+
+#: customers/forms.py:145
+msgid "Credit Rating (Source)"
+msgstr "fuente de calificación crediticia"
+
+#: customers/forms.py:155
+msgid "Credit Limit (Currency)"
+msgstr "moneda límite de crédito"
+
+#: customers/forms.py:165
+msgid "Credit Limit (Amount)"
+msgstr "importe del límite de crédito"
+
+#: customers/forms.py:175
+msgid "Highest Education Attained"
+msgstr "mayor_educación_alcanzada"
+
+#: customers/forms.py:185
+msgid "Employment Status"
+msgstr "Estado de Empleo"
+
+#: customers/forms.py:195
+msgid "KYC Status"
+msgstr "estado"
+
+#: customers/forms.py:205
+msgid "Last OK Date"
+msgstr "Último día"
+
 #: customers/templates/customers/create.html:10
 msgid "Create Customer"
 msgstr "Crear cliente"
-
-#: customers/templates/customers/create.html:31
-msgid "username"
-msgstr "nombre de usuario"
-
-#: customers/templates/customers/create.html:38
-msgid "customer number"
-msgstr "número de cliente"
-
-#: customers/templates/customers/create.html:48
-msgid "legal name"
-msgstr "Nombre_juridico"
-
-#: customers/templates/customers/create.html:55
-msgid "mobile phone number"
-msgstr "teléfono móvil"
-
-#: customers/templates/customers/create.html:62
-#: users/templates/users/invitation.html:45
-msgid "email"
-msgstr "Email"
-
-#: customers/templates/customers/create.html:72
-msgid "face_image_url"
-msgstr "URL de la imagen de la cara"
-
-#: customers/templates/customers/create.html:79
-msgid "face image date"
-msgstr "fecha de la imagen de la cara"
-
-#: customers/templates/customers/create.html:89
-msgid "date of birth"
-msgstr "fecha de nacimiento"
-
-#: customers/templates/customers/create.html:96
-msgid "relationship status"
-msgstr "estado civil"
-
-#: customers/templates/customers/create.html:106
-msgid "dependants"
-msgstr "personas a cargo"
-
-#: customers/templates/customers/create.html:113
-msgid "dob of dependants"
-msgstr "dob de dependientes"
-
-#: customers/templates/customers/create.html:123
-msgid "credit rating rating"
-msgstr "calificación crediticia"
-
-#: customers/templates/customers/create.html:130
-msgid "credit rating source"
-msgstr "fuente de calificación crediticia"
-
-#: customers/templates/customers/create.html:138
-msgid "credit limit currency"
-msgstr "moneda límite de crédito"
-
-#: customers/templates/customers/create.html:145
-msgid "credit limit amount"
-msgstr "importe del límite de crédito"
-
-#: customers/templates/customers/create.html:155
-msgid "highest education attained"
-msgstr "mayor_educación_alcanzada"
-
-#: customers/templates/customers/create.html:162
-msgid "employment status"
-msgstr "Estado de Empleo"
-
-#: customers/templates/customers/create.html:172
-msgid "kyc status"
-msgstr "estado de kyc"
-
-#: customers/templates/customers/create.html:179
-msgid "last ok date"
-msgstr "última fecha aceptable"
 
 #: dynamicendpoints/templates/dynamicendpoints/index.html:10
 msgid "ENDPOINT ID"
@@ -1070,12 +1091,19 @@ msgstr "Tiempo de Respuesta Promedio(ms)"
 #: metrics/templates/metrics/yearly_summary.html:101
 msgid "Median time from consumer registration to first API call"
 msgstr ""
-"Tiempo medio desde el registro del consumidor hasta la primera llamada a la "
+"Mediana de tiempo desde el registro del consumidor hasta la primera llamada "
+"APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APITiempo medio desde el registro del consumidor hasta la "
+"primera llamada a la APItiempo medio hasta la primeraTiempo medio desde el "
+"registro del consumidor hasta la primera llamada a la APIMediana de tiempo "
+"desde el registro del consumidor hasta la primera llamada APITiempo medio "
+"desde el registro del consumidor hasta la primera llamada a la APITiempo "
+"medio desde el registro del consumidor hasta la primera llamada a la "
 "APITiempo medio desde el registro del consumidor hasta la primera llamada a "
 "la APITiempo medio desde el registro del consumidor hasta la primera llamada "
-"a la APITiempo medio desde el registro del consumidor hasta la primera "
-"llamada a la APItiempo medio hasta la primeraTiempo medio desde el registro "
-"del consumidor hasta la primera llamada a la APIMediana de tiempo desde el "
+"a la APItiempo medio hasta la primeraTiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APIMediana de tiempo desde el "
 "registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
 "el registro del consumidor hasta la primera llamada APIMediana de tiempo "
 "desde el registro del consumidor hasta la primera llamada APIMediana de "
@@ -1212,20 +1240,28 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/weekly_summary.html:110
 msgid "Apps with distinct developer email addresses"
 msgstr ""
-"Aplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasDirecciones de correo electrónicoAplicaciones con direcciones de "
-"correo electrónico de desarrollador distintasDirecciones de correo "
-"electrónicoAplicaciones con distintas direcciones de correo electrónico para "
+"Aplicaciones con distintas direcciones de correo electrónico para "
 "desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
 "para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para desarrolladoresAplicaciones con direcciones de "
-"correo electrónico de desarrollador distintasAplicaciones con direcciones de "
-"correo electrónico de desarrollador distintasAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico de desarrollador"
+"electrónico para desarrolladoresDirecciones de correo "
+"electrónicoAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con direcciones de correo "
+"electrónico de desarrollador distintasAplicaciones con direcciones de correo "
+"electrónico de desarrollador distintasAplicaciones con direcciones de correo "
+"electrónico de desarrollador distintasDirecciones de correo "
+"electrónicoAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasDirecciones de correo electrónicoAplicaciones con "
+"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
+"con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con direcciones de correo "
+"electrónico de desarrollador distintasAplicaciones con direcciones de correo "
+"electrónico de desarrollador distintasAplicaciones con distintas direcciones "
+"de correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico de desarrollador"
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
@@ -1269,11 +1305,6 @@ msgstr "llamadas por mes"
 #: users/templates/users/detail.html:8
 msgid "User"
 msgstr "Usuaria"
-
-#: users/templates/users/detail.html:16 users/templates/users/index.html:59
-#: users/templates/users/invitation.html:71
-msgid "Email"
-msgstr "Correo electrónico"
 
 #: users/templates/users/detail.html:21
 msgid "Provider"
@@ -1348,14 +1379,6 @@ msgstr "Total de usuarios"
 msgid "User Id"
 msgstr "Identificación de usuario"
 
-#: users/templates/users/index.html:58
-msgid "Username"
-msgstr "Nombre de usuario"
-
-#: users/templates/users/index.html:69
-msgid "View"
-msgstr "Ver"
-
 #: users/templates/users/invitation.html:29
 #: users/templates/users/invitation.html:69
 msgid "First Name"
@@ -1365,6 +1388,10 @@ msgstr "Nombre"
 #: users/templates/users/invitation.html:70
 msgid "Last Name"
 msgstr "Apellido"
+
+#: users/templates/users/invitation.html:45
+msgid "email"
+msgstr "Email"
 
 #: users/templates/users/invitation.html:52
 #: users/templates/users/invitation.html:72
@@ -1403,3 +1430,74 @@ msgstr "Guardar valor"
 #: webui/templates/webui/index.html:48
 msgid "Save"
 msgstr "Ahorrar"
+
+#~ msgid "username"
+#~ msgstr "nombre de usuario"
+
+#~ msgid "mobile phone number"
+#~ msgstr "teléfono móvil"
+
+#~ msgid "face_image_url"
+#~ msgstr "URL de la imagen de la cara"
+
+#~ msgid "kyc status"
+#~ msgstr "estado de kyc"
+
+#~ msgid "last ok date"
+#~ msgstr "última fecha aceptable"
+
+#~ msgid "Branch_Id"
+#~ msgstr "ID_sucursal"
+
+#~ msgid "branch_type"
+#~ msgstr "Sucursales"
+
+#~ msgid "location_longitude"
+#~ msgstr "ubicación longitud"
+
+#~ msgid "branch_routing_scheme"
+#~ msgstr "esquema_de_rama_de_enrutamiento"
+
+#~ msgid "branch_routing_address"
+#~ msgstr "dirección_enrutamiento_sucursal"
+
+#~ msgid "is_accessible"
+#~ msgstr "producción y validación es"
+
+#~ msgid "accessibleFeatures"
+#~ msgstr "Funciones accesibles"
+
+#~ msgid "more_info"
+#~ msgstr "más información"
+
+#~ msgid "phone_number"
+#~ msgstr "número_de_teléfono"
+
+#~ msgid "address"
+#~ msgstr "dirección"
+
+#~ msgid "lobby"
+#~ msgstr "ejercer presión"
+
+#, fuzzy
+#~| msgid "Cash Withdrawal International Fee"
+#~ msgid "cash_withdrawal_international_fee"
+#~ msgstr "Cargo internacional por retiro de efectivo"
+
+#~ msgid "Cash Withdrawal International Fee"
+#~ msgstr "Cargo internacional por retiro de efectivo"
+
+#~ msgid "Location Latitude"
+#~ msgstr "Ubicación Latitud"
+
+#~ msgid "Location Longitude"
+#~ msgstr "Longitud de la ubicación"
+
+#~ msgid "Located At"
+#~ msgstr "La página de presentación, que está ubicada en"
+
+#~ msgid "Accessibility Features"
+#~ msgstr "Características de accesibilidad"
+
+#~ msgid "Lobby"
+#~ msgstr "Sala de espera"

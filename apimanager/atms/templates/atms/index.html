@@ -1,222 +1,260 @@
-{% extends 'base.html' %} {% load static i18n %}
-{% block page_title %}{{ block.super }} / atms{% endblock page_title %} {% block content %}
+{% extends 'base.html' %} {% load static i18n %} {% block page_title %}{{
+block.super }} / atms{% endblock page_title %} {% block content %}
 <div id="atms_list">
-    <h1>{% trans "ATMs" %}</h1>
+  <h1>{% trans "ATMs" %}</h1>
 
-    <form method="post">
-        {% csrf_token %} {% if form.non_field_errors %}
+  <form method="post">
+    {% csrf_token %} {% if form.non_field_errors %}
+    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.atm_id.errors %}
+        <div class="alert alert-danger">{{ form.atm_id.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.atm_id.label_tag }} {{ form.atm_id }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.bank_id.errors %}
+        <div class="alert alert-danger">{{ form.bank_id.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.bank_id.label_tag }} {{ form.bank_id }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.name.errors %}
+        <div class="alert alert-danger">{{ form.name.errors }}</div>
+        {% endif %}
+        <div class="form-group">{{ form.name.label_tag }} {{ form.name }}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.services.errors %}
+        <div class="alert alert-danger">{{ form.services.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.services.label_tag }} {{ form.services }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.location_latitude.errors %}
         <div class="alert alert-danger">
-            {{ form.non_field_errors }}
+          {{ form.location_latitude.errors }}
         </div>
         {% endif %}
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.atm_id.errors %}
-                <div class="alert alert-danger">{{ form.atm_id.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "ATM Id" %} </strong>{{ form.atm_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.bank_id.errors %}
-                <div class="alert alert-danger">{{ form.bank_id.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Bank Id" %}</strong> {{ form.bank_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.name.errors %}
-                <div class="alert alert-danger">{{ form.name.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Name" %}</strong> {{ form.name }}
-                </div>
-            </div>
+        <div class="form-group">
+          {{ form.location_latitude.label_tag }} {{ form.location_latitude }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.services.errors %}
-                <div class="alert alert-danger">{{ form.services.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Services" %}</strong> {{ form.services }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.location_latitude.errors %}
-                <div class="alert alert-danger">{{ form.location_latitude.errors }}
-                </div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Location Latitude" %}</strong> {{ form.location_latitude }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.location_longitude.errors %}
-                <div class="alert alert-danger">{{ form.location_longitude.errors }}
-                </div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Location Longitude" %}</strong> {{ form.location_longitude }}
-                </div>
-            </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.location_longitude.errors %}
+        <div class="alert alert-danger">
+          {{ form.location_longitude.errors }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.meta_license_name.errors %}
-                <div class="alert alert-danger">{{ form.meta_license_name.errors }}
-                </div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Meta License Name" %}</strong> {{ form.meta_license_name }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.located_at.errors %}
-                <div class="alert alert-danger">{{ form.located_at.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Located At" %}</strong> {{ form.located_at }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.has_deposit_capability.errors %}
-                <div class="alert alert-danger">{{ form.has_deposit_capability.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Has Deposit Capability" %}</strong> {{ form.has_deposit_capability }}
-                </div>
-            </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.location_longitude.label_tag }} {{ form.location_longitude }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.is_accessible.errors %}
-                <div class="alert alert-danger">{{ form.is_accessible.errors }}</div>
-                {% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Is Accessible" %}</strong> {{ form.is_accessible }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.accessibility_features.errors %}
-                <div class="alert alert-danger">{{ form.accessibility_features.errors }}
-                </div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Accessibility Features" %}</strong> {{ form.accessibility_features }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.more_info.errors %}
-                <div class="alert alert-danger">{{ form.more_info.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "More Info" %}</strong> {{ form.more_info }}
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.meta_license_name.errors %}
+        <div class="alert alert-danger">
+          {{ form.meta_license_name.errors }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.notes.errors %}
-                <div class="alert alert-danger">{{ form.notes.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Notes" %}</strong> {{ form.notes }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.supported_languages.errors %}
-                <div class="alert alert-danger">{{ form.supported_languages.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Supported Languages" %}</strong> {{ form.supported_languages }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.supported_currencies.errors %}
-                <div class="alert alert-danger">{{ form.supported_currencies.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Supported Currencies" %}</strong> {{ form.supported_currencies }}
-                </div>
-            </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.meta_license_name.label_tag }} {{ form.meta_license_name }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.location_categories.errors %}
-                <div class="alert alert-danger">{{ form.location_categories.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Location Categories" %}</strong> {{ form.location_categories }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.minimum_withdrawal.errors %}
-                <div class="alert alert-danger">{{ form.minimum_withdrawal.errors }}
-                </div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Minimum Withdrawal" %}</strong> {{ form.minimum_withdrawal }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.site_name.errors %}
-                <div class="alert alert-danger">{{ form.site_name.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Site Name" %}</strong>  {{ form.site_name }}
-                </div>
-            </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.located_at.errors %}
+        <div class="alert alert-danger">{{ form.located_at.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.located_at.label_tag }} {{ form.located_at }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.branch_identification.errors %}
-                <div class="alert alert-danger">{{ form.branch_identification.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Branch Identification" %}</strong>  {{ form.branch_identification }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.site_identification.errors %}
-                <div class="alert alert-danger">{{ form.site_identification.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Site Identification" %}</strong> {{ form.site_identification }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4"> {% if form.cash_withdrawal_national_fee.errors %}
-                <div class="alert alert-danger">{{ form.cash_withdrawal_national_fee.errors }}</div>{% endif %}
-                <div class="form-group"><strong>{% trans "Cash Withdrawal National Fee" %}</strong>  {{ form.cash_withdrawal_national_fee }}
-                </div>
-            </div>
-
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.has_deposit_capability.errors %}
+        <div class="alert alert-danger">
+          {{ form.has_deposit_capability.errors }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.balance_inquiry_fee.errors %}
-                <div class="alert alert-danger">{{ form.balance_inquiry_fee.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Balance Inquiry Fee" %}</strong> {{ form.balance_inquiry_fee }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.cash_withdrawal_international_fee.errors %}
-                <div class="alert alert-danger">{{ form.cash_withdrawal_international_fee.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Cash Withdrawal International Fee" %}</strong> {{ form.cash_withdrawal_international_fee }}
-                </div>
-            </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.has_deposit_capability.label_tag }} {{ form.has_deposit_capability }}
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                {% if form.address.errors %}
-                <div class="alert alert-danger">{{ form.address.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Address" %}</strong> {{ form.address }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                {% if form.lobby.errors %}
-                <div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
-                <div class="form-group">
-                    <strong>{% trans "Lobby" %}</strong> {{ form.lobby }}
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.is_accessible.errors %}
+        <div class="alert alert-danger">{{ form.is_accessible.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.is_accessible.label_tag }} {{ form.is_accessible }}
         </div>
-        <div class="row">
-            <div class="col-sm-12 hidden-xs">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-green">{% trans "Add" %}</button>
-                </div>
-            </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.accessibility_features.errors %}
+        <div class="alert alert-danger">
+          {{ form.accessibility_features.errors }}
         </div>
-    </form>
-
+        {% endif %}
+        <div class="form-group">
+          {{ form.accessibility_features.label_tag }} {{ form.accessibility_features }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.more_info.errors %}
+        <div class="alert alert-danger">{{ form.more_info.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.more_info.label_tag }} {{ form.more_info }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.notes.errors %}
+        <div class="alert alert-danger">{{ form.notes.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.notes.label_tag }} {{ form.notes }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.supported_languages.errors %}
+        <div class="alert alert-danger">
+          {{ form.supported_languages.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.supported_languages.label_tag }} {{ form.supported_languages }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.supported_currencies.errors %}
+        <div class="alert alert-danger">
+          {{ form.supported_currencies.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.supported_currencies.label_tag }} {{ form.supported_currencies }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.location_categories.errors %}
+        <div class="alert alert-danger">
+          {{ form.location_categories.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.location_categories.label_tag }} {{ form.location_categories }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.minimum_withdrawal.errors %}
+        <div class="alert alert-danger">
+          {{ form.minimum_withdrawal.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.minimum_withdrawal.label_tag }} {{ form.minimum_withdrawal }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.site_name.errors %}
+        <div class="alert alert-danger">{{ form.site_name.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.site_name.label_tag }} {{ form.site_name }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.branch_identification.errors %}
+        <div class="alert alert-danger">
+          {{ form.branch_identification.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.branch_identification.label_tag }} {{ form.branch_identification }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.site_identification.errors %}
+        <div class="alert alert-danger">
+          {{ form.site_identification.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.site_identification.label_tag }} {{ form.site_identification }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.cash_withdrawal_national_fee.errors %}
+        <div class="alert alert-danger">
+          {{ form.cash_withdrawal_national_fee.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.cash_withdrawal_national_fee.label_tag }} {{ form.cash_withdrawal_national_fee }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        {% if form.balance_inquiry_fee.errors %}
+        <div class="alert alert-danger">
+          {{ form.balance_inquiry_fee.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.balance_inquiry_fee.label_tag }} {{ form.balance_inquiry_fee }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        {% if form.cash_withdrawal_international_fee.errors %}
+        <div class="alert alert-danger">
+          {{ form.cash_withdrawal_international_fee.errors }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.cash_withdrawal_international_fee.label_tag }}
+          {{ form.cash_withdrawal_international_fee }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        {% if form.address.errors %}
+        <div class="alert alert-danger">{{ form.address.errors }}</div>
+        {% endif %}
+        <div class="form-group">
+          {{ form.address.label_tag }} {{ form.address }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 hidden-xs">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-green">
+            {% trans "Add" %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 
 {% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
-<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}
+<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet" /> {% endblock extracss %}

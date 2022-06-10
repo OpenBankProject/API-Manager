@@ -3,6 +3,7 @@ Forms of ATMs app
 """
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 import random
 
@@ -10,7 +11,7 @@ import random
 class CreateAtmForm(forms.Form):
 
     atm_id = forms.CharField(
-        label='ATM Id',
+        label=_('ATM Id'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'atm-id-{}'.format(random.randint(1,1000)),
@@ -21,7 +22,7 @@ class CreateAtmForm(forms.Form):
     )
 
     bank_id = forms.ChoiceField(
-        label='Bank',
+        label=_('Bank Id'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -31,7 +32,7 @@ class CreateAtmForm(forms.Form):
     )
 
     name = forms.CharField(
-        label='Name',
+        label=_('Name'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'The name of the ATM',
@@ -42,7 +43,7 @@ class CreateAtmForm(forms.Form):
     )
 
     address = forms.CharField(
-        label='Address',
+        label=_('Address'),
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
@@ -52,7 +53,7 @@ class CreateAtmForm(forms.Form):
     )
 
     location_latitude = forms.FloatField(
-        label='Latitude',
+        label=_('Latitude'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': " ",
@@ -63,7 +64,7 @@ class CreateAtmForm(forms.Form):
     )
 
     location_longitude = forms.FloatField(
-        label='Longitude',
+        label=_('Longitude'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': " ",
@@ -74,7 +75,7 @@ class CreateAtmForm(forms.Form):
     )
 
     meta_license_id = forms.CharField(
-        label='meta_license_id',
+        label=_('Meta License Id'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'PDDL',
@@ -85,7 +86,7 @@ class CreateAtmForm(forms.Form):
     )
 
     meta_license_name = forms.CharField(
-        label='meta_license_name',
+        label=_('Meta License Name'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Open Data Commons Public Domain Dedication and License',
@@ -96,7 +97,7 @@ class CreateAtmForm(forms.Form):
     )
 
     lobby = forms.CharField(
-        label='Opening Hours',
+        label=_('Opening Hours'),
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'None',
@@ -106,7 +107,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     monday = forms.CharField(
-           label=' Monday',
+           label=_(' Monday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -116,7 +117,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     tuesday = forms.CharField(
-           label='Tuesday',
+           label=_('Tuesday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -126,7 +127,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     wednesday = forms.CharField(
-           label=' Wednesday',
+           label=_(' Wednesday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -136,7 +137,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     thursday = forms.CharField(
-           label=' Thursday',
+           label=_(' Thursday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -146,7 +147,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     friday = forms.CharField(
-           label=' Friday',
+           label=_(' Friday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -156,7 +157,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     saturday = forms.CharField(
-           label=' Saturday',
+           label=_(' Saturday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -166,7 +167,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     sunday = forms.CharField(
-           label=' Sunday',
+           label=_(' Sunday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -176,7 +177,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     is_accessible = forms.ChoiceField(
-            label='is accessible',
+            label=_('Is Accessible'),
             widget=forms.Select(
                 attrs={
                     'class': 'form-control',
@@ -185,7 +186,7 @@ class CreateAtmForm(forms.Form):
             required=False,
         )
     located_at = forms.CharField(
-        label='ATM location',
+        label=_('ATM location'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'OBP',
@@ -195,7 +196,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     more_info = forms.CharField(
-            label='More information',
+            label=_('More information'),
             widget=forms.TextInput(
                 attrs={
                     'placeholder': 'short walk to the lake from here',
@@ -205,7 +206,7 @@ class CreateAtmForm(forms.Form):
             required=False,
        )
     has_deposit_capability = forms.ChoiceField(
-             label='Deposit Capabilities',
+             label=_('Deposit Capabilities'),
              widget=forms.Select(
                   attrs={
                          'class': 'form-control',
@@ -214,7 +215,7 @@ class CreateAtmForm(forms.Form):
              required=False,
         )
     supported_languages = forms.ChoiceField(
-            label='Supported Languages',
+            label=_('Supported Languages'),
             widget=forms.Select(
                attrs={
                       'class': 'form-control',
@@ -223,7 +224,7 @@ class CreateAtmForm(forms.Form):
             required=False,
         )
     services = forms.CharField(
-            label='Services',
+            label=_('Services'),
             widget=forms.TextInput(
                 attrs={
                     'placeholder': 'Service store',
@@ -233,7 +234,7 @@ class CreateAtmForm(forms.Form):
             required=False,
         )
     accessibility_features = forms.CharField(
-        label='Accessible Features',
+        label=_('Accessible Features'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'wheelchair, atm usuable by the visually impaired',
@@ -243,7 +244,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     supported_currencies = forms.ChoiceField(
-        label='Supported Currencies',
+        label=_('Supported Currencies'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -252,7 +253,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     notes = forms.ChoiceField(
-        label='Write Notes',
+        label=_('Write Notes'),
         widget=forms.Select(
             attrs={
                'class': 'form-control',
@@ -261,7 +262,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     location_categories = forms.ChoiceField(
-        label='Write location Category',
+        label=_('Write location Category'),
         widget=forms.Select(
            attrs={
               'class': 'form-control',
@@ -270,7 +271,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     minimum_withdrawal = forms.CharField(
-        label='Minimum Withdrawal',
+        label=_('Minimum Withdrawal'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '5',
@@ -280,7 +281,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     branch_identification = forms.CharField(
-            label='Branch Identification',
+            label=_('Branch Identification'),
             widget=forms.TextInput(
                 attrs={
                     'placeholder': 'Enter your Branch Identification',
@@ -290,7 +291,7 @@ class CreateAtmForm(forms.Form):
             required=False,
         )
     site_identification = forms.CharField(
-            label='Site Identification',
+            label=_('Site Identification'),
             widget=forms.TextInput(
                 attrs={
                    'placeholder': 'Enter your Site Identification',
@@ -300,7 +301,7 @@ class CreateAtmForm(forms.Form):
             required=False,
         )
     site_name = forms.CharField(
-        label='Site Name',
+        label=_('Site Name'),
         widget=forms.TextInput(
             attrs={
                'placeholder': 'Enter your Site Name ',
@@ -320,7 +321,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )"""
     cash_withdrawal_national_fee = forms.CharField(
-         label='Cash Withdrawal National fee',
+         label=_('Cash Withdrawal National fee'),
          widget=forms.TextInput(
               attrs={
                      'placeholder': 'Cash withdrawal national fee',
@@ -330,7 +331,7 @@ class CreateAtmForm(forms.Form):
          required=False,
     )
     cash_withdrawal_international_fee = forms.CharField(
-         label='Cash Withdrawal international fee',
+         label=_('Cash Withdrawal international fee'),
          widget=forms.TextInput(
               attrs={
                      'placeholder': 'Cash withdrawal international fee',
@@ -340,7 +341,7 @@ class CreateAtmForm(forms.Form):
          required=False,
     )
     balance_inquiry_fee = forms.CharField(
-         label='Balance Inquiry Fee',
+         label=_('Balance Inquiry Fee'),
          widget=forms.TextInput(
               attrs={
                      'placeholder': 'Balance Inquiry Fee',

@@ -3,14 +3,14 @@ Forms of branches app
 """
 
 from django import forms
-
+from django.utils.translation import ugettext_lazy as _
 import random
 
 
 class CreateBranchForm(forms.Form):
 
     branch_id = forms.CharField(
-        label='Branch Id',
+        label=_('Branch Id'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'branch-id-{}'.format(random.randint(1,1000)),
@@ -21,7 +21,7 @@ class CreateBranchForm(forms.Form):
     )
 
     bank_id = forms.ChoiceField(
-        label='Bank',
+        label=_('Bank'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -30,7 +30,7 @@ class CreateBranchForm(forms.Form):
         choices=[],
     )
     name = forms.CharField(
-        label='Name',
+        label=_('Name'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'The name of the branch',
@@ -40,7 +40,7 @@ class CreateBranchForm(forms.Form):
         required=True
     )
     address = forms.CharField(
-        label='Address',
+        label=_('Address'),
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
@@ -50,7 +50,7 @@ class CreateBranchForm(forms.Form):
     )
 
     location_latitude = forms.FloatField(
-        label='Latitude',
+        label=_('Latitude'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 37.0,
@@ -61,7 +61,7 @@ class CreateBranchForm(forms.Form):
     )
 
     location_longitude = forms.FloatField(
-        label='Longitude',
+        label=_('Longitude'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 110.0,
@@ -72,7 +72,7 @@ class CreateBranchForm(forms.Form):
     )
 
     meta_license_id = forms.CharField(
-        label='meta_license_id',
+        label=_('meta_license_id'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'PDDL',
@@ -83,7 +83,7 @@ class CreateBranchForm(forms.Form):
     )
 
     meta_license_name = forms.CharField(
-        label='meta_license_name',
+        label=_('meta_license_name'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Open Data Commons Public Domain Dedication and License',
@@ -94,7 +94,7 @@ class CreateBranchForm(forms.Form):
     )
 
     lobby = forms.CharField(
-        label=' Lobby Opening Hours',
+        label=_(' Lobby Opening Hours'),
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'None',
@@ -104,7 +104,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     drive_up = forms.CharField(
-        label='Drive Up',
+        label=_('Drive Up'),
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'None',  # noqa
@@ -114,7 +114,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     branch_routing_scheme = forms.CharField(
-        label='Branch Routing Scheme',
+        label=_('Branch Routing Scheme'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'OBP',
@@ -124,7 +124,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     branch_routing_address = forms.CharField(
-        label='Branch Routing Address',
+        label=_('Branch Routing Address'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '123abc',
@@ -134,7 +134,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     is_accessible = forms.ChoiceField(
-        label='is accessible',
+        label=_('is accessible'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -143,7 +143,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     accessibleFeatures = forms.CharField(
-        label='Accessible Features',
+        label=_('Accessible Features'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'wheelchair, atm usuable by the visually impaired',
@@ -153,7 +153,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     branch_type = forms.CharField(
-        label='Branch type',
+        label=_('Branch type'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Full service store',
@@ -163,7 +163,7 @@ class CreateBranchForm(forms.Form):
         required=False,
     )
     more_info = forms.CharField(
-        label='More information',
+        label=_('More information'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'short walk to the lake from here',
@@ -174,7 +174,7 @@ class CreateBranchForm(forms.Form):
     )
 
     phone_number = forms.CharField(
-        label='Mobile Phone Number',
+        label=_('Mobile Phone Number'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'E.g. +49 123 456 78 90 12',
