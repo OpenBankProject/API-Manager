@@ -281,9 +281,9 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             else:
                 fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
             fields['supported_languages'].initial = result['supported_languages']
-            if result['supported_currencies'][0].lower()=='eur':
+            if result['supported_currencies'][0].lower()=='EUR':
                   fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
-            elif result['supported_currencies'][0].lower()=='mxn':
+            elif result['supported_currencies'][0].lower()=='MXN':
                   fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
             else:
                   fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]

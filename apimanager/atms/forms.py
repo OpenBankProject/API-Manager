@@ -107,7 +107,7 @@ class CreateAtmForm(forms.Form):
         required=False,
     )
     monday = forms.CharField(
-           label=_(' Monday'),
+           label=_('Monday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -127,7 +127,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     wednesday = forms.CharField(
-           label=_(' Wednesday'),
+           label=_('Wednesday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -137,7 +137,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     thursday = forms.CharField(
-           label=_(' Thursday'),
+           label=_('Thursday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -147,7 +147,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     friday = forms.CharField(
-           label=_(' Friday'),
+           label=_('Friday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -157,7 +157,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     saturday = forms.CharField(
-           label=_(' Saturday'),
+           label=_('Saturday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',
@@ -167,7 +167,7 @@ class CreateAtmForm(forms.Form):
            required=False,
        )
     sunday = forms.CharField(
-           label=_(' Sunday'),
+           label=_('Sunday'),
            widget=forms.TextInput(
                attrs={
                    'placeholder': 'None',

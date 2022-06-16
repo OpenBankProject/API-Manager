@@ -44,7 +44,7 @@
 					<form action="{% url 'entitlement-request-delete' entitlementrequest.entitlement_request_id %}" method="post">
 						{% csrf_token %}
 						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
-						<button type="submit" class="btn btn-primary btn-sm btn-red">Reject</button>
+						<button type="submit" class="btn btn-primary btn-sm btn-red">{% trans "Reject" %}</button>
 					</form>
 				</td>
 				<td>
@@ -53,7 +53,7 @@
 						<input type="hidden" name="entitlement_request_id" value="{{ entitlementrequest.entitlement_request_id }}" />
 						<input type="hidden" name="bank_id" value="{{ entitlementrequest.bank_id }}" />
 						<input type="hidden" name="role_name" value="{{ entitlementrequest.role_name }}" />
-						<button type="submit" class="btn btn-primary btn-sm">Accept</button>
+						<button type="submit" class="btn btn-primary btn-sm">{% trans "Accept" %}</button>
 					</form>
 				</td>
 			</tr>

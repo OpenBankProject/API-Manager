@@ -63,35 +63,35 @@
                             <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
                         {% elif method_routing.connector_name == "akka_vDec2018" %}
-                            <option value="akka_vDec2018">akka_vDec2018</option> # This will be selected
-                            <option value="kafka_vSept2018">kafka_vSept2018</option>
-                            <option value="mapped">mapped</option>
-                            <option value="rest_vMar2019">rest_vMar2019</option>
-                            <option value="kafka_vMay2019">kafka_vMay2019</option>
-                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option> # This will be selected
+                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
+                            <option value="mapped">{% trans "mapped" %}</option>
+                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
+                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
+                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                         {% elif method_routing.connector_name == "rest_vMar2019" %}
-                            <option value="rest_vMar2019">rest_vMar2019</option> # This will be selected
-                            <option value="kafka_vSept2018">kafka_vSept2018</option>
-                            <option value="mapped">mapped</option>
-                            <option value="akka_vDec2018">akka_vDec2018</option>
-                            <option value="kafka_vMay2019">kafka_vMay2019</option>
-                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option> # This will be selected
+                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018</option>
+                            <option value="mapped">{% trans "mapped</option>
+                            <option value="akka_vDec2018">{% trans "akka_vDec2018</option>
+                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019</option>
+                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019</option>
                         {% elif method_routing.connector_name == "kafka_vMay2019" %}
-                            <option value="kafka_vMay2019">kafka_vMay2019</option> # This will be selected
-                            <option value="rest_vMar2019">rest_vMar2019</option>
-                            <option value="kafka_vSept2018">kafka_vSept2018</option>
-                            <option value="mapped">mapped</option>
-                            <option value="internal">internal</option>
-                            <option value="akka_vDec2018">akka_vDec2018</option>
-                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option>
+                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option> # This will be selected
+                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
+                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
+                            <option value="mapped">{% trans "mapped" %}</option>
+                            <option value="internal">{% trans "internal" %}</option>
+                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
+                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                         {% elif method_routing.connector_name == "stored_procedure_vDec2019" %}
-                            <option value="stored_procedure_vDec2019">stored_procedure_vDec2019</option> # This will be selected
-                            <option value="kafka_vMay2019">kafka_vMay2019</option>
-                            <option value="rest_vMar2019">rest_vMar2019</option>
-                            <option value="kafka_vSept2018">kafka_vSept2018</option>
-                            <option value="mapped">mapped</option>
-                            <option value="internal">internal</option>
-                            <option value="akka_vDec2018">akka_vDec2018</option>
+                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option> # This will be selected
+                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
+                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
+                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
+                            <option value="mapped">{% trans "mapped" %}</option>
+                            <option value="internal">{% trans "internal" %}</option>
+                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
                         {% endif %}
                     </select>
                 </div>
@@ -102,11 +102,11 @@
                 <div class="col-xs-12 col-sm-1" align="center">
                     <select class="is_bank_id_exact_match form-control">
                         {% if method_routing.is_bank_id_exact_match == False %}
-                            <option value="False">False</option>
-                            <option value="True">True</option>
+                            <option value="False">{% trans "False" %}</option>
+                            <option value="True">{% trans "True" %}</option>
                         {% else %}
-                            <option value="True">True</option>
-                            <option value="False">False</option>
+                            <option value="True">{% trans "True" %}</option>
+                            <option value="False">{% trans "False" %}</option>
                         {% endif %}
                     </select>
                 </div>
@@ -121,12 +121,12 @@
                 <div class="col-sm-12 col-sm-2">
                     {% if method_routing.method_routing_id == "" %}
                         <div class="form-group">
-                            <button class="btn btn-primary btn-green forSave">Create New </button>
+                            <button class="btn btn-primary btn-green forSave">{% trans "Create New" %}</button>
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <button class="btn btn-primary btn-bule forSave">Update</button>
-                            <button class="btn btn-primary btn-red forDelete">Delete</button>
+                            <button class="btn btn-primary btn-bule forSave">{% trans "Update" %}</button>
+                            <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
                         </div>
                     {% endif %}
                 </div>
