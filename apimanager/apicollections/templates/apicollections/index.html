@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block page_title %}{{ block.super }} / API Collections{% endblock page_title %}
 
 {% block content %}
-    <h1>API Collections</h1>
+    <h1>{% trans "API Collections" %}</h1>
     <div class="row">
         <div class="col-xs-12 col-sm-2">
-            <label class="form-group">API Collection Id:</label> <br>
+            <label class="form-group">{% trans "API Collection Id" %}:</label> <br>
         </div>
         <div class="col-xs-12 col-sm-2">
-            <label class="form-group">Collection Name:</label> <br>
+            <label class="form-group">{% trans "Collection Name" %}:</label> <br>
         </div>
         <div class="col-xs-12 col-sm-2">
-            <label class="form-group">Is Sharable:</label> <br>
+            <label class="form-group">{% trans "Is Sharable" %}:</label> <br>
         </div>
         <div class="col-xs-12 col-sm-6">
-            <label class="form-group">Description:</label> <br>
+            <label class="form-group">{% trans "Description" %}:</label> <br>
         </div>
     </div>
     <form method="post">
@@ -56,20 +56,20 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <textarea cols="40" rows="1" class="form-control api_collection_description">Describe the purpose of the collection</textarea>
+                        <textarea cols="40" rows="1" class="form-control api_collection_description">{% trans "Describe the purpose of the collection" %}</textarea>
                     </div>
                 {%  endif %}
                 {%  if forloop.counter0 == 0 %}
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">Create </button>
+                        <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
                     </div>
                 </div>
                 {%  endif %}
                 {%  if forloop.counter0 > 0 %}
                 <div class="col-sm-12 col-sm-2">
                     <div class="form-group">
-                        <button class="btn btn-primary btn-red forDelete">Delete</button>
+                        <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
                     </div>
                 </div>
                 {%  endif %}

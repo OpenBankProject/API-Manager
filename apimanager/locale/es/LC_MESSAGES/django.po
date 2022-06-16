@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-10 12:39+0200\n"
+"POT-Creation-Date: 2022-06-15 19:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apicollections/templates/apicollections/index.html:6
+msgid "API Collections"
+msgstr "Mis colecciones de API"
+
+#: apicollections/templates/apicollections/index.html:9
+msgid "API Collection Id"
+msgstr "Mis colecciones de API"
+
+#: apicollections/templates/apicollections/index.html:12
+msgid "Collection Name"
+msgstr "Métricas del conector"
+
+#: apicollections/templates/apicollections/index.html:15
+msgid "Is Sharable"
+msgstr "Es Compartible"
+
+#: apicollections/templates/apicollections/index.html:18
+#: consumers/templates/consumers/detail.html:175
+#: consumers/templates/consumers/index.html:59
+msgid "Description"
+msgstr "Descripción"
+
+#: apicollections/templates/apicollections/index.html:59
+msgid "Describe the purpose of the collection"
+msgstr "Describir el propósito de la colección"
+
+#: apicollections/templates/apicollections/index.html:65
+#: dynamicendpoints/templates/dynamicendpoints/index.html:33
+msgid "Create"
+msgstr "Creada"
+
+#: apicollections/templates/apicollections/index.html:72
+#: dynamicendpoints/templates/dynamicendpoints/index.html:40
+#: methodrouting/templates/methodrouting/index.html:129
+#: users/templates/users/detail.html:114 webui/templates/webui/index.html:48
+msgid "Delete"
+msgstr "Eliminar"
 
 #: apimanager/settings.py:175
 msgid "English"
@@ -45,7 +83,7 @@ msgstr "Id. de banco"
 msgid "Name"
 msgstr "Nombre"
 
-#: atms/forms.py:46 branches/forms.py:43
+#: atms/forms.py:46 atms/templates/atms/atm_List.html:25 branches/forms.py:43
 #: branches/templates/branches/index.html:176
 #: branches/templates/branches/index.html:203
 msgid "Address"
@@ -72,7 +110,7 @@ msgid "Opening Hours"
 msgstr "Horario de atención"
 
 #: atms/forms.py:110
-msgid " Monday"
+msgid "Monday"
 msgstr "Lunes"
 
 #: atms/forms.py:120
@@ -80,23 +118,23 @@ msgid "Tuesday"
 msgstr "Martes"
 
 #: atms/forms.py:130
-msgid " Wednesday"
+msgid "Wednesday"
 msgstr "Wednesday"
 
 #: atms/forms.py:140
-msgid " Thursday"
+msgid "Thursday"
 msgstr "Jueves"
 
 #: atms/forms.py:150
-msgid " Friday"
+msgid "Friday"
 msgstr "Viernes"
 
 #: atms/forms.py:160
-msgid " Saturday"
+msgid "Saturday"
 msgstr "Sábado"
 
 #: atms/forms.py:170
-msgid " Sunday"
+msgid "Sunday"
 msgstr "Sunday"
 
 #: atms/forms.py:180
@@ -167,6 +205,10 @@ msgstr "Cargo internacional por retiro de efectivo"
 #: atms/forms.py:344
 msgid "Balance Inquiry Fee"
 msgstr "Cargo por consulta de saldo"
+
+#: atms/templates/atms/atm_List.html:4 atms/templates/atms/update.html:3
+msgid "ATM Detail"
+msgstr "Descripción"
 
 #: atms/templates/atms/atm_List.html:10
 msgid "ATM Name"
@@ -265,7 +307,7 @@ msgstr "Vista de cajeros automáticos"
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:95 config/templates/config/index.html:9
+#: base/templates/base.html:95 config/templates/config/index.html:8
 msgid "Config"
 msgstr "Configuraciones"
 
@@ -453,7 +495,7 @@ msgstr "Más información"
 msgid "Phone Number"
 msgstr "Número de teléfono"
 
-#: config/templates/config/index.html:11
+#: config/templates/config/index.html:10
 msgid "The configuration of the API"
 msgstr "La configuración de la API"
 
@@ -469,7 +511,7 @@ msgstr "Parámetros"
 msgid "Update Consumer"
 msgstr "Consumidoras"
 
-#: consumers/templates/consumers/detail.html:80
+#: consumers/templates/consumers/detail.html:80 metrics/forms.py:121
 #: metrics/templates/metrics/api.html:165
 msgid "App Name"
 msgstr "Nombre de la aplicación"
@@ -520,11 +562,6 @@ msgstr "Límite de llamadas por semana"
 #: consumers/templates/consumers/detail.html:165
 msgid "Per month call limit"
 msgstr "Límite de llamadas por mes"
-
-#: consumers/templates/consumers/detail.html:175
-#: consumers/templates/consumers/index.html:59
-msgid "Description"
-msgstr "Descripción"
 
 #: consumers/templates/consumers/detail.html:194
 #: consumers/templates/consumers/index.html:75
@@ -696,17 +733,8 @@ msgid "SWAGGER STRING"
 msgstr "CUERDA SWAGGER"
 
 #: dynamicendpoints/templates/dynamicendpoints/index.html:33
-msgid "Create"
-msgstr "Creada"
-
-#: dynamicendpoints/templates/dynamicendpoints/index.html:33
 msgid "saved."
 msgstr "salvado."
-
-#: dynamicendpoints/templates/dynamicendpoints/index.html:40
-#: users/templates/users/detail.html:114 webui/templates/webui/index.html:49
-msgid "Delete"
-msgstr "Eliminar"
 
 #: entitlementrequests/templates/entitlementrequests/index.html:27
 msgid "Role Name"
@@ -720,6 +748,14 @@ msgstr "Nombre de usuario"
 msgid "Bank ID"
 msgstr "Id. de banco"
 
+#: entitlementrequests/templates/entitlementrequests/index.html:47
+msgid "Reject"
+msgstr "Rechazar"
+
+#: entitlementrequests/templates/entitlementrequests/index.html:56
+msgid "Accept"
+msgstr "Aceptar"
+
 #: methodrouting/templates/methodrouting/index.html:7
 msgid "Method Routing"
 msgstr "Enrutamiento de métodos"
@@ -728,7 +764,7 @@ msgstr "Enrutamiento de métodos"
 msgid "Method Name"
 msgstr "Métricas del conector"
 
-#: methodrouting/templates/methodrouting/index.html:13
+#: methodrouting/templates/methodrouting/index.html:13 metrics/forms.py:186
 #: metrics/templates/metrics/connector.html:87
 msgid "Connector Name"
 msgstr "Métricas del conector"
@@ -753,43 +789,135 @@ msgstr "Identificación del método"
 #: methodrouting/templates/methodrouting/index.html:50
 #: methodrouting/templates/methodrouting/index.html:55
 #: methodrouting/templates/methodrouting/index.html:59
+#: methodrouting/templates/methodrouting/index.html:68
+#: methodrouting/templates/methodrouting/index.html:83
+#: methodrouting/templates/methodrouting/index.html:92
 msgid "mapped"
 msgstr "mapeada"
 
 #: methodrouting/templates/methodrouting/index.html:42
 #: methodrouting/templates/methodrouting/index.html:49
 #: methodrouting/templates/methodrouting/index.html:60
+#: methodrouting/templates/methodrouting/index.html:84
+#: methodrouting/templates/methodrouting/index.html:93
 msgid "internal"
 msgstr "interna"
 
 #: methodrouting/templates/methodrouting/index.html:43
 #: methodrouting/templates/methodrouting/index.html:54
 #: methodrouting/templates/methodrouting/index.html:58
+#: methodrouting/templates/methodrouting/index.html:67
+#: methodrouting/templates/methodrouting/index.html:82
+#: methodrouting/templates/methodrouting/index.html:91
 msgid "kafka_vSept2018"
 msgstr "kafka_vseptiembre2018"
 
 #: methodrouting/templates/methodrouting/index.html:44
 #: methodrouting/templates/methodrouting/index.html:56
 #: methodrouting/templates/methodrouting/index.html:61
+#: methodrouting/templates/methodrouting/index.html:66
+#: methodrouting/templates/methodrouting/index.html:85
+#: methodrouting/templates/methodrouting/index.html:94
 msgid "akka_vDec2018"
 msgstr "akka_vdiciembre2018"
 
 #: methodrouting/templates/methodrouting/index.html:45
 #: methodrouting/templates/methodrouting/index.html:53
 #: methodrouting/templates/methodrouting/index.html:62
+#: methodrouting/templates/methodrouting/index.html:69
+#: methodrouting/templates/methodrouting/index.html:73
+#: methodrouting/templates/methodrouting/index.html:81
+#: methodrouting/templates/methodrouting/index.html:90
 msgid "rest_vMar2019"
 msgstr "rest_vMar2019"
 
 #: methodrouting/templates/methodrouting/index.html:46
 #: methodrouting/templates/methodrouting/index.html:52
 #: methodrouting/templates/methodrouting/index.html:63
+#: methodrouting/templates/methodrouting/index.html:70
+#: methodrouting/templates/methodrouting/index.html:80
+#: methodrouting/templates/methodrouting/index.html:89
 msgid "kafka_vMay2019"
 msgstr "kafka_vmayo2019"
 
 #: methodrouting/templates/methodrouting/index.html:47
 #: methodrouting/templates/methodrouting/index.html:51
+#: methodrouting/templates/methodrouting/index.html:71
+#: methodrouting/templates/methodrouting/index.html:86
+#: methodrouting/templates/methodrouting/index.html:88
 msgid "stored_procedure_vDec2019"
 msgstr "procedimiento_almacenado_vdic2019"
+
+#: methodrouting/templates/methodrouting/index.html:105
+#: methodrouting/templates/methodrouting/index.html:109
+msgid "False"
+msgstr "Falso"
+
+#: methodrouting/templates/methodrouting/index.html:106
+#: methodrouting/templates/methodrouting/index.html:108
+msgid "True"
+msgstr "Verdadero"
+
+#: methodrouting/templates/methodrouting/index.html:124
+msgid "Create New"
+msgstr "Creada"
+
+#: methodrouting/templates/methodrouting/index.html:128
+msgid "Update"
+msgstr "Botón Actualizar"
+
+#: metrics/forms.py:18 metrics/forms.py:174 metrics/forms.py:230
+msgid "From Date"
+msgstr "desde fecha"
+
+#: metrics/forms.py:30 metrics/forms.py:216
+msgid "To Date"
+msgstr "Fecha"
+
+#: metrics/forms.py:41 users/templates/users/includes/filter_pagination.html:8
+msgid "Limit"
+msgstr "Límite"
+
+#: metrics/forms.py:51 users/templates/users/includes/filter_pagination.html:4
+msgid "Offset"
+msgstr "Desplazamiento"
+
+#: metrics/forms.py:92 metrics/templates/metrics/api.html:166
+msgid "Consumer ID"
+msgstr "identificación del consumidor"
+
+#: metrics/forms.py:101 metrics/templates/metrics/api.html:163
+#: users/templates/users/detail.html:11
+msgid "User ID"
+msgstr "Identificación de usuario"
+
+#: metrics/forms.py:110
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: metrics/forms.py:130 metrics/templates/metrics/api.html:143
+msgid "Verb"
+msgstr "Verbo"
+
+#: metrics/forms.py:141 metrics/templates/metrics/api.html:144
+msgid "URL"
+msgstr "URL"
+
+#: metrics/forms.py:150
+msgid "Implemented By Partial Function"
+msgstr "Implementado por Función Parcial"
+
+#: metrics/forms.py:159 metrics/templates/metrics/api.html:168
+msgid "Implemented In Version"
+msgstr "Implementado en versión"
+
+#: metrics/forms.py:195 metrics/templates/metrics/connector.html:88
+msgid "Function Name"
+msgstr "Nombre de la función"
+
+#: metrics/forms.py:204 metrics/templates/metrics/connector.html:89
+msgid "Correlation ID"
+msgstr "Id. de correlación"
 
 #: metrics/templates/metrics/api.html:12
 #: metrics/templates/metrics/connector.html:12
@@ -801,61 +929,6 @@ msgstr "procedimiento_almacenado_vdic2019"
 #: metrics/templates/metrics/yearly_summary.html:38
 msgid "Filter"
 msgstr "Filtrar"
-
-#: metrics/templates/metrics/api.html:24
-msgid "from date"
-msgstr "desde fecha"
-
-#: metrics/templates/metrics/api.html:31
-#: metrics/templates/metrics/connector.html:31
-#: metrics/templates/metrics/custom_summary.html:57
-#: metrics/templates/metrics/daily_summary.html:50
-#: metrics/templates/metrics/hourly_summary.html:48
-#: metrics/templates/metrics/monthly_summary.html:51
-msgid "to_date"
-msgstr "fecha hasta"
-
-#: metrics/templates/metrics/api.html:38
-#: metrics/templates/metrics/connector.html:38
-msgid "limit"
-msgstr "Límite"
-
-#: metrics/templates/metrics/api.html:45
-#: metrics/templates/metrics/connector.html:45
-msgid "offset"
-msgstr "compensación"
-
-#: metrics/templates/metrics/api.html:55
-msgid "consumer id"
-msgstr "identificación del consumidor"
-
-#: metrics/templates/metrics/api.html:63
-msgid "user_id"
-msgstr "id_usuario"
-
-#: metrics/templates/metrics/api.html:71
-msgid "anon"
-msgstr "Anón"
-
-#: metrics/templates/metrics/api.html:79
-msgid "app_name"
-msgstr "nombre de la aplicación"
-
-#: metrics/templates/metrics/api.html:90
-msgid "verb"
-msgstr "verbo"
-
-#: metrics/templates/metrics/api.html:98
-msgid "url"
-msgstr "url"
-
-#: metrics/templates/metrics/api.html:108
-msgid "implemented by partial function"
-msgstr "implementado por función parcial"
-
-#: metrics/templates/metrics/api.html:116
-msgid "implemented in version"
-msgstr "implementado en versión"
 
 #: metrics/templates/metrics/api.html:123
 #: metrics/templates/metrics/connector.html:75
@@ -879,14 +952,6 @@ msgstr "Lista"
 msgid "Summary by Partial Function"
 msgstr "Resumen por Función Parcial"
 
-#: metrics/templates/metrics/api.html:143
-msgid "Verb"
-msgstr "Verbo"
-
-#: metrics/templates/metrics/api.html:144
-msgid "URL"
-msgstr "URL"
-
 #: metrics/templates/metrics/api.html:145
 #: metrics/templates/metrics/connector.html:86
 msgid "Date"
@@ -904,25 +969,29 @@ msgstr "Descripción"
 msgid "User Name"
 msgstr "Nombre de Usuario"
 
-#: metrics/templates/metrics/api.html:163 users/templates/users/detail.html:11
-msgid "User ID"
-msgstr "Identificación de usuario"
-
-#: metrics/templates/metrics/api.html:166
-msgid "Consumer ID"
-msgstr "identificación del consumidor"
-
 #: metrics/templates/metrics/api.html:167
 msgid "Implemented by Partial Function"
 msgstr "Implementado por Función Parcial"
 
-#: metrics/templates/metrics/api.html:168
-msgid "Implemented In Version"
-msgstr "Implementado en versión"
-
 #: metrics/templates/metrics/connector.html:24
 msgid "from_date"
 msgstr "partir de la fecha"
+
+#: metrics/templates/metrics/connector.html:31
+#: metrics/templates/metrics/custom_summary.html:57
+#: metrics/templates/metrics/daily_summary.html:50
+#: metrics/templates/metrics/hourly_summary.html:48
+#: metrics/templates/metrics/monthly_summary.html:51
+msgid "to_date"
+msgstr "fecha hasta"
+
+#: metrics/templates/metrics/connector.html:38
+msgid "limit"
+msgstr "Límite"
+
+#: metrics/templates/metrics/connector.html:45
+msgid "offset"
+msgstr "compensación"
 
 #: metrics/templates/metrics/connector.html:55
 msgid "connector_name"
@@ -935,14 +1004,6 @@ msgstr "nombre de la función"
 #: metrics/templates/metrics/connector.html:69
 msgid "correlation_id"
 msgstr "correlación_id"
-
-#: metrics/templates/metrics/connector.html:88
-msgid "Function Name"
-msgstr "Nombre de la función"
-
-#: metrics/templates/metrics/connector.html:89
-msgid "Correlation ID"
-msgstr "Id. de correlación"
 
 #: metrics/templates/metrics/connector.html:90
 msgid "Duration (ms)"
@@ -1041,6 +1102,36 @@ msgstr "desde la fecha personalizada"
 msgid "Include System Calls"
 msgstr "Incluir llamadas del sistema"
 
+#: metrics/templates/metrics/custom_summary.html:77
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "Period"
+msgstr "Período"
+
+#: metrics/templates/metrics/custom_summary.html:77
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "From"
+msgstr "Desde"
+
+#: metrics/templates/metrics/custom_summary.html:77
+#: metrics/templates/metrics/daily_summary.html:70
+#: metrics/templates/metrics/hourly_summary.html:68
+#: metrics/templates/metrics/monthly_summary.html:80
+#: metrics/templates/metrics/quarterly_summary.html:69
+#: metrics/templates/metrics/weekly_summary.html:71
+#: metrics/templates/metrics/yearly_summary.html:71
+msgid "to"
+msgstr "a"
+
 #: metrics/templates/metrics/custom_summary.html:85
 #: metrics/templates/metrics/daily_summary.html:78
 #: metrics/templates/metrics/monthly_summary.html:88
@@ -1094,25 +1185,40 @@ msgstr ""
 "Mediana de tiempo desde el registro del consumidor hasta la primera llamada "
 "APIMediana de tiempo desde el registro del consumidor hasta la primera "
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
-"primera llamada APITiempo medio desde el registro del consumidor hasta la "
-"primera llamada a la APItiempo medio hasta la primeraTiempo medio desde el "
-"registro del consumidor hasta la primera llamada a la APIMediana de tiempo "
-"desde el registro del consumidor hasta la primera llamada APITiempo medio "
-"desde el registro del consumidor hasta la primera llamada a la APITiempo "
-"medio desde el registro del consumidor hasta la primera llamada a la "
-"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
-"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
-"a la APItiempo medio hasta la primeraTiempo medio desde el registro del "
-"consumidor hasta la primera llamada a la APIMediana de tiempo desde el "
+"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
+"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
 "registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
 "el registro del consumidor hasta la primera llamada APIMediana de tiempo "
 "desde el registro del consumidor hasta la primera llamada APIMediana de "
-"tiempo desde el registro del consumidor hasta la primera llamada APITiempo "
-"medio desde el registro del consumidor hasta la primera llamada a la "
-"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
-"la APIMediana de tiempo desde el registro del consumidor hasta la primera "
-"llamada APITiempo medio desde el registro del consumidor hasta la primera "
-"llamada a la API"
+"tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
+"de tiempo desde el registro del consumidor hasta la primera llamada "
+"APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APITiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APItiempo medio hasta la "
+"primeraTiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APITiempo medio desde el registro del consumidor hasta la "
+"primera llamada a la APITiempo medio desde el registro del consumidor hasta "
+"la primera llamada a la APITiempo medio desde el registro del consumidor "
+"hasta la primera llamada a la APITiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APItiempo medio hasta la "
+"primeraTiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APITiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APITiempo medio desde el registro "
+"del consumidor hasta la primera llamada a la APIMediana de tiempo desde el "
+"registro del consumidor hasta la primera llamada APITiempo medio desde el "
+"registro del consumidor hasta la primera llamada a la API"
 
 #: metrics/templates/metrics/custom_summary.html:111
 #: metrics/templates/metrics/daily_summary.html:105
@@ -1199,33 +1305,6 @@ msgstr "Usuarios con rol CanSearchWarehouse"
 msgid "N/A"
 msgstr "N/A"
 
-#: metrics/templates/metrics/daily_summary.html:70
-#: metrics/templates/metrics/hourly_summary.html:68
-#: metrics/templates/metrics/monthly_summary.html:80
-#: metrics/templates/metrics/quarterly_summary.html:69
-#: metrics/templates/metrics/weekly_summary.html:71
-#: metrics/templates/metrics/yearly_summary.html:71
-msgid "Period"
-msgstr "Período"
-
-#: metrics/templates/metrics/daily_summary.html:70
-#: metrics/templates/metrics/hourly_summary.html:68
-#: metrics/templates/metrics/monthly_summary.html:80
-#: metrics/templates/metrics/quarterly_summary.html:69
-#: metrics/templates/metrics/weekly_summary.html:71
-#: metrics/templates/metrics/yearly_summary.html:71
-msgid "From"
-msgstr "Desde"
-
-#: metrics/templates/metrics/daily_summary.html:70
-#: metrics/templates/metrics/hourly_summary.html:68
-#: metrics/templates/metrics/monthly_summary.html:80
-#: metrics/templates/metrics/quarterly_summary.html:69
-#: metrics/templates/metrics/weekly_summary.html:71
-#: metrics/templates/metrics/yearly_summary.html:71
-msgid "to"
-msgstr "a"
-
 #: metrics/templates/metrics/daily_summary.html:87
 msgid "Calls per hour"
 msgstr "Llamadas por Hora"
@@ -1243,7 +1322,23 @@ msgstr ""
 "Aplicaciones con distintas direcciones de correo electrónico para "
 "desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
 "para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresDirecciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
+"con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
+"con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresDirecciones de correo "
 "electrónicoAplicaciones con direcciones de correo electrónico de "
 "desarrollador distintasAplicaciones con direcciones de correo electrónico de "
 "desarrollador distintasAplicaciones con distintas direcciones de correo "
@@ -1351,14 +1446,6 @@ msgstr "Derechos"
 msgid "Active"
 msgstr "Activo"
 
-#: users/templates/users/includes/filter_pagination.html:4
-msgid "Offset"
-msgstr "Desplazamiento"
-
-#: users/templates/users/includes/filter_pagination.html:8
-msgid "Limit"
-msgstr "Límite"
-
 #: users/templates/users/includes/filter_role.html:8
 msgid "All Roles"
 msgstr "Todas las Funciones"
@@ -1407,29 +1494,53 @@ msgstr "países"
 msgid "status"
 msgstr "estado"
 
-#: webui/templates/webui/index.html:10
+#: webui/templates/webui/index.html:9
 msgid "WEBUI"
 msgstr "WEBUI"
 
-#: webui/templates/webui/index.html:13
+#: webui/templates/webui/index.html:12
 msgid "Web UI Props Name"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:16
+#: webui/templates/webui/index.html:15
 msgid "Web UI Props Value"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:19
+#: webui/templates/webui/index.html:18
 msgid "Web UI Props Id"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:22
+#: webui/templates/webui/index.html:21
 msgid "Save Value"
 msgstr "Guardar valor"
 
-#: webui/templates/webui/index.html:48
+#: webui/templates/webui/index.html:47
 msgid "Save"
 msgstr "Ahorrar"
+
+#~ msgid "consumer id"
+#~ msgstr "identificación del consumidor"
+
+#~ msgid "user_id"
+#~ msgstr "id_usuario"
+
+#~ msgid "anon"
+#~ msgstr "Anón"
+
+#~ msgid "app_name"
+#~ msgstr "nombre de la aplicación"
+
+#~ msgid "verb"
+#~ msgstr "verbo"
+
+#~ msgid "url"
+#~ msgstr "url"
+
+#~ msgid "implemented by partial function"
+#~ msgstr "implementado por función parcial"
+
+#~ msgid "implemented in version"
+#~ msgstr "implementado en versión"
 
 #~ msgid "username"
 #~ msgstr "nombre de usuario"
@@ -1479,8 +1590,6 @@ msgstr "Ahorrar"
 #~ msgid "lobby"
 #~ msgstr "ejercer presión"
 
-#, fuzzy
-#~| msgid "Cash Withdrawal International Fee"
 #~ msgid "cash_withdrawal_international_fee"
 #~ msgstr "Cargo internacional por retiro de efectivo"
 
