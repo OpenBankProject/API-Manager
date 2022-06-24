@@ -15,23 +15,23 @@ from obp.views import (
 )
 
 urlpatterns = [
+    #url(r'^$', HomeView.as_view(), name="home"),
+    url(r'^oauth/initiate$',
+        OAuthInitiateView.as_view(), name='oauth-initiate'),
+    url(r'^oauth/authorize$',
+            OAuthAuthorizeView.as_view(), name='oauth-authorize'),
+    url(r'^directlogin$',
+            DirectLoginView.as_view(), name='directlogin'),
+    url(r'^gatewaylogin$',
+            GatewayLoginView.as_view(), name='gatewaylogin'),
     # Defining authentication URLs here and not including oauth.urls for
     # backward compatibility
 ]
 urlpatterns += i18n_patterns(
 #urlpatterns = (
     url(r'^$', HomeView.as_view(), name="home"),
-
-    url(r'^oauth/initiate$',
-        OAuthInitiateView.as_view(), name='oauth-initiate'),
     url(r'^single-sign-on',
         OAuthInitiateView.as_view(), name='single-sign-on'),
-    url(r'^oauth/authorize$',
-        OAuthAuthorizeView.as_view(), name='oauth-authorize'),
-    url(r'^directlogin$',
-        DirectLoginView.as_view(), name='directlogin'),
-    url(r'^gatewaylogin$',
-        GatewayLoginView.as_view(), name='gatewaylogin'),
     url(r'^logout$',
         LogoutView.as_view(), name='oauth-logout'),
     url(r'^consumers/', include('consumers.urls')),
