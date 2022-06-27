@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% trans load i18n %}
+{% extends 'base.html' %} {% load static %} {% load i18n %}
 {% block page_title %} /atms{% endblock page_title %} {% block content %}
 <div id="atms">
     <h1>{% trans "ATM Detail" %}</h1>
@@ -60,7 +60,7 @@
                     </ul>
                 </div>
             </td>
-            <td><a href="{{ url_atm_update }}" class="btn btn-primary">View</a></td>
+            <td><a href="{{ url_atm_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
         </tr>
         {% endfor %}
 

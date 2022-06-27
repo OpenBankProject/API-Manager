@@ -5,18 +5,15 @@ from django.shortcuts import render
 """
 Views of atms app
 """
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.urls import reverse_lazy
 from django.views.generic import FormView
-
 from obp.api import API, APIError
-
 from .forms import CreateAtmForm
-
 class IndexAtmsView(LoginRequiredMixin, FormView):
+
     """Index view for ATMs"""
     template_name = "atms/index.html"
     form_class = CreateAtmForm
@@ -393,7 +390,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         })
         return context
 
-class atmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
+class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
     template_name = "atms/atm_List.html"
     success_url = '/atms/'
     def get_banks(self):
