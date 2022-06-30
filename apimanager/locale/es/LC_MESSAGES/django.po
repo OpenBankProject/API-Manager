@@ -76,7 +76,7 @@ msgstr "ID del cajero automático"
 #: users/templates/users/detail.html:99
 #: users/templates/users/invitation.html:22
 msgid "Bank Id"
-msgstr "Id. de banco"
+msgstr "Id del banco"
 
 #: atms/forms.py:35 branches/forms.py:33
 #: consumers/templates/consumers/index.html:58
@@ -245,11 +245,11 @@ msgstr "Administrador de API"
 
 #: base/templates/base.html:48
 msgid "Home"
-msgstr "Casa"
+msgstr "Inicio"
 
 #: base/templates/base.html:50 consumers/templates/consumers/index.html:10
 msgid "Consumers"
-msgstr "Consumidoras"
+msgstr "Consumidores"
 
 #: base/templates/base.html:52
 #: entitlementrequests/templates/entitlementrequests/index.html:8
@@ -258,7 +258,7 @@ msgstr "Solicitudes de derechos"
 
 #: base/templates/base.html:57 users/templates/users/index.html:8
 msgid "Users"
-msgstr "Usuarias"
+msgstr "Usuarios"
 
 #: base/templates/base.html:59
 #: consumers/templates/consumers/includes/filter_apptype.html:4
@@ -299,7 +299,7 @@ msgstr "Recursos"
 
 #: base/templates/base.html:81 customers/templates/customers/create.html:5
 msgid "Customers"
-msgstr "Consumidoras"
+msgstr "Consumidores"
 
 #: base/templates/base.html:82 branches/templates/branches/index.html:9
 msgid "Branches"
@@ -399,7 +399,7 @@ msgstr "Enrutamiento de sucursales"
 
 #: branches/forms.py:137
 msgid "is accessible"
-msgstr "producción y validación es"
+msgstr "producción y validaciones"
 
 #: branches/forms.py:156
 msgid "Branch type"
@@ -507,7 +507,7 @@ msgstr "La configuración de la API"
 
 #: consumers/templates/consumers/detail.html:9
 msgid "Consumer"
-msgstr "Consumidoras"
+msgstr "Consumidores"
 
 #: consumers/templates/consumers/detail.html:15
 msgid "Params"
@@ -515,7 +515,7 @@ msgstr "Parámetros"
 
 #: consumers/templates/consumers/detail.html:64
 msgid "Update Consumer"
-msgstr "Consumidoras"
+msgstr "Consumidores"
 
 #: consumers/templates/consumers/detail.html:80 metrics/forms.py:121
 #: metrics/templates/metrics/api.html:165
@@ -667,11 +667,11 @@ msgstr "Correo electrónico"
 
 #: customers/forms.py:72
 msgid "Face Image URL"
-msgstr "fecha de la imagen de la cara"
+msgstr "URL de la imagen de portada"
 
 #: customers/forms.py:82
 msgid "Face Image Date"
-msgstr "fecha de la imagen de la cara"
+msgstr "Fecha de la imagen de portada
 
 #: customers/forms.py:93
 msgid "Date of Birth"
@@ -976,7 +976,7 @@ msgstr "Implementado por Función Parcial"
 
 #: metrics/templates/metrics/connector.html:24
 msgid "from_date"
-msgstr "partir de la fecha"
+msgstr "a partir de la fecha"
 
 #: metrics/templates/metrics/connector.html:31
 #: metrics/templates/metrics/custom_summary.html:57
@@ -1266,7 +1266,7 @@ msgstr "Las 10 mejores API"
 #: metrics/templates/metrics/weekly_summary.html:123
 #: metrics/templates/metrics/yearly_summary.html:123
 msgid "Top 10 Consumers"
-msgstr "Las 10 principales consumidoras"
+msgstr "Las 10 principales Consumidores"
 
 #: metrics/templates/metrics/custom_summary.html:132
 #: metrics/templates/metrics/daily_summary.html:126
