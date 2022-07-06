@@ -75,13 +75,14 @@
 				{% url "branches_list" as branches_list_url %}
 				{% url "customers-create" as customers_create_url %}
 				{% url "atms_list" as atms_list_url %}
+				{% url "atms_views" as atms_views_url %}
 				<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
 					<ul class="dropdown-menu">
 						<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li><hr class="dropdown-hr">
 						<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
 						<li{% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">{% trans "ATMs" %}</a></li>
-						<li{% if all_atms_view_url in request.path  %} class="active"{% endif %}><a href="http://127.0.0.1:8000/es/atms/atmlist/">{% trans "ATMs View" %}</a></li>
+						<li{% if atms_views_url in request.path  %} class="active"{% endif %}><a href="{{ atms_views_url }}">{% trans "ATMs View" %}</a></li>
 					</ul>
 				</li>
 				{% url "config-index" as config_index_url %}
@@ -123,14 +124,15 @@
 
 <div class="container" id="body-container">
 	{% block content %}{% endblock content %}
-	<div class="footer-content-wrapper" data-lift="WebUI.homePage">
+	<div class="footer-content-wrapper" data-lift="WebUI.homePage" style = "cursor:pointer">
 		<span>Language </span>
 		<span> | </span>
-		<a id="uk" href="/en" >EN</a>
+		<a id="uk" >EN</a>
 		<span> | </span>
-		<a id="es" href="/es" >ES</a>
+		<a id="es">ES</a>
 	</div>
 </div>
+
 <footer>
 	<div class="container">
 		<p class="text-muted">
@@ -141,7 +143,22 @@
 		</p>
 	</div>
 </footer>
-
+<script>
+	var currentURL = window.location.href;
+	url = "http://reena-manager:8000"
+	const element = document.getElementById('uk')
+	element.addEventListener("click", () => {
+		if(currentURL.includes("/es/")){
+			location.href=url + "/en/" + currentURL.split("/es/")[1]
+		}
+	});
+	const element1 = document.getElementById('es')
+	element1.addEventListener("click", () => {
+		if(currentURL.includes("/en/")){
+			location.href=url + "/es/" + currentURL.split("/en/")[1]
+		}
+});
+</script>
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
