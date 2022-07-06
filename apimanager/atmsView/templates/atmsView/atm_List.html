@@ -9,7 +9,6 @@
         <th scope="col">{% trans "Bank Id" %}</th>
         <th scope="col">{% trans "ATM Name" %}</th>
         <th scope="col">{% trans "More info" %}</th>
-        <!--<th scope="col">{% trans "Update Button" %}</th>-->
         </thead>
         <tbody>
         {% for atm in atms_list %}
@@ -27,36 +26,7 @@
                                 <li>line1: {{atm.address.line_1}}</li>
                             </ul>
                         </li>
-                        <!-- <li>line2: {{atm.address.line_2}}</li>
-                                <li>line3: {{atm.address.line_3}}</li>
-                                <li>city: {{atm.address.city}}</li>
-                                <li>county: {{atm.address.county}}</li>
-                                <li>state: {{atm.address.state}}</li>
-                                <li>postcode: {{atm.address.postcode}}</li>
-                                <li>country_code: {{atm.address.country_code}}</li>
-                            </ul>
-                        </li>
-                        <li>Location:
-                            <ul>
-                                <li>latitude: {{atm.location.latitude}}</li>
-                                <li>longitude: {{atm.location.longitude}}</li>
-                            </ul>
-                        </li>
-                        <li>Meta License:
-                            <ul>
-                                <li>id: {{atm.meta.license.id}}</li>
-                                <li>name: {{atm.meta.license.name}}</li>
-                            </ul>
-                        </li>
-                        <li>ATM Routing
-                            <ul>
-                                <li>Scheme: {{atm.atm_routing.scheme}}</li>
-                                <li>Address: {{atm.atm_routing.address}}</li>
-                            </ul>
-                        </li>
-                        <li>ATM Type: {{atm.branch_type}}</li>
-                        <li>More Info: {{atm.more_info}}</li>
-                        <li>Accessible Features: {{atm.accessibleFeatures}}</li>-->
+
                     </ul>
                 </div>
             </td>
