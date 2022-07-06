@@ -14,6 +14,7 @@ from atms.views import IndexAtmsView
 from obp.api import API, APIError
 
 
+
 class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
     template_name = "atmsView/atm_List.html"
     success_url = '/atmsView/'
