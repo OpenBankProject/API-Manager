@@ -132,7 +132,21 @@
 		<a id="es">ES</a>
 	</div>
 </div>
-
+<script>
+	var currentURL = window.location.href;
+	const element = document.getElementById('uk')
+	element.addEventListener("click", () => {
+		if(currentURL.includes("/es/")){
+			location.href=currentURL.split("/es/")[0] + "/en/" + currentURL.split("/es/")[1]
+		}
+	});
+	const element1 = document.getElementById('es')
+	element1.addEventListener("click", () => {
+		if(currentURL.includes("/en/")){
+			location.href=currentURL.split("/en/")[0] + "/es/" + currentURL.split("/en/")[1]
+		}
+});
+</script>
 <footer>
 	<div class="container">
 		<p class="text-muted">
@@ -143,22 +157,7 @@
 		</p>
 	</div>
 </footer>
-<script>
-	var currentURL = window.location.href;
-	url = "http://reena-manager:8000"
-	const element = document.getElementById('uk')
-	element.addEventListener("click", () => {
-		if(currentURL.includes("/es/")){
-			location.href=url + "/en/" + currentURL.split("/es/")[1]
-		}
-	});
-	const element1 = document.getElementById('es')
-	element1.addEventListener("click", () => {
-		if(currentURL.includes("/en/")){
-			location.href=url + "/es/" + currentURL.split("/en/")[1]
-		}
-});
-</script>
+
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
