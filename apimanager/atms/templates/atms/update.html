@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% load static %} {% block page_title %}{{ block.super }} / Atms{% endblock page_title %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block page_title %}{{ block.super }} / Atms{% endblock page_title %} {% block content %}
 <div id="atms">
     <h1>{% trans "ATM Detail" %}</h1>
     <h2>{{ bank_id }} : {{ atm_id }}</h2>
