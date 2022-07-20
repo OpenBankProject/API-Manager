@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-06 14:46+0200\n"
+"POT-Creation-Date: 2022-07-20 13:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,141 +67,141 @@ msgstr "francés"
 msgid "Spanish"
 msgstr "español"
 
-#: atms/forms.py:14 atms/templates/atms/atm_List.html:8 atmsView/forms.py:14
-#: atmsView/templates/atmsView/atm_List.html:8
+#: atmDetail/forms.py:14 atmDetail/templates/atmsView/atm_List.html:8
+#: atms/forms.py:14 atms/templates/atms/atm_List.html:8
 msgid "ATM Id"
 msgstr "ID del cajero automático"
 
-#: atms/forms.py:25 atms/templates/atms/atm_List.html:9 atmsView/forms.py:25
-#: atmsView/templates/atmsView/atm_List.html:9
+#: atmDetail/forms.py:25 atmDetail/templates/atmsView/atm_List.html:9
+#: atms/forms.py:25 atms/templates/atms/atm_List.html:9
 #: branches/templates/branches/index.html:161
 #: users/templates/users/detail.html:99
 #: users/templates/users/invitation.html:22
 msgid "Bank Id"
 msgstr "Id del banco"
 
-#: atms/forms.py:35 atmsView/forms.py:35 branches/forms.py:33
+#: atmDetail/forms.py:35 atms/forms.py:35 branches/forms.py:33
 #: consumers/templates/consumers/index.html:58
 msgid "Name"
 msgstr "Nombre"
 
-#: atms/forms.py:38 atmsView/forms.py:38
+#: atmDetail/forms.py:38 atms/forms.py:38
 msgid "The name of the ATM"
 msgstr "La configuración de la API"
 
-#: atms/forms.py:46 atms/templates/atms/atm_List.html:25 atmsView/forms.py:46
-#: atmsView/templates/atmsView/atm_List.html:24 branches/forms.py:43
+#: atmDetail/forms.py:46 atmDetail/templates/atmsView/atm_List.html:24
+#: atms/forms.py:46 atms/templates/atms/atm_List.html:25 branches/forms.py:43
 #: branches/templates/branches/index.html:176
 #: branches/templates/branches/index.html:203
 msgid "Address"
 msgstr "Dirección"
 
-#: atms/forms.py:56 atmsView/forms.py:56 branches/forms.py:53
+#: atmDetail/forms.py:56 atms/forms.py:56 branches/forms.py:53
 msgid "Latitude"
 msgstr "latitud"
 
-#: atms/forms.py:67 atmsView/forms.py:67 branches/forms.py:64
+#: atmDetail/forms.py:67 atms/forms.py:67 branches/forms.py:64
 msgid "Longitude"
 msgstr "longitud"
 
-#: atms/forms.py:78 atmsView/forms.py:78
+#: atmDetail/forms.py:78 atms/forms.py:78
 msgid "Meta License Id"
 msgstr "Meta Licencia"
 
-#: atms/forms.py:81 atmsView/forms.py:81
+#: atmDetail/forms.py:81
 msgid "PDDL"
 msgstr "PDDL"
 
-#: atms/forms.py:89 atmsView/forms.py:89
+#: atmDetail/forms.py:89 atms/forms.py:89
 msgid "Meta License Name"
 msgstr "Nombre de la Licencia"
 
-#: atms/forms.py:92 atmsView/forms.py:92
+#: atmDetail/forms.py:92
 msgid "Open Data Commons Public Domain Dedication and License"
 msgstr "Dedicación y licencia de dominio público de Open Data Commons"
 
-#: atms/forms.py:100 atmsView/forms.py:100
+#: atmDetail/forms.py:100 atms/forms.py:100
 msgid "Opening Hours"
 msgstr "Horario de atención"
 
-#: atms/forms.py:103 atms/forms.py:113 atms/forms.py:123 atms/forms.py:133
-#: atms/forms.py:143 atms/forms.py:153 atms/forms.py:163 atms/forms.py:173
-#: atmsView/forms.py:103 atmsView/forms.py:113 atmsView/forms.py:123
-#: atmsView/forms.py:133 atmsView/forms.py:143 atmsView/forms.py:153
-#: atmsView/forms.py:163 atmsView/forms.py:173
+#: atmDetail/forms.py:103 atmDetail/forms.py:113 atmDetail/forms.py:123
+#: atmDetail/forms.py:133 atmDetail/forms.py:143 atmDetail/forms.py:153
+#: atmDetail/forms.py:163 atmDetail/forms.py:173 atms/forms.py:103
+#: atms/forms.py:113 atms/forms.py:123 atms/forms.py:133 atms/forms.py:143
+#: atms/forms.py:153 atms/forms.py:163 atms/forms.py:173
 msgid "None"
 msgstr "Ninguno"
 
-#: atms/forms.py:110 atmsView/forms.py:110
+#: atmDetail/forms.py:110 atms/forms.py:110
 msgid "Monday"
 msgstr "Lunes"
 
-#: atms/forms.py:120 atmsView/forms.py:120
+#: atmDetail/forms.py:120 atms/forms.py:120
 msgid "Tuesday"
 msgstr "Martes"
 
-#: atms/forms.py:130 atmsView/forms.py:130
+#: atmDetail/forms.py:130 atms/forms.py:130
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: atms/forms.py:140 atmsView/forms.py:140
+#: atmDetail/forms.py:140 atms/forms.py:140
 msgid "Thursday"
 msgstr "Jueves"
 
-#: atms/forms.py:150 atmsView/forms.py:150
+#: atmDetail/forms.py:150 atms/forms.py:150
 msgid "Friday"
 msgstr "Viernes"
 
-#: atms/forms.py:160 atmsView/forms.py:160
+#: atmDetail/forms.py:160 atms/forms.py:160
 msgid "Saturday"
 msgstr "Sábado"
 
-#: atms/forms.py:170 atmsView/forms.py:170
+#: atmDetail/forms.py:170 atms/forms.py:170
 msgid "Sunday"
 msgstr "Sunday"
 
-#: atms/forms.py:180 atmsView/forms.py:180
+#: atmDetail/forms.py:180 atms/forms.py:180
 msgid "Is Accessible"
 msgstr "producción y validación es"
 
-#: atms/forms.py:189 atmsView/forms.py:189
+#: atmDetail/forms.py:189 atms/forms.py:189
 msgid "ATM location"
 msgstr "Ubicación"
 
-#: atms/forms.py:192 atmsView/forms.py:192
+#: atmDetail/forms.py:192
 msgid "OBP"
 msgstr "OBP"
 
-#: atms/forms.py:199 atmsView/forms.py:199 branches/forms.py:166
+#: atmDetail/forms.py:199 atms/forms.py:199 branches/forms.py:166
 msgid "More information"
 msgstr "Más información"
 
-#: atms/forms.py:202 atmsView/forms.py:202
+#: atmDetail/forms.py:202 atms/forms.py:202
 msgid "short walk to the lake from here"
 msgstr "corto paseo hasta el lago desde aquí"
 
-#: atms/forms.py:209 atmsView/forms.py:209
+#: atmDetail/forms.py:209 atms/forms.py:209
 msgid "Deposit Capabilities"
 msgstr "Tiene capacidad de depósito"
 
-#: atms/forms.py:218 atmsView/forms.py:218
+#: atmDetail/forms.py:218 atms/forms.py:218
 msgid "Supported Languages"
 msgstr "Idiomas admitidos"
 
-#: atms/forms.py:227 atmsView/forms.py:227
+#: atmDetail/forms.py:227 atms/forms.py:227
 msgid "Services"
 msgstr "Servicios"
 
-#: atms/forms.py:230 atmsView/forms.py:230
+#: atmDetail/forms.py:230 atms/forms.py:230
 msgid "Service store"
 msgstr "Servicios"
 
-#: atms/forms.py:237 atmsView/forms.py:237 branches/forms.py:146
+#: atmDetail/forms.py:237 atms/forms.py:237 branches/forms.py:146
 #: branches/templates/branches/index.html:209
 msgid "Accessible Features"
 msgstr "Características accesibles"
 
-#: atms/forms.py:240 atmsView/forms.py:240
+#: atmDetail/forms.py:240 atms/forms.py:240
 msgid "wheelchair, atm usuable by the visually impaired"
 msgstr ""
 "sillón de ruedas, cajero automático utilizable por las personas con "
@@ -217,95 +217,100 @@ msgstr ""
 "automático utilizable por las personas con discapacidad visualsillón de "
 "ruedas, cajero automático utilizable por las personas con discapacidad "
 "visualsillón de ruedas, cajero automático utilizable por las personas con "
-"discapacidad visual"
+"discapacidad visualsillón de ruedas, cajero automático utilizable por las "
+"personas con discapacidad visualsillón de ruedas, cajero automático "
+"utilizable por las personas con discapacidad visual"
 
-#: atms/forms.py:247 atmsView/forms.py:247
+#: atmDetail/forms.py:247 atms/forms.py:247
 msgid "Supported Currencies"
 msgstr "Divisas Soportadas"
 
-#: atms/forms.py:256 atmsView/forms.py:256
+#: atmDetail/forms.py:256 atms/forms.py:256
 msgid "Write Notes"
 msgstr "Notas:"
 
-#: atms/forms.py:265 atmsView/forms.py:265
+#: atmDetail/forms.py:265 atms/forms.py:265
 msgid "Write location Category"
 msgstr "Categorías de ubicación"
 
-#: atms/forms.py:274 atmsView/forms.py:274
+#: atmDetail/forms.py:274 atms/forms.py:274
 msgid "Minimum Withdrawal"
 msgstr "El retiro mínimo"
 
-#: atms/forms.py:284 atmsView/forms.py:284
+#: atmDetail/forms.py:284 atms/forms.py:284
 msgid "Branch Identification"
 msgstr "Identificación de la sucursal"
 
-#: atms/forms.py:287 atmsView/forms.py:287
+#: atmDetail/forms.py:287 atms/forms.py:287
 msgid "Enter your Branch Identification"
 msgstr "Identificación de la sucursal"
 
-#: atms/forms.py:294 atmsView/forms.py:294
+#: atmDetail/forms.py:294 atms/forms.py:294
 msgid "Site Identification"
 msgstr "IDENTIFICACIÓN DEL LUGAR"
 
-#: atms/forms.py:297 atmsView/forms.py:297
+#: atmDetail/forms.py:297 atms/forms.py:297
 msgid "Enter your Site Identification"
 msgstr "IDENTIFICACIÓN DEL LUGAR"
 
-#: atms/forms.py:304 atmsView/forms.py:304
+#: atmDetail/forms.py:304 atms/forms.py:304
 msgid "Site Name"
 msgstr "Nobre del sitio"
 
-#: atms/forms.py:307 atmsView/forms.py:307
+#: atmDetail/forms.py:307 atms/forms.py:307
 msgid "Enter your Site Name "
 msgstr "Nobre del sitio"
 
-#: atms/forms.py:314 atmsView/forms.py:314
+#: atmDetail/forms.py:314 atms/forms.py:314
 msgid "Cash Withdrawal National fee"
 msgstr "Cargo Nacional por Retiro de Efectivo"
 
-#: atms/forms.py:317 atmsView/forms.py:317
+#: atmDetail/forms.py:317 atms/forms.py:317
 msgid "Cash withdrawal national fee"
 msgstr "Cargo Nacional por Retiro de Efectivo"
 
-#: atms/forms.py:324 atmsView/forms.py:324
+#: atmDetail/forms.py:324 atms/forms.py:324
 msgid "Cash Withdrawal international fee"
 msgstr "Cargo internacional por retiro de efectivo"
 
-#: atms/forms.py:327 atmsView/forms.py:327
+#: atmDetail/forms.py:327 atms/forms.py:327
 msgid "Cash withdrawal international fee"
 msgstr "Cargo internacional por retiro de efectivo"
 
-#: atms/forms.py:334 atms/forms.py:337 atmsView/forms.py:334
-#: atmsView/forms.py:337
+#: atmDetail/forms.py:334 atmDetail/forms.py:337 atms/forms.py:334
+#: atms/forms.py:337
 msgid "Balance Inquiry Fee"
 msgstr "Cargo por consulta de saldo"
 
-#: atms/templates/atms/atm_List.html:4 atms/templates/atms/update.html:3
-#: atmsView/templates/atmsView/atm_List.html:4
-msgid "ATM Detail"
+#: atmDetail/templates/atmsView/atm_List.html:4 base/templates/base.html:85
+msgid "ATMs Detail"
 msgstr "Descripción"
 
+#: atmDetail/templates/atmsView/atm_List.html:10
 #: atms/templates/atms/atm_List.html:10
-#: atmsView/templates/atmsView/atm_List.html:10
 msgid "ATM Name"
 msgstr "Nombre del cajero automático"
 
+#: atmDetail/templates/atmsView/atm_List.html:11
 #: atms/templates/atms/atm_List.html:11
-#: atmsView/templates/atmsView/atm_List.html:11
 msgid "More info"
 msgstr "Más información"
+
+#: atmDetail/templates/atmsView/atm_List.html:33
+#: atms/templates/atms/atm_List.html:63
+#: consumers/templates/consumers/index.html:76
+#: users/templates/users/index.html:69
+msgid "View"
+msgstr "Ver"
+
+#: atms/templates/atms/atm_List.html:4 atms/templates/atms/update.html:4
+msgid "ATM Detail"
+msgstr "Descripción"
 
 #: atms/templates/atms/atm_List.html:12
 #: branches/templates/branches/index.html:164
 msgid "Update Button"
 msgstr "Botón Actualizar"
-
-#: atms/templates/atms/atm_List.html:63
-#: atmsView/templates/atmsView/atm_List.html:33
-#: consumers/templates/consumers/index.html:76
-#: users/templates/users/index.html:69
-msgid "View"
-msgstr "Ver"
 
 #: atms/templates/atms/index.html:3 base/templates/base.html:84
 msgid "ATMs"
@@ -387,10 +392,6 @@ msgstr "Consumidores"
 #: base/templates/base.html:83 branches/templates/branches/index.html:9
 msgid "Branches"
 msgstr "Sucursales"
-
-#: base/templates/base.html:85
-msgid "ATMs View"
-msgstr "Vista de cajeros automáticos"
 
 #: base/templates/base.html:94
 msgid "Configurations"
@@ -754,7 +755,7 @@ msgstr "URL de la imagen de portada"
 
 #: customers/forms.py:82
 msgid "Face Image Date"
-msgstr "Fecha de la imagen de portada
+msgstr "Fecha de la imagen de portada"
 
 #: customers/forms.py:93
 msgid "Date of Birth"
@@ -1283,7 +1284,9 @@ msgstr ""
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
 "primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
 "la primera llamada APIMediana de tiempo desde el registro del consumidor "
-"hasta la primera llamada "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
+"del consumidor hasta la primera llamada "
 
 #: metrics/templates/metrics/custom_summary.html:111
 #: metrics/templates/metrics/daily_summary.html:105
@@ -1402,7 +1405,9 @@ msgstr ""
 "desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
 "para desarrolladoresAplicaciones con distintas direcciones de correo "
 "electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico para "
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
@@ -1563,6 +1568,9 @@ msgstr "Guardar valor"
 #: webui/templates/webui/index.html:47
 msgid "Save"
 msgstr "Ahorrar"
+
+#~ msgid "ATMs View"
+#~ msgstr "Vista de cajeros automáticos"
 
 #~ msgid "consumer id"
 #~ msgstr "identificación del consumidor"
