@@ -78,7 +78,7 @@ class CreateAtmForm(forms.Form):
         label=_('Meta License Id'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('PDDL'),
+                'placeholder': 'PDDL',
                 'class': 'form-control',
             }
         ),
@@ -89,7 +89,7 @@ class CreateAtmForm(forms.Form):
         label=_('Meta License Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Open Data Commons Public Domain Dedication and License'),
+                'placeholder': 'Open Data Commons Public Domain Dedication and License',
                 'class': 'form-control',
             }
         ),
@@ -189,7 +189,7 @@ class CreateAtmForm(forms.Form):
         label=_('ATM location'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('OBP'),
+                'placeholder': 'OBP',
                 'class': 'form-control',
             }
         ),
