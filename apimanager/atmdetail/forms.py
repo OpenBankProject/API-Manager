@@ -189,7 +189,7 @@ class CreateAtmForm(forms.Form):
         label=_('ATM location'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('OBP'),
+                'placeholder': 'OBP',
                 'class': 'form-control',
             }
         ),

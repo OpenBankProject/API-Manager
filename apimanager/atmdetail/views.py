@@ -16,7 +16,7 @@ from obp.api import API, APIError
 
 
 class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
-    template_name = "atmsView/atm_List.html"
+    template_name = "atmsView/atmdetail.html"
     success_url = '/atmsView/'
     def get_banks(self):
                 api = API(self.request.session.get('obp'))

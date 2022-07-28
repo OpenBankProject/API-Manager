@@ -75,7 +75,7 @@
 				{% url "branches_list" as branches_list_url %}
 				{% url "customers-create" as customers_create_url %}
 				{% url "atms_list" as atms_list_url %}
-				{% url "atm_detail" as atm_detail_url %}
+				{% url "atm-detail" as atm_detail_url %}
 				<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
 					<ul class="dropdown-menu">

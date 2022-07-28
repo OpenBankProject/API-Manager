@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'users',
     'branches',
     'atms',
-    'atmDetail',
+    'atmdetail',
     'entitlementrequests',
     'customers',
     'metrics',

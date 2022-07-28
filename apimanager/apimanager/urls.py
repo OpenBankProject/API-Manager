@@ -39,7 +39,7 @@ urlpatterns += i18n_patterns(
     url(r'^users/', include('users.urls')),
     url(r'^branches/', include('branches.urls')),
     url(r'^atms/', include('atms.urls')),
-    url(r'^atm_detail/', include('atmDetail.urls')),
+    url(r'^atm-detail/', include('atmdetail.urls')),
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),

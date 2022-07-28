@@ -14,7 +14,6 @@ from obp.api import API, APIError
 from .forms import AddEntitlementForm,CreateInvitationForm
 import csv
 
-
 class FilterRoleName(BaseFilter):
     """Filter users by role names"""
     filter_type = 'role_name'
@@ -367,18 +366,32 @@ class UserStatusUpdateView(LoginRequiredMixin, View):
                 else:
                     msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
                     messages.success(request, msg)
-            else:
-                urlpath = '/users/{}/lock-status'.format(kwargs['username'])
-                result = api.put(urlpath, None)
+            elif(request.POST.get("Lock")):
+                urlpath = '/users/{}/locks'.format(kwargs['username'])
+                result = api.post(urlpath, None)
                 if result is not None and 'code' in result and result['code'] >= 400:
                     messages.error(request, result['message'])
                 else:
+                    msg = 'User {} has been lock.'.format(kwargs['username'])
+                    messages.success(request, msg)
+            else:
+                urlpath = '/users/{}/lock-status'.format(kwargs['username'])
+                result = api.put(urlpath, None)
+                print("result", result)
+                #if result is not None and 'code' in result and result['code'] >= 400:
+                if 'code' in result and result['code'] == 404:
                     msg = 'User {} has been unlocked.'.format(kwargs['username'])
                     messages.success(request, msg)
+                else:
+                    messages.error(request, result['message'])
+                #else:
+                #    msg = 'User {} has been unlocked.'.format(kwargs['username'])
+                #    messages.success(request, msg)
+
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as e:
+            messages.error(self.request, 'Unknown Error' + str(e))
 
         # from sonarcloud: Change this code to not perform redirects based on user-controlled data.
         redirect_url_from_gui = request.POST.get('next', reverse('users-index'))

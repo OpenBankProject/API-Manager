@@ -100,7 +100,7 @@ class CreateAtmForm(forms.Form):
         label=_('Opening Hours'),
         widget=forms.Textarea(
             attrs={
-                'placeholder': _('None'),
+                'placeholder': 'None',
                 'class': 'form-control',
             }
         ),
@@ -110,7 +110,7 @@ class CreateAtmForm(forms.Form):
            label=_('Monday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -120,7 +120,7 @@ class CreateAtmForm(forms.Form):
            label=_('Tuesday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -130,7 +130,7 @@ class CreateAtmForm(forms.Form):
            label=_('Wednesday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -140,7 +140,7 @@ class CreateAtmForm(forms.Form):
            label=_('Thursday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -150,7 +150,7 @@ class CreateAtmForm(forms.Form):
            label=_('Friday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -160,7 +160,7 @@ class CreateAtmForm(forms.Form):
            label=_('Saturday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),
@@ -170,7 +170,7 @@ class CreateAtmForm(forms.Form):
            label=_('Sunday'),
            widget=forms.TextInput(
                attrs={
-                   'placeholder': _('None'),
+                   'placeholder': 'None',
                    'class': 'form-control',
                }
            ),

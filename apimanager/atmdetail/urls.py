@@ -9,5 +9,5 @@ from .views import AtmListView
 urlpatterns = [
     url(r'^$',
         AtmListView.as_view(),
-        name='atm_detail')
+        name='atm-detail')
 ]
