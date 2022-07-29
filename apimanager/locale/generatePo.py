@@ -30,7 +30,7 @@ def writeFile(language):
     try:
         with open(fileName,encoding='utf-8') as f: # Reading from the file
             a=[i.replace("\n","") for i in f.readlines()] # Reading everyline from a file and store it into a
-    except Exception as e:
+    except Exception as e: # same like try block. 
         print(fileName, e)
     b=0
     for i in range(len(a)):

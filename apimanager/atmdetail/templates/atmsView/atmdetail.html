@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block page_title %} {% trans "API Manager" %}/{% trans "ATMs Detail" %}{% endblock page_title %} {% block content %}
+<div id="atms">
+    <h1>{% trans "ATMs List" %}</h1>
+<div class="table-responsive">
+    <table class="table table-hover tablesorter" id="atms-list" aria-describedby="atms list">
+        <thead>
+        <th scope="col">{% trans "ATM Id" %}</th>
+        <th scope="col">{% trans "Bank Id" %}</th>
+        <th scope="col">{% trans "ATM Name" %}</th>
+        <th scope="col">{% trans "More info" %}</th>
+        </thead>
+        <tbody>
+        {% for atm in atms_list %}
+
+        {% url 'atms_update' atm.id atm.bank_id as url_atm_update %}
+        <tr data-atm-id="{{ atm.id }}">
+            <td>{{ atm.id }}</td>
+            <td>{{ atm.bank_id }}</td>
+            <td>{{ atm.name }}</td>
+            <td>
+                <div class="popuptext">
+                    <ul>
+                        <li>{% trans "Address" %}:
+                            <ul>
+                                <li>line1: {{atm.address.line_1}}</li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </td>
+            <td><a href="{{ url_atm_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}

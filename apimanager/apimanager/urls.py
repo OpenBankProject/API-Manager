@@ -15,7 +15,7 @@ from obp.views import (
 )
 
 urlpatterns = [
-    #url(r'^$', HomeView.as_view(), name="home"),
+    #These pages URLs have no GUI
     url(r'^oauth/initiate$',
         OAuthInitiateView.as_view(), name='oauth-initiate'),
     url(r'^oauth/authorize$',
@@ -39,6 +39,7 @@ urlpatterns += i18n_patterns(
     url(r'^users/', include('users.urls')),
     url(r'^branches/', include('branches.urls')),
     url(r'^atms/', include('atms.urls')),
+    url(r'^atm-detail/', include('atmdetail.urls')),
     url(r'^customers/', include('customers.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),
