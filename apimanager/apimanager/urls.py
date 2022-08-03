@@ -45,6 +45,7 @@ urlpatterns += i18n_patterns(
     url(r'^config/', include('config.urls')),
     url(r'^webui/', include('webui.urls')),
     url(r'^methodrouting/', include('methodrouting.urls')),
+    url(r'^connectormethod/', include('connectormethod.urls')),
     url(r'^dynamicendpoints/', include('dynamicendpoints.urls')),
     url(r'^apicollections/', include('apicollections.urls')),
 )

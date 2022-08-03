@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'config',
     'webui',
     'methodrouting',
+    'connectormethod',
     'dynamicendpoints',
     'apicollections'
 ]

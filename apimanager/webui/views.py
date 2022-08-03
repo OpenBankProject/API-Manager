@@ -65,7 +65,8 @@ class IndexView(LoginRequiredMixin, FormView):
 def webui_save(request):
     web_ui_props_name = request.POST.get('web_ui_props_name')
     web_ui_props_value = request.POST.get('web_ui_props_value')
-
+    print("request.POST.get", request.GET)
+    #print("web_ui_props_value", web_ui_props_value)
     payload = {
         'name': web_ui_props_name,
         'value': web_ui_props_value

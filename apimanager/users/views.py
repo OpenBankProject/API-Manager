@@ -247,7 +247,9 @@ class MyDetailView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, 'Unknown Error')
-
+        #print(user,"This is ")
+        #entitlements=user["entitlements"]["list"]
+        user["entitlements"]["list"] = sorted(user["entitlements"]["list"], key=lambda d: d['role_name'])
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
         })
@@ -416,25 +418,23 @@ class ExportCsvView(LoginRequiredMixin, View):
         username = self.request.GET.get('username')
         lockedstatus = self.request.GET.get('locked_status')
         if lockedstatus is None: lockedstatus = "active"
-
         if email:
             urlpath = '/users/email/{}/terminator'.format(email)
         elif username:
             urlpath = '/users/username/{}'.format(username)
         else:
             urlpath = '/users?limit={}&offset={}&locked_status={}'.format(limit, offset, lockedstatus)
-
         try:
             response = api.get(urlpath)
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
                 users = response['users']
+
         except APIError as err:
             messages.error(self.request, err)
         except:
             messages.error(self.request, 'Unknown Error')
-      
         response = HttpResponse(content_type = 'text/csv')
         response['Content-Disposition'] = 'attachment;filename= Users'+ str(datetime.datetime.now())+'.csv'
         writer = csv.writer(response)
