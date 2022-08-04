@@ -16,7 +16,6 @@ urlpatterns = [
     url(r'^my-connectormethod-ids/(?P<connectormethod_id>[\w\@\.\+-]+)$',
             DetailView.as_view(),
            name='connector_detail'),
-
 ]
 """url(r'^my-connectormethod-ids/(?P<connectormethod-id>[\w\@\.\+-]+)$',
         DetailView.as_view(),

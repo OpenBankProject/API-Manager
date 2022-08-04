@@ -16,10 +16,50 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 class IndexView(LoginRequiredMixin, FormView):
-    """Index view for config"""
+    """Index view for Connector Methods"""
     template_name = "connectormethod/index.html"
     form_class = ConnectorMethodForm
     success_url = reverse_lazy('connectormethod-index')
+    def dispatch(self, request, *args, **kwargs):
+            self.api = API(request.session.get('obp'))
+            return super(IndexView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self, *args, **kwargs):
+        form = super(IndexView, self).get_form(*args, **kwargs)
+        # Cannot add api in constructor: super complains about unknown kwarg
+        form.api = self.api
+        fields = form.fields
+        try:
+            fields['is_accessible'].choices = [('',_('Choose...')),(Scala, Scala), (Java, Java), (JavaScript, JavaScript)]
+        except APIError as err:
+            messages.error(self.request, err)
+        except Exception as err:
+            messages.error(self.request, err)
+
+        return form
+    def form_valid(self, form):
+        try:
+            data = form.cleaned_data
+            urlpath = '/management/connector-methods'
+            payload ={
+                "connector_method_id": data["connector_method_id"],
+                "method_name": data["method_name"],
+                "programming_lang": data["programming_lang"] if data["programming_lang"]!="" else "false",
+                "method_body": data["method_body"],
+            }
+            result = self.api.post(urlpath, payload=payload)
+        except APIError as err:
+            messages.error(self.request, "Unknown Error")
+            return super(IndexView, self).form_invalid(form)
+        except Exception as err:
+            messages.error(self.request, "Unknown Error")
+            return super(IndexView, self).form_invalid(form)
+        if 'code' in result and result['code']>=400:
+            messages.error(self.request, result['message'])
+            return super(IndexView, self).form_valid(form)
+        msg = 'Connector Method has been created successfully!'
+        messages.success(self.request, msg)
+        return super(IndexView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
