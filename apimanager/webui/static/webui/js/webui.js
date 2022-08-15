@@ -53,6 +53,7 @@ $(document).ready(function($) {
 		$.post('/webui/save/method', {
 			'web_ui_props_name': web_ui_props_name,
             'web_ui_props_value': web_ui_props_value,
+             alert(web_ui_props_value, "Value of webui")
 		}, function (response) {
 			location.reload(); 
 		});
