@@ -78,9 +78,7 @@ class ExportCsvView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
        api = API(self.request.session.get('obp'))
        try:
-           print("Helooooooo")
            self.bankids = self.get_banks()
-           print("Worlddddddd", )
            atms_list = []
            for bank_id in self.bankids:
                urlpath = '/banks/{}/atms'.format(bank_id)

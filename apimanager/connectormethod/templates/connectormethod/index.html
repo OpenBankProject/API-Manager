@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>{% trans "Connector Methods" %}</h1>
+<h5><a href="https://plugins.jetbrains.com/plugin/16603-obp-push">Get OBP Push (IntelliJ Plugin)</a></h5>
 <div class="row">
     <div class="col-xs-12 col-sm-2">
         <label class="form-group">{% trans "Connector Method id" %}:</label> <br>
@@ -26,7 +27,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
-                    <a class="api_collection_id" href="{{ url_collection_detail }}">{{ connectormethod.connector_method_id }}</a></div>
+                    <a class="connector_method_id" href="#">{{ connectormethod.connector_method_id }}</a></div>
             </div>
             {% if connectormethod.connector_method_id %}
             <div class="col-xs-12 col-sm-2">
@@ -35,29 +36,35 @@
             </div>
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
-                    <div>{{ connectormethod.programming_lang }}</div>
+                    <div>
+                        <select class="connector_method_programming_lang_update form-control">
+                        <option value="{{ connectormethod.programming_lang }}" selected="selected" hidden>{{ connectormethod.programming_lang }}</option>
+                            <option value="Scala">Scala</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                    </select></div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <div cols="40" rows="1" class="form-control" style="overflow:scroll; padding:0px, 0px, 0px, 2px; height:50px;">{{connectormethod.method_body}}</div>
+                <textarea cols="40" rows="1" class="form-control connector_method_body_update" style="margin: 0px -2px 0px 0px; height: 138px; width: 100%;">{{connectormethod.method_body}}</textarea>
             </div>
             {% else %}
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
-                    <input class="api_collection_name" value="Method Name">
+                    <input class="connector_method_name" value="Method Name">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
-                    <select class="api_collection_is_sharable form-control">
-                        <option value="True">Scala</option>
-                        <option value="False">Java</option>
-                        <option value="False">JavaScript</option>
+                    <select class="connector_method_programming_lang form-control">
+                        <option value="Scala">Scala</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
                     </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <textarea cols="40" rows="1" class="form-control api_collection_description">{% trans "Enter Your Method Body" %}</textarea>
+                <textarea cols="40" rows="1" class="form-control connector_method_body">{% trans "Enter Your Method Body" %}</textarea>
             </div>
             {%  endif %}
             {%  if forloop.counter0 == 0 %}
@@ -70,7 +77,7 @@
             {%  if forloop.counter0 > 0 %}
             <div class="col-sm-12 col-sm-2">
                 <div class="form-group">
-                    <button class="btn btn-primary btn-red forDelete">{% trans "Update" %}</button>
+                    <button class="btn btn-primary btn-red forUpdate">{% trans "Update" %}</button>
                 </div>
             </div>
             {%  endif %}
@@ -82,5 +89,46 @@
 
 
 {% block extrajs %}
-<script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
+<script>
+$(document).ready(function($) {
+    $('.runner button.forSave').click(function(e) {
+        e.preventDefault();
+        var t = $(this);
+        var runner = t.parent().parent().parent();
+        var connector_method_name = $(runner).find('.connector_method_name').val();
+        var connector_method_programming_lang = $(runner).find('.connector_method_programming_lang').val();
+        var connector_method_body = $(runner).find('.connector_method_body').val();
+
+        $('.runner button.forSave').attr("disabled", "disabled");
+        $('.runner button.forDelete').attr("disabled", "disabled");
+        $.post('save/connectormethod', {
+            'connector_method_name': connector_method_name,
+            'connector_method_programming_lang': connector_method_programming_lang,
+            'connector_method_body': connector_method_body,
+        }, function(response) {
+            location.reload();
+        });
+    });
+
+    $('.runner button.forUpdate').click(function(e) {
+        e.preventDefault();
+        var t = $(this);
+        var runner = t.parent().parent().parent();
+        var connector_method_id = $(runner).find('.connector_method_id').html();
+        var connector_method_programming_lang_update = $(runner).find('.connector_method_programming_lang_update').val();
+        var connector_method_body_update = $(runner).find('.connector_method_body_update').val();
+
+        $('.runner button.forSave').attr("disabled", "disabled");
+        $('.runner button.forUpdate').attr("disabled", "disabled");
+        $.post('update/connectormethod', {
+            'connector_method_id': connector_method_id,
+            'connector_method_programming_lang_update': connector_method_programming_lang_update,
+            'connector_method_body_update': connector_method_body_update,
+        }, function(response) {
+            location.reload();
+        });
+    });
+});
+</script>
+<script type="text/javascript" src="{% static 'connectormethod/js/connectormethod.js' %}"></script>
 {% endblock extrajs %}
