@@ -1,4 +1,3 @@
-console.log("good bye bye")
 $(document).ready(function($) {
     $('.runner button.forSave').click(function(e) {
         e.preventDefault();
