@@ -24,7 +24,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Username'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'The name of the user',
+                'placeholder': _('The name of the user'),
                 'class': 'form-control',
             }
         ),
@@ -42,7 +42,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Legal Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'NONE',
+                'placeholder': _('NONE'),
                 'class': 'form-control',
             }
         ),
@@ -52,7 +52,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Mobile Phone Number'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'E.g. +49 123 456 78 90 12',
+                'placeholder': _('E.g. +49 123 456 78 90 12'),
                 'class': 'form-control',
             }
         ),
@@ -62,7 +62,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Email'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'E.g. person@example.com',
+                'placeholder': _('E.g. person@example.com'),
                 'class': 'form-control',
             }
         ),
@@ -104,7 +104,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Relationship Status'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Single',
+                'placeholder': _('Single'),
                 'class': 'form-control',
             }
         ),
@@ -155,7 +155,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Credit Limit (Currency)'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'EUR',
+                'placeholder': _('EUR'),
                 'class': 'form-control',
             }
         ),
@@ -175,7 +175,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Highest Education Attained'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Bachelor’s Degree',
+                'placeholder': _('Bachelor’s Degree'),
                 'class': 'form-control',
             }
         ),
@@ -185,7 +185,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Employment Status'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Employed',
+                'placeholder': _('Employed'),
                 'class': 'form-control',
             }
         ),

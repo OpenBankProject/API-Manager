@@ -4,6 +4,7 @@ Forms of users app
 """
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 class AddEntitlementForm(forms.Form):
     user_id = forms.CharField(
@@ -11,7 +12,7 @@ class AddEntitlementForm(forms.Form):
         required=True,
     )
     role_name = forms.CharField(
-        label='Role name',
+        label=_('Role name'),
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
@@ -20,7 +21,7 @@ class AddEntitlementForm(forms.Form):
         required=True,
     )
     bank_id = forms.ChoiceField(
-        label='Bank',
+        label=_('Bank'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -36,7 +37,7 @@ class AddEntitlementForm(forms.Form):
 
 class CreateInvitationForm(forms.Form):
     bank_id = forms.ChoiceField(
-        label='Bank',
+        label=_('Bank'),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -45,25 +46,25 @@ class CreateInvitationForm(forms.Form):
         choices=[],
     )
     first_name = forms.CharField(
-        label='First Name',
+        label=_('First Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'First Name',
+                'placeholder': _('First Name'),
                 'class': 'form-control',
             }
         ),
     )
     last_name = forms.CharField(
-        label='Last Name',
+        label=_('Last Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Last Name',
+                'placeholder': _('Last Name'),
                 'class': 'form-control',
             }
         ),
     )
     email = forms.CharField(
-        label='Email',
+        label=_('Email'),
         widget=forms.EmailInput(
             attrs={
                 'placeholder': 'felixsmith@example.com',
@@ -73,30 +74,30 @@ class CreateInvitationForm(forms.Form):
         required=True,
     )
     company = forms.CharField(
-        label='Company',
+        label=_('Company'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'TESOBE GmbH',
+                'placeholder': _('TESOBE GmbH'),
                 'class': 'form-control',
             }
         ),
         required=True,
     )
     country = forms.CharField(
-        label='Country',
+        label=_('Country'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Germany',
+                'placeholder': _('Germany'),
                 'class': 'form-control',
             }
         ),
         required=True,
     )
     purpose = forms.CharField(
-        label='Purpose',
+        label=_('Purpose'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'For the Bank App',
+                'placeholder': _('For the Bank App'),
                 'class': 'form-control',
             }
         ),
