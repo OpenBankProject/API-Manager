@@ -42,7 +42,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Legal Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('NONE'),
+                'placeholder': 'NONE',
                 'class': 'form-control',
             }
         ),
@@ -155,7 +155,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Credit Limit (Currency)'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('EUR'),
+                'placeholder': 'EUR',
                 'class': 'form-control',
             }
         ),

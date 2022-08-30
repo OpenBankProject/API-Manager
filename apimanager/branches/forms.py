@@ -75,7 +75,7 @@ class CreateBranchForm(forms.Form):
         label=_('meta_license_id'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('PDDL'),
+                'placeholder': 'PDDL',
                 'class': 'form-control',
             }
         ),
@@ -86,7 +86,7 @@ class CreateBranchForm(forms.Form):
         label=_('meta_license_name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Open Data Commons Public Domain Dedication and License'),
+                'placeholder': 'Open Data Commons Public Domain Dedication and License',
                 'class': 'form-control',
             }
         ),
@@ -97,7 +97,7 @@ class CreateBranchForm(forms.Form):
         label=_(' Lobby Opening Hours'),
         widget=forms.Textarea(
             attrs={
-                'placeholder': _('None'),
+                'placeholder': 'None',
                 'class': 'form-control',
             }
         ),
