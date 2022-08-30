@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-
 {% block page_title %}{{ block.super }} / API Usage Report{% endblock page_title %}
-
 {% block content %}
-
 <div id="metrics">
 	<h1>{% trans "API Usage Report" %}</h1>
 	<h2>{% trans "API instance" %}: {{ api_host_name }}</h2>
-
-
-
     <div id="metrics-data">
     	<ul class="nav nav-tabs">
     	{% block nav_tabs %}

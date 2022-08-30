@@ -1,10 +1,11 @@
+{% load i18n %}
 <div id="filter-email" class="filter">
 	<div class="btn-group">
 		<form action="" method="get">
 			<input type="hidden"  name="role_name" value="{{ active_role_name }}" />
 			<input type="hidden"  name="locked_status" value="{{ active_locked_status }}" />
 			<div class="input-group">
-				<input type="text" class="form-control" size="30" name="email" placeholder="Enter email address ..." value="{% if not active_email_all %}{{ active_email }}{% endif %}" />
+				<input type="text" class="form-control" size="30" name="email" placeholder='{% trans "Enter email address ..." %}' value="{% if not active_email_all %}{{ active_email }}{% endif %}" />
 				<span class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></span>
 			</div>
 		</form>
