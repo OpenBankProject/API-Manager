@@ -8,7 +8,7 @@
 
 <div id="metrics">
 	<h1>{% trans "API Usage Report" %}</h1>
-	<h2>{% trans "API instance : {{ api_host_name }}</h2>
+	<h2>{% trans "API instance" %} : {{ api_host_name }}</h2>
 
     <div id="metrics-data">
     	<ul class="nav nav-tabs">
@@ -50,13 +50,19 @@
 						{{ form.to_date }}
 					</div>
 				</div>
-
-				<div class="col-xs-6 col-sm-3">
+				<div class="col-xs-4 col-sm-3">
+					{% if form.exclude_app_names.errors %}<div class="alert alert-danger">{{ form.exclude_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.include_obp_apps }} {% trans "Include System Calls" %}
+						{{ form.exclude_app_names.label_tag }}
+						{{ form.exclude_app_names }}
 					</div>
 				</div>
-
+				<div class="col-xs-4 col-sm-3">
+					<div class="form-group include_system_calls">
+						{{ form.include_obp_apps }}
+						{{ form.include_obp_apps.label_tag }}
+					</div>
+				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
 		</form>
@@ -64,11 +70,12 @@
 	</div>
 
     	<div class="tab-content">
+			{% if form.include_obp_apps.value %}
     		{% block tab_content %}
     		<div class="tab-pane active">
     			<h2>{% trans "Period" %}:{% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
 
-		<table border="1">
+		<table border="1" id="obp_app_table">
             <tr>
                 <th></th>
                 <th></th>
@@ -146,6 +153,9 @@
 		</table>
     		</div>
     		{% endblock tab_content %}
+			{% else %}
+			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
+			{% endif %}
     	</div>
     </div>
 

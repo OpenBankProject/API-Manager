@@ -39,13 +39,12 @@ class IndexView(LoginRequiredMixin, FormView):
         except BaseException as err:
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
-            # set the default endpoint there, the first item will be the new endpoint.
-            default_api_endpoint = {
-                "api_collection_name": "Customer",
-                "is_sharable": "True",
-                "description":"Describe the purpose of the collection"
-            }
-            connectormethod.insert(0,json.dumps(default_api_endpoint))
+            default_connector_method_endpoint = {
+                            "connector_method_name": "Method Name",
+                            "programming_lang": "Scala",
+                            "Method Body":"Enter Your Method Body"
+                        }
+            connectormethod.insert(0,json.dumps(default_connector_method_endpoint))
 
             context.update({
                 'connectormethods': connectormethod

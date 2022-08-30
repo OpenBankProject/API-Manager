@@ -62,7 +62,6 @@ class MetricsForm(forms.Form):
         kwargs.setdefault('label_suffix', '')
         super(MetricsForm, self).__init__(*args, **kwargs)
 
-
 class APIMetricsForm(MetricsForm):
     ANONYMOUS = (
         ('', 'Anonymous and Non-Anonymous'),
@@ -223,33 +222,43 @@ class CustomSummaryForm(forms.Form):
         # ),
         widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
+        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
     from_date_custom = forms.DateField(
         label=_('From Date'),
-        # input_formats=[settings.API_DATEFORMAT],
+        #input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
         #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
         #         'class': 'form-control',
         #     }
-        # ),
+        # )
         widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
+        #initial=str(datetime.now().strftime('%Y-%m-%d')),
         initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
     )
-
-    include_obp_apps = forms.BooleanField(required=False)
+    exclude_app_names = forms.CharField(
+        label=_('Exclude App Names'),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+        initial='API-Manager',
+    )
+    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
-
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label='To Date',
+        label=_('To Date'),
         # input_formats=[settings.API_DATEFORMAT],
         # widget=forms.DateTimeInput(
         #     attrs={
@@ -262,8 +271,17 @@ class MonthlyMetricsSummaryForm(forms.Form):
         # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
-
-    include_obp_apps = forms.BooleanField(required=False)
+    exclude_app_names = forms.CharField(
+        label=_('Exclude App Names'),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+        initial='API-Manager',
+    )
+    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')

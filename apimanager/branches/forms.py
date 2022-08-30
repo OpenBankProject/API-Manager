@@ -33,7 +33,7 @@ class CreateBranchForm(forms.Form):
         label=_('Name'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'The name of the branch',
+                'placeholder': _('The name of the branch'),
                 'class': 'form-control',
             }
         ),
@@ -146,7 +146,7 @@ class CreateBranchForm(forms.Form):
         label=_('Accessible Features'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'wheelchair, atm usuable by the visually impaired',
+                'placeholder': _('wheelchair, atm useable by the visually impaired'),
                 'class': 'form-control',
             }
         ),
@@ -156,7 +156,7 @@ class CreateBranchForm(forms.Form):
         label=_('Branch type'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Full service store',
+                'placeholder': _('Full service store'),
                 'class': 'form-control',
             }
         ),
@@ -166,7 +166,7 @@ class CreateBranchForm(forms.Form):
         label=_('More information'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'short walk to the lake from here',
+                'placeholder': _('short walk to the lake from here'),
                 'class': 'form-control',
             }
         ),
@@ -177,7 +177,7 @@ class CreateBranchForm(forms.Form):
         label=_('Mobile Phone Number'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'E.g. +49 123 456 78 90 12',
+                'placeholder': _('E.g. +49 123 456 78 90 12'),
                 'class': 'form-control',
             }
         ),

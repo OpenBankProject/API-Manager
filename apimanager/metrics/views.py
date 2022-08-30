@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 from django.conf import settings
+from apimanager import local_settings
 from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,8 +28,9 @@ try:
 except ImportError:
     # Python 3
     import io
-from io import BytesIO
 import base64
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import statistics
 
@@ -38,7 +40,6 @@ def get_random_color(to_hash):
     b = int(hashed[3:6]) % 255
     g = int(hashed[6:9]) % 255
     return 'rgba({}, {}, {}, 0.3)'.format(r, g, b)
-
 
 def get_barchart_data(metrics, fieldname):
     """
@@ -75,9 +76,9 @@ class SummaryType(Enum):
     QUARTERLY = 2
     MONTHLY = 3
     WEEKLY = 4
-    DAYLY = 5
+    DAILY = 5
     CUSTOM = 6
- 
+
 class MetricsView(LoginRequiredMixin, TemplateView):
     """View for metrics (sort of abstract base class)"""
     form_class = None
@@ -196,15 +197,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     template_name = 'metrics/monthly_summary.html'
     api_urlpath = None
 
-    def get_form(self):
+    def get_form(self, web_page_type = ""):
         """
         Get bound form either from request.GET or initials
         We need a bound form because we already send a request to the API
         without user intervention on initial request
         """
-        if self.request.GET:
+        if (self.request.GET) and (web_page_type != SummaryType.CUSTOM):
             data = self.request.GET
-
         else:
             fields = self.form_class.declared_fields
             data = {}
@@ -248,7 +248,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         Gets the metrics from the API, using given parameters,
         There are different use cases, so we accept different parameters.
-        only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer. 
+        only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
         """
         try:
             api_calls_total = 0
@@ -258,7 +258,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 urlpath = urlpath + '?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
             elif ((not only_show_api_explorer_metrics) and (not is_included_obp_apps)):
                 urlpath = urlpath + '?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                    from_date, to_date, ",".join(EXCLUDE_APPS),",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+                    from_date, to_date, ",".join(local_settings.EXCLUDE_APPS),",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             else:
                 urlpath =  urlpath + '?from_date={}&to_date={}'.format(from_date, to_date)
             cache_key = get_cache_key_for_current_call(self.request, urlpath)
@@ -268,14 +268,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             except Exception as err:
                 apicaches = None
             if not apicaches is None:
-                metrics = apicaches 
-            else:    
+                metrics = apicaches
+            else:
                 api = API(self.request.session.get('obp'))
                 metrics = api.get(urlpath)
                 apicaches = cache.set(cache_key, metrics)
                 LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
                 LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
-                
+
             api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
                 api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, urlpath)
             return api_calls_total, average_response_time, int(average_calls_per_day)
@@ -283,8 +283,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             error_once_only(self.request, err)
         except Exception as err:
             error_once_only(self.request, 'Unknown Error. {}'.format(err))
-
-        
 
     def get_internal_api_call_metrics(self, api_calls_total, average_response_time, cache_key, from_date, metrics,
                                       to_date, urlpath):
@@ -300,17 +298,17 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     def get_aggregate_metrics_api_explorer(self, from_date, to_date):
         return self.get_aggregate_metrics(from_date, to_date, True, True)
 
-    def get_active_apps(self, is_included_obp_apps, from_date, to_date):
+    def get_active_apps(self, is_included_obp_apps, from_date, to_date, exclude_app_names):
         """
          Gets the metrics from the API, using given parameters,
          There are different use cases, so we accept different parameters.
-         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer. 
+         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
          """
         apps = []
         form = self.get_form()
         active_apps_list = []
         if is_included_obp_apps:
-            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
+            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}'.format(from_date, to_date, exclude_app_names)
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
@@ -324,7 +322,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+                from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 apps = api.get(urlpath)
@@ -359,7 +357,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             app_names = app_names
         else:
             for app in app_names:
-                if app in EXCLUDE_APPS:
+                if app in local_settings.EXCLUDE_APPS:
                     app_names.remove(app)
 
         app_names = list(filter(None, app_names))
@@ -393,7 +391,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             try:
                 apps = api.get(urlpath)
                 apps_list = apps["consumers"]
-                cache.set(cache_key, apps_list, 60 * 60)  # for the consumers we cache for 1 hour, consumers may be increased 
+                cache.set(cache_key, apps_list, 60 * 60)  # for the consumers we cache for 1 hour, consumers may be increased
                 LOGGER.warning('The cache is setting, url is: {}'.format(urlpath))
                 LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
             except APIError as err:
@@ -402,12 +400,12 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
         return apps_list
 
-    def calls_per_delta(self, is_included_obp_apps, from_date_string, to_date_string, **delta ):
+    def calls_per_delta(self, is_included_obp_apps, from_date_string, to_date_string, exclude_app_names, **delta ):
         """
         return how many calls were made in total per given delta.
         Here we need to convert date_string to datetime object, and calculate the dates.
         """
-        
+
         # we need to convert string to datetime object, then we can calculate the date
         from_datetime_object = datetime.datetime.strptime(from_date_string, API_DATEFORMAT)
         to_datetime_object = datetime.datetime.strptime(to_date_string , API_DATEFORMAT)
@@ -429,28 +427,28 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             except Exception as err:
                 break
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
-                
+
             from_datetime_object = time_delta_in_loop
             time_delta_in_loop = time_delta_in_loop + timedelta(**delta)
 
         return (result_list, result_list_pure, date_list)
-        
 
-    def calls_per_month(self, is_included_obp_apps, from_date, to_date):
+
+    def calls_per_month(self, is_included_obp_apps, from_date, to_date, exclude_app_names):
         """
         Convenience function to print number of calls per month
         It is actually 30 days, not a month
         """
-        calls_per_month_list, calls_per_month, month_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, days=30)
+        calls_per_month_list, calls_per_month, month_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, exclude_app_names, days=30)
         return calls_per_month_list, calls_per_month, month_list
 
 
-    def calls_per_day(self, is_included_obp_apps, from_date, to_date):
+    def calls_per_day(self, is_included_obp_apps, from_date, to_date, exclude_app_names):
         """
         Convenience function to print number of calls per day
         """
         index = []
-        calls_per_day, calls_per_day_pure, date_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, days=1)
+        calls_per_day, calls_per_day_pure, date_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date,exclude_app_names, days=1)
 
         if len(calls_per_day) >= 90:
             calls_per_day = calls_per_day[-90:]
@@ -468,14 +466,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         Convenience function to print number of calls per half day
         """
-        return self.calls_per_delta(is_included_obp_apps, from_date, hours=12)
+        return self.calls_per_delta(is_included_obp_apps, from_date, exclude_app_names, hours=12)
 
 
-    def calls_per_hour(self, is_included_obp_apps, from_date, to_date):
+    def calls_per_hour(self, is_included_obp_apps, from_date, to_date, exclude_app_names):
         """
         Convenience function to print number of calls per hour
         """
-        calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, hours=1)
+        calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_delta(is_included_obp_apps, from_date, to_date, exclude_app_names, hours=1)
         return calls_per_hour_list, calls_per_hour, hour_list
 
     def plot_line_chart(self, plot_data, date_month_list, period):
@@ -526,7 +524,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         plt.ylim(ymin=0)
         plt.tight_layout()
-        buf = BytesIO()
+        buf = io.BytesIO()
         plt.savefig(buf, format='png')
         image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
         buf.close()
@@ -551,14 +549,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         for i, j in zip(y, x):
             plt.text(i, j, str(i), clip_on=True, ha='center',va='center', fontsize=8)
         plt.tight_layout()
-        buf = BytesIO()
+        buf = io.BytesIO()
         plt.savefig(buf, format='png')
         image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
         buf.close()
         # Clear the previous plot.
         plt.gcf().clear()
         return image_base64
-        
+
     def plot_topconsumer_bar_chart(self, data):
         x = []
         y = []
@@ -574,7 +572,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         for i, j in zip(y, x):
             plt.text(i, j, str(i), clip_on=True, ha='center',va='center', fontsize=8)
         plt.tight_layout()
-        buf = BytesIO()
+        buf = io.BytesIO()
         plt.savefig(buf, format='png')
         image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
         buf.close()
@@ -635,7 +633,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
         else:
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+                from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 top_apis = api.get(urlpath)
@@ -661,7 +659,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         #     print(str(top_apis.index(api) + 1) + "," + api['Implemented_by_partial_function'] + "," + str(api['count']))
         top_apis = reversed(top_apis)
         return top_apis
-        
+
     def get_top_consumers(self, cleaned_data, from_date, to_date):
         top_consumers = []
         form = self.get_form()
@@ -681,7 +679,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                from_date, to_date, ",".join(EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+                from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
             api = API(self.request.session.get('obp'))
             try:
                 top_consumers = api.get(urlpath)
@@ -716,12 +714,12 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             error_once_only(self.request, 'Unknown Error. {}'.format(err))
         return top_warehouse_calls
 
-    def get_top_apps_using_warehouse(self, from_date, to_date):
+    def get_top_apps_using_warehouse(self, from_date, to_date, exclude_app_names):
         form = self.get_form()
         top_apps_using_warehouse = []
 
-        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&implemented_by_partial_function={}'.format(
-            from_date, to_date, "elasticSearchWarehouse")
+        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&implemented_by_partial_function={}'.format(
+            from_date, to_date, exclude_app_names, "elasticSearchWarehouse")
         api = API(self.request.session.get('obp'))
         try:
             top_apps_using_warehouse = api.get(urlpath)
@@ -772,7 +770,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     metrics=apicaches
                 else:
                     metrics = api.get(urlpath_metrics)
-                    
+
                     if metrics is not None and 'code' in metrics and metrics['code'] == 403:
                         error_once_only(self.request, metrics['message'])
                         if(metrics['message'].startswith('OBP-20006')):
@@ -802,10 +800,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         return delta
 
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.MONTHLY)
-        
+
     def prepare_general_context(self, web_page_type,  **kwargs):
         try:
-            form = self.get_form()
+            form = self.get_form(web_page_type)
             per_day_chart=[]
             calls_per_month_list=[]
             per_month_chart=[]
@@ -813,47 +811,50 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             per_hour_chart=[]
             if form.is_valid():
                 is_included_obp_apps = form.cleaned_data.get('include_obp_apps')
+                exclude_app_names = form.cleaned_data.get("exclude_app_names")
+                #if exclude_app_names not in local_settings.EXCLUDE_APPS:
+                #    error_once_only(self.request, "Invalid Exclude App Name, Please select" + str(local_settings.EXCLUDE_APPS) + "Anyone of these")
                 form_to_date_string = form.data['to_date']
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
 
-                if (web_page_type == SummaryType.DAYLY):
+                if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
                     from_date = return_to_days_ago(to_date, 1)
-                    calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(is_included_obp_apps, from_date, to_date)
+                    calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list, 'hour')
-                    
+
                 if (web_page_type == SummaryType.WEEKLY):
                     # for one month, the from_date is 7 days ago.
                     from_date = return_to_days_ago(to_date, 7)
-                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
-                    
+
                 if (web_page_type == SummaryType.MONTHLY):
                     # for one month, the from_date is 30 days ago.
                     from_date = return_to_days_ago(to_date, 30)
-                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
 
                 if (web_page_type == SummaryType.QUARTERLY):
                     # for one quarter, the from_date is 90 days ago.
                     from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
-                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date)
+                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_month_chart = self.plot_line_chart(calls_per_month, month_list, 'month')
 
                 if (web_page_type == SummaryType.YEARLY):
                     from_date = return_to_days_ago(to_date, 365)
-                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date)
+                    calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_month_chart = self.plot_line_chart(calls_per_month, month_list, "month")
 
                 if (web_page_type == SummaryType.CUSTOM):
                     # for one month, the from_date is x day ago.
                     form_from_date_string = form.data['from_date_custom']
                     from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
-                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date)
+                    calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
-                    
+
                 api_host_name = API_HOST
-                top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
+                top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date, exclude_app_names)
                 user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
                 median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
@@ -868,10 +869,9 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
                 unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
                     form.cleaned_data, from_date, to_date)
-                active_apps_list = self.get_active_apps(is_included_obp_apps, from_date, to_date)
+                active_apps_list = self.get_active_apps(is_included_obp_apps, from_date, to_date, exclude_app_names)
 
                 context = super(MonthlyMetricsSummaryView, self).get_context_data(**kwargs)
-
                 context.update({
                     'form': form,
                     'api_calls': api_calls,
@@ -897,25 +897,22 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     'top_apis_bar_chart': top_apis_bar_chart,
                     'top_consumers_bar_chart': top_consumers_bar_chart,
                     'median_time_to_first_api_call': median_time_to_first_api_call,
-                    'excluded_apps': EXCLUDE_APPS,
-                    'excluded_functions': EXCLUDE_FUNCTIONS,
-                    'excluded_url_pattern': EXCLUDE_URL_PATTERN,
+                    'excluded_apps':[exclude_app_names if exclude_app_names in local_settings.EXCLUDE_APPS else "null"],
                 })
                 return context
             else:
-                error_once_only(self.request, form.errors)
+                error_once_only(self.request, str(form.errors))
         except Exception as err:
             error_once_only(self.request, 'Unknown Error. {}'.format(err))
-
 
 class YearlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/yearly_summary.html'
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.YEARLY, **kwargs)
-      
+
 class QuarterlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/quarterly_summary.html'
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.QUARTERLY, **kwargs)
-       
+
 
 class WeeklySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/weekly_summary.html'
@@ -923,7 +920,7 @@ class WeeklySummaryView(MonthlyMetricsSummaryView):
 
 class DailySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/daily_summary.html'
-    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.DAYLY, **kwargs)
+    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.DAILY, **kwargs)
 
 class HourlySummaryView(MonthlyMetricsSummaryView):
     template_name = 'metrics/hourly_summary.html'
@@ -931,5 +928,4 @@ class HourlySummaryView(MonthlyMetricsSummaryView):
 class CustomSummaryView(MonthlyMetricsSummaryView):
     form_class = CustomSummaryForm
     template_name = 'metrics/custom_summary.html'
-
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.CUSTOM, **kwargs)
