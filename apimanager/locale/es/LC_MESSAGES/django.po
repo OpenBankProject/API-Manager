@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-30 00:30+0200\n"
+"POT-Creation-Date: 2022-08-30 10:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,9 @@ msgstr "Describir el propósito de la colección"
 
 #: apicollections/templates/apicollections/index.html:65
 #: connectormethod/templates/connectormethod/index.html:73
+#: customers/templates/customers/create.html:185
 #: dynamicendpoints/templates/dynamicendpoints/index.html:33
+#: users/templates/users/invitation.html:65
 msgid "Create"
 msgstr "Creada"
 
@@ -272,6 +274,11 @@ msgstr "Descripción"
 #: atmdetail/templates/atmsView/atmdetail.html:4
 msgid "ATMs List"
 msgstr "Vista de Cajeros automáticos"
+
+#: atmdetail/templates/atmsView/atmdetail.html:6
+#: users/templates/users/includes/filter_pagination.html:12
+msgid "Export CSV"
+msgstr "Exportar CSV"
 
 #: atmdetail/templates/atmsView/atmdetail.html:13
 #: atms/templates/atms/atm_list.html:10
@@ -1346,11 +1353,24 @@ msgstr "Tiempo de Respuesta Promedio(ms)"
 #: metrics/templates/metrics/yearly_summary.html:108
 msgid "Median time from consumer registration to first API call"
 msgstr ""
-"tiempo medio hasta la primeratiempo medio hasta la primeratiempo medio hasta "
-"la primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
+"Tiempo medio desde el registro del consumidor hasta la primera llamada a la "
+"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
+"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
+"a la APITiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la APITiempo medio desde el registro del consumidor hasta la "
+"primera llamada a la APITiempo medio desde el registro del consumidor hasta "
+"la primera llamada a la APITiempo medio desde el registro del consumidor "
+"hasta la primera llamada a la APITiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APITiempo medio desde el registro "
+"del consumidor hasta la primera llamada a la APItiempo medio hasta la "
+"primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
 "medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
 "primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeraMediana de tiempo desde el registro del consumidor "
+"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
+"primeraMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
 "hasta la primera llamada APIMediana de tiempo desde el registro del "
 "consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
 "del consumidor hasta la primera llamada APIMediana de tiempo desde el "
@@ -1366,10 +1386,7 @@ msgstr ""
 "hasta la primera llamada APIMediana de tiempo desde el registro del "
 "consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
 "del consumidor hasta la primera llamada APIMediana de tiempo desde el "
-"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
-"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
-"desde el registro del consumidor hasta la primera llamada APIMediana de "
-"tiempo desde el registro del consumidor hasta la primera llamada "
+"registro del consumidor hasta la primera llamada "
 
 #: metrics/templates/metrics/custom_summary.html:112
 #: metrics/templates/metrics/daily_summary.html:112
@@ -1470,7 +1487,16 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/weekly_summary.html:115
 msgid "Apps with distinct developer email addresses"
 msgstr ""
-"Direcciones de correo electrónicoDirecciones de correo "
+"Aplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
+"distintasDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
@@ -1625,6 +1651,11 @@ msgstr "Derechos"
 msgid "Active"
 msgstr "Activo"
 
+#: users/templates/users/includes/filter_pagination.html:11
+msgid "Refresh"
+msgstr "Actualizar"
+
+#: users/templates/users/includes/filter_role.html:5
 #: users/templates/users/includes/filter_role.html:8
 msgid "All Roles"
 msgstr "Todas las Funciones"
@@ -1686,6 +1717,12 @@ msgstr "Guardar valor"
 #: webui/templates/webui/index.html:46
 msgid "Save"
 msgstr "Ahorrar"
+
+#~ msgid "Anonymous and Non-Anonymous"
+#~ msgstr "Anónimo y no anónimo"
+
+#~ msgid "Any"
+#~ msgstr "Cualquiera"
 
 #~ msgid "OBP"
 #~ msgstr "OBP"

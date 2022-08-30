@@ -2,7 +2,7 @@
 <div id="filter-role" class="filter">
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {% if active_role_name_all %}All Roles{% else %}{{ active_role_name }}{% endif %} <span class="caret"></span>
+            {% if active_role_name_all %}{% trans "All Roles" %} {% else %}{{ active_role_name }}{% endif %} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li><a href="?email={{ active_email }}&amp;username={{ active_username }}&amp;locked_status={{ active_locked_status }}&amp;role_name=All">{% trans "All Roles" %}</a></li>

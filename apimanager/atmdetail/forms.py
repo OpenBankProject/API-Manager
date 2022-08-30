@@ -78,7 +78,7 @@ class CreateAtmForm(forms.Form):
         label=_('Meta License Id'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('PDDL'),
+                'placeholder': 'PDDL',
                 'class': 'form-control',
             }
         ),
