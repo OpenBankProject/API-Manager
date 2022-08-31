@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-30 10:03+0200\n"
+"POT-Creation-Date: 2022-08-30 16:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,27 +111,13 @@ msgstr "longitud"
 msgid "Meta License Id"
 msgstr "Meta Licencia"
 
-#: atmdetail/forms.py:81 branches/forms.py:78
-msgid "PDDL"
-msgstr "PDDL"
-
 #: atmdetail/forms.py:89 atms/forms.py:89
 msgid "Meta License Name"
 msgstr "Nombre de la Licencia"
 
-#: atmdetail/forms.py:92 branches/forms.py:89
-msgid "Open Data Commons Public Domain Dedication and License"
-msgstr "Dedicación y licencia de dominio público de Open Data Commons"
-
 #: atmdetail/forms.py:100 atms/forms.py:100
 msgid "Opening Hours"
 msgstr "Horario de atención"
-
-#: atmdetail/forms.py:103 atmdetail/forms.py:113 atmdetail/forms.py:123
-#: atmdetail/forms.py:133 atmdetail/forms.py:143 atmdetail/forms.py:153
-#: atmdetail/forms.py:163 atmdetail/forms.py:173 branches/forms.py:100
-msgid "None"
-msgstr "Ninguno"
 
 #: atmdetail/forms.py:110 atms/forms.py:110
 msgid "Monday"
@@ -323,7 +309,7 @@ msgstr "Seleccione..."
 
 #: base/templates/base.html:29
 msgid "Logout"
-msgstr "Cierre de sesión"
+msgstr "Cerrar la sesión"
 
 #: base/templates/base.html:48
 msgid "Home"
@@ -602,6 +588,14 @@ msgstr "Más información"
 msgid "Phone Number"
 msgstr "Número de teléfono"
 
+#: branches/templates/branches/index.html:213
+#: branches/templates/branches/update.html:159
+#: connectormethod/templates/connectormethod/detail.html:34
+#: connectormethod/templates/connectormethod/index.html:80
+#: methodrouting/templates/methodrouting/index.html:128
+msgid "Update"
+msgstr "Botón Actualizar"
+
 #: config/templates/config/index.html:10
 msgid "The configuration of the API"
 msgstr "La configuración de la API"
@@ -616,12 +610,6 @@ msgstr "Métricas del conector"
 #: connectormethod/templates/connectormethod/index.html:16
 msgid "Programming Language"
 msgstr "Lenguaje de programación:"
-
-#: connectormethod/templates/connectormethod/detail.html:34
-#: connectormethod/templates/connectormethod/index.html:80
-#: methodrouting/templates/methodrouting/index.html:128
-msgid "Update"
-msgstr "Botón Actualizar"
 
 #: connectormethod/templates/connectormethod/index.html:10
 msgid "Connector Method id"
@@ -794,10 +782,6 @@ msgstr "número de cliente"
 msgid "Legal Name"
 msgstr "Nombre_juridico"
 
-#: customers/forms.py:45
-msgid "NONE"
-msgstr "NINGUNO"
-
 #: customers/forms.py:62 users/forms.py:67 users/templates/users/detail.html:16
 #: users/templates/users/index.html:59 users/templates/users/invitation.html:71
 msgid "Email"
@@ -846,10 +830,6 @@ msgstr "fuente de calificación crediticia"
 #: customers/forms.py:155
 msgid "Credit Limit (Currency)"
 msgstr "moneda límite de crédito"
-
-#: customers/forms.py:158
-msgid "EUR"
-msgstr "URL"
 
 #: customers/forms.py:165
 msgid "Credit Limit (Amount)"
@@ -1080,10 +1060,10 @@ msgstr "Incluir llamadas del sistema"
 
 #: metrics/templates/metrics/api.html:12
 #: metrics/templates/metrics/connector.html:12
-#: metrics/templates/metrics/custom_summary.html:35
+#: metrics/templates/metrics/custom_summary.html:32
 #: metrics/templates/metrics/daily_summary.html:37
 #: metrics/templates/metrics/hourly_summary.html:35
-#: metrics/templates/metrics/monthly_summary.html:38
+#: metrics/templates/metrics/monthly_summary.html:32
 #: metrics/templates/metrics/quarterly_summary.html:36
 #: metrics/templates/metrics/yearly_summary.html:38
 msgid "Filter"
@@ -1091,10 +1071,10 @@ msgstr "Filtrar"
 
 #: metrics/templates/metrics/api.html:123
 #: metrics/templates/metrics/connector.html:75
-#: metrics/templates/metrics/custom_summary.html:71
+#: metrics/templates/metrics/custom_summary.html:68
 #: metrics/templates/metrics/daily_summary.html:68
 #: metrics/templates/metrics/hourly_summary.html:66
-#: metrics/templates/metrics/monthly_summary.html:69
+#: metrics/templates/metrics/monthly_summary.html:63
 #: metrics/templates/metrics/quarterly_summary.html:67
 #: metrics/templates/metrics/weekly_summary.html:69
 #: metrics/templates/metrics/yearly_summary.html:69
@@ -1137,10 +1117,10 @@ msgid "from_date"
 msgstr "a partir de la fecha"
 
 #: metrics/templates/metrics/connector.html:31
-#: metrics/templates/metrics/custom_summary.html:53
+#: metrics/templates/metrics/custom_summary.html:50
 #: metrics/templates/metrics/daily_summary.html:50
 #: metrics/templates/metrics/hourly_summary.html:48
-#: metrics/templates/metrics/monthly_summary.html:51
+#: metrics/templates/metrics/monthly_summary.html:45
 msgid "to_date"
 msgstr "fecha hasta"
 
@@ -1168,98 +1148,98 @@ msgstr "correlación_id"
 msgid "Duration (ms)"
 msgstr "Duración (ms)"
 
-#: metrics/templates/metrics/custom_summary.html:10
+#: metrics/templates/metrics/custom_summary.html:7
 #: metrics/templates/metrics/daily_summary.html:11
 #: metrics/templates/metrics/hourly_summary.html:9
-#: metrics/templates/metrics/monthly_summary.html:10
+#: metrics/templates/metrics/monthly_summary.html:7
 #: metrics/templates/metrics/quarterly_summary.html:10
 #: metrics/templates/metrics/weekly_summary.html:10
 #: metrics/templates/metrics/yearly_summary.html:10
 msgid "API Usage Report"
 msgstr "LACC usage report"
 
-#: metrics/templates/metrics/custom_summary.html:11
+#: metrics/templates/metrics/custom_summary.html:8
 #: metrics/templates/metrics/daily_summary.html:12
 #: metrics/templates/metrics/hourly_summary.html:10
-#: metrics/templates/metrics/monthly_summary.html:11
+#: metrics/templates/metrics/monthly_summary.html:8
 #: metrics/templates/metrics/quarterly_summary.html:11
 #: metrics/templates/metrics/weekly_summary.html:11
 #: metrics/templates/metrics/yearly_summary.html:11
 msgid "API instance"
 msgstr "Instancia de API"
 
-#: metrics/templates/metrics/custom_summary.html:15
+#: metrics/templates/metrics/custom_summary.html:12
 #: metrics/templates/metrics/daily_summary.html:17
 #: metrics/templates/metrics/hourly_summary.html:15
-#: metrics/templates/metrics/monthly_summary.html:18
+#: metrics/templates/metrics/monthly_summary.html:12
 #: metrics/templates/metrics/quarterly_summary.html:16
 #: metrics/templates/metrics/weekly_summary.html:18
 #: metrics/templates/metrics/yearly_summary.html:18
 msgid "Year"
 msgstr "Lo que va"
 
-#: metrics/templates/metrics/custom_summary.html:16
+#: metrics/templates/metrics/custom_summary.html:13
 #: metrics/templates/metrics/daily_summary.html:18
 #: metrics/templates/metrics/hourly_summary.html:16
-#: metrics/templates/metrics/monthly_summary.html:19
+#: metrics/templates/metrics/monthly_summary.html:13
 #: metrics/templates/metrics/quarterly_summary.html:17
 #: metrics/templates/metrics/weekly_summary.html:19
 #: metrics/templates/metrics/yearly_summary.html:19
 msgid "Quarter"
 msgstr "Trimestre"
 
-#: metrics/templates/metrics/custom_summary.html:17
+#: metrics/templates/metrics/custom_summary.html:14
 #: metrics/templates/metrics/daily_summary.html:19
 #: metrics/templates/metrics/hourly_summary.html:17
-#: metrics/templates/metrics/monthly_summary.html:20
+#: metrics/templates/metrics/monthly_summary.html:14
 #: metrics/templates/metrics/quarterly_summary.html:18
 #: metrics/templates/metrics/weekly_summary.html:20
 #: metrics/templates/metrics/yearly_summary.html:20
 msgid "Month"
 msgstr "Mes"
 
-#: metrics/templates/metrics/custom_summary.html:18
+#: metrics/templates/metrics/custom_summary.html:15
 #: metrics/templates/metrics/daily_summary.html:20
 #: metrics/templates/metrics/hourly_summary.html:18
-#: metrics/templates/metrics/monthly_summary.html:21
+#: metrics/templates/metrics/monthly_summary.html:15
 #: metrics/templates/metrics/quarterly_summary.html:19
 #: metrics/templates/metrics/weekly_summary.html:21
 #: metrics/templates/metrics/yearly_summary.html:21
 msgid "Week"
 msgstr "Semana"
 
-#: metrics/templates/metrics/custom_summary.html:19
+#: metrics/templates/metrics/custom_summary.html:16
 #: metrics/templates/metrics/daily_summary.html:21
 #: metrics/templates/metrics/hourly_summary.html:19
-#: metrics/templates/metrics/monthly_summary.html:22
+#: metrics/templates/metrics/monthly_summary.html:16
 #: metrics/templates/metrics/quarterly_summary.html:20
 #: metrics/templates/metrics/weekly_summary.html:22
 #: metrics/templates/metrics/yearly_summary.html:22
 msgid "Day"
 msgstr "Dia"
 
-#: metrics/templates/metrics/custom_summary.html:21
+#: metrics/templates/metrics/custom_summary.html:18
 #: metrics/templates/metrics/daily_summary.html:23
 #: metrics/templates/metrics/hourly_summary.html:21
-#: metrics/templates/metrics/monthly_summary.html:24
+#: metrics/templates/metrics/monthly_summary.html:18
 #: metrics/templates/metrics/quarterly_summary.html:22
 #: metrics/templates/metrics/weekly_summary.html:24
 #: metrics/templates/metrics/yearly_summary.html:24
 msgid "Custom"
 msgstr "Disfraz"
 
-#: metrics/templates/metrics/custom_summary.html:46
+#: metrics/templates/metrics/custom_summary.html:43
 msgid "from_date_custom"
 msgstr "desde la fecha personalizada"
 
-#: metrics/templates/metrics/custom_summary.html:78
-#: metrics/templates/metrics/custom_summary.html:154
+#: metrics/templates/metrics/custom_summary.html:75
+#: metrics/templates/metrics/custom_summary.html:151
 #: metrics/templates/metrics/daily_summary.html:77
 #: metrics/templates/metrics/daily_summary.html:154
 #: metrics/templates/metrics/hourly_summary.html:75
 #: metrics/templates/metrics/hourly_summary.html:152
-#: metrics/templates/metrics/monthly_summary.html:78
-#: metrics/templates/metrics/monthly_summary.html:154
+#: metrics/templates/metrics/monthly_summary.html:72
+#: metrics/templates/metrics/monthly_summary.html:148
 #: metrics/templates/metrics/quarterly_summary.html:76
 #: metrics/templates/metrics/quarterly_summary.html:157
 #: metrics/templates/metrics/weekly_summary.html:76
@@ -1269,14 +1249,14 @@ msgstr "desde la fecha personalizada"
 msgid "Period"
 msgstr "Período"
 
-#: metrics/templates/metrics/custom_summary.html:78
-#: metrics/templates/metrics/custom_summary.html:154
+#: metrics/templates/metrics/custom_summary.html:75
+#: metrics/templates/metrics/custom_summary.html:151
 #: metrics/templates/metrics/daily_summary.html:77
 #: metrics/templates/metrics/daily_summary.html:154
 #: metrics/templates/metrics/hourly_summary.html:75
 #: metrics/templates/metrics/hourly_summary.html:152
-#: metrics/templates/metrics/monthly_summary.html:78
-#: metrics/templates/metrics/monthly_summary.html:154
+#: metrics/templates/metrics/monthly_summary.html:72
+#: metrics/templates/metrics/monthly_summary.html:148
 #: metrics/templates/metrics/quarterly_summary.html:76
 #: metrics/templates/metrics/quarterly_summary.html:157
 #: metrics/templates/metrics/weekly_summary.html:76
@@ -1286,14 +1266,14 @@ msgstr "Período"
 msgid "From"
 msgstr "Desde"
 
-#: metrics/templates/metrics/custom_summary.html:78
-#: metrics/templates/metrics/custom_summary.html:154
+#: metrics/templates/metrics/custom_summary.html:75
+#: metrics/templates/metrics/custom_summary.html:151
 #: metrics/templates/metrics/daily_summary.html:77
 #: metrics/templates/metrics/daily_summary.html:154
 #: metrics/templates/metrics/hourly_summary.html:75
 #: metrics/templates/metrics/hourly_summary.html:152
-#: metrics/templates/metrics/monthly_summary.html:78
-#: metrics/templates/metrics/monthly_summary.html:154
+#: metrics/templates/metrics/monthly_summary.html:72
+#: metrics/templates/metrics/monthly_summary.html:148
 #: metrics/templates/metrics/quarterly_summary.html:76
 #: metrics/templates/metrics/quarterly_summary.html:157
 #: metrics/templates/metrics/weekly_summary.html:76
@@ -1303,71 +1283,83 @@ msgstr "Desde"
 msgid "to"
 msgstr "a"
 
-#: metrics/templates/metrics/custom_summary.html:86
+#: metrics/templates/metrics/custom_summary.html:83
 #: metrics/templates/metrics/daily_summary.html:85
-#: metrics/templates/metrics/monthly_summary.html:86
+#: metrics/templates/metrics/monthly_summary.html:80
 #: metrics/templates/metrics/quarterly_summary.html:84
 #: metrics/templates/metrics/weekly_summary.html:84
 #: metrics/templates/metrics/yearly_summary.html:86
 msgid "Total API calls"
 msgstr "Total de llamadas de API"
 
-#: metrics/templates/metrics/custom_summary.html:90
+#: metrics/templates/metrics/custom_summary.html:87
 #: metrics/templates/metrics/daily_summary.html:89
 #: metrics/templates/metrics/hourly_summary.html:87
-#: metrics/templates/metrics/monthly_summary.html:90
+#: metrics/templates/metrics/monthly_summary.html:84
 #: metrics/templates/metrics/quarterly_summary.html:88
 #: metrics/templates/metrics/weekly_summary.html:88
 #: metrics/templates/metrics/yearly_summary.html:90
 msgid "API calls made using API Explorer"
 msgstr "Llamadas API realizadas con API Explorer"
 
-#: metrics/templates/metrics/custom_summary.html:95
+#: metrics/templates/metrics/custom_summary.html:92
 msgid "Calls per day (last 30 days)"
 msgstr "Llamadas por día (últimos 30 días)"
 
-#: metrics/templates/metrics/custom_summary.html:99
-#: metrics/templates/metrics/monthly_summary.html:99
+#: metrics/templates/metrics/custom_summary.html:96
+#: metrics/templates/metrics/monthly_summary.html:93
 #: metrics/templates/metrics/quarterly_summary.html:101
 #: metrics/templates/metrics/weekly_summary.html:97
 #: metrics/templates/metrics/yearly_summary.html:99
 msgid "Average number of calls per day"
 msgstr "Número promedio de llamadas"
 
-#: metrics/templates/metrics/custom_summary.html:103
+#: metrics/templates/metrics/custom_summary.html:100
 #: metrics/templates/metrics/daily_summary.html:102
 #: metrics/templates/metrics/hourly_summary.html:103
-#: metrics/templates/metrics/monthly_summary.html:103
+#: metrics/templates/metrics/monthly_summary.html:97
 #: metrics/templates/metrics/quarterly_summary.html:105
 #: metrics/templates/metrics/weekly_summary.html:101
 #: metrics/templates/metrics/yearly_summary.html:103
 msgid "Average response time (ms)"
 msgstr "Tiempo de Respuesta Promedio(ms)"
 
-#: metrics/templates/metrics/custom_summary.html:107
+#: metrics/templates/metrics/custom_summary.html:104
 #: metrics/templates/metrics/daily_summary.html:107
 #: metrics/templates/metrics/hourly_summary.html:108
-#: metrics/templates/metrics/monthly_summary.html:107
+#: metrics/templates/metrics/monthly_summary.html:101
 #: metrics/templates/metrics/quarterly_summary.html:110
 #: metrics/templates/metrics/weekly_summary.html:106
 #: metrics/templates/metrics/yearly_summary.html:108
 msgid "Median time from consumer registration to first API call"
 msgstr ""
-"Tiempo medio desde el registro del consumidor hasta la primera llamada a la "
+"Mediana de tiempo desde el registro del consumidor hasta la primera llamada "
+"APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
+"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
+"del consumidor hasta la primera llamada APITiempo medio desde el registro "
+"del consumidor hasta la primera llamada a la APITiempo medio desde el "
+"registro del consumidor hasta la primera llamada a la APITiempo medio desde "
+"el registro del consumidor hasta la primera llamada a la APITiempo medio "
+"desde el registro del consumidor hasta la primera llamada a la APITiempo "
+"medio desde el registro del consumidor hasta la primera llamada a la "
 "APITiempo medio desde el registro del consumidor hasta la primera llamada a "
 "la APITiempo medio desde el registro del consumidor hasta la primera llamada "
 "a la APITiempo medio desde el registro del consumidor hasta la primera "
 "llamada a la APITiempo medio desde el registro del consumidor hasta la "
-"primera llamada a la APITiempo medio desde el registro del consumidor hasta "
-"la primera llamada a la APITiempo medio desde el registro del consumidor "
-"hasta la primera llamada a la APITiempo medio desde el registro del "
-"consumidor hasta la primera llamada a la APITiempo medio desde el registro "
-"del consumidor hasta la primera llamada a la APItiempo medio hasta la "
+"primera llamada a la APItiempo medio hasta la primeratiempo medio hasta la "
 "primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
 "medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
 "primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
-"primeraMediana de tiempo desde el registro del consumidor hasta la primera "
+"medio hasta la primeratiempo medio hasta la primeraMediana de tiempo desde "
+"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
+"desde el registro del consumidor hasta la primera llamada APIMediana de "
+"tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
+"de tiempo desde el registro del consumidor hasta la primera llamada "
+"APIMediana de tiempo desde el registro del consumidor hasta la primera "
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
 "primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
 "la primera llamada APIMediana de tiempo desde el registro del consumidor "
@@ -1382,94 +1374,90 @@ msgstr ""
 "APIMediana de tiempo desde el registro del consumidor hasta la primera "
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
 "primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
-"la primera llamada APIMediana de tiempo desde el registro del consumidor "
-"hasta la primera llamada APIMediana de tiempo desde el registro del "
-"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
-"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
-"registro del consumidor hasta la primera llamada "
+"la primera llamada "
 
-#: metrics/templates/metrics/custom_summary.html:112
+#: metrics/templates/metrics/custom_summary.html:109
 #: metrics/templates/metrics/daily_summary.html:112
 #: metrics/templates/metrics/hourly_summary.html:113
-#: metrics/templates/metrics/monthly_summary.html:112
+#: metrics/templates/metrics/monthly_summary.html:106
 #: metrics/templates/metrics/quarterly_summary.html:115
 #: metrics/templates/metrics/weekly_summary.html:111
 #: metrics/templates/metrics/yearly_summary.html:113
 msgid "Apps with distinct names"
 msgstr "Aplicaciones con nombres distintos"
 
-#: metrics/templates/metrics/custom_summary.html:116
-#: metrics/templates/metrics/monthly_summary.html:116
+#: metrics/templates/metrics/custom_summary.html:113
+#: metrics/templates/metrics/monthly_summary.html:110
 msgid "Distinct developer email addresses"
 msgstr "Distintas direcciones de correo electrónico para desarrolladores"
 
-#: metrics/templates/metrics/custom_summary.html:121
+#: metrics/templates/metrics/custom_summary.html:118
 #: metrics/templates/metrics/daily_summary.html:121
 #: metrics/templates/metrics/hourly_summary.html:122
-#: metrics/templates/metrics/monthly_summary.html:121
+#: metrics/templates/metrics/monthly_summary.html:115
 #: metrics/templates/metrics/quarterly_summary.html:124
 #: metrics/templates/metrics/weekly_summary.html:120
 #: metrics/templates/metrics/yearly_summary.html:122
 msgid "Active Apps (at least one API call in the period)"
 msgstr "Aplicaciones activas (al menos una llamada API en el periodo)"
 
-#: metrics/templates/metrics/custom_summary.html:125
+#: metrics/templates/metrics/custom_summary.html:122
 #: metrics/templates/metrics/daily_summary.html:125
-#: metrics/templates/metrics/monthly_summary.html:125
+#: metrics/templates/metrics/monthly_summary.html:119
 #: metrics/templates/metrics/quarterly_summary.html:128
 #: metrics/templates/metrics/weekly_summary.html:124
 #: metrics/templates/metrics/yearly_summary.html:126
 msgid "Top 10 APIs"
 msgstr "Las 10 mejores API"
 
-#: metrics/templates/metrics/custom_summary.html:129
+#: metrics/templates/metrics/custom_summary.html:126
 #: metrics/templates/metrics/daily_summary.html:129
-#: metrics/templates/metrics/monthly_summary.html:129
+#: metrics/templates/metrics/monthly_summary.html:123
 #: metrics/templates/metrics/quarterly_summary.html:132
 #: metrics/templates/metrics/weekly_summary.html:128
 #: metrics/templates/metrics/yearly_summary.html:130
 msgid "Top 10 Consumers"
 msgstr "Las 10 principales Consumidores"
 
-#: metrics/templates/metrics/custom_summary.html:133
+#: metrics/templates/metrics/custom_summary.html:130
 #: metrics/templates/metrics/daily_summary.html:133
 #: metrics/templates/metrics/hourly_summary.html:130
-#: metrics/templates/metrics/monthly_summary.html:133
+#: metrics/templates/metrics/monthly_summary.html:127
 #: metrics/templates/metrics/quarterly_summary.html:136
 #: metrics/templates/metrics/weekly_summary.html:132
 #: metrics/templates/metrics/yearly_summary.html:134
 msgid "Top Warehouse APIs"
 msgstr "Principales API de almacén"
 
-#: metrics/templates/metrics/custom_summary.html:137
+#: metrics/templates/metrics/custom_summary.html:134
 #: metrics/templates/metrics/daily_summary.html:137
-#: metrics/templates/metrics/monthly_summary.html:137
+#: metrics/templates/metrics/monthly_summary.html:131
 #: metrics/templates/metrics/quarterly_summary.html:140
 #: metrics/templates/metrics/weekly_summary.html:136
 #: metrics/templates/metrics/yearly_summary.html:138
 msgid "Top Apps using data warehouse"
 msgstr "Principales aplicaciones que utilizan el almacén de datos"
 
-#: metrics/templates/metrics/custom_summary.html:141
+#: metrics/templates/metrics/custom_summary.html:138
 #: metrics/templates/metrics/daily_summary.html:141
-#: metrics/templates/metrics/monthly_summary.html:141
+#: metrics/templates/metrics/monthly_summary.html:135
 #: metrics/templates/metrics/quarterly_summary.html:144
 #: metrics/templates/metrics/weekly_summary.html:140
 #: metrics/templates/metrics/yearly_summary.html:142
 msgid "Total number of CanSearchWarehouse users"
 msgstr "Número total de usuarios de CanSearchWarehouse"
 
-#: metrics/templates/metrics/custom_summary.html:146
+#: metrics/templates/metrics/custom_summary.html:143
 #: metrics/templates/metrics/daily_summary.html:146
 #: metrics/templates/metrics/hourly_summary.html:139
-#: metrics/templates/metrics/monthly_summary.html:146
+#: metrics/templates/metrics/monthly_summary.html:140
 #: metrics/templates/metrics/quarterly_summary.html:149
 #: metrics/templates/metrics/weekly_summary.html:145
 #: metrics/templates/metrics/yearly_summary.html:147
 msgid "Users with role CanSearchWarehouse"
 msgstr "Usuarios con rol CanSearchWarehouse"
 
-#: metrics/templates/metrics/custom_summary.html:147
+#: metrics/templates/metrics/custom_summary.html:144
 msgid "N/A"
 msgstr "N/A"
 
@@ -1487,17 +1475,25 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/weekly_summary.html:115
 msgid "Apps with distinct developer email addresses"
 msgstr ""
-"Aplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasAplicaciones con direcciones de correo electrónico de desarrollador "
-"distintasDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"Aplicaciones con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
+"con distintas direcciones de correo electrónico para "
+"desarrolladoresAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
+"desarrollador distintasDirecciones de correo electrónicoDirecciones de "
+"correo electrónicoDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
 "electrónicoDirecciones de correo electrónicoDirecciones de correo "
@@ -1553,7 +1549,7 @@ msgstr "Principales aplicaciones que utilizan el almacén de datos"
 msgid "CanSearchWarehouse users"
 msgstr "Usuarios de CanSearchWarehouse"
 
-#: metrics/templates/metrics/monthly_summary.html:95
+#: metrics/templates/metrics/monthly_summary.html:89
 #: metrics/templates/metrics/weekly_summary.html:93
 msgid "Calls per day"
 msgstr "Maximo de llamadas por día"
@@ -1647,6 +1643,12 @@ msgstr "identificación bancaria"
 msgid "Entitlements"
 msgstr "Derechos"
 
+#: users/templates/users/includes/filter_email.html:8
+#, fuzzy
+#| msgid "Distinct developer email addresses"
+msgid "Enter email address ..."
+msgstr "Distintas direcciones de correo electrónico para desarrolladores"
+
 #: users/templates/users/includes/filter_locked.html:2
 msgid "Active"
 msgstr "Activo"
@@ -1659,6 +1661,12 @@ msgstr "Actualizar"
 #: users/templates/users/includes/filter_role.html:8
 msgid "All Roles"
 msgstr "Todas las Funciones"
+
+#: users/templates/users/includes/filter_username.html:8
+#, fuzzy
+#| msgid "username"
+msgid "Enter username ..."
+msgstr "nombre de usuario"
 
 #: users/templates/users/index.html:11
 msgid "Filters"
@@ -1718,6 +1726,21 @@ msgstr "Guardar valor"
 msgid "Save"
 msgstr "Ahorrar"
 
+#~ msgid "PDDL"
+#~ msgstr "PDDL"
+
+#~ msgid "Open Data Commons Public Domain Dedication and License"
+#~ msgstr "Dedicación y licencia de dominio público de Open Data Commons"
+
+#~ msgid "None"
+#~ msgstr "Ninguno"
+
+#~ msgid "NONE"
+#~ msgstr "NINGUNO"
+
+#~ msgid "EUR"
+#~ msgstr "URL"
+
 #~ msgid "Anonymous and Non-Anonymous"
 #~ msgstr "Anónimo y no anónimo"
 
@@ -1750,9 +1773,6 @@ msgstr "Ahorrar"
 
 #~ msgid "implemented in version"
 #~ msgstr "implementado en versión"
-
-#~ msgid "username"
-#~ msgstr "nombre de usuario"
 
 #~ msgid "mobile phone number"
 #~ msgstr "teléfono móvil"
