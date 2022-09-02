@@ -8,7 +8,6 @@ from django.views.generic import TemplateView
 from django.shortcuts import render
 from obp.forms import DirectLoginForm, GatewayLoginForm
 
-
 class HomeView(TemplateView):
     """View for home page"""
     template_name = "home.html"
@@ -21,6 +20,7 @@ class HomeView(TemplateView):
             'override_css_url': settings.OVERRIDE_CSS_URL,
             'directlogin_form': DirectLoginForm(),
             'gatewaylogin_form': GatewayLoginForm(),
+            "API_TESTER_URL":settings.SHOW_API_TESTER,
         })
         return context
 

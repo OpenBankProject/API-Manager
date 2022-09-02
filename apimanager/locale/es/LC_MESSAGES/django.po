@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-30 16:42+0200\n"
+"POT-Creation-Date: 2022-09-02 14:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,15 +58,15 @@ msgstr "Creada"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: apimanager/settings.py:177
+#: apimanager/settings.py:178
 msgid "English"
 msgstr "Inglés"
 
-#: apimanager/settings.py:178
+#: apimanager/settings.py:179
 msgid "French"
 msgstr "francés"
 
-#: apimanager/settings.py:179
+#: apimanager/settings.py:180
 msgid "Spanish"
 msgstr "español"
 
@@ -101,11 +101,11 @@ msgstr "Dirección"
 
 #: atmdetail/forms.py:56 atms/forms.py:56 branches/forms.py:53
 msgid "Latitude"
-msgstr "latitud"
+msgstr "Latitud"
 
 #: atmdetail/forms.py:67 atms/forms.py:67 branches/forms.py:64
 msgid "Longitude"
-msgstr "longitud"
+msgstr "Longitud"
 
 #: atmdetail/forms.py:78 atms/forms.py:78
 msgid "Meta License Id"
@@ -149,7 +149,7 @@ msgstr "Sunday"
 
 #: atmdetail/forms.py:180 atms/forms.py:180
 msgid "Is Accessible"
-msgstr "producción y validación es"
+msgstr "Producción y validación es"
 
 #: atmdetail/forms.py:189 atms/forms.py:189
 msgid "ATM location"
@@ -259,7 +259,7 @@ msgstr "Descripción"
 
 #: atmdetail/templates/atmsView/atmdetail.html:4
 msgid "ATMs List"
-msgstr "Vista de Cajeros automáticos"
+msgstr "Vista de Cajeros Automáticos"
 
 #: atmdetail/templates/atmsView/atmdetail.html:6
 #: users/templates/users/includes/filter_pagination.html:12
@@ -408,26 +408,26 @@ msgstr "Mis colecciones de API"
 msgid "Welcome to API Manager"
 msgstr "Bienvenido al Administrador de API"
 
-#: base/templates/home.html:10
+#: base/templates/home.html:9
 msgid ""
 "This app gives you access to management functionality for the OBP instance at"
 msgstr ""
 "Esta aplicación le brinda acceso a la funcionalidad de administración para "
 "la instancia de OBP en"
 
-#: base/templates/home.html:10
+#: base/templates/home.html:9
 msgid "You have to"
 msgstr "Tienes que"
 
-#: base/templates/home.html:10
+#: base/templates/home.html:9
 msgid "register"
 msgstr "Registrarse"
 
-#: base/templates/home.html:10
+#: base/templates/home.html:9
 msgid "an account before being able to proceed"
 msgstr "una cuenta antes de poder continuar"
 
-#: base/templates/home.html:10
+#: base/templates/home.html:9
 msgid ""
 "The logged-in user needs to have specific roles granted to use the "
 "functionality."
@@ -450,11 +450,11 @@ msgstr "La configuración de la API"
 
 #: branches/forms.py:75
 msgid "meta_license_id"
-msgstr "nombre de la metalicencia"
+msgstr "Nombre de la metalicencia"
 
 #: branches/forms.py:86
 msgid "meta_license_name"
-msgstr "nombre de la metalicencia"
+msgstr "Nombre de la metalicencia"
 
 #: branches/forms.py:97
 msgid " Lobby Opening Hours"
@@ -462,7 +462,7 @@ msgstr "Horario de atención"
 
 #: branches/forms.py:107
 msgid "Drive Up"
-msgstr "subir"
+msgstr "Subir"
 
 #: branches/forms.py:117
 msgid "Branch Routing Scheme"
@@ -474,7 +474,7 @@ msgstr "Enrutamiento de sucursales"
 
 #: branches/forms.py:137
 msgid "is accessible"
-msgstr "producción y validaciones"
+msgstr "Producción y validaciones"
 
 #: branches/forms.py:149
 msgid "wheelchair, atm useable by the visually impaired"
@@ -490,7 +490,7 @@ msgstr "Servicios"
 
 #: branches/forms.py:177 customers/forms.py:52
 msgid "Mobile Phone Number"
-msgstr "teléfono móvil"
+msgstr "Teléfono móvil"
 
 #: branches/forms.py:180 customers/forms.py:55
 msgid "E.g. +49 123 456 78 90 12"
@@ -498,11 +498,11 @@ msgstr "Por ejemplo el usuario ha marcado 7(123)456-78-90."
 
 #: branches/templates/branches/index.html:29
 msgid "bank_id"
-msgstr "id_banco"
+msgstr "Id_Banco"
 
 #: branches/templates/branches/index.html:53
 msgid "location_latitude"
-msgstr "ubicación_latitud"
+msgstr "Ubicación_latitud"
 
 #: branches/templates/branches/index.html:162
 msgid "Branch Name"
@@ -534,7 +534,7 @@ msgstr "Hajdú-Bihar"
 
 #: branches/templates/branches/index.html:183
 msgid "state"
-msgstr "estado"
+msgstr "Estado"
 
 #: branches/templates/branches/index.html:184
 msgid "postcode"
@@ -554,7 +554,7 @@ msgstr "latitud"
 
 #: branches/templates/branches/index.html:191
 msgid "longitude"
-msgstr "longitud"
+msgstr "Longitud"
 
 #: branches/templates/branches/index.html:194
 msgid "Meta License"
@@ -661,7 +661,7 @@ msgstr "Creado"
 
 #: consumers/templates/consumers/detail.html:119
 msgid "Created By User ID"
-msgstr "Crear cliente"
+msgstr "Crear Cliente"
 
 #: consumers/templates/consumers/detail.html:128
 msgid "Redirect URL"
@@ -776,7 +776,7 @@ msgstr "La configuración de la API"
 
 #: customers/forms.py:33
 msgid "Customer Number"
-msgstr "número de cliente"
+msgstr "Número de cliente"
 
 #: customers/forms.py:42
 msgid "Legal Name"
@@ -801,11 +801,11 @@ msgstr "Fecha de la imagen de portada"
 
 #: customers/forms.py:93
 msgid "Date of Birth"
-msgstr "fecha de nacimiento"
+msgstr "Fecha de nacimiento"
 
 #: customers/forms.py:104
 msgid "Relationship Status"
-msgstr "estado civil"
+msgstr "Estado civil"
 
 #: customers/forms.py:107
 msgid "Single"
@@ -813,31 +813,31 @@ msgstr "Individual"
 
 #: customers/forms.py:114
 msgid "Dependants"
-msgstr "personas a cargo"
+msgstr "Personas a cargo"
 
 #: customers/forms.py:125
 msgid "Date of Birth of Dependants"
-msgstr "dob de dependientes"
+msgstr "Dob de dependientes"
 
 #: customers/forms.py:135
 msgid "Credit Rating (Rating)"
-msgstr "calificación crediticia"
+msgstr "Calificación Crediticia"
 
 #: customers/forms.py:145
 msgid "Credit Rating (Source)"
-msgstr "fuente de calificación crediticia"
+msgstr "Fuente de Calificación Crediticia"
 
 #: customers/forms.py:155
 msgid "Credit Limit (Currency)"
-msgstr "moneda límite de crédito"
+msgstr "Moneda límite de crédito"
 
 #: customers/forms.py:165
 msgid "Credit Limit (Amount)"
-msgstr "importe del límite de crédito"
+msgstr "Importe del límite de crédito"
 
 #: customers/forms.py:175
 msgid "Highest Education Attained"
-msgstr "mayor_educación_alcanzada"
+msgstr "Mayor Educación Alcanzada"
 
 #: customers/forms.py:178
 msgid "Bachelor’s Degree"
@@ -853,7 +853,7 @@ msgstr "Empleados"
 
 #: customers/forms.py:195
 msgid "KYC Status"
-msgstr "estado"
+msgstr "Estado"
 
 #: customers/forms.py:205
 msgid "Last OK Date"
@@ -999,7 +999,7 @@ msgstr "Creada"
 
 #: metrics/forms.py:18 metrics/forms.py:173 metrics/forms.py:230
 msgid "From Date"
-msgstr "desde fecha"
+msgstr "Desde fecha"
 
 #: metrics/forms.py:30 metrics/forms.py:215 metrics/forms.py:261
 msgid "To Date"
@@ -1015,7 +1015,7 @@ msgstr "Desplazamiento"
 
 #: metrics/forms.py:91 metrics/templates/metrics/api.html:166
 msgid "Consumer ID"
-msgstr "identificación del consumidor"
+msgstr "Identificación del Consumidor"
 
 #: metrics/forms.py:100 metrics/templates/metrics/api.html:163
 #: users/templates/users/detail.html:11
@@ -1114,7 +1114,7 @@ msgstr "Implementado por Función Parcial"
 
 #: metrics/templates/metrics/connector.html:24
 msgid "from_date"
-msgstr "a partir de la fecha"
+msgstr "A partir de la fecha"
 
 #: metrics/templates/metrics/connector.html:31
 #: metrics/templates/metrics/custom_summary.html:50
@@ -1122,7 +1122,7 @@ msgstr "a partir de la fecha"
 #: metrics/templates/metrics/hourly_summary.html:48
 #: metrics/templates/metrics/monthly_summary.html:45
 msgid "to_date"
-msgstr "fecha hasta"
+msgstr "Fecha hasta"
 
 #: metrics/templates/metrics/connector.html:38
 msgid "limit"
@@ -1130,19 +1130,19 @@ msgstr "Límite"
 
 #: metrics/templates/metrics/connector.html:45
 msgid "offset"
-msgstr "compensación"
+msgstr "Compensación"
 
 #: metrics/templates/metrics/connector.html:55
 msgid "connector_name"
-msgstr "conector_nombre"
+msgstr "Conector Nombre"
 
 #: metrics/templates/metrics/connector.html:62
 msgid "function_name"
-msgstr "nombre de la función"
+msgstr "Nombre de la Función"
 
 #: metrics/templates/metrics/connector.html:69
 msgid "correlation_id"
-msgstr "correlación_id"
+msgstr "Correlación Id"
 
 #: metrics/templates/metrics/connector.html:90
 msgid "Duration (ms)"
@@ -1340,26 +1340,27 @@ msgstr ""
 "la primera llamada APIMediana de tiempo desde el registro del consumidor "
 "hasta la primera llamada APIMediana de tiempo desde el registro del "
 "consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
-"del consumidor hasta la primera llamada APITiempo medio desde el registro "
-"del consumidor hasta la primera llamada a la APITiempo medio desde el "
-"registro del consumidor hasta la primera llamada a la APITiempo medio desde "
-"el registro del consumidor hasta la primera llamada a la APITiempo medio "
-"desde el registro del consumidor hasta la primera llamada a la APITiempo "
-"medio desde el registro del consumidor hasta la primera llamada a la "
-"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
-"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
-"a la APITiempo medio desde el registro del consumidor hasta la primera "
-"llamada a la APITiempo medio desde el registro del consumidor hasta la "
-"primera llamada a la APItiempo medio hasta la primeratiempo medio hasta la "
-"primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
-"primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeratiempo medio hasta la primeraMediana de tiempo desde "
+"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
+"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
 "el registro del consumidor hasta la primera llamada APIMediana de tiempo "
 "desde el registro del consumidor hasta la primera llamada APIMediana de "
 "tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
 "de tiempo desde el registro del consumidor hasta la primera llamada "
-"APIMediana de tiempo desde el registro del consumidor hasta la primera "
+"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
+"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
+"a la APITiempo medio desde el registro del consumidor hasta la primera "
+"llamada a la APITiempo medio desde el registro del consumidor hasta la "
+"primera llamada a la APITiempo medio desde el registro del consumidor hasta "
+"la primera llamada a la APITiempo medio desde el registro del consumidor "
+"hasta la primera llamada a la APITiempo medio desde el registro del "
+"consumidor hasta la primera llamada a la APITiempo medio desde el registro "
+"del consumidor hasta la primera llamada a la APITiempo medio desde el "
+"registro del consumidor hasta la primera llamada a la APItiempo medio hasta "
+"la primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
+"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
+"primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
+"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
+"primeraMediana de tiempo desde el registro del consumidor hasta la primera "
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
 "primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
 "la primera llamada APIMediana de tiempo desde el registro del consumidor "
@@ -1374,7 +1375,11 @@ msgstr ""
 "APIMediana de tiempo desde el registro del consumidor hasta la primera "
 "llamada APIMediana de tiempo desde el registro del consumidor hasta la "
 "primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
-"la primera llamada "
+"la primera llamada APIMediana de tiempo desde el registro del consumidor "
+"hasta la primera llamada APIMediana de tiempo desde el registro del "
+"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
+"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
+"registro del consumidor hasta la primera llamada "
 
 #: metrics/templates/metrics/custom_summary.html:109
 #: metrics/templates/metrics/daily_summary.html:112
@@ -1483,24 +1488,27 @@ msgstr ""
 "direcciones de correo electrónico para desarrolladoresAplicaciones con "
 "distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
 "con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasDirecciones de correo electrónicoDirecciones de "
-"correo electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoAplicaciones con distintas "
+"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
+"para desarrolladoresAplicaciones con distintas direcciones de correo "
+"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
 "direcciones de correo electrónico para desarrolladoresAplicaciones con "
 "distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasAplicaciones "
+"con direcciones de correo electrónico de desarrollador distintasDirecciones "
+"de correo electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"electrónicoDirecciones de correo electrónicoDirecciones de correo "
+"electrónicoAplicaciones con distintas direcciones de correo electrónico para "
 "desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
 "para desarrolladoresAplicaciones con distintas direcciones de correo "
 "electrónico para desarrolladoresAplicaciones con distintas direcciones de "
@@ -1518,7 +1526,9 @@ msgstr ""
 "desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
 "para desarrolladoresAplicaciones con distintas direcciones de correo "
 "electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para "
+"correo electrónico para desarrolladoresAplicaciones con distintas "
+"direcciones de correo electrónico para desarrolladoresAplicaciones con "
+"distintas direcciones de correo electrónico para "
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
@@ -1576,15 +1586,15 @@ msgstr "Apellido"
 
 #: users/forms.py:77
 msgid "Company"
-msgstr "empresa"
+msgstr "Empresa"
 
 #: users/forms.py:80
 msgid "TESOBE GmbH"
-msgstr "GmbH"
+msgstr "TESOBE GmbH"
 
 #: users/forms.py:87
 msgid "Country"
-msgstr "países"
+msgstr "Países"
 
 #: users/forms.py:90
 msgid "Germany"
@@ -1691,16 +1701,16 @@ msgstr "Email"
 #: users/templates/users/invitation.html:52
 #: users/templates/users/invitation.html:72
 msgid "company"
-msgstr "empresa"
+msgstr "Empresa"
 
 #: users/templates/users/invitation.html:59
 #: users/templates/users/invitation.html:73
 msgid "country"
-msgstr "países"
+msgstr "Países"
 
 #: users/templates/users/invitation.html:74
 msgid "status"
-msgstr "estado"
+msgstr "Estado"
 
 #: webui/templates/webui/index.html:9
 msgid "WEBUI"
@@ -1775,7 +1785,7 @@ msgstr "Ahorrar"
 #~ msgstr "implementado en versión"
 
 #~ msgid "mobile phone number"
-#~ msgstr "teléfono móvil"
+#~ msgstr "Teléfono móvil"
 
 #~ msgid "face_image_url"
 #~ msgstr "URL de la imagen de la cara"

@@ -29,6 +29,7 @@ SECRET_KEY = None
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SHOW_API_TESTER = False
 # Set this to e.g. ['127.0.0.1', 'localhost'] if DEBUG = False
 ALLOWED_HOSTS = []
 
@@ -261,8 +262,8 @@ OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
 
 # Set OAuth client key/secret in apimanager/local_settings.py
-OAUTH_CONSUMER_KEY = None
-OAUTH_CONSUMER_SECRET = None
+OAUTH_CONSUMER_KEY = "z300jpw42no0x0v504ttota0zmoklgr0rrebsb0z"
+OAUTH_CONSUMER_SECRET = "pxdi4ygbqnodin41txjch0c2rlmurmuv45hy20vj"
 
 # Path on API_HOST to DirectLogin
 DIRECTLOGIN_PATH = '/my/logins/direct'
