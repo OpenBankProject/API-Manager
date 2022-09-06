@@ -107,3 +107,4 @@ def api_tester_url(request):
     """Returns the URL to the API Tester for the API instance"""
     url = getattr(settings, 'API_TESTER_URL', None)
     return {'API_TESTER_URL': url}
+

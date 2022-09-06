@@ -252,7 +252,7 @@ API_BASE_PATH = '/obp/v'
 API_VERSION = '4.0.0'
 
 # URL to API Tester
-API_TESTER_URL = 'https://simon.com'
+API_TESTER_URL = 'https://www.example.com'
 SHOW_API_TESTER = True
 
 # Always save session$
@@ -264,8 +264,8 @@ OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
 
 # Set OAuth client key/secret in apimanager/local_settings.py
-OAUTH_CONSUMER_KEY = "None"
-OAUTH_CONSUMER_SECRET = "None"
+OAUTH_CONSUMER_KEY = None
+OAUTH_CONSUMER_SECRET = None
 
 # Path on API_HOST to DirectLogin
 DIRECTLOGIN_PATH = '/my/logins/direct'
