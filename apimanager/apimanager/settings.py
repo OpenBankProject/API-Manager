@@ -27,9 +27,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-SHOW_API_TESTER = False
+
+
 # Set this to e.g. ['127.0.0.1', 'localhost'] if DEBUG = False
 ALLOWED_HOSTS = []
 
@@ -250,8 +251,9 @@ API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
 API_VERSION = '4.0.0'
 
-# URL to API Tester if it is running on API_HOST
-API_TESTER_URL = ''
+# URL to API Tester
+API_TESTER_URL = 'https://simon.com'
+SHOW_API_TESTER = True
 
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
@@ -262,8 +264,8 @@ OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
 OAUTH_ACCESS_TOKEN_PATH = '/oauth/token'
 
 # Set OAuth client key/secret in apimanager/local_settings.py
-OAUTH_CONSUMER_KEY = "z300jpw42no0x0v504ttota0zmoklgr0rrebsb0z"
-OAUTH_CONSUMER_SECRET = "pxdi4ygbqnodin41txjch0c2rlmurmuv45hy20vj"
+OAUTH_CONSUMER_KEY = "None"
+OAUTH_CONSUMER_SECRET = "None"
 
 # Path on API_HOST to DirectLogin
 DIRECTLOGIN_PATH = '/my/logins/direct'

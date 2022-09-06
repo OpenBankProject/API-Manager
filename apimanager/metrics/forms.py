@@ -64,19 +64,19 @@ class MetricsForm(forms.Form):
 
 class APIMetricsForm(MetricsForm):
     ANONYMOUS = (
-        ('', 'Anonymous and Non-Anonymous'),
+        ('', _('Anonymous and Non-Anonymous')),
         ('true', 'Yes'),
         ('false', 'No'),
     )
     VERB = (
-        ('', 'Any'),
+        ('', _('Any')),
         ('DELETE', 'DELETE'),
         ('GET', 'GET'),
         ('POST', 'POST'),
         ('PUT', 'PUT'),
     )
     VERSION = (
-        ('', 'Any'),
+        ('', _('Any')),
         ('v1.2', '1.2'),
         ('v1.2.1', '1.2.1'),
         ('v1.3.0', '1.3.0'),
