@@ -102,10 +102,9 @@
 						<li{% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
 					</ul>
 				</li>
-
-				{% if API_TESTER_URL %}
+				{% if SHOW_API_TESTER %}
 				<li>
-					<p class="navbar-btn"><a href="{{ API_TESTER_URL }}" class="btn btn-default">Go to API Tester</a></p>
+					<a href="{{ API_TESTER_URL }}" >API Tester</a>
 				</li>
 				{% endif %}
 			</ul>

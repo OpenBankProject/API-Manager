@@ -27,7 +27,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+
 
 # Set this to e.g. ['127.0.0.1', 'localhost'] if DEBUG = False
 ALLOWED_HOSTS = []
@@ -249,8 +251,9 @@ API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
 API_VERSION = '4.0.0'
 
-# URL to API Tester if it is running on API_HOST
-API_TESTER_URL = ''
+# URL to API Tester
+API_TESTER_URL = 'https://www.example.com'
+SHOW_API_TESTER = True
 
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
