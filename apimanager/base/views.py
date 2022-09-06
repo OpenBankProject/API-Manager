@@ -20,8 +20,8 @@ class HomeView(TemplateView):
             'override_css_url': settings.OVERRIDE_CSS_URL,
             'directlogin_form': DirectLoginForm(),
             'gatewaylogin_form': GatewayLoginForm(),
-            "SHOW_API_TESTER":settings.SHOW_API_TESTER,
-            "API_TESTER_URL":settings.API_TESTER_URL
+            'SHOW_API_TESTER':settings.SHOW_API_TESTER,
+            'API_TESTER_URL':settings.API_TESTER_URL
         })
         return context
 
