@@ -1,5 +1,5 @@
-{% load static i18n %}
-
+{% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,18 +47,18 @@
 			<ul class="nav navbar-nav">
 				<li><a href="{{ API_PORTAL }}" >{% trans "Home" %}</a></li>
 				{% url "consumers-index" as consumers_index_url %}
-				<li{% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">{% trans "Consumers" %}</a></li>
+				<li {% if consumers_index_url in request.path  %} class="active"{% endif %}><a href="{{ consumers_index_url }}">{% trans "Consumers" %}</a></li>
 				{% url "entitlementrequests-index" as entitlementrequests_index_url %}
-				<li{% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">{% trans "Entitlement Requests" %}</a></li>
+				<li {% if entitlementrequests_index_url in request.path  %} class="active"{% endif %}><a href="{{ entitlementrequests_index_url }}">{% trans "Entitlement Requests" %}</a></li>
 				{% url "users-index" as users_index_url %}
 				{% url 'my-user-detail' API_USER_ID as url_users_detail %}
 				{% url "my-user-invitation" as my_user_invitation %}
 				<li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path or my_user_invitation in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Users" %}</a>
 					<ul class="dropdown-menu">
-						<li{% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">{% trans "All" %}</a></li><hr class="dropdown-hr">
-						<li{% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">{% trans "My User" %}</a></li><hr class="dropdown-hr">
-						<li{% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite Developer" %}</a></li>
+						<li {% if users_index_url in request.path  %} class="active"{% endif %}><a href="{{ users_index_url }}">{% trans "All" %}</a></li><hr class="dropdown-hr">
+						<li {% ifequal request.path url_users_detail  %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">{% trans "My User" %}</a></li><hr class="dropdown-hr">
+						<li {% ifequal request.path my_user_invitation  %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite Developer" %}</a></li>
 					</ul>
 				</li>
 				{% url "api-metrics" as api_metrics_url %}
@@ -67,9 +67,9 @@
 				<li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Metrics" %}</a>
 					<ul class="dropdown-menu">
-						<li{% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">{% trans "API Metrics" %}</a></li><hr class="dropdown-hr">
-						<li{% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">{% trans "Connector Metrics" %}</a></li><hr class="dropdown-hr">
-						<li{% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">{% trans "KPI Dashboard" %}</a></li>
+						<li {% if api_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ api_metrics_url }}">{% trans "API Metrics" %}</a></li><hr class="dropdown-hr">
+						<li {% if connector_metrics_url in request.path  %} class="active"{% endif %}><a href="{{ connector_metrics_url }}">{% trans "Connector Metrics" %}</a></li><hr class="dropdown-hr">
+						<li {% if metrics_summary_url in request.path  %} class="active"{% endif %}><a href="{{ metrics_summary_url }}">{% trans "KPI Dashboard" %}</a></li>
 					</ul>
 				</li>
 				{% url "branches_list" as branches_list_url %}
@@ -79,10 +79,10 @@
 				<li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
 					<ul class="dropdown-menu">
-						<li{% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li><hr class="dropdown-hr">
-						<li{% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
-						<li{% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">{% trans "ATMs" %}</a></li>
-						<li{% if atm_detail_url in request.path  %} class="active"{% endif %}><a href="{{ atm_detail_url }}">{% trans "ATMs Detail" %}</a></li>
+						<li {% if customers_create_url in request.path  %} class="active"{% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li><hr class="dropdown-hr">
+						<li {% if branches_list_url in request.path  %} class="active"{% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
+						<li {% if atms_list_url in request.path  %} class="active"{% endif %}><a href="{{ atms_list_url }}">{% trans "ATMs" %}</a></li>
+						<li {% if atm_detail_url in request.path  %} class="active"{% endif %}><a href="{{ atm_detail_url }}">{% trans "ATMs Detail" %}</a></li>
 					</ul>
 				</li>
 				{% url "config-index" as config_index_url %}
@@ -94,12 +94,12 @@
 				<li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Configurations" %}</a>
 					<ul class="dropdown-menu">
-						<li{% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">{% trans "Config" %}</a></li><hr class="dropdown-hr">
-						<li{% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">{% trans "Webui Props" %}</a></li><hr class="dropdown-hr">
-						<li{% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">{% trans "Method Routings" %}</a></li><hr class="dropdown-hr">
-						<li{% if connectormethod_url in request.path  %} class="active"{% endif %}><a href="{{ connectormethod_url }}">{% trans "Connector Methods" %}</a></li><hr class="dropdown-hr">
-						<li{% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">{% trans "Dynamic Endpoints" %}</a></li><hr class="dropdown-hr">
-						<li{% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
+						<li {% if config_index_url in request.path  %} class="active"{% endif %}><a href="{{ config_index_url }}">{% trans "Config" %}</a></li><hr class="dropdown-hr">
+						<li {% if webui_props_index_url in request.path  %} class="active"{% endif %}><a href="{{ webui_props_index_url }}">{% trans "Webui Props" %}</a></li><hr class="dropdown-hr">
+						<li {% if methodrouting_index_url in request.path  %} class="active"{% endif %}><a href="{{ methodrouting_index_url }}">{% trans "Method Routings" %}</a></li><hr class="dropdown-hr">
+						<li {% if connectormethod_url in request.path  %} class="active"{% endif %}><a href="{{ connectormethod_url }}">{% trans "Connector Methods" %}</a></li><hr class="dropdown-hr">
+						<li {% if dynamic_endpoints_index_url in request.path  %} class="active"{% endif %}><a href="{{ dynamic_endpoints_index_url }}">{% trans "Dynamic Endpoints" %}</a></li><hr class="dropdown-hr">
+						<li {% if api_collections_index_url in request.path  %} class="active"{% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
 					</ul>
 				</li>
 				{% if SHOW_API_TESTER %}

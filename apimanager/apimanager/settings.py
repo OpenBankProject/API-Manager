@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
@@ -172,6 +172,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+# Set this to your local directory for static files
+STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static-collected')
 
 from django.utils.translation import gettext_lazy as _
 
@@ -185,8 +187,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, "locale/"),
 )
 
-# Set this to your local directory for static files
-STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static-collected')
+
 
 
 LOGGING = {
