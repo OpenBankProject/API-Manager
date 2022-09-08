@@ -196,6 +196,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'abc'
 # API hostname, e.g. https://api.openbankproject.com
 API_HOST = 'http://127.0.0.1:8080'
+# API Portal URL, if you deploy OBP with split API/Portal instances. Else, set to same value as API_HOST
+API_PORTAL = 'http://127.0.0.1:8080'
 # Consumer key + secret to authenticate the _app_ against the API
 OAUTH_CONSUMER_KEY = ''
 OAUTH_CONSUMER_SECRET = ''
