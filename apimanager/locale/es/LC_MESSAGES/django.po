@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-12 09:57+0200\n"
+"POT-Creation-Date: 2022-09-12 14:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1344,8 +1344,9 @@ msgstr "Tiempo de Respuesta Promedio(ms)"
 #: metrics/templates/metrics/weekly_summary.html:106
 #: metrics/templates/metrics/yearly_summary.html:108
 msgid "Median time from consumer registration to first API call"
-msgstr "Mittlere Zeit von der Registrierung des Verbrauchers bis zum ersten API-Aufruf"
-
+msgstr ""
+"Mittlere Zeit von der Registrierung des Verbrauchers bis zum ersten API-"
+"Aufruf"
 
 #: metrics/templates/metrics/custom_summary.html:109
 #: metrics/templates/metrics/daily_summary.html:112
@@ -1445,8 +1446,9 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/quarterly_summary.html:119
 #: metrics/templates/metrics/weekly_summary.html:115
 msgid "Apps with distinct developer email addresses"
-msgstr "Anwendungen mit eindeutigen Entwickler-E-Mail-Adressen"
-
+msgstr ""
+"Aplicaciones con distintas direcciones de correo electrónico de los "
+"desarrolladores"
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
