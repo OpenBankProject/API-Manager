@@ -31,9 +31,7 @@ class IndexView(LoginRequiredMixin, FormView):
             else:
                 dynamic_endpoints=response['dynamic_endpoints']
         except APIError as err:
-            error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
-                                                   "Please check OBP-API server.    "
-                                                   "Details: " + str(err)))
+            messages.error(self.request, err)
         except BaseException as err:
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
