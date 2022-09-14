@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-06 11:49+0200\n"
+"POT-Creation-Date: 2022-09-12 14:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,15 +58,15 @@ msgstr "Creada"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: apimanager/settings.py:179
+#: apimanager/settings.py:181
 msgid "English"
 msgstr "Inglés"
 
-#: apimanager/settings.py:180
+#: apimanager/settings.py:182
 msgid "French"
 msgstr "francés"
 
-#: apimanager/settings.py:181
+#: apimanager/settings.py:183
 msgid "Spanish"
 msgstr "español"
 
@@ -403,6 +403,10 @@ msgstr "Puntos finales dinámicos"
 #: base/templates/base.html:102
 msgid "My API Collections"
 msgstr "Mis colecciones de API"
+
+#: base/templates/base.html:107
+msgid "API Tester"
+msgstr "Métricas de la API"
 
 #: base/templates/home.html:5
 msgid "Welcome to API Manager"
@@ -785,7 +789,7 @@ msgstr "Nombre_juridico"
 #: customers/forms.py:62 users/forms.py:67 users/templates/users/detail.html:16
 #: users/templates/users/index.html:59 users/templates/users/invitation.html:71
 msgid "Email"
-msgstr "Correo electrónico"
+msgstr "Correo Electrónico"
 
 #: customers/forms.py:65
 msgid "E.g. person@example.com"
@@ -861,7 +865,7 @@ msgstr "Último día"
 
 #: customers/templates/customers/create.html:10
 msgid "Create Customer"
-msgstr "Crear cliente"
+msgstr "Crear Cliente"
 
 #: dynamicendpoints/templates/dynamicendpoints/index.html:10
 msgid "ENDPOINT ID"
@@ -1341,57 +1345,8 @@ msgstr "Tiempo de Respuesta Promedio(ms)"
 #: metrics/templates/metrics/yearly_summary.html:108
 msgid "Median time from consumer registration to first API call"
 msgstr ""
-"Mediana de tiempo desde el registro del consumidor hasta la primera llamada "
-"APIMediana de tiempo desde el registro del consumidor hasta la primera "
-"llamada APITiempo medio desde el registro del consumidor hasta la primera "
-"llamada a la APITiempo medio desde el registro del consumidor hasta la "
-"primera llamada a la APIMediana de tiempo desde el registro del consumidor "
-"hasta la primera llamada APIMediana de tiempo desde el registro del "
-"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
-"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
-"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
-"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
-"desde el registro del consumidor hasta la primera llamada APIMediana de "
-"tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
-"de tiempo desde el registro del consumidor hasta la primera llamada "
-"APIMediana de tiempo desde el registro del consumidor hasta la primera "
-"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
-"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
-"la primera llamada APIMediana de tiempo desde el registro del consumidor "
-"hasta la primera llamada APITiempo medio desde el registro del consumidor "
-"hasta la primera llamada a la APITiempo medio desde el registro del "
-"consumidor hasta la primera llamada a la APITiempo medio desde el registro "
-"del consumidor hasta la primera llamada a la APITiempo medio desde el "
-"registro del consumidor hasta la primera llamada a la APITiempo medio desde "
-"el registro del consumidor hasta la primera llamada a la APITiempo medio "
-"desde el registro del consumidor hasta la primera llamada a la APITiempo "
-"medio desde el registro del consumidor hasta la primera llamada a la "
-"APITiempo medio desde el registro del consumidor hasta la primera llamada a "
-"la APITiempo medio desde el registro del consumidor hasta la primera llamada "
-"a la APItiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
-"primeratiempo medio hasta la primeratiempo medio hasta la primeratiempo "
-"medio hasta la primeratiempo medio hasta la primeratiempo medio hasta la "
-"primeratiempo medio hasta la primeraMediana de tiempo desde el registro del "
-"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
-"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
-"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
-"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
-"desde el registro del consumidor hasta la primera llamada APIMediana de "
-"tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
-"de tiempo desde el registro del consumidor hasta la primera llamada "
-"APIMediana de tiempo desde el registro del consumidor hasta la primera "
-"llamada APIMediana de tiempo desde el registro del consumidor hasta la "
-"primera llamada APIMediana de tiempo desde el registro del consumidor hasta "
-"la primera llamada APIMediana de tiempo desde el registro del consumidor "
-"hasta la primera llamada APIMediana de tiempo desde el registro del "
-"consumidor hasta la primera llamada APIMediana de tiempo desde el registro "
-"del consumidor hasta la primera llamada APIMediana de tiempo desde el "
-"registro del consumidor hasta la primera llamada APIMediana de tiempo desde "
-"el registro del consumidor hasta la primera llamada APIMediana de tiempo "
-"desde el registro del consumidor hasta la primera llamada APIMediana de "
-"tiempo desde el registro del consumidor hasta la primera llamada APIMediana "
-"de tiempo desde el registro del consumidor hasta la primera llamada "
+"Mittlere Zeit von der Registrierung des Verbrauchers bis zum ersten API-"
+"Aufruf"
 
 #: metrics/templates/metrics/custom_summary.html:109
 #: metrics/templates/metrics/daily_summary.html:112
@@ -1492,60 +1447,8 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/weekly_summary.html:115
 msgid "Apps with distinct developer email addresses"
 msgstr ""
-"Aplicaciones con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para desarrolladoresAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para desarrolladoresAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasAplicaciones con direcciones de correo electrónico de "
-"desarrollador distintasDirecciones de correo electrónicoDirecciones de "
-"correo electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoDirecciones de correo "
-"electrónicoDirecciones de correo electrónicoAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para desarrolladoresAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para desarrolladoresAplicaciones con distintas "
-"direcciones de correo electrónico para desarrolladoresAplicaciones con "
-"distintas direcciones de correo electrónico para desarrolladoresAplicaciones "
-"con distintas direcciones de correo electrónico para "
-"desarrolladoresAplicaciones con distintas direcciones de correo electrónico "
-"para desarrolladoresAplicaciones con distintas direcciones de correo "
-"electrónico para desarrolladoresAplicaciones con distintas direcciones de "
-"correo electrónico para "
+"Aplicaciones con distintas direcciones de correo electrónico de los "
+"desarrolladores"
 
 #: metrics/templates/metrics/hourly_summary.html:20
 msgid "Hour"
@@ -1585,6 +1488,10 @@ msgstr "Maximo de llamadas por día"
 #: metrics/templates/metrics/yearly_summary.html:95
 msgid "Calls per month"
 msgstr "llamadas por mes"
+
+#: obp/api.py:170 obp/api.py:178
+msgid "Choose ..."
+msgstr "Seleccione..."
 
 #: users/forms.py:15 users/templates/users/detail.html:67
 #: users/templates/users/detail.html:96
@@ -1671,10 +1578,8 @@ msgid "Entitlements"
 msgstr "Derechos"
 
 #: users/templates/users/includes/filter_email.html:8
-#, fuzzy
-#| msgid "Distinct developer email addresses"
 msgid "Enter email address ..."
-msgstr "Distintas direcciones de correo electrónico para desarrolladores"
+msgstr "Introduzca la dirección de correo electrónico ..."
 
 #: users/templates/users/includes/filter_locked.html:2
 msgid "Active"
@@ -1690,10 +1595,8 @@ msgid "All Roles"
 msgstr "Todas las Funciones"
 
 #: users/templates/users/includes/filter_username.html:8
-#, fuzzy
-#| msgid "username"
 msgid "Enter username ..."
-msgstr "nombre de usuario"
+msgstr "Introduzca el nombre de usuario ..."
 
 #: users/templates/users/index.html:11
 msgid "Filters"
@@ -1713,7 +1616,7 @@ msgstr "Identificación de usuario"
 
 #: users/templates/users/invitation.html:45
 msgid "email"
-msgstr "Email"
+msgstr "Correo Electrónico"
 
 #: users/templates/users/invitation.html:52
 #: users/templates/users/invitation.html:72

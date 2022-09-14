@@ -15,7 +15,7 @@ import requests
 from requests.exceptions import ConnectionError
 
 from django.conf import settings
-
+from django.utils.translation import ugettext_lazy as _
 
 DATE_FORMAT = '%d/%b/%Y %H:%M:%S'
 LOGGER = logging.getLogger(__name__)
@@ -167,7 +167,7 @@ class API(object):
 
     def get_bank_id_choices(self):
         """Gets a list of bank ids and bank ids as used by form choices"""
-        choices = [('', 'Choose ...')]
+        choices = [('', _('Choose ...'))]
         result = self.get('/banks')
         for bank in sorted(result['banks'], key=lambda d: d['id']) :
             choices.append((bank['id'], bank['id']))
@@ -175,7 +175,7 @@ class API(object):
 
     def get_user_id_choices(self):
         """Gets a list of user ids and usernames as used by form choices"""
-        choices = [('', 'Choose ...')]
+        choices = [('', _('Choose ...'))]
         result = self.get('/users')
         for user in result['users']:
             choices.append((user['user_id'], user['username']))
