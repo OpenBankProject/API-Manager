@@ -19,7 +19,7 @@ import csv
 
 
 class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
-    template_name = "atmsView/atmdetail.html"
+    template_name = "atmsView/atmlist.html"
     success_url = '/atmsView/'
     def get_banks(self):
                 api = API(self.request.session.get('obp'))

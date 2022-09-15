@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'atmdetail',
     'entitlementrequests',
     'customers',
+    #'customerlist'
     'metrics',
     'config',
     'webui',
