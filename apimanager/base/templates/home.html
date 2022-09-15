@@ -3,13 +3,17 @@
 {% block content %}
 <div class="home">
 	<h1>{% trans "Welcome to API Manager" %}</h1>
-	<!--<h1>Welcome to API Manager</h1>-->
 	<div class="well" id="intro">
+		{% if not user.is_authenticated %}
 		<p>
-			{% trans "This app gives you access to management functionality for the OBP instance at" %} <a href="{{ API_HOST }}">{{ API_HOST }}</a>. {% trans "You have to" %}<a href="{{ API_HOST }}/user_mgt/sign_up" title="Register at {{ API_HOST }}"> {% trans "register" %} </a> {% trans "an account before being able to proceed" %}.{% trans "The logged-in user needs to have specific roles granted to use the functionality." %}
+			{% trans "This app gives you access to management functionality for the OBP instance at" %} <a href="{{ API_HOST }}">{{ API_HOST }}</a>. {% trans "You have to" %}<a href="{{ API_HOST }}/user_mgt/sign_up" title="Register at {{ API_HOST }}"> {% trans "register" %} </a> {% trans "an account before being able to proceed" %}.{% trans "Your access is limited by the Entitlements you have." %}
 		</p>
+		{% else %}
+		<p>
+			{% trans "This app gives you access to management functionality for the OBP instance at" %} <a href="{{ API_HOST }}">{{ API_HOST }}</a>.
+		</p>
+		{% endif %}
 	</div>
-
 	{% if not user.is_authenticated %}
 	<div id="login">
 		<label for="authentication-select"><h2>Authenticate</h2></label>
