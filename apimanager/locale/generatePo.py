@@ -1,4 +1,4 @@
-from translate import Translator # Convert one language to another
+from deepl_translation_fun import translator # Convert one language to another
 from concurrent.futures import ThreadPoolExecutor as tpe # Multithreading
 from threading import Lock # Locking Purpose
 
@@ -17,11 +17,9 @@ class clsTranslate():
         """
         self.strString = strString
         self.strTolang = strTolang
-        translator = Translator(to_lang=self.strTolang)
-        translation = translator.translate(self.strString)
-        return (str(translation))
+        translator = translator(text=self.strString, language=self.strTolang)
 
-
+        return (str(translator))
 # This is method for writing file
 
 def writeFile(language):

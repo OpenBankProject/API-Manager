@@ -47,9 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 # }
                 context.update(response)
         except APIError as err:
-            messages.error(self.request, Exception("The OBP-API server is not running or does not respond properly."
-                                                   "Please check OBP-API server.    "
-                                                   "Details: " + str(err)))
+            messages.error(self.request, err)
         except BaseException as err:
             messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
         return context
