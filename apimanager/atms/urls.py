@@ -9,7 +9,7 @@ from .views import IndexAtmsView, UpdateAtmsView
 urlpatterns = [
     url(r'^$',
         IndexAtmsView.as_view(),
-        name='atms_list'),
+        name='atms_create'),
     url(r'^update/(?P<atm_id>[ 0-9\w|\W\@\.\+-]+)/bank/(?P<bank_id>[0-9\w\@\.\+-]+)/$',
         UpdateAtmsView.as_view(),
         name='atms_update'),

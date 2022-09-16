@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}  {% block page_title %}{{ block.super }} / Atms{% endblock page_title %} {% block content %}
 <div id="atms_list">
-  <h1>{% trans "ATM Detail" %}</h1>
+  <h1>{% trans "ATM Create" %}</h1>
 
   <form method="post">
     {% csrf_token %} {% if form.non_field_errors %}
