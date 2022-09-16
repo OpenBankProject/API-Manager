@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}
-{% block page_title %} {% trans "API Manager" %}/{% trans "ATMs Detail" %}{% endblock page_title %} {% block content %}
+{% block page_title %} {{ block.super }} / {% trans "ATMs Detail" %}{% endblock page_title %} {% block content %}
 <div id="atms">
     <h1>{% trans "ATMs List" %}</h1>
     <form class="form-inline" method="get">
