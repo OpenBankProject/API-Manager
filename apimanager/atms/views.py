@@ -182,7 +182,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
 
 class UpdateAtmsView(LoginRequiredMixin, FormView):
     template_name = "atms/update.html"
-    success_url = '/atms/'
+    success_url = '/atms/list'
     form_class = CreateAtmForm
 
     def dispatch(self, request, *args, **kwargs):

@@ -9,7 +9,7 @@ from .views import AtmListView, ExportCsvView
 urlpatterns = [
     url(r'^$',
         AtmListView.as_view(),
-        name='atm-detail'),
+        name='atm-list'),
     url(r'^export_csv$',
             ExportCsvView.as_view(),
             name='export-csv')
