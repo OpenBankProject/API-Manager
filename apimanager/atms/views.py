@@ -335,7 +335,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         except Exception as e:
             messages.error(self.request, e)
             return super(UpdateAtmsView, self).form_invalid(form)
-        msg = 'Atm {} for Bank {} has been update successfully!'.format(  # noqa
+        msg = 'Atm {} for Bank {} has been updated successfully!'.format(  # noqa
             data["atm_id"], data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateAtmsView, self).form_valid(form)
