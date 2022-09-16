@@ -1,4 +1,4 @@
-from deepl_translation_fun import translator # Convert one language to another
+from deepl_translation_function import translator # Convert one language to another
 from concurrent.futures import ThreadPoolExecutor as tpe # Multithreading
 from threading import Lock # Locking Purpose
 
