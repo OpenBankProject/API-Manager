@@ -10,7 +10,7 @@ dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(f"{BASE_DIR}/.env"):
     dotenv.load_dotenv(dotenv_file)
     # Update secret key
-    auth_key = os.environ['auth_key'] # Instead of your actual Auth Key
+    deepl_auth_key = os.environ['auth_key'] # Instead of your actual Auth Key
 
 headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
