@@ -1,102 +1,129 @@
-{% extends 'base.html' %}
-{% load static i18n %}
-
-{% block page_title %}{{ block.super }} / Users{% endblock page_title %}
-
-{% block content %}
-    <div id="webui">
-        <div id="webui_list">
-            <h1>{% trans "WEBUI" %}</h1>
-            <div class="row">
-                <div class="col-xs-12 col-sm-3">
-                    <label class="form-group">{% trans "Web UI Props Name" %}:</label> <br>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                    <label class="form-group">{% trans "Web UI Props Value" %}:</label> <br>
-                </div>
-				<div class="col-xs-12 col-sm-3">
-                    <label class="form-group">{% trans "Web UI Props Id" %}:</label> <br>
-                </div>
-                <div class="col-sm-12 col-sm-3">
-                    <label class="form-group">{% trans "Save Value" %}:</label> <br>
-                </div>
+{% extends 'base.html' %} {% load static i18n %} {% block page_title %}{{ block.super }} / Users{% endblock page_title %} {% block content %}
+<div id="webui">
+    <div id="webui_list">
+        <h1>{% trans "WEBUI" %}</h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Web UI Props Name" %}:</label>
+                <br />
             </div>
-            <form method="post">
-                {% csrf_token %}
-                {% for webui_prop in webui_props %}
-                    <div class="runner">
-                        <div class="row">
-                            <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}"/>
-                            <div class="col-xs-12 col-sm-3">
-                                <div class="form-group" cols="20" rows="1">
-                                    <div class="web_ui_props_name" >{{ webui_prop.name }}</div>
-                                </div>
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Web UI Props Value" %}:</label>
+                <br />
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Web UI Props Id" %}:</label> <br />
+            </div>
+            <div class="col-sm-12 col-sm-3">
+                <label class="form-group">{% trans "Save Value" %}:</label> <br />
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %} {% for webui_prop in webui_props %}
+            <div class="runner">
+                <div class="row">
+                    <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}" />
+                    <div class="col-xs-12 col-sm-3">
+                        <div class="form-group" cols="20" rows="1">
+                            <div class="web_ui_props_name" style="float: left">
+                                {{ webui_prop.name }}
                             </div>
-                            <div class="col-xs-12 col-sm-3">
-                                <div class="form-group">
-                                    <textarea class="form-control required web_ui_props_value" cols="40"
-                                              rows="1">{{ webui_prop.value }}</textarea>
-                                </div>
-                            </div>
-							<div class="col-xs-12 col-sm-3">
-								<div class="form-group" cols="1" rows="1"><div class="">{{ webui_prop.web_ui_props_id }}</div></div>
-							</div>
-                            <div class="col-sm-12 col-sm-3">
-                                <div class="form-group">
-                                    <button class="btn btn-primary btn-green forSave">{% trans "Save" %}</button>
-                                    <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
-                                </div>
-                            </div>
+                            <span class="language_list"></span>
                         </div>
                     </div>
-                {% endfor %}
-            </form>
-        </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <div class="form-group">
+                            <textarea class="form-control required web_ui_props_value" cols="40" rows="1">
+{{ webui_prop.value }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <div class="form-group" cols="1" rows="1">
+                            <div class="">{{ webui_prop.web_ui_props_id }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-sm-3">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-green forSave">
+                                {% trans "Save" %}
+                            </button>
+                            <button class="btn btn-primary btn-red forDelete">
+                                {% trans "Delete" %}
+                            </button>
+                            <button class="btn btn-primary btn-create forCreate">
+                                {% trans "Create Locale" %}
+                            </button>
+                            <select class="language">
+                                <option value="en">En</option>
+                                <option value="es">Es</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </form>
     </div>
-{% endblock %}
-
-{% block extrajs %}
-    <script>
+</div>
+{% endblock %} {% block extrajs %}
+<script>
     $(document).ready(function($) {
-    $('.runner button.forSave').click(function(e) {
-        e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
-        var web_ui_props_value = $(runner).find('.web_ui_props_value').val();
-        $('.runner button.forSave').attr("disabled", "disabled");
-        $('.runner button.forDelete').attr("disabled", "disabled");
-        $.post('save/method', {
-            'web_ui_props_name': web_ui_props_name,
-            'web_ui_props_value': web_ui_props_value,
-        }, function(response) {
-            location.reload();
+        $(".runner button.forSave").click(function(e) {
+            e.preventDefault();
+            var t = $(this);
+            var runner = t.parent().parent().parent();
+            var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
+            var web_ui_props_value = $(runner).find(".web_ui_props_value").val();
+            $(".runner button.forSave").attr("disabled", "disabled");
+            $(".runner button.forDelete").attr("disabled", "disabled");
+            $.post(
+                "save/method", {
+                    web_ui_props_name: web_ui_props_name,
+                    web_ui_props_value: web_ui_props_value,
+                },
+                function(response) {
+                    location.reload();
+                }
+            );
+        });
+
+        $(".runner button.forDelete").click(function(e) {
+            e.preventDefault();
+            var t = $(this);
+            var runner = t.parent().parent().parent();
+            var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
+            var textArea = runner.find(".web_ui_props_value");
+            var props_id = $(runner).find(".web_ui_props_id");
+            var web_ui_props_id = props_id.val();
+            var webui = $("#webui");
+            $(".runner button.forSave").attr("disabled", "disabled");
+            $(".runner button.forDelete").attr("disabled", "disabled");
+            $.post(
+                "delete/method", {
+                    web_ui_props_id: web_ui_props_id,
+                },
+                function(response) {
+                    location.reload();
+                }
+            );
+        });
+        $(".runner button.forCreate").click(function(e) {
+            e.preventDefault();
+            var t = $(this);
+            var runner = t.parent().parent().parent();
+            var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
+            var languages = $(runner).find(".language").val();
+
+            if (languages == "es") {
+                $(runner)
+                    .find(".language_list")
+                    .text("_" + languages);
+            } else {
+                $(runner).find(".language_list").text("");
+            }
         });
     });
+</script>
 
-    $('.runner button.forDelete').click(function(e) {
-        e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
-        var textArea = runner.find('.web_ui_props_value');
-        var props_id = $(runner).find('.web_ui_props_id');
-        var web_ui_props_id = props_id.val();
-        var webui = $('#webui');
-        $('.runner button.forSave').attr("disabled", "disabled");
-        $('.runner button.forDelete').attr("disabled", "disabled");
-        $.post('delete/method', {
-            'web_ui_props_id': web_ui_props_id,
-        }, function(response) {
-            location.reload();
-        });
-    });
-});
-    </script>
-    <!--<script type="text/javascript" src="{% static 'webui/js/webui.js' %}"></script>-->
-
-{% endblock extrajs %}
-
-{% block extracss %}
-    <link href="{% static 'webui/css/webui.css' %}" rel="stylesheet">
-{% endblock extracss %}
+{% endblock extrajs %} {% block extracss %}
+<link href="{% static 'webui/css/webui.css' %}" rel="stylesheet" /> {% endblock extracss %}
