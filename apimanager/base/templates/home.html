@@ -16,11 +16,11 @@
 	</div>
 	{% if not user.is_authenticated %}
 	<div id="login">
-		<label for="authentication-select"><h2>Authenticate</h2></label>
+		<label for="authentication-select"><h2>{% trans "Authenticate" %}</h2></label>
 		<div class="row">
 			<div class="col-xs-12 col-sm-3">
 				<select class="form-control" id="authentication-select">
-					<option value="">Choose ...</option>
+					<option value="">{% trans "Choose ..." %}</option>
 					<option value="oauth">OAuth 1/OpenID Connect</option>
 					<option value="directlogin">DirectLogin</option>
 					<option value="gatewaylogin">GatewayLogin</option>

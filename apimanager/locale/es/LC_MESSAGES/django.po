@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-12 14:29+0200\n"
+"POT-Creation-Date: 2022-09-19 11:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Creada"
 #: apicollections/templates/apicollections/index.html:72
 #: dynamicendpoints/templates/dynamicendpoints/index.html:40
 #: methodrouting/templates/methodrouting/index.html:129
-#: users/templates/users/detail.html:112 webui/templates/webui/index.html:47
+#: users/templates/users/detail.html:112 webui/templates/webui/index.html:51
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -70,231 +70,211 @@ msgstr "francés"
 msgid "Spanish"
 msgstr "español"
 
-#: atmdetail/forms.py:14 atmdetail/templates/atmsView/atmdetail.html:11
-#: atms/forms.py:14 atms/templates/atms/atm_list.html:8
+#: atmlist/forms.py:14 atmlist/templates/atmlist/atmlist.html:11
+#: atms/forms.py:14
 msgid "ATM Id"
 msgstr "ID del cajero automático"
 
-#: atmdetail/forms.py:25 atmdetail/templates/atmsView/atmdetail.html:12
-#: atms/forms.py:25 atms/templates/atms/atm_list.html:9
-#: branches/templates/branches/index.html:161
+#: atmlist/forms.py:25 atmlist/templates/atmlist/atmlist.html:12
+#: atms/forms.py:25 branches/templates/branches/index.html:161
 #: users/templates/users/detail.html:97
 #: users/templates/users/invitation.html:22
 msgid "Bank Id"
 msgstr "Id del banco"
 
-#: atmdetail/forms.py:35 atms/forms.py:35 branches/forms.py:33
+#: atmlist/forms.py:35 atms/forms.py:35 branches/forms.py:33
 #: consumers/templates/consumers/index.html:58
 msgid "Name"
 msgstr "Nombre"
 
-#: atmdetail/forms.py:38 atms/forms.py:38
+#: atmlist/forms.py:38 atms/forms.py:38
 msgid "The name of the ATM"
 msgstr "La configuración de la API"
 
-#: atmdetail/forms.py:46 atmdetail/templates/atmsView/atmdetail.html:27
-#: atms/forms.py:46 atms/templates/atms/atm_list.html:25 branches/forms.py:43
+#: atmlist/forms.py:46 atmlist/templates/atmlist/atmlist.html:27
+#: atms/forms.py:46 branches/forms.py:43
 #: branches/templates/branches/index.html:176
 #: branches/templates/branches/index.html:203
 msgid "Address"
 msgstr "Dirección"
 
-#: atmdetail/forms.py:56 atms/forms.py:56 branches/forms.py:53
+#: atmlist/forms.py:56 atms/forms.py:56 branches/forms.py:53
 msgid "Latitude"
 msgstr "Latitud"
 
-#: atmdetail/forms.py:67 atms/forms.py:67 branches/forms.py:64
+#: atmlist/forms.py:67 atms/forms.py:67 branches/forms.py:64
 msgid "Longitude"
 msgstr "Longitud"
 
-#: atmdetail/forms.py:78 atms/forms.py:78
+#: atmlist/forms.py:78 atms/forms.py:78
 msgid "Meta License Id"
 msgstr "Meta Licencia"
 
-#: atmdetail/forms.py:89 atms/forms.py:89
+#: atmlist/forms.py:89 atms/forms.py:89
 msgid "Meta License Name"
 msgstr "Nombre de la Licencia"
 
-#: atmdetail/forms.py:100 atms/forms.py:100
+#: atmlist/forms.py:100 atms/forms.py:100
 msgid "Opening Hours"
 msgstr "Horario de atención"
 
-#: atmdetail/forms.py:110 atms/forms.py:110
+#: atmlist/forms.py:110 atms/forms.py:110
 msgid "Monday"
 msgstr "Lunes"
 
-#: atmdetail/forms.py:120 atms/forms.py:120
+#: atmlist/forms.py:120 atms/forms.py:120
 msgid "Tuesday"
 msgstr "Martes"
 
-#: atmdetail/forms.py:130 atms/forms.py:130
+#: atmlist/forms.py:130 atms/forms.py:130
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: atmdetail/forms.py:140 atms/forms.py:140
+#: atmlist/forms.py:140 atms/forms.py:140
 msgid "Thursday"
 msgstr "Jueves"
 
-#: atmdetail/forms.py:150 atms/forms.py:150
+#: atmlist/forms.py:150 atms/forms.py:150
 msgid "Friday"
 msgstr "Viernes"
 
-#: atmdetail/forms.py:160 atms/forms.py:160
+#: atmlist/forms.py:160 atms/forms.py:160
 msgid "Saturday"
 msgstr "Sábado"
 
-#: atmdetail/forms.py:170 atms/forms.py:170
+#: atmlist/forms.py:170 atms/forms.py:170
 msgid "Sunday"
 msgstr "Sunday"
 
-#: atmdetail/forms.py:180 atms/forms.py:180
+#: atmlist/forms.py:180 atms/forms.py:180
 msgid "Is Accessible"
 msgstr "Producción y validación es"
 
-#: atmdetail/forms.py:189 atms/forms.py:189
+#: atmlist/forms.py:189 atms/forms.py:189
 msgid "ATM location"
 msgstr "Ubicación"
 
-#: atmdetail/forms.py:199 atms/forms.py:199 branches/forms.py:166
+#: atmlist/forms.py:199 atms/forms.py:199 branches/forms.py:166
 msgid "More information"
 msgstr "Más información"
 
-#: atmdetail/forms.py:202 atms/forms.py:202 branches/forms.py:169
+#: atmlist/forms.py:202 atms/forms.py:202 branches/forms.py:169
 msgid "short walk to the lake from here"
 msgstr "corto paseo hasta el lago desde aquí"
 
-#: atmdetail/forms.py:209 atms/forms.py:209
+#: atmlist/forms.py:209 atms/forms.py:209
 msgid "Deposit Capabilities"
 msgstr "Tiene capacidad de depósito"
 
-#: atmdetail/forms.py:218 atms/forms.py:218
+#: atmlist/forms.py:218 atms/forms.py:218
 msgid "Supported Languages"
 msgstr "Idiomas admitidos"
 
-#: atmdetail/forms.py:227 atms/forms.py:227
+#: atmlist/forms.py:227 atms/forms.py:227
 msgid "Services"
 msgstr "Servicios"
 
-#: atmdetail/forms.py:230 atms/forms.py:230
+#: atmlist/forms.py:230 atms/forms.py:230
 msgid "Service store"
 msgstr "Servicios"
 
-#: atmdetail/forms.py:237 atms/forms.py:237 branches/forms.py:146
+#: atmlist/forms.py:237 atms/forms.py:237 branches/forms.py:146
 #: branches/templates/branches/index.html:209
 msgid "Accessible Features"
 msgstr "Características accesibles"
 
-#: atmdetail/forms.py:240 atms/forms.py:240
+#: atmlist/forms.py:240 atms/forms.py:240
 msgid "wheelchair, atm usuable by the visually impaired"
 msgstr "Rollstuhl, für Sehbehinderte nutzbar"
 
-#: atmdetail/forms.py:247 atms/forms.py:247
+#: atmlist/forms.py:247 atms/forms.py:247
 msgid "Supported Currencies"
 msgstr "Divisas Soportadas"
 
-#: atmdetail/forms.py:256 atms/forms.py:256
+#: atmlist/forms.py:256 atms/forms.py:256
 msgid "Write Notes"
 msgstr "Notas:"
 
-#: atmdetail/forms.py:265 atms/forms.py:265
+#: atmlist/forms.py:265 atms/forms.py:265
 msgid "Write location Category"
 msgstr "Categorías de ubicación"
 
-#: atmdetail/forms.py:274 atms/forms.py:274
+#: atmlist/forms.py:274 atms/forms.py:274
 msgid "Minimum Withdrawal"
 msgstr "El retiro mínimo"
 
-#: atmdetail/forms.py:284 atms/forms.py:284
+#: atmlist/forms.py:284 atms/forms.py:284
 msgid "Branch Identification"
 msgstr "Identificación de la sucursal"
 
-#: atmdetail/forms.py:287 atms/forms.py:287
+#: atmlist/forms.py:287 atms/forms.py:287
 msgid "Enter your Branch Identification"
 msgstr "Identificación de la sucursal"
 
-#: atmdetail/forms.py:294 atms/forms.py:294
+#: atmlist/forms.py:294 atms/forms.py:294
 msgid "Site Identification"
 msgstr "IDENTIFICACIÓN DEL LUGAR"
 
-#: atmdetail/forms.py:297 atms/forms.py:297
+#: atmlist/forms.py:297 atms/forms.py:297
 msgid "Enter your Site Identification"
 msgstr "IDENTIFICACIÓN DEL LUGAR"
 
-#: atmdetail/forms.py:304 atms/forms.py:304
+#: atmlist/forms.py:304 atms/forms.py:304
 msgid "Site Name"
 msgstr "Nobre del sitio"
 
-#: atmdetail/forms.py:307 atms/forms.py:307
+#: atmlist/forms.py:307 atms/forms.py:307
 msgid "Enter your Site Name "
 msgstr "Nobre del sitio"
 
-#: atmdetail/forms.py:314 atms/forms.py:314
+#: atmlist/forms.py:314 atms/forms.py:314
 msgid "Cash Withdrawal National fee"
 msgstr "Cargo Nacional por Retiro de Efectivo"
 
-#: atmdetail/forms.py:317 atms/forms.py:317
+#: atmlist/forms.py:317 atms/forms.py:317
 msgid "Cash withdrawal national fee"
 msgstr "Cargo Nacional por Retiro de Efectivo"
 
-#: atmdetail/forms.py:324 atms/forms.py:324
+#: atmlist/forms.py:324 atms/forms.py:324
 msgid "Cash Withdrawal international fee"
 msgstr "Cargo internacional por retiro de efectivo"
 
-#: atmdetail/forms.py:327 atms/forms.py:327
+#: atmlist/forms.py:327 atms/forms.py:327
 msgid "Cash withdrawal international fee"
 msgstr "Cargo internacional por retiro de efectivo"
 
-#: atmdetail/forms.py:334 atmdetail/forms.py:337 atms/forms.py:334
+#: atmlist/forms.py:334 atmlist/forms.py:337 atms/forms.py:334
 #: atms/forms.py:337
 msgid "Balance Inquiry Fee"
 msgstr "Cargo por consulta de saldo"
 
-#: atmdetail/templates/atmsView/atmdetail.html:2 base/templates/base.html:11
-msgid "API Manager"
-msgstr "Administrador de API"
-
-#: atmdetail/templates/atmsView/atmdetail.html:2 base/templates/base.html:85
-msgid "ATMs Detail"
-msgstr "Descripción"
-
-#: atmdetail/templates/atmsView/atmdetail.html:4
-msgid "ATMs List"
+#: atmlist/templates/atmlist/atmlist.html:2
+#: atmlist/templates/atmlist/atmlist.html:4 base/templates/base.html:85
+msgid "ATM List"
 msgstr "Vista de Cajeros Automáticos"
 
-#: atmdetail/templates/atmsView/atmdetail.html:6
+#: atmlist/templates/atmlist/atmlist.html:6
 #: users/templates/users/includes/filter_pagination.html:12
 msgid "Export CSV"
 msgstr "Exportar CSV"
 
-#: atmdetail/templates/atmsView/atmdetail.html:13
-#: atms/templates/atms/atm_list.html:10
+#: atmlist/templates/atmlist/atmlist.html:13
 msgid "ATM Name"
 msgstr "Nombre del cajero automático"
 
-#: atmdetail/templates/atmsView/atmdetail.html:14
-#: atms/templates/atms/atm_list.html:11
+#: atmlist/templates/atmlist/atmlist.html:14
 msgid "More info"
 msgstr "Más información"
 
-#: atmdetail/templates/atmsView/atmdetail.html:36
-#: atms/templates/atms/atm_list.html:63
+#: atmlist/templates/atmlist/atmlist.html:36
 #: consumers/templates/consumers/index.html:76
 #: users/templates/users/index.html:69
 msgid "View"
 msgstr "Ver"
 
-#: atms/templates/atms/atm_list.html:4 atms/templates/atms/update.html:4
-msgid "ATM Detail"
-msgstr "Descripción"
-
-#: atms/templates/atms/atm_list.html:12
-#: branches/templates/branches/index.html:164
-msgid "Update Button"
-msgstr "Botón Actualizar"
-
 #: atms/templates/atms/index.html:3 base/templates/base.html:84
-msgid "ATMs"
-msgstr "Cajeros Automáticos"
+msgid "ATM Create"
+msgstr "Creada"
 
 #: atms/templates/atms/index.html:250
 #: branches/templates/branches/index.html:151
@@ -302,10 +282,18 @@ msgstr "Cajeros Automáticos"
 msgid "Add"
 msgstr "Agregar"
 
+#: atms/templates/atms/update.html:4
+msgid "ATM Detail"
+msgstr "Descripción"
+
 #: atms/views.py:36 atms/views.py:37 atms/views.py:38 atms/views.py:39
 #: atms/views.py:40 atms/views.py:41
 msgid "Choose..."
 msgstr "Seleccione..."
+
+#: base/templates/base.html:11
+msgid "API Manager"
+msgstr "Administrador de API"
 
 #: base/templates/base.html:29
 msgid "Logout"
@@ -412,16 +400,23 @@ msgstr "Métricas de la API"
 msgid "Welcome to API Manager"
 msgstr "Bienvenido al Administrador de API"
 
-#: base/templates/home.html:9
-msgid ""
-"This app gives you access to management functionality for the OBP instance at"
+#: base/templates/home.html:9 base/templates/home.html:13
+msgid "API Manager allows you to manage some aspects of the OBP instance at "
 msgstr ""
-"Esta aplicación le brinda acceso a la funcionalidad de administración para "
-"la instancia de OBP en"
+"El Gestor de la API le permite gestionar algunos aspectos de la instancia "
+"OBP en"
 
 #: base/templates/home.html:9
-msgid "You have to"
+msgid "You have to "
 msgstr "Tienes que"
+
+#: base/templates/home.html:9
+msgid "login"
+msgstr "inicio de sesión"
+
+#: base/templates/home.html:9
+msgid "or"
+msgstr "Hora"
 
 #: base/templates/home.html:9
 msgid "register"
@@ -432,12 +427,16 @@ msgid "an account before being able to proceed"
 msgstr "una cuenta antes de poder continuar"
 
 #: base/templates/home.html:9
-msgid ""
-"The logged-in user needs to have specific roles granted to use the "
-"functionality."
-msgstr ""
-"El usuario que inició sesión debe tener roles específicos otorgados para "
-"usar la funcionalidad."
+msgid "Your access is limited by the Entitlements you have."
+msgstr "Su acceso está limitado por los derechos que tiene."
+
+#: base/templates/home.html:19
+msgid "Authenticate"
+msgstr "Autentificar"
+
+#: base/templates/home.html:23 obp/api.py:170 obp/api.py:178
+msgid "Choose ..."
+msgstr "Seleccione..."
 
 #: branches/forms.py:13 branches/templates/branches/index.html:160
 msgid "Branch Id"
@@ -515,6 +514,10 @@ msgstr "Nombre de la sucursal"
 #: branches/templates/branches/index.html:163
 msgid "More_info"
 msgstr "Más información"
+
+#: branches/templates/branches/index.html:164
+msgid "Update Button"
+msgstr "Botón Actualizar"
 
 #: branches/templates/branches/index.html:178
 msgid "line1"
@@ -1489,10 +1492,6 @@ msgstr "Maximo de llamadas por día"
 msgid "Calls per month"
 msgstr "llamadas por mes"
 
-#: obp/api.py:170 obp/api.py:178
-msgid "Choose ..."
-msgstr "Seleccione..."
-
 #: users/forms.py:15 users/templates/users/detail.html:67
 #: users/templates/users/detail.html:96
 msgid "Role name"
@@ -1632,29 +1631,46 @@ msgstr "Países"
 msgid "status"
 msgstr "Estado"
 
-#: webui/templates/webui/index.html:9
+#: webui/templates/webui/index.html:4
 msgid "WEBUI"
 msgstr "WEBUI"
 
-#: webui/templates/webui/index.html:12
+#: webui/templates/webui/index.html:7
 msgid "Web UI Props Name"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:15
+#: webui/templates/webui/index.html:11
 msgid "Web UI Props Value"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:18
+#: webui/templates/webui/index.html:15
 msgid "Web UI Props Id"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:21
+#: webui/templates/webui/index.html:18
 msgid "Save Value"
 msgstr "Guardar valor"
 
-#: webui/templates/webui/index.html:46
+#: webui/templates/webui/index.html:48
 msgid "Save"
 msgstr "Ahorrar"
+
+#: webui/templates/webui/index.html:54
+msgid "Create Locale"
+msgstr "Creada"
+
+#~ msgid "ATMs Detail"
+#~ msgstr "Descripción"
+
+#~ msgid "ATMs"
+#~ msgstr "Cajeros Automáticos"
+
+#~ msgid ""
+#~ "The logged-in user needs to have specific roles granted to use the "
+#~ "functionality."
+#~ msgstr ""
+#~ "El usuario que inició sesión debe tener roles específicos otorgados para "
+#~ "usar la funcionalidad."
 
 #~ msgid "PDDL"
 #~ msgstr "PDDL"
