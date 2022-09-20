@@ -19,7 +19,6 @@
 </head>
 
 <body>
-
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -106,13 +105,14 @@
                 <!--/.nav-collapse -->
             </div>
         </nav>
-    </div>
+
     {% if messages %}
     <div class="container messages">
         {% for message in messages %}
-        <div class="alert alert-dismissible{% ifequal message.tags " error " %} alert-danger{% else %}{% ifequal message.tags "debug " %} alert-info{% else %} alert-{{ message.tags }}{% endifequal %}{% endifequal %}" role="alert">
+        <div class="alert alert-dismissible{% ifequal message.tags "error" %} alert-danger{% else %}{% ifequal message.tags "debug" %} alert-info{% else %} alert-{{ message.tags }}{% endifequal %}{% endifequal %}" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-					aria-hidden="true">&times;</span></button> {{ message }}
+					aria-hidden="true">&times;</span></button>
+        {{ message }}
         </div>
         {% endfor %}
     </div>
