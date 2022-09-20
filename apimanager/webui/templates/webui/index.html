@@ -20,22 +20,21 @@
 
         </div>
         <form method="post">
-            {% csrf_token %} {% for webui_prop in webui_props %}
+            {% csrf_token %}
+            {% for webui_prop in webui_props %}
             <div class="runner">
                 <div class="row">
                     <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}" />
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group" cols="20" rows="1">
-                            <div class="web_ui_props_name" style="float: left">
-                                {{ webui_prop.name }}
+                            <div class="web_ui_props_name">{{ webui_prop.name }}
                             </div>
-                            <span class="language_list"></span>
+                            <!--<span class="language_list"></span>-->
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
                         <div class="form-group">
-                            <textarea class="form-control required web_ui_props_value" cols="40" rows="1">
-{{ webui_prop.value }}</textarea>
+                            <textarea class="form-control required web_ui_props_value" cols="40" rows="1">{{ webui_prop.value }}</textarea>
                         </div>
                     </div>
                     <div class="col-sm-12 col-sm-4">
@@ -79,8 +78,7 @@
             var web_ui_props_value = $(runner).find(".web_ui_props_value").val();
             $(".runner button.forSave").attr("disabled", "disabled");
             $(".runner button.forDelete").attr("disabled", "disabled");
-            $.post(
-                "save/method", {
+            $.post("save/method", {
                     web_ui_props_name: web_ui_props_name,
                     web_ui_props_value: web_ui_props_value,
                 },
@@ -101,8 +99,7 @@
             var webui = $("#webui");
             $(".runner button.forSave").attr("disabled", "disabled");
             $(".runner button.forDelete").attr("disabled", "disabled");
-            $.post(
-                "delete/method", {
+            $.post("delete/method", {
                     web_ui_props_id: web_ui_props_id,
                 },
                 function(response) {
@@ -118,9 +115,7 @@
             var languages = $(runner).find(".language").val();
 
             if (languages == "es_ES") {
-                $(runner)
-                    .find(".language_list")
-                    .text("_" + languages);
+                $(runner).find(".language_list").text("_" + languages);
             } else {
                 $(runner).find(".language_list").text("");
             }
