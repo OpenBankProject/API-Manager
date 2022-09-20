@@ -3,27 +3,28 @@
     <div id="webui_list">
         <h1>{% trans "WEBUI" %}</h1>
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <label class="form-group">{% trans "Web UI Props Name" %}:</label>
+            <div class="col-xs-12 col-sm-4">
+                <label class="form-group">{% trans "Web UI Props Name" %}</label>
                 <br />
             </div>
             <div class="col-xs-12 col-sm-3">
-                <label class="form-group">{% trans "Web UI Props Value" %}:</label>
+                <label class="form-group">{% trans "Web UI Props Value" %}</label>
                 <br />
             </div>
-            <div class="col-xs-12 col-sm-3">
-                <label class="form-group">{% trans "Web UI Props Id" %}:</label> <br />
+            <div class="col-sm-12 col-sm-4">
+                <label class="form-group">{% trans "Action" %}</label> <br />
             </div>
-            <div class="col-sm-12 col-sm-3">
-                <label class="form-group">{% trans "Save Value" %}:</label> <br />
+            <div class="col-xs-12 col-sm-1">
+                <label class="form-group">{% trans "Props Id" %}</label> <br />
             </div>
+
         </div>
         <form method="post">
             {% csrf_token %} {% for webui_prop in webui_props %}
             <div class="runner">
                 <div class="row">
                     <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}" />
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-4">
                         <div class="form-group" cols="20" rows="1">
                             <div class="web_ui_props_name" style="float: left">
                                 {{ webui_prop.name }}
@@ -37,12 +38,7 @@
 {{ webui_prop.value }}</textarea>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-3">
-                        <div class="form-group" cols="1" rows="1">
-                            <div class="">{{ webui_prop.web_ui_props_id }}</div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-sm-3">
+                    <div class="col-sm-12 col-sm-4">
                         <div class="form-group">
                             <button class="btn btn-primary btn-green forSave">
                                 {% trans "Save" %}
@@ -50,15 +46,22 @@
                             <button class="btn btn-primary btn-red forDelete">
                                 {% trans "Delete" %}
                             </button>
-                            <button class="btn btn-primary btn-create forCreate">
-                                {% trans "Create Locale" %}
-                            </button>
-                            <select class="language">
-                                <option value="en">En</option>
-                                <option value="es">Es</option>
+                            <select class="language" style="width:6rem; height:3.5rem">
+                                <option value="en_GB">en_GB</option>
+                                <option value="es_ES">es_ES</option>
                             </select>
+                            <button class="btn btn-primary btn-create forCreate">
+                                {% trans "Create" %}
+                            </button>
+
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-1">
+                        <div class="form-group" cols="1" rows="1">
+                            <div class="" >{{ webui_prop.web_ui_props_id }}</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {% endfor %}
@@ -114,7 +117,7 @@
             var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
             var languages = $(runner).find(".language").val();
 
-            if (languages == "es") {
+            if (languages == "es_ES") {
                 $(runner)
                     .find(".language_list")
                     .text("_" + languages);

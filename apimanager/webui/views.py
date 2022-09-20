@@ -35,16 +35,6 @@ class IndexView(LoginRequiredMixin, FormView):
                 messages.error(self.request, response['message'])
                 context.update({'webui_props': []})
             else:
-                # Here is response of getWebuiProps.
-                # {
-                #     "webui_props": [
-                #         {
-                #             "name": "webui_header_logo_left_url ",
-                #             "value": " /media/images/logo.png",
-                #             "web_ui_props_id": "default"
-                #         }
-                #     ]
-                # }
                 context.update(response)
         except APIError as err:
             messages.error(self.request, err)
