@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-19 11:19+0200\n"
+"POT-Creation-Date: 2022-09-20 13:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,14 +47,14 @@ msgstr "Describir el propósito de la colección"
 #: connectormethod/templates/connectormethod/index.html:73
 #: customers/templates/customers/create.html:185
 #: dynamicendpoints/templates/dynamicendpoints/index.html:33
-#: users/templates/users/invitation.html:65
+#: users/templates/users/invitation.html:65 webui/templates/webui/index.html:53
 msgid "Create"
 msgstr "Creada"
 
 #: apicollections/templates/apicollections/index.html:72
 #: dynamicendpoints/templates/dynamicendpoints/index.html:40
 #: methodrouting/templates/methodrouting/index.html:129
-#: users/templates/users/detail.html:112 webui/templates/webui/index.html:51
+#: users/templates/users/detail.html:112 webui/templates/webui/index.html:46
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -249,7 +249,7 @@ msgid "Balance Inquiry Fee"
 msgstr "Cargo por consulta de saldo"
 
 #: atmlist/templates/atmlist/atmlist.html:2
-#: atmlist/templates/atmlist/atmlist.html:4 base/templates/base.html:85
+#: atmlist/templates/atmlist/atmlist.html:4 base/templates/base.html:70
 msgid "ATM List"
 msgstr "Vista de Cajeros Automáticos"
 
@@ -272,7 +272,7 @@ msgstr "Más información"
 msgid "View"
 msgstr "Ver"
 
-#: atms/templates/atms/index.html:3 base/templates/base.html:84
+#: atms/templates/atms/index.html:3 base/templates/base.html:69
 msgid "ATM Create"
 msgstr "Creada"
 
@@ -295,28 +295,24 @@ msgstr "Seleccione..."
 msgid "API Manager"
 msgstr "Administrador de API"
 
-#: base/templates/base.html:29
-msgid "Logout"
-msgstr "Cerrar la sesión"
-
-#: base/templates/base.html:48
+#: base/templates/base.html:35
 msgid "Home"
 msgstr "Inicio"
 
-#: base/templates/base.html:50 consumers/templates/consumers/index.html:10
+#: base/templates/base.html:37 consumers/templates/consumers/index.html:10
 msgid "Consumers"
 msgstr "Consumidores"
 
-#: base/templates/base.html:52
+#: base/templates/base.html:39
 #: entitlementrequests/templates/entitlementrequests/index.html:8
 msgid "Entitlement Requests"
 msgstr "Solicitudes de derechos"
 
-#: base/templates/base.html:57 users/templates/users/index.html:8
+#: base/templates/base.html:42 users/templates/users/index.html:8
 msgid "Users"
 msgstr "Usuarios"
 
-#: base/templates/base.html:59
+#: base/templates/base.html:44
 #: consumers/templates/consumers/includes/filter_apptype.html:4
 #: consumers/templates/consumers/includes/filter_enabled.html:4
 #: consumers/templates/consumers/includes/filter_time.html:7
@@ -325,76 +321,80 @@ msgstr "Usuarios"
 msgid "All"
 msgstr "Todos"
 
-#: base/templates/base.html:60
+#: base/templates/base.html:46
 msgid "My User"
 msgstr "Mi usuaria"
 
-#: base/templates/base.html:61 users/templates/users/invitation.html:8
+#: base/templates/base.html:48 users/templates/users/invitation.html:8
 msgid "Invite Developer"
 msgstr "Invitar a desarrollador"
 
-#: base/templates/base.html:68
+#: base/templates/base.html:53
 msgid "Metrics"
 msgstr "Métrica"
 
-#: base/templates/base.html:70 metrics/templates/metrics/api.html:9
+#: base/templates/base.html:55 metrics/templates/metrics/api.html:9
 msgid "API Metrics"
 msgstr "Métricas de la API"
 
-#: base/templates/base.html:71 metrics/templates/metrics/connector.html:9
+#: base/templates/base.html:57 metrics/templates/metrics/connector.html:9
 msgid "Connector Metrics"
 msgstr "Métricas del conector"
 
-#: base/templates/base.html:72
+#: base/templates/base.html:59
 msgid "KPI Dashboard"
 msgstr "Panel de KPI"
 
-#: base/templates/base.html:80
+#: base/templates/base.html:64
 msgid "Resources"
 msgstr "Recursos"
 
-#: base/templates/base.html:82 customers/templates/customers/create.html:5
+#: base/templates/base.html:66 customers/templates/customers/create.html:5
 msgid "Customers"
 msgstr "Consumidores"
 
-#: base/templates/base.html:83 branches/templates/branches/index.html:9
+#: base/templates/base.html:68 branches/templates/branches/index.html:9
 msgid "Branches"
 msgstr "Sucursales"
 
-#: base/templates/base.html:95
+#: base/templates/base.html:75
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:97 config/templates/config/index.html:8
+#: base/templates/base.html:77 config/templates/config/index.html:8
 msgid "Config"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:98
+#: base/templates/base.html:79
 msgid "Webui Props"
 msgstr "Accesorios webui"
 
-#: base/templates/base.html:99
+#: base/templates/base.html:81
 msgid "Method Routings"
 msgstr "Enrutamiento de métodos"
 
-#: base/templates/base.html:100
+#: base/templates/base.html:83
 #: connectormethod/templates/connectormethod/detail.html:6
 #: connectormethod/templates/connectormethod/index.html:6
 msgid "Connector Methods"
 msgstr "Métricas del conector"
 
-#: base/templates/base.html:101
+#: base/templates/base.html:85
 #: dynamicendpoints/templates/dynamicendpoints/index.html:7
 msgid "Dynamic Endpoints"
 msgstr "Puntos finales dinámicos"
 
-#: base/templates/base.html:102
+#: base/templates/base.html:88
 msgid "My API Collections"
 msgstr "Mis colecciones de API"
 
-#: base/templates/base.html:107
+#: base/templates/base.html:93
 msgid "API Tester"
 msgstr "Métricas de la API"
+
+#: base/templates/base.html:99
+msgid "Logout"
+msgstr "Cerrar la sesión"
 
 #: base/templates/home.html:5
 msgid "Welcome to API Manager"
@@ -437,6 +437,10 @@ msgstr "Autentificar"
 #: base/templates/home.html:23 obp/api.py:170 obp/api.py:178
 msgid "Choose ..."
 msgstr "Seleccione..."
+
+#: base/templates/home.html:32
+msgid "Proceed to authentication server"
+msgstr "Weiter zum Authentifizierungsserver"
 
 #: branches/forms.py:13 branches/templates/branches/index.html:160
 msgid "Branch Id"
@@ -770,6 +774,7 @@ msgstr "Identificación"
 #: entitlementrequests/templates/entitlementrequests/index.html:31
 #: entitlementrequests/templates/entitlementrequests/index.html:32
 #: users/templates/users/detail.html:98 users/templates/users/index.html:60
+#: webui/templates/webui/index.html:15
 msgid "Action"
 msgstr "Acción"
 
@@ -1643,21 +1648,21 @@ msgstr "Accesorios webui"
 msgid "Web UI Props Value"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:15
-msgid "Web UI Props Id"
+#: webui/templates/webui/index.html:18
+#, fuzzy
+#| msgid "Web UI Props Id"
+msgid "Props Id"
 msgstr "Accesorios webui"
 
-#: webui/templates/webui/index.html:18
-msgid "Save Value"
-msgstr "Guardar valor"
-
-#: webui/templates/webui/index.html:48
+#: webui/templates/webui/index.html:43
 msgid "Save"
 msgstr "Ahorrar"
 
-#: webui/templates/webui/index.html:54
-msgid "Create Locale"
-msgstr "Creada"
+#~ msgid "Save Value"
+#~ msgstr "Guardar valor"
+
+#~ msgid "Create Locale"
+#~ msgstr "Creada"
 
 #~ msgid "ATMs Detail"
 #~ msgstr "Descripción"

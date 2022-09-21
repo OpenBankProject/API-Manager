@@ -53,6 +53,7 @@ def webui_save(request):
     urlpath = '/management/webui_props'
     web_ui_props_name = request.POST.get('web_ui_props_name')
     web_ui_props_value = request.POST.get('web_ui_props_value')
+    #print("web_ui_props_name", request.get)
     payload = {
         'name': web_ui_props_name,
         'value': web_ui_props_value

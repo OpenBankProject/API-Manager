@@ -29,7 +29,7 @@
 
 			<div class="col-xs-12 col-sm-9">
 				<div class="authentication-method" id="authenticate-oauth">
-					<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Proceed to authentication server</a>
+					<a class="btn btn-primary" href="{% url 'oauth-initiate' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Proceed to authentication server" %}</a>
 				</div>
 				<div class="authentication-method" id="authenticate-directlogin">
 					<form action="{% url 'directlogin' %}" method="post">
