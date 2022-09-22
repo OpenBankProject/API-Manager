@@ -29,7 +29,7 @@
                         <div class="form-group" cols="20" rows="1">
                             <div class="web_ui_props_name">{{ webui_prop.name }}
                             </div>
-                            <!--<span class="language_list"></span>-->
+                            <span class="language_list"></span>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -111,14 +111,24 @@
             e.preventDefault();
             var t = $(this);
             var runner = t.parent().parent().parent();
-            var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
+            var web_ui_props_name = $(runner).find(".web_ui_props_name").text().replace(/\n/g, " ").trim();
+            var web_ui_props_value = $(runner).find(".web_ui_props_value").val();
             var languages = $(runner).find(".language").val();
-
             if (languages == "es_ES") {
-                $(runner).find(".language_list").text("_" + languages);
-            } else {
-                $(runner).find(".language_list").text("");
-            }
+                 $.post("save/method", {
+                    web_ui_props_name: web_ui_props_name + "_es_Es",
+                    web_ui_props_value: web_ui_props_value,
+                },
+                function(response) {
+                    location.reload();
+                }
+            );
+                //$(runner).find(".language_list").text("_" + languages);
+                //$(runner).text(web_ui_props_name + "_" + languages)
+            }// else {
+                //$(runner).find(".language_list").text(" ");
+                //$(runner).text(web_ui_props_name, + "");
+            //}
         });
     });
 </script>
