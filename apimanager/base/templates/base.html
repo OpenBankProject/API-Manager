@@ -20,7 +20,7 @@
 
 <body>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
+            <div style="margin-left:10% !important;">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
@@ -29,7 +29,7 @@
 						<span class="icon-bar"></span>
 					</button>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
+                <div id="navbar" class="collapse navbar-collapse" >
                     <ul class="nav navbar-nav">
                         <li> <a href="{% url 'home' %}"><img src="{{ logo_url }}" alt="brand"></a></li>
                         <li><a href="{{ API_PORTAL }}">{% trans "Home" %}</a></li>
@@ -100,12 +100,15 @@
                                 {% endif %}
                             </li>
                         <!--</ul>-->
+                       <li style="margin-left:7rem; margin-top:5px" ><a style="text-decoration: none; color:black; ">Language
+                            <span id="uk" style="cursor:pointer">EN</span>
+                             |
+                            <span id="es" style="cursor:pointer">ES</span></a></li>
                     </ul>
+                    <!--/.nav-collapse -->
                 </div>
-                <!--/.nav-collapse -->
-            </div>
+                </div>
         </nav>
-
     {% if messages %}
     <div class="container messages">
         {% for message in messages %}
@@ -117,16 +120,6 @@
         {% endfor %}
     </div>
     {% endif %}
-
-    <div class="container" id="body-container">
-        {% block content %}{% endblock content %}
-        <div class="footer-content-wrapper" data-lift="WebUI.homePage" style="cursor:pointer">
-            <span>Language </span>
-            <a id="uk">EN</a>
-            <span> | </span>
-            <a id="es">ES</a>
-        </div>
-    </div>
     <script>
         var currentURL = window.location.href;
         const element = document.getElementById('uk')

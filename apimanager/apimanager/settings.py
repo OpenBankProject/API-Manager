@@ -271,10 +271,11 @@ OAUTH_CONSUMER_SECRET = None
 
 # Path on API_HOST to DirectLogin
 DIRECTLOGIN_PATH = '/my/logins/direct'
+ALLOW_DIRECT_LOGIN = True
 
 # Set to true if the API is connected to a core banking system
 GATEWAYLOGIN_HAS_CBS = False
-
+ALLOW_GATEWAY_LOGIN = True
 
 # Use BOOTSTRAP3 if you are using Bootstrap 3
 BOOTSTRAP4 = {

@@ -19,7 +19,9 @@ class HomeView(TemplateView):
             'logo_url': settings.LOGO_URL,
             'override_css_url': settings.OVERRIDE_CSS_URL,
             'directlogin_form': DirectLoginForm(),
+            'ALLOW_DIRECT_LOGIN':settings.ALLOW_DIRECT_LOGIN,
             'gatewaylogin_form': GatewayLoginForm(),
+            'ALLOW_GATEWAY_LOGIN': settings.ALLOW_GATEWAY_LOGIN,
             'SHOW_API_TESTER':settings.SHOW_API_TESTER,
             'API_TESTER_URL':settings.API_TESTER_URL
         })
