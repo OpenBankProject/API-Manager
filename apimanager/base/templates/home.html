@@ -22,9 +22,13 @@
 				<select class="form-control" id="authentication-select">
 					<option value="">{% trans "Choose ..." %}</option>
 					<option value="oauth">OAuth 1/OpenID Connect</option>
-					<option value="directlogin">DirectLogin</option>
-					<option value="gatewaylogin">GatewayLogin</option>
-				</select>
+					 {% if ALLOW_DIRECT_LOGIN %}
+					<option value="directlogin" >DirectLogin</option>
+					{% endif %}
+					{% if ALLOW_GATEWAY_LOGIN %}
+					<option value="gatewaylogin" >GatewayLogin</option>
+					{% endif %}
+ 				</select>
 			</div>
 
 			<div class="col-xs-12 col-sm-9">

@@ -5,17 +5,17 @@
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 <label class="form-group">{% trans "Web UI Props Name" %}</label>
-                <br />
+                <br/>
             </div>
             <div class="col-xs-12 col-sm-3">
                 <label class="form-group">{% trans "Web UI Props Value" %}</label>
-                <br />
+                <br/>
             </div>
             <div class="col-sm-12 col-sm-4">
-                <label class="form-group">{% trans "Action" %}</label> <br />
+                <label class="form-group">{% trans "Action" %}</label> <br/>
             </div>
             <div class="col-xs-12 col-sm-1">
-                <label class="form-group">{% trans "Props Id" %}</label> <br />
+                <label class="form-group">{% trans "Props Id" %}</label> <br/>
             </div>
 
         </div>
@@ -24,12 +24,12 @@
             {% for webui_prop in webui_props %}
             <div class="runner">
                 <div class="row">
-                    <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}" />
+                    <input type="hidden" class="web_ui_props_id" value="{{ webui_prop.web_ui_props_id }}"/>
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group" cols="20" rows="1">
                             <div class="web_ui_props_name">{{ webui_prop.name }}
                             </div>
-                            <!--<span class="language_list"></span>-->
+                            <span class="language_list"></span>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -46,8 +46,8 @@
                                 {% trans "Delete" %}
                             </button>
                             <select class="language" style="width:6rem; height:3.5rem">
-                                <option value="en_GB">en_GB</option>
-                                <option value="es_ES">es_ES</option>
+                                <option value="_en_GB">en_GB</option>
+                                <option value="_es_ES">es_ES</option>
                             </select>
                             <button class="btn btn-primary btn-create forCreate">
                                 {% trans "Create" %}
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-1">
                         <div class="form-group" cols="1" rows="1">
-                            <div class="" >{{ webui_prop.web_ui_props_id }}</div>
+                            <div class="">{{ webui_prop.web_ui_props_id }}</div>
                         </div>
                     </div>
 
@@ -111,17 +111,23 @@
             e.preventDefault();
             var t = $(this);
             var runner = t.parent().parent().parent();
-            var web_ui_props_name = $(runner).find(".web_ui_props_name").text();
+            var web_ui_props_name = $(runner).find(".web_ui_props_name").text().replace(/\n/g, " ").trim();
+            var web_ui_props_value = $(runner).find(".web_ui_props_value").val();
             var languages = $(runner).find(".language").val();
-
-            if (languages == "es_ES") {
-                $(runner).find(".language_list").text("_" + languages);
-            } else {
-                $(runner).find(".language_list").text("");
+            if (languages == "_es_ES") {
+                 $.post("save/method", {
+                    web_ui_props_name: web_ui_props_name + languages,
+                    web_ui_props_value: web_ui_props_value,
+                },
+                function(response) {
+                    location.reload();
+                }
+            );
             }
         });
     });
+
 </script>
 
 {% endblock extrajs %} {% block extracss %}
-<link href="{% static 'webui/css/webui.css' %}" rel="stylesheet" /> {% endblock extracss %}
+<link href="{% static 'webui/css/webui.css' %}" rel="stylesheet"/> {% endblock extracss %}
