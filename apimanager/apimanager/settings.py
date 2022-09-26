@@ -254,7 +254,7 @@ API_VERSION = '4.0.0'
 
 # URL to API Tester
 API_TESTER_URL = 'https://www.example.com'
-SHOW_API_TESTER = True
+SHOW_API_TESTER = False
 
 
 # Always save session$

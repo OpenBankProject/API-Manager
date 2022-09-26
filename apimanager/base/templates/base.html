@@ -120,6 +120,11 @@
         {% endfor %}
     </div>
     {% endif %}
+        <div class="container" id="body-container">
+            {% block content %}{% endblock content %}
+            <div class="footer-content-wrapper" data-lift="WebUI.homePage" style="cursor:pointer">
+            </div>
+        </div>
     <script>
         var currentURL = window.location.href;
         const element = document.getElementById('uk')
