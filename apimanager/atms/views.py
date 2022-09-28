@@ -20,7 +20,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
     """Index view for ATMs"""
     template_name = "atms/index.html"
     form_class = CreateAtmForm
-    success_url = reverse_lazy('atms_list')
+    success_url = reverse_lazy('atms_create')
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
