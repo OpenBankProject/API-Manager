@@ -192,16 +192,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	margin-top: 89px;
 }
 
-#logo-left{
-	height: 50px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-#left-logo img{
-	height:40px;
-}
-
 .navbar-btn .btn-default {
 	font-size: 16px;
 	text-align: center;
