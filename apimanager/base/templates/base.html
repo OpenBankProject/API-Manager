@@ -30,7 +30,7 @@
 					</button>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="margin-left:8rem">
                         <li> <a href="{% url 'home' %}" style="position:absolute; margin-left: -70px !important; top:-5px"><img src="{{ logo_url }}" alt="brand"></a></li>
                         <li><a href="{{ API_PORTAL }}">{% trans "Home" %}</a></li>
                         {% url "consumers-index" as consumers_index_url %}
