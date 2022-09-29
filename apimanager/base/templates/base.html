@@ -59,7 +59,7 @@
                                 <li {% if metrics_summary_url in request.path %} class="active" {% endif %}><a href="{{ metrics_summary_url }}">{% trans "KPI Dashboard" %}</a></li>
                             </ul>
                         </li>
-                        {% url "branches_list" as branches_list_url %} {% url "customers-create" as customers_create_url %} {% url "atms_create" as atms_create_url %} {% url "atm-list" as atm_list_url %}
+                        {% url "branches_list" as branches_list_url %} {% url "customers-create" as customers_create_url %} {% url "atms_create" as atms_create_url %} {% url "atm-list" as atm_list_url %} {% url "product-list" as product_list_url %}
                         <li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
                             <ul class="dropdown-menu">
@@ -68,6 +68,7 @@
                                 <li {% if branches_list_url in request.path %} class="active" {% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
                                 <li {% if atms_create_url in request.path %} class="active" {% endif %}><a href="{{ atms_create_url }}">{% trans "ATM Create" %}</a></li>
                                 <li {% if atm_list_url in request.path %} class="active" {% endif %}><a href="{{ atm_list_url }}">{% trans "ATM List" %}</a></li>
+                                <li {% if product_list_url in request.path %} class="active" {% endif %}><a href="{{ product_list_url }}">{% trans "Product List" %}</a></li>
                             </ul>
                         </li>
                         {% url "config-index" as config_index_url %} {% url "webui-index" as webui_props_index_url %} {% url "methodrouting-index" as methodrouting_index_url %} {% url "connectormethod" as connectormethod_url %} {% url "dynamicendpoints-index" as dynamic_endpoints_index_url %} {% url "apicollections-index" as api_collections_index_url %}
@@ -94,13 +95,13 @@
                         </li>
                         {% endif %}
                         <!--<ul class="nav navbar-nav navbar-right" style="padding-top:13px; margin-left:12rem">-->
-                            <li style="margin-left:55%; position:fixed">
+                            <li style="margin-left:50%; position:fixed">
                                 {% if user.is_authenticated %}
                                 <p class="navbar-right" style="margin-top:8px"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a href="/logout" class="btn btn-default">{% trans "Logout" %} </a></p>
                                 {% endif %}
                             </li>
                         <!--</ul>-->
-                        <li><a style="text-decoration: none; color:#fff; cursor:pointer; margin-left:60rem">
+                        <li style="text-decoration: none; color:#fff; cursor:pointer; margin-left:50rem"><a style="color:#fff;">
                             <span id="uk">English</span>
                             |
                             <span id="es">Spanish</span></a></li>

@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'bootstrap3',
     'bootstrap_datepicker_plus',
     'mathfilters',
-
     'base',
     'obp',
     'consumers',
@@ -56,6 +55,7 @@ INSTALLED_APPS = [
     'branches',
     'atms',
     'atmlist',
+    'productlist',
     'entitlementrequests',
     'customers',
     'metrics',
