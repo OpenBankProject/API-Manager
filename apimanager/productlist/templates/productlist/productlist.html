@@ -8,19 +8,19 @@
 <div class="table-responsive">
     <table class="table table-hover tablesorter" id="product-list" aria-describedby="atms list">
         <thead>
-        <th scope="col">{% trans "ATM Id" %}</th>
+        <th scope="col">{% trans "Product Code" %}</th>
         <th scope="col">{% trans "Bank Id" %}</th>
-        <th scope="col">{% trans "ATM Name" %}</th>
+        <th scope="col">{% trans "Product Name" %}</th>
         <th scope="col">{% trans "More info" %}</th>
         </thead>
         <tbody>
-        {% for atm in atms_list %}
+        {% for product in products_list %}
 
-        {% url 'atms_update' atm.id atm.bank_id as url_atm_update %}
-        <tr data-atm-id="{{ atm.id }}">
-            <td>{{ atm.id }}</td>
-            <td>{{ atm.bank_id }}</td>
-            <td>{{ atm.name }}</td>
+        <!--{% url 'atms_update' atm.id atm.bank_id as url_atm_update %}-->
+        <tr data-product-code="{{ product.code }}">
+            <td>{{ product.code }}</td>
+            <td>{{ product.bank_id }}</td>
+            <td>{{ product.name }}</td>
             <td>
                 <div class="popuptext">
                     <ul>
@@ -42,4 +42,4 @@
 </div>
 </div>
 {% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
-<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}
+<link href="{% static 'productlist/css/product.css' %}" rel="stylesheet"> {% endblock extracss %}

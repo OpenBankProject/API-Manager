@@ -12,15 +12,12 @@ import json
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
-from atms.views import IndexAtmsView
 from obp.api import API, APIError
 import csv
 
-
-
-class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
-    template_name = "atmlist/atmlist.html"
-    success_url = '/atms/list'
+class ProductListView(LoginRequiredMixin, FormView ):
+    template_name = "productlist/productlist.html"
+    success_url = '/products/list'
     def get_banks(self):
                 api = API(self.request.session.get('obp'))
                 try:
@@ -34,30 +31,29 @@ class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
                     messages.error(self.request, err)
                     return []
 
-    def get_atms(self, context):
+    def get_products(self):
             api = API(self.request.session.get('obp'))
             try:
                 self.bankids = self.get_banks()
-                atms_list = []
+                products_list = []
                 for bank_id in self.bankids:
-                    urlpath = '/banks/{}/atms'.format(bank_id)
+                    urlpath = '/banks/{}/products'.format(bank_id)
                     result = api.get(urlpath)
-                    #print(result)
-                    if 'atms' in result:
-                        atms_list.extend(result['atms'])
+                    #print(result, "This is a result")
+                    if 'products' in result:
+                        products_list.extend(result['products'])
             except APIError as err:
                 messages.error(self.request, err)
                 return []
             except Exception as inst:
                 messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
                 return []
-
-            return atms_list
+            return products_list
     def get_context_data(self, **kwargs):
-            context = super(IndexAtmsView, self).get_context_data(**kwargs)
-            atms_list = self.get_atms(context)
+            products_list = self.get_products()
+            context = {}
             context.update({
-                'atms_list': atms_list,
+                'products_list': products_list,
                 'bankids': self.bankids
             })
             return context
@@ -79,13 +75,13 @@ class ExportCsvView(LoginRequiredMixin, View):
        api = API(self.request.session.get('obp'))
        try:
            self.bankids = self.get_banks()
-           atms_list = []
+           products_list = []
            for bank_id in self.bankids:
-               urlpath = '/banks/{}/atms'.format(bank_id)
+               urlpath = '/banks/{}/products'.format(bank_id)
                result = api.get(urlpath)
                #print(result)
-               if 'atms' in result:
-                   atms_list.extend(result['atms'])
+               if 'products' in result:
+                   products_list.extend(result['products'])
        except APIError as err:
            messages.error(self.request, err)
        except Exception as inst:
@@ -93,10 +89,10 @@ class ExportCsvView(LoginRequiredMixin, View):
        response = HttpResponse(content_type = 'text/csv')
        response['Content-Disposition'] = 'attachment;filename= Atms'+ str(datetime.datetime.now())+'.csv'
        writer = csv.writer(response)
-       writer.writerow(["id","name","notes","line_1","line_2","line_3","city", "county", "state", "postcode","country_code", "longitude","latitude","more_info"])
+       writer.writerow(["product_code","bank_id","name","parent_product_code","more_info_url","terms_and_conditions_url","description", "license", "id", "name"])
        for user in atms_list:
-          writer.writerow([user['id'],user['name'], user['notes'], user["address"]['line_1'], user["address"]['line_2'],
-                             user["address"]['line_3'], user["address"]['city'], user["address"]['county'], user["address"]['state'], user["address"]['postcode'], user["address"]['country_code'], user["location"]['longitude'], user["location"]['latitude'], user['more_info']])
+          writer.writerow([user['product_code'],user['bank_id'], user['name'], user["parent_product_code"], user["more_info_url"],
+                             user["terms_and_conditions_url"], user["description"], user["license"]['id'], user["license"]['name']])
        return response
 
        #print(atms_list)
