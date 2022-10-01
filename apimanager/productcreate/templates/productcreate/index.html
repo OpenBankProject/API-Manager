@@ -1,0 +1,83 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}  {% block page_title %}{{ block.super }} / Products{% endblock page_title %} {% block content %}
+<div id="productcreate">
+    <h1>{% trans "Product Create" %}</h1>
+    <form method="post">
+        {% csrf_token %} {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                {% if form.parent_product_code.errors %}
+                <div class="alert alert-danger">{{ form.parent_product_code.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.parent_product_code.label_tag }} {{ form.parent_product_code }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {% if form.name.errors %}
+                <div class="alert alert-danger">{{ form.name.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.name.label_tag }} {{ form.name }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                {% if form.more_info_url.errors %}
+                <div class="alert alert-danger">{{ form.more_info_url.errors }}</div>
+                {% endif %}
+                <div class="form-group">{{ form.more_info_url.label_tag }} {{ form.more_info_url }}</div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {% if form.terms_and_conditions_url.errors %}
+                <div class="alert alert-danger">{{ form.terms_and_conditions_url.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.terms_and_conditions_url.label_tag }} {{ form.terms_and_conditions_url }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                {% if form.description.errors %}
+                <div class="alert alert-danger"> {{ form.description.errors }} </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.description.label_tag }} {{ form.description }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {% if form.meta_license_id.errors %}
+                <div class="alert alert-danger"> {{ form.meta_license_id.errors }} </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.meta_license_id.label_tag }} {{ form.meta_license_id }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                {% if form.meta_license_name.errors %}
+                <div class="alert alert-danger"> {{ form.meta_license_name.errors }} </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.meta_license_name.label_tag }} {{ form.meta_license_name }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 hidden-xs">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-green">
+                        {% trans "Add" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'productcreate/css/productcreate.css' %}" rel="stylesheet"/> {% endblock extracss %}
