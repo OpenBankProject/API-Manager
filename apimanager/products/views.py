@@ -109,6 +109,7 @@ class UpdateProductView(LoginRequiredMixin, FormView):
         }
         try:
             result = self.api.put(urlpath, payload=payload)
+            print(result, "This is result")
             if 'code' in result and result['code']>=400:
                 error_once_only(self.request, result['message'])
                 return super(UpdateProductView, self).form_invalid(form)
