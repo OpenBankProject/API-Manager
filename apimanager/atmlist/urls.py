@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-URLs for metrics app
+URLs for ATM list app
 """
 
 from django.conf.urls import url

@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,6 +5,7 @@ from django.shortcuts import render
 """
 Views of Product app
 """
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
@@ -13,13 +13,12 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import CreateProductForm
-from django.utils.translation import ugettext_lazy as _
 
 class IndexProductView(LoginRequiredMixin, FormView):
-    """Index view for Products"""
-    template_name = "productcreate/index.html"
+    """Index view for Product"""
+    template_name = "products/index.html"
     form_class = CreateProductForm
-    success_url = reverse_lazy('product_create')
+    success_url = reverse_lazy('products-create')
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
@@ -34,31 +33,16 @@ class IndexProductView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except Exception as err:
-            messages.error(self.request, err)
+        except:
+            messages.error(self.request, "Unknown Error")
         return form
 
     def form_valid(self, form):
         try:
-            data = form.cleaned_data
-            urlpath = '/banks/{}/products'.format(bank_id)
-            payload ={
-                "id": data["product_code"],
-                "bank_id": data["bank_id"],
-                "name": data["name"],
-                "more_info_url": data['more_info_url'],
-                "terms_and_conditions_url": data["terms_and_conditions_url"],
-                "description": data["description"],
-                "meta": {
-                    "license": {
-                    "id": "ODbL-1.0",
-                    "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
-                    }
-                }
-            },
-            result = self.api.put(urlpath, payload=payload)
+           pass
+            #result = self.api.put(urlpath, payload=payload)
         except APIError as err:
-            messages.error(self.request, "Unknown Error")
+            messages.error(self.request, err)
             return super(IndexProductView, self).form_invalid(form)
         except Exception as err:
             messages.error(self.request, "Unknown Error")
@@ -66,12 +50,12 @@ class IndexProductView(LoginRequiredMixin, FormView):
         if 'code' in result and result['code']>=400:
             messages.error(self.request, result['message'])
             return super(IndexProductView, self).form_valid(form)
-        msg = 'Product {} for Bank {} has been created successfully!'.format(result["id"],result['bank_id'])
+        msg = 'Product {} for Bank {} has been created successfully!'.format(result['product_code'], result['bank_id'])
         messages.success(self.request, msg)
         return super(IndexProductView, self).form_valid(form)
 
 class UpdateProductView(LoginRequiredMixin, FormView):
-    template_name = "productcreate/update.html"
+    template_name = "products/update.html"
     success_url = '/products/list'
     form_class = CreateProductForm
 
@@ -93,8 +77,7 @@ class UpdateProductView(LoginRequiredMixin, FormView):
             messages.error(self.request, "Unknown Error")
         try:
             result = self.api.get(urlpath)
-            fields['bank_id'].initial = self.kwargs['bank_id']
-            fields['product_code'].initial = self.kwargs['product_code']
+            fields['parent_product_code'].initial = self.kwargs['parent_product_code']
             fields['name'].initial = result['name']
             fields['more_info_url'].initial = result['more_info_url']
             fields['terms_and_conditions_url'].initial = result['terms_and_conditions_url']
@@ -108,33 +91,34 @@ class UpdateProductView(LoginRequiredMixin, FormView):
         return form
     def form_valid(self, form):
         data = form.cleaned_data
-        urlpath = '/banks/{}/products/{}'.format(data["bank_id"],data["product_code"])
+        urlpath = '/banks/{}/products/{}'.format(data["bank_id"], data["product_code"])
         payload = {
-            "id": data["product_code"],
-            "bank_id": data["bank_id"],
+            #"product_code": data["product_code"],
+            "parent_product_code": data["parent_product_code"],
+            #"bank_id": data["bank_id"],
             "name": data["name"],
-            "more_info_url": data['more_info_url'],
+            "more_info_url": data["more_info_url"],
             "terms_and_conditions_url": data["terms_and_conditions_url"],
             "description": data["description"],
             "meta": {
                 "license": {
-                "id": "ODbL-1.0",
-                "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
+                    "id": "PDDL",
+                    "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
                 }
-            }
-        },
+            },
+        }
         try:
             result = self.api.put(urlpath, payload=payload)
             if 'code' in result and result['code']>=400:
-                messages.error(self.request, result['message'])
+                error_once_only(self.request, result['message'])
                 return super(UpdateProductView, self).form_invalid(form)
         except APIError as err:
             messages.error(self.request, err)
             return super(UpdateProductView, self).form_invalid(form)
-        except Exception as e:
-            messages.error(self.request, e)
+        except Exception as err:
+            messages.error(self.request, err)
             return super(UpdateProductView, self).form_invalid(form)
-        msg = 'Product {} for Bank {} has been updated successfully!'.format(  # noqa
+        msg = 'Product {} for Bank {} has been Update successfully!'.format(  # noqa
             data["product_code"], data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateProductView, self).form_valid(form)
@@ -142,12 +126,13 @@ class UpdateProductView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(UpdateProductView, self).get_context_data(**kwargs)
         self.bank_id = self.kwargs['bank_id']
-        self.product_code = self.kwargs['product_code']
+        self.branch_id = self.kwargs['product_code']
         context.update({
             'product_code': self.product_code,
             'bank_id': self.bank_id
         })
         return context
+
 
 
 

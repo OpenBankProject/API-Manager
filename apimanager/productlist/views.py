@@ -12,10 +12,11 @@ import json
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
+from products.views import IndexProductView
 from obp.api import API, APIError
 import csv
 
-class ProductListView(LoginRequiredMixin, FormView ):
+class ProductListView(IndexProductView, LoginRequiredMixin, FormView ):
     template_name = "productlist/productlist.html"
     success_url = '/products/list'
     def get_banks(self):
@@ -31,7 +32,7 @@ class ProductListView(LoginRequiredMixin, FormView ):
                     messages.error(self.request, err)
                     return []
 
-    def get_products(self):
+    def get_products(self, context):
             api = API(self.request.session.get('obp'))
             try:
                 self.bankids = self.get_banks()
@@ -50,13 +51,13 @@ class ProductListView(LoginRequiredMixin, FormView ):
                 return []
             return products_list
     def get_context_data(self, **kwargs):
-            products_list = self.get_products()
-            context = {}
-            context.update({
-                'products_list': products_list,
-                'bankids': self.bankids
-            })
-            return context
+        context = super(IndexProductView, self).get_context_data(**kwargs)
+        products_list = self.get_products(context)
+        context.update({
+            'products_list': products_list,
+            'bankids': self.bankids
+        })
+        return context
 class ExportCsvView(LoginRequiredMixin, View):
     """View to export the user to csv"""
     def get_banks(self):

@@ -1,4 +1,4 @@
-#productcreate div {
+#products div {
 	margin: 5px 0;
 }
 
@@ -12,7 +12,7 @@
   padding: 8px 0;
   z-index: 1;
   /*bottom: 125%;*/
-  top:100%;
+  top:100%
   left: 50%;
   margin-left: -80px;
 }

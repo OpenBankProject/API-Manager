@@ -31,6 +31,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
+        print(fields, "These are fields")
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('',_('Choose...')),(True, True), (False, False)]
@@ -104,6 +105,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
+            print(data, "This is a data")
             urlpath = '/banks/{}/atms'.format(data['bank_id'])
             payload ={
                 "id": data["atm_id"],
