@@ -13,6 +13,8 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import CreateProductForm
+from django.views.decorators.csrf import csrf_exempt
+from base.utils import exception_handle
 
 class IndexProductView(LoginRequiredMixin, FormView):
     """Index view for Product"""
@@ -29,6 +31,7 @@ class IndexProductView(LoginRequiredMixin, FormView):
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
+        print(fields, "These are fields")
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
@@ -39,8 +42,23 @@ class IndexProductView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         try:
-           pass
-            #result = self.api.put(urlpath, payload=payload)
+           data = form.cleaned_data
+           print(data, "This is a data")
+           urlpath = '/banks/{}/products'.format(bank_id)
+           payload={
+                "parent_product_code": data["parent_product_code"],
+                "name": data["name"],
+                "more_info_url": data["more_info_url"],
+                "terms_and_conditions_url": data["terms_and_conditions_url"],
+                "description": data["description"],
+                "meta": {
+                        "license": {
+                        "id": "ODbL-1.0",
+                        "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
+                        }
+                    },
+           }
+           result = self.api.put(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(IndexProductView, self).form_invalid(form)
@@ -135,5 +153,9 @@ class UpdateProductView(LoginRequiredMixin, FormView):
         return context
 
 
-
+@exception_handle
+@csrf_exempt
+def createList(request):
+    print(request.POST, "createProductList listt")
+    return HttpResponse("<h1>View 1</h1>")
 

@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'productlist',
     'entitlementrequests',
     'customers',
+    'customerlist',
     'metrics',
     'config',
     'webui',
