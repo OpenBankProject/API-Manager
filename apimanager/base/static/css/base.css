@@ -201,3 +201,15 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	border: 1px solid #333333;
 	display:inline-block;
 }
+
+.button-select {
+    margin-top:8px;
+    margin-left:25rem
+}
+
+.language-select {
+    text-decoration: none;
+    color:#fff;
+    cursor:pointer;
+    margin-left:5rem;
+}

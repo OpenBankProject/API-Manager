@@ -96,13 +96,13 @@
                         </li>
                         {% endif %}
                         <!--<ul class="nav navbar-nav navbar-right" style="padding-top:13px; margin-left:12rem">-->
-                            <li style="margin-left:50%; position:fixed">
+                            <li>
                                 {% if user.is_authenticated %}
-                                <p class="navbar-right" style="margin-top:8px"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a href="/logout" class="btn btn-default">{% trans "Logout" %} </a></p>
+                                <p class="navbar-right button-select"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a href="/logout" class="btn btn-default">{% trans "Logout" %} </a></p>
                                 {% endif %}
                             </li>
                         <!--</ul>-->
-                        <li style="text-decoration: none; color:#fff; cursor:pointer; margin-left:50rem"><a style="color:#fff;">Language
+                        <li class="language-select"><a style="color:#fff;">Language
                             <span id="uk">EN</span>
                             |
                             <span id="es">ES</span></a></li>
@@ -146,7 +146,7 @@
         <div class="container">
             <p class="text-muted">
                 <a title="API ROOT" href="{{ API_ROOT }}">API ROOT: {{ API_ROOT }}</a> |
-                <a title="Open Bank Project" href="https://openbankproject.com">Open Bank Project</a> | Powered by <a title="TESOBE" href="http://tesobe.com">TESOBE</a> |
+                <a title="Open Bank Project" href="https://openbankproject.com?locale=en_GB">Open Bank Project</a> | Powered by <a title="TESOBE" href="http://tesobe.com">TESOBE</a> |
                 <small>Copyright &copy; 2016 - 2020</small>
             </p>
         </div>
