@@ -5,39 +5,40 @@
     <form class="form-inline" method="get">
         <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv' %}';">
     </form>
-<div class="table-responsive">
-    <table class="table table-hover tablesorter" id="customers_list" aria-describedby="customers list">
-        <thead>
-        <th scope="col">{% trans "Customer Id" %}</th>
-        <th scope="col">{% trans "Bank Id" %}</th>
-        <th scope="col">{% trans "Customer Name" %}</th>
-        <th scope="col">{% trans "More info" %}</th>
-        </thead>
-        <tbody>
-        {% for customer in customer_list %}
+    <div class="table-responsive">
+        <table class="table table-hover tablesorter" id="customers_list" aria-describedby="customers list">
+            <thead>
+            <th scope="col">{% trans "Customer Id" %}</th>
+            <th scope="col">{% trans "Bank Id" %}</th>
+            <th scope="col">{% trans "Customer Name" %}</th>
+            <th scope="col">{% trans "More info" %}</th>
+            </thead>
+            <tbody>
 
-        {% url 'customers_update' customer.id customer.bank_id as url_customer_update %}
-        <tr data-customer-id="{{ customer.id }}">
-            <td>{{ customer.id }}</td>
-            <td>{{ customer.bank_id }}</td>
-            <td>{{ customer.name }}</td>
-            <td>
-                <div class="popuptext">
-                    <ul>
-                        <li>{% trans "Other Info" %}:
-                            <ul>
-                                <li>line1: {{customer.email}}</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-            <td><a href="{{ url_customer_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            {% for customer in customers_list %}
+
+            {% url 'customers_update' customer.customer_id customer.bank_id as url_customer_update %}
+            <tr id="{{ customer.customer_id }}">
+                <td>{{ customer.customer_id }}</td>
+                <td>{{ customer.bank_id }}</td>
+                <td>{{ customer.legal_name }}</td>
+                <td>
+                    <div class="popuptext">
+                        <ul>
+                            <li>{% trans "Other Info" %}:
+                                <ul>
+                                    <li>line1: {{customer.email}}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td><a href="{{ url_customer_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
 <link href="{% static 'customerlist/css/customerlist.css' %}" rel="stylesheet"> {% endblock extracss %}
