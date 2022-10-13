@@ -35,32 +35,35 @@ class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
                     return []
 
     def get_customers(self, context):
+
             api = API(self.request.session.get('obp'))
             try:
                 self.bankids = self.get_banks()
                 customers_list = []
-                for bank_id in self.bankids:
-                    urlpath = '/banks/{}/my/customers'.format(bank_id)
-                    #urlpath = 'http://127.0.0.1:8080/obp/v4.0.0/my/customers'
-                    result = api.get(urlpath)
-                    print(result, "Result is ")
-                    if 'customers' in result:
-                        customers_list.extend(result['customers'])
+                #for bank_id in self.bankids:
+                urlpath = '/my/customers'
+                #urlpath = 'http://127.0.0.1:8080/obp/v4.0.0/my/customers'
+                result = api.get(urlpath)
+                print(result, "Result is ")
+                if 'customers' in result:
+                    customers_list.extend(result['customers'])
             except APIError as err:
                 messages.error(self.request, err)
                 return []
             except Exception as inst:
                 messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
                 return []
-            print(customers_list, "This is a list")
+            print(customers_list[0], "This is a customer list")
             return customers_list
     def get_context_data(self, **kwargs):
+            print("Hello from get_context_data")
             context = super(CreateView, self).get_context_data(**kwargs)
             customers_list = self.get_customers(context)
             context.update({
                 'customers_list': customers_list,
                 'bankids': self.bankids
             })
+            print(context, "Bye from get_context_data")
             return context
 class ExportCsvView(LoginRequiredMixin, View):
     """View to export the user to csv"""
