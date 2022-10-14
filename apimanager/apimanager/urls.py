@@ -43,6 +43,7 @@ urlpatterns += i18n_patterns(
     url(r'^products/', include('products.urls')),
     url(r'^products/list', include('productlist.urls')),
     url(r'^customers/', include('customers.urls')),
+    url(r'^customer/list', include('customerlist.urls')),
     url(r'^metrics/', include('metrics.urls')),
     url(r'^config/', include('config.urls')),
     url(r'^webui/', include('webui.urls')),

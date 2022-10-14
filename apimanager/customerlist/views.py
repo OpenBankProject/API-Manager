@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 # -*- coding: utf-8 -*-
 """
-Views of atms app
+Views of customer list app
 """
 import datetime
 from django.contrib import messages
@@ -12,14 +12,15 @@ import json
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
-from products.views import IndexProductView
+from customers.views import CreateView
 from obp.api import API, APIError
-
 import csv
 
-class ProductListView(IndexProductView, LoginRequiredMixin, FormView ):
-    template_name = "productlist/productlist.html"
-    success_url = '/products/list'
+
+
+class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
+    template_name = "customerlist/customerlist.html"
+    success_url = '/customers/list'
     def get_banks(self):
                 api = API(self.request.session.get('obp'))
                 try:
@@ -33,32 +34,37 @@ class ProductListView(IndexProductView, LoginRequiredMixin, FormView ):
                     messages.error(self.request, err)
                     return []
 
-    def get_products(self, context):
+    def get_customers(self, context):
+
             api = API(self.request.session.get('obp'))
             try:
                 self.bankids = self.get_banks()
-                products_list = []
-                for bank_id in self.bankids:
-                    urlpath = '/banks/{}/products'.format(bank_id)
-                    result = api.get(urlpath)
-                    #print(result, "This is a result")
-                    if 'products' in result:
-                        products_list.extend(result['products'])
+                customers_list = []
+                #for bank_id in self.bankids:
+                urlpath = '/my/customers'
+                #urlpath = 'http://127.0.0.1:8080/obp/v4.0.0/my/customers'
+                result = api.get(urlpath)
+                print(result, "Result is ")
+                if 'customers' in result:
+                    customers_list.extend(result['customers'])
             except APIError as err:
                 messages.error(self.request, err)
                 return []
             except Exception as inst:
                 messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
                 return []
-            return products_list
+            print(customers_list[0], "This is a customer list")
+            return customers_list
     def get_context_data(self, **kwargs):
-        context = super(IndexProductView, self).get_context_data(**kwargs)
-        products_list = self.get_products(context)
-        context.update({
-            'products_list': products_list,
-            'bankids': self.bankids
-        })
-        return context
+            print("Hello from get_context_data")
+            context = super(CreateView, self).get_context_data(**kwargs)
+            customers_list = self.get_customers(context)
+            context.update({
+                'customers_list': customers_list,
+                'bankids': self.bankids
+            })
+            print(context, "Bye from get_context_data")
+            return context
 class ExportCsvView(LoginRequiredMixin, View):
     """View to export the user to csv"""
     def get_banks(self):
@@ -77,13 +83,13 @@ class ExportCsvView(LoginRequiredMixin, View):
        api = API(self.request.session.get('obp'))
        try:
            self.bankids = self.get_banks()
-           products_list = []
+           customers_list = []
            for bank_id in self.bankids:
-               urlpath = '/banks/{}/products'.format(bank_id)
+               urlpath = '/banks/{}/customers'.format(bank_id)
                result = api.get(urlpath)
                #print(result)
-               if 'products' in result:
-                   products_list.extend(result['products'])
+               if 'customers' in result:
+                   customers_list.extend(result['customers'])
        except APIError as err:
            messages.error(self.request, err)
        except Exception as inst:
@@ -91,10 +97,11 @@ class ExportCsvView(LoginRequiredMixin, View):
        response = HttpResponse(content_type = 'text/csv')
        response['Content-Disposition'] = 'attachment;filename= Atms'+ str(datetime.datetime.now())+'.csv'
        writer = csv.writer(response)
-       writer.writerow(["product_code","bank_id","name","parent_product_code","more_info_url","terms_and_conditions_url","description", "license", "id", "name"])
+       writer.writerow(["bank_id","customer_id","customer_number","legal_name","mobile_phone_number","email","face_image", "url", "date", "date_of_birth","relationship_status", "dependants","dob_of_dependants","employment_status"])
        for user in atms_list:
-          writer.writerow([user['product_code'],user['bank_id'], user['name'], user["parent_product_code"], user["more_info_url"],
-                             user["terms_and_conditions_url"], user["description"], user["license"]['id'], user["license"]['name']])
+          writer.writerow([user['bank_id'],user['customer_id'], user['customer_number'], user["legal_name"],
+                             user["mobile_phone_number"], user["email"], user["face_image"]['url'], user["face_image"]['date'], user["date_of_birth"], user['relationship_status'], user["dependants"], user["dob_of_dependants"], user['employment_status']])
        return response
 
        #print(atms_list)
+

@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-sm-12 hidden-xs">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-green">{% trans "Add" %}</button>
+                    <button type="submit" class="btn btn-primary btn-green" onclick="createProductList()">{% trans "Add" %}</button>
                 </div>
             </div>
         </div>
@@ -84,7 +84,16 @@
 {% block extrajs %}
 {% comment %}
 	<script type="text/javascript" src="{% static 'products/js/products.js' %}"></script>
-	<script type="text/javascript">
+	<script>
+        function createProductList(){
+        $.post('/products/list/createProductList', {
+                'api_collection_name': 'api_collection_name',
+                'api_collection_is_sharable': 'api_collection_is_sharable',
+                'api_collection_description': 'api_collection_description',
+            }, function (response) {
+                console.log(" hello", response)
+            });
+    }
 	</script>
 {% endcomment %}
 {% endblock extrajs %}

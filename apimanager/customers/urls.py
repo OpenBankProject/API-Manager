@@ -4,7 +4,6 @@ URLs for customers app
 """
 
 from django.conf.urls import url
-
 from .views import CreateView
 
 urlpatterns = [
