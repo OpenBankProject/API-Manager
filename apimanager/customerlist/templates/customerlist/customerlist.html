@@ -9,8 +9,8 @@
         <table class="table table-hover tablesorter" id="customers_list" aria-describedby="customers list">
             <thead>
             <th scope="col">{% trans "Customer Id" %}</th>
+            <th scope="col">{% trans "User Id" %}</th>
             <th scope="col">{% trans "Bank Id" %}</th>
-            <th scope="col">{% trans "Legal Name" %}</th>
             <th scope="col">{% trans "More info" %}</th>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                         <ul>
                             <li>{% trans "Other Info" %}:
                                 <ul>
-                                    <li>line1: {{customer.email}}</li>
+                                    <li>Customer Number: {{customer.customer_number}}</li>
                                 </ul>
                             </li>
                         </ul>
