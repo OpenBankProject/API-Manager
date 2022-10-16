@@ -59,10 +59,11 @@
                                 <li {% if metrics_summary_url in request.path %} class="active" {% endif %}><a href="{{ metrics_summary_url }}">{% trans "KPI Dashboard" %}</a></li>
                             </ul>
                         </li>
-                        {% url "branches_list" as branches_list_url %} {% url "customers-create" as customers_create_url %} {% url "customer-list" as customer_list_url %} {% url "atms_create" as atms_create_url %} {% url "atm-list" as atm_list_url %}  {% url "product-list" as product_list_url %} {% url "products-create" as product_create_url %}
+                        {% url "branches_list" as branches_list_url %} {% url "system_view" as system_view_url %} {% url "customers-create" as customers_create_url %} {% url "customer-list" as customer_list_url %} {% url "atms_create" as atms_create_url %} {% url "atm-list" as atm_list_url %}  {% url "product-list" as product_list_url %} {% url "products-create" as product_create_url %}
                         <li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
                             <ul class="dropdown-menu">
+                                <li {% if system_view_url in request.path %} class="active" {% endif %}><a href="{{ system_view_url }}">{% trans "System View" %}</a></li>
                                 <li {% if customers_create_url in request.path %} class="active" {% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li>
                                 <li {% if customer_list_url in request.path %} class="active" {% endif %}><a href="{{ customer_list_url }}">{% trans "Customer List" %}</a></li>
                                 <hr class="dropdown-hr">

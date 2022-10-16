@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'customerlist',
     'metrics',
     'config',
+    'systemview',
     'webui',
     'methodrouting',
     'connectormethod',
