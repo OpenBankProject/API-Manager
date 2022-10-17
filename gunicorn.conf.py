@@ -10,3 +10,4 @@ errorlog = os.path.join(BASE_DIR, 'logs', 'gunicorn.error.log')
 loglevel = 'info'
 capture_output = True
 workers = multiprocessing.cpu_count() * 2 + 1
+timeout = 240
