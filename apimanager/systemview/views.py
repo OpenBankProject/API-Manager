@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 # -*- coding: utf-8 -*-
 """
-Views of atms app
+Views of System View app
 """
 import datetime
 from django.contrib import messages
@@ -32,27 +32,30 @@ class SystemView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
             return []
 
-    def get_systemview(self, context):
+    def get_systemview(self):
         api = API(self.request.session.get('obp'))
         try:
-            systemview = []
+            self.bankids = self.get_banks()
+            system_view = []
             urlpath = '/system-views/owner'
             result = api.get(urlpath)
-            #print(result, "This is a result")
-            if 'systemview' in result:
-                systemview.extend(result['systemview'])
+            system_view = result
         except APIError as err:
             messages.error(self.request, err)
             return []
         except Exception as inst:
             messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return []
-        return systemview
+        return system_view
     def get_context_data(self, **kwargs):
-        context = super(self).get_context_data(**kwargs)
-        systemview = self.get_systemview(context)
+        #context = super(self).get_context_data(**kwargs)
+        #systemview = self.get_systemview(context)
+        system_view = self.get_systemview()
+
+        context = {}
         context.update({
-            'systemview': get_systemview,
+            'system_view': system_view,
+            'bankids': self.bankids
         })
         return context
 """class ExportCsvView(LoginRequiredMixin, View):

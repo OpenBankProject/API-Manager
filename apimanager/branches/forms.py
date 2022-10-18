@@ -29,6 +29,15 @@ class CreateBranchForm(forms.Form):
         ),
         choices=[],
     )
+    view_id = forms.ChoiceField(
+        label=_('View Id'),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        choices=[],
+    )
     name = forms.CharField(
         label=_('Name'),
         widget=forms.TextInput(
