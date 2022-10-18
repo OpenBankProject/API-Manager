@@ -8,16 +8,16 @@
     <div class="table-responsive">
         <table class="table table-hover tablesorter" id="customers_list" aria-describedby="customers list">
             <thead>
-            <th scope="col">{% trans "Customer Id" %}</th>
-            <th scope="col">{% trans "Bank Id" %}</th>
-            <th scope="col">{% trans "Legal Name" %}</th>
-            <th scope="col">{% trans "More info" %}</th>
+            <th scope="col">{% trans "Id" %}</th>
+            <th scope="col">{% trans "Short Name" %}</th>
+            <th scope="col">{% trans "Is Public" %}</th>
+            <th scope="col">{% trans "Description" %}</th>
             </thead>
             <tbody>
 
-            {% for customer in customers_list %}
+            {% for view in views_list %}
 
-            {% url 'customers_update' customer.customer_id customer.bank_id as url_customer_update %}
+            {% url 'view_update' view.id view.bank_id as url_view_update %}
             <tr id="{{ customer.customer_id }}">
                 <td>{{ customer.customer_id }}</td>
                 <td>{{ customer.bank_id }}</td>
@@ -27,7 +27,7 @@
                         <ul>
                             <li>{% trans "Other Info" %}:
                                 <ul>
-                                    <li>line1: {{customer.email}}</li>
+                                    <li>Customer Number: {{customer.customer_number}}</li>
                                 </ul>
                             </li>
                         </ul>

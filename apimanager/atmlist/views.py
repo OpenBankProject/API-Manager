@@ -100,4 +100,3 @@ class ExportCsvView(LoginRequiredMixin, View):
        return response
 
        #print(atms_list)
-
