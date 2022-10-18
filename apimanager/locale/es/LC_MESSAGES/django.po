@@ -448,7 +448,7 @@ msgstr "Seleccione..."
 
 #: base/templates/home.html:36
 msgid "Proceed to authentication server"
-msgstr "Weiter zum Authentifizierungsserver"
+msgstr "Proceder al servidor de autenticación"
 
 #: branches/forms.py:13 branches/templates/branches/index.html:160
 msgid "Branch Id"
