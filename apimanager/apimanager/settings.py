@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'base',
     'obp',
     'consumers',
+    'accounts',
     'systemviews',
     'users',
     'branches',
