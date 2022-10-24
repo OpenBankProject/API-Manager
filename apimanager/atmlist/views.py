@@ -13,7 +13,6 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
 from atms.views import IndexAtmsView
-from base.views import get_banks
 from obp.api import API, APIError
 import csv
 
@@ -22,23 +21,23 @@ import csv
 class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
     template_name = "atmlist/atmlist.html"
     success_url = '/atms/list'
-    """def get_banks(self):
-                api = API(self.request.session.get('obp'))
-                try:
-                    urlpath = '/banks'
-                    result = api.get(urlpath)
-                    if 'banks' in result:
-                        return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
-                    else:
-                        return []
-                except APIError as err:
-                    messages.error(self.request, err)
-                    return []"""
-
-    def get_atms(self,context):
+    def get_banks(self):
             api = API(self.request.session.get('obp'))
             try:
-                self.bankids = get_banks(self.request)
+                urlpath = '/banks'
+                result = api.get(urlpath)
+                if 'banks' in result:
+                    return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
+                else:
+                    return []
+            except APIError as err:
+                messages.error(self.request, err)
+                return []
+
+    def get_atms(self, context):
+            api = API(self.request.session.get('obp'))
+            try:
+                self.bankids = self.get_banks()
                 atms_list = []
                 for bank_id in self.bankids:
                     urlpath = '/banks/{}/atms'.format(bank_id)
@@ -59,7 +58,7 @@ class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
             atms_list = self.get_atms(context)
             context.update({
                 'atms_list': atms_list,
-                'bankids': get_banks(self.request)
+                'bankids': self.bankids
             })
             return context
 class ExportCsvView(LoginRequiredMixin, View):
@@ -101,4 +100,3 @@ class ExportCsvView(LoginRequiredMixin, View):
        return response
 
        #print(atms_list)
-

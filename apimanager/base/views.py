@@ -7,20 +7,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from obp.forms import DirectLoginForm, GatewayLoginForm
-from obp.api import API, APIError
 
-def get_banks(request):
-    api = API(request.session.get('obp'))
-    try:
-        urlpath = '/banks'
-        result = api.get(urlpath)
-        if 'banks' in result:
-            return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
-        else:
-            return []
-    except APIError as err:
-        messages.error(self.request, err)
-        return []
 
 class HomeView(TemplateView):
     """View for home page"""
