@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-URLs for metrics app
+URLs for Account app
 """
 
 from django.conf.urls import url
-from .views import IndexAccountsView, UpdateAccountsView
+from .views import IndexAccountsView
 
 urlpatterns = [
     url(r'^create',
         IndexAccountsView.as_view(),
         name='accounts-create'),
-    url(r'^update/(?P<account_id>[ 0-9\w|\W\@\.\+-]+)/bank/(?P<bank_id>[0-9\w\@\.\+-]+)/$',
-        UpdateAccountsView.as_view(),
-        name='accounts_update'),
+
 ]
