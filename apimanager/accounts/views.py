@@ -70,9 +70,9 @@ class IndexAccountsView(LoginRequiredMixin, FormView):
         messages.success(self.request, msg)
         return super(IndexAccountsView, self).form_valid(form)
 
-"""class UpdateAccountsView(LoginRequiredMixin, FormView):
+class UpdateAccountsView(LoginRequiredMixin, FormView):
     template_name = "accounts/update.html"
-    success_url = '/atms/list'
+    success_url = '/accounts/list'
     form_class = CreateAccountForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -239,4 +239,4 @@ class IndexAccountsView(LoginRequiredMixin, FormView):
             'bank_id': self.bank_id
         })
         return context
-"""
+
