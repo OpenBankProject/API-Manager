@@ -35,6 +35,7 @@ urlpatterns += i18n_patterns(
     url(r'^logout$',
         LogoutView.as_view(), name='oauth-logout'),
     url(r'^systemviews/', include('systemviews.urls')),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^consumers/', include('consumers.urls')),
     url(r'^entitlementrequests/', include('entitlementrequests.urls')),
     url(r'^users/', include('users.urls')),

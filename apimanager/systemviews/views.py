@@ -14,7 +14,6 @@ from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
 from obp.api import API, APIError
 
-import csv
 
 class SystemView(LoginRequiredMixin, FormView):
     template_name = "systemviews/index.html"
