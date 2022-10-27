@@ -22,17 +22,17 @@ class AtmListView(IndexAtmsView, LoginRequiredMixin, FormView ):
     template_name = "atmlist/atmlist.html"
     success_url = '/atms/list'
     def get_banks(self):
-                api = API(self.request.session.get('obp'))
-                try:
-                    urlpath = '/banks'
-                    result = api.get(urlpath)
-                    if 'banks' in result:
-                        return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
-                    else:
-                        return []
-                except APIError as err:
-                    messages.error(self.request, err)
+            api = API(self.request.session.get('obp'))
+            try:
+                urlpath = '/banks'
+                result = api.get(urlpath)
+                if 'banks' in result:
+                    return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
+                else:
                     return []
+            except APIError as err:
+                messages.error(self.request, err)
+                return []
 
     def get_atms(self, context):
             api = API(self.request.session.get('obp'))
@@ -100,4 +100,3 @@ class ExportCsvView(LoginRequiredMixin, View):
        return response
 
        #print(atms_list)
-

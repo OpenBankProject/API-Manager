@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-29 14:00+0200\n"
+"POT-Creation-Date: 2022-10-18 16:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,6 +36,8 @@ msgstr "Es Compartible"
 #: apicollections/templates/apicollections/index.html:18
 #: consumers/templates/consumers/detail.html:175
 #: consumers/templates/consumers/index.html:59
+#: productlist/templates/productlist/productlist.html:27
+#: systemviews/templates/systemviews/index.html:11
 msgid "Description"
 msgstr "Descripción"
 
@@ -58,24 +60,25 @@ msgstr "Creada"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: apimanager/settings.py:181
+#: apimanager/settings.py:184
 msgid "English"
 msgstr "Inglés"
 
-#: apimanager/settings.py:182
+#: apimanager/settings.py:185
 msgid "French"
 msgstr "francés"
 
-#: apimanager/settings.py:183
+#: apimanager/settings.py:186
 msgid "Spanish"
 msgstr "español"
 
 #: atmlist/templates/atmlist/atmlist.html:2
-#: atmlist/templates/atmlist/atmlist.html:4 base/templates/base.html:70
+#: atmlist/templates/atmlist/atmlist.html:4 base/templates/base.html:71
 msgid "ATM List"
 msgstr "Vista de Cajeros Automáticos"
 
 #: atmlist/templates/atmlist/atmlist.html:6
+#: customerlist/templates/customerlist/customerlist.html:6
 #: productlist/templates/productlist/productlist.html:6
 #: users/templates/users/includes/filter_pagination.html:12
 msgid "Export CSV"
@@ -87,6 +90,7 @@ msgstr "ID del cajero automático"
 
 #: atmlist/templates/atmlist/atmlist.html:12 atms/forms.py:25
 #: branches/templates/branches/index.html:161
+#: customerlist/templates/customerlist/customerlist.html:12
 #: productlist/templates/productlist/productlist.html:12
 #: users/templates/users/detail.html:97
 #: users/templates/users/invitation.html:22
@@ -98,6 +102,7 @@ msgid "ATM Name"
 msgstr "Nombre del cajero automático"
 
 #: atmlist/templates/atmlist/atmlist.html:14
+#: customerlist/templates/customerlist/customerlist.html:14
 #: productlist/templates/productlist/productlist.html:14
 msgid "More info"
 msgstr "Más información"
@@ -105,19 +110,20 @@ msgstr "Más información"
 #: atmlist/templates/atmlist/atmlist.html:27 atms/forms.py:46
 #: branches/forms.py:43 branches/templates/branches/index.html:176
 #: branches/templates/branches/index.html:203
-#: productlist/templates/productlist/productlist.html:27
 msgid "Address"
 msgstr "Dirección"
 
 #: atmlist/templates/atmlist/atmlist.html:36
 #: consumers/templates/consumers/index.html:76
+#: customerlist/templates/customerlist/customerlist.html:36
 #: productlist/templates/productlist/productlist.html:36
+#: systemviews/templates/systemviews/index.html:21
 #: users/templates/users/index.html:69
 msgid "View"
 msgstr "Ver"
 
 #: atms/forms.py:35 branches/forms.py:33
-#: consumers/templates/consumers/index.html:58
+#: consumers/templates/consumers/index.html:58 products/forms.py:45
 msgid "Name"
 msgstr "Nombre"
 
@@ -274,17 +280,18 @@ msgstr "Cargo internacional por retiro de efectivo"
 msgid "Balance Inquiry Fee"
 msgstr "Cargo por consulta de saldo"
 
-#: atms/templates/atms/index.html:3 base/templates/base.html:69
+#: atms/templates/atms/index.html:3 base/templates/base.html:70
 msgid "ATM Create"
 msgstr "Creada"
 
 #: atms/templates/atms/index.html:250
 #: branches/templates/branches/index.html:151
+#: products/templates/products/index.html:76
 #: users/templates/users/detail.html:81 users/templates/users/detail.html:86
 msgid "Add"
 msgstr "Agregar"
 
-#: atms/templates/atms/update.html:4
+#: atms/templates/atms/update.html:4 products/templates/products/update.html:8
 msgid "ATM Detail"
 msgstr "Descripción"
 
@@ -351,56 +358,75 @@ msgstr "Panel de KPI"
 msgid "Resources"
 msgstr "Recursos"
 
-#: base/templates/base.html:66 customers/templates/customers/create.html:5
+#: base/templates/base.html:66 systemviews/templates/systemviews/index.html:2
+#: systemviews/templates/systemviews/index.html:4
+msgid "System View"
+msgstr ""
+
+#: base/templates/base.html:67 customers/templates/customers/create.html:5
 msgid "Customers"
 msgstr "Consumidores"
 
-#: base/templates/base.html:68 branches/templates/branches/index.html:9
+#: base/templates/base.html:68
+#: customerlist/templates/customerlist/customerlist.html:2
+#: customerlist/templates/customerlist/customerlist.html:4
+#, fuzzy
+#| msgid "Customers"
+msgid "Customer List"
+msgstr "Consumidores"
+
+#: base/templates/base.html:69 branches/templates/branches/index.html:9
 msgid "Branches"
 msgstr "Sucursales"
 
-#: base/templates/base.html:71
+#: base/templates/base.html:72 products/templates/products/index.html:8
+#, fuzzy
+#| msgid "Function Name"
+msgid "Product Create"
+msgstr "Nombre de la función"
+
+#: base/templates/base.html:73
 #: productlist/templates/productlist/productlist.html:2
 #: productlist/templates/productlist/productlist.html:4
 msgid "Product List"
 msgstr "Produkt Liste"
 
-#: base/templates/base.html:76
+#: base/templates/base.html:78
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:78 config/templates/config/index.html:8
+#: base/templates/base.html:80 config/templates/config/index.html:8
 msgid "Config"
 msgstr "Configuraciones"
 
-#: base/templates/base.html:80
+#: base/templates/base.html:82
 msgid "Webui Props"
 msgstr "Accesorios webui"
 
-#: base/templates/base.html:82
+#: base/templates/base.html:84
 msgid "Method Routings"
 msgstr "Enrutamiento de métodos"
 
-#: base/templates/base.html:84
+#: base/templates/base.html:86
 #: connectormethod/templates/connectormethod/detail.html:6
 #: connectormethod/templates/connectormethod/index.html:6
 msgid "Connector Methods"
 msgstr "Métricas del conector"
 
-#: base/templates/base.html:86
+#: base/templates/base.html:88
 #: dynamicendpoints/templates/dynamicendpoints/index.html:7
 msgid "Dynamic Endpoints"
 msgstr "Puntos finales dinámicos"
 
-#: base/templates/base.html:89
+#: base/templates/base.html:91
 msgid "My API Collections"
 msgstr "Mis colecciones de API"
 
-#: base/templates/base.html:94
+#: base/templates/base.html:96
 msgid "API Tester"
 msgstr "Métricas de la API"
 
-#: base/templates/base.html:100
+#: base/templates/base.html:102
 msgid "Logout"
 msgstr "Cerrar la sesión"
 
@@ -448,26 +474,26 @@ msgstr "Seleccione..."
 
 #: base/templates/home.html:36
 msgid "Proceed to authentication server"
-msgstr "Weiter zum Authentifizierungsserver"
+msgstr "Proceder al servidor de autenticación"
 
 #: branches/forms.py:13 branches/templates/branches/index.html:160
 msgid "Branch Id"
 msgstr "Identificación de la sucursal"
 
-#: branches/forms.py:24 customers/forms.py:15 users/forms.py:24
-#: users/forms.py:40
+#: branches/forms.py:24 customers/forms.py:15 products/forms.py:24
+#: users/forms.py:24 users/forms.py:40
 msgid "Bank"
 msgstr "Banco"
 
-#: branches/forms.py:36
+#: branches/forms.py:36 products/forms.py:48 products/forms.py:58
 msgid "The name of the branch"
 msgstr "La configuración de la API"
 
-#: branches/forms.py:75
+#: branches/forms.py:75 products/forms.py:86
 msgid "meta_license_id"
 msgstr "Nombre de la metalicencia"
 
-#: branches/forms.py:86
+#: branches/forms.py:86 products/forms.py:97
 msgid "meta_license_name"
 msgstr "Nombre de la metalicencia"
 
@@ -584,6 +610,8 @@ msgid "id"
 msgstr "identificación"
 
 #: branches/templates/branches/index.html:197
+#: products/templates/products/index.html:28
+#: products/templates/products/update.html:28
 msgid "name"
 msgstr "nombre"
 
@@ -786,6 +814,23 @@ msgstr "Identificación"
 msgid "Action"
 msgstr "Acción"
 
+#: customerlist/templates/customerlist/customerlist.html:11
+#, fuzzy
+#| msgid "Customers"
+msgid "Customer Id"
+msgstr "Consumidores"
+
+#: customerlist/templates/customerlist/customerlist.html:13
+#: customers/forms.py:42
+msgid "Legal Name"
+msgstr "Nombre_juridico"
+
+#: customerlist/templates/customerlist/customerlist.html:28
+#, fuzzy
+#| msgid "More Info"
+msgid "Other Info"
+msgstr "Más información"
+
 #: customers/forms.py:24 users/templates/users/index.html:58
 msgid "Username"
 msgstr "Nombre de usuario"
@@ -797,10 +842,6 @@ msgstr "La configuración de la API"
 #: customers/forms.py:33
 msgid "Customer Number"
 msgstr "Número de cliente"
-
-#: customers/forms.py:42
-msgid "Legal Name"
-msgstr "Nombre_juridico"
 
 #: customers/forms.py:62 users/forms.py:67 users/templates/users/detail.html:16
 #: users/templates/users/index.html:59 users/templates/users/invitation.html:71
@@ -1505,7 +1546,7 @@ msgstr "Maximo de llamadas por día"
 msgid "Calls per month"
 msgstr "llamadas por mes"
 
-#: productlist/templates/productlist/productlist.html:11
+#: productlist/templates/productlist/productlist.html:11 products/forms.py:13
 msgid "Product Code"
 msgstr ""
 
@@ -1514,6 +1555,42 @@ msgstr ""
 #| msgid "Function Name"
 msgid "Product Name"
 msgstr "Nombre de la función"
+
+#: products/forms.py:34 products/forms.py:37
+msgid "parent_product_code"
+msgstr ""
+
+#: products/forms.py:55
+#, fuzzy
+#| msgid "more_info"
+msgid "more_info_url"
+msgstr "más información"
+
+#: products/forms.py:65 products/forms.py:68
+msgid "terms_and_conditions_url"
+msgstr ""
+
+#: products/forms.py:75 products/forms.py:78
+#: products/templates/products/index.html:52
+#: products/templates/products/update.html:52
+#, fuzzy
+#| msgid "Description"
+msgid "description"
+msgstr "Descripción"
+
+#: systemviews/templates/systemviews/index.html:8
+msgid "Id"
+msgstr ""
+
+#: systemviews/templates/systemviews/index.html:9
+#, fuzzy
+#| msgid "Site Name"
+msgid "Short Name"
+msgstr "Nobre del sitio"
+
+#: systemviews/templates/systemviews/index.html:10
+msgid "Is Public"
+msgstr ""
 
 #: users/forms.py:15 users/templates/users/detail.html:67
 #: users/templates/users/detail.html:96
@@ -1767,9 +1844,6 @@ msgstr "Ahorrar"
 
 #~ msgid "accessibleFeatures"
 #~ msgstr "Funciones accesibles"
-
-#~ msgid "more_info"
-#~ msgstr "más información"
 
 #~ msgid "phone_number"
 #~ msgstr "número_de_teléfono"

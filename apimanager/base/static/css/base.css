@@ -210,6 +210,11 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .language-select {
     text-decoration: none;
     color:#fff;
-    cursor:pointer;
     margin-left:5rem;
 }
+#uk {
+    cursor:pointer;
+}
+#es {
+    cursor:pointer;
+}1
