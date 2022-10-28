@@ -10,8 +10,9 @@ urlpatterns = [
     url(r'^$',
         ProductListView.as_view(),
         name='product-list'),
-    url(r'^export_csv$',
+    url(r'^export_csv_product$',
         ExportCsvView.as_view(),
-        name='export-csv'),
-
+        name='export-csv-product'),
 ]
+
+
