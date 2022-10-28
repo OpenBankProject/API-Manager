@@ -6,19 +6,18 @@
         <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv' %}';">
     </form>
 <div class="table-responsive">
-    <table class="table table-hover tablesorter" id="product-list" aria-describedby="atms list">
+    <table class="table table-hover tablesorter" id="product-list" aria-describedby="Product list">
         <thead>
         <th scope="col">{% trans "Product Code" %}</th>
         <th scope="col">{% trans "Bank Id" %}</th>
-        <th scope="col">{% trans "Product Name" %}</th>
+        <th scope="col">{% trans "Name" %}</th>
         <th scope="col">{% trans "More info" %}</th>
         </thead>
         <tbody>
         {% for product in products_list %}
 
-        <!--{% url 'atms_update' atm.id atm.bank_id as url_atm_update %}-->
-        <tr data-product-code="{{ product.code }}">
-            <td>{{ product.code }}</td>
+        <tr data-product-code="{{ product.product_code }}">
+            <td>{{ product.product_code }}</td>
             <td>{{ product.bank_id }}</td>
             <td>{{ product.name }}</td>
             <td>
@@ -26,7 +25,7 @@
                     <ul>
                         <li>{% trans "Description" %}:
                             <ul>
-                                <li>{{product.Description.more_info_url}}</li>
+                                <li>{{product.more_info_url}}</li>
                             </ul>
                         </li>
 
