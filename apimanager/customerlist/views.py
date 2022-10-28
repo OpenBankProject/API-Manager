@@ -51,7 +51,7 @@ class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
         })
         return context
 class ExportCsvView(LoginRequiredMixin, View):
-    View to export the user to csv
+    """View to export the user to csv"""
 
     def get(self, request, *args, **kwargs):
        api = API(self.request.session.get('obp'))
@@ -59,7 +59,7 @@ class ExportCsvView(LoginRequiredMixin, View):
            self.bankids = get_banks(self.request)
            customers_list = []
            for bank_id in self.bankids:
-               urlpath = '/banks/{}/customers'.format(bank_id)
+               urlpath = '/customers'
                result = api.get(urlpath)
                if 'customers' in result:
                    customers_list.extend(result['customers'])
@@ -67,7 +67,7 @@ class ExportCsvView(LoginRequiredMixin, View):
            messages.error(self.request, err)
        except Exception as inst:
            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
-       response = HttpResponse(content_type = 'text1/csv')
+       response = HttpResponse(content_type = 'text/csv')
        response['Content-Disposition'] = 'attachment;filename= Customers'+ str(datetime.datetime.now())+'.csv'
        writer = csv.writer(response)
        writer.writerow(["bank_id","customer_id","customer_number","legal_name","mobile_phone_number","email","face_image", "url", "date", "date_of_birth","relationship_status", "dependants","dob_of_dependants","employment_status"])

@@ -15,6 +15,7 @@ from django.views.generic import FormView,TemplateView, View
 from products.views import IndexProductView
 from obp.api import API, APIError
 from base.views import get_banks
+import csv
 
 #import csv
 
@@ -50,7 +51,7 @@ class ProductListView(IndexProductView, LoginRequiredMixin, FormView ):
         })
         return context
 class ExportCsvView(LoginRequiredMixin, View):
-    View to export the user to csv
+    """View to export the user to csv"""
 
     def get(self, request, *args, **kwargs):
        api = API(self.request.session.get('obp'))

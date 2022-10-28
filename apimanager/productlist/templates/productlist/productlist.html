@@ -3,7 +3,7 @@
 <div id="products">
     <h1>{% trans "Product List" %}</h1>
     <form class="form-inline" method="get">
-        <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv' %}';">
+        <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv-product' %}';">
     </form>
 <div class="table-responsive">
     <table class="table table-hover tablesorter" id="product-list" aria-describedby="Product list">
