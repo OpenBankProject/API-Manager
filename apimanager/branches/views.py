@@ -11,10 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.urls import reverse_lazy
 from django.views.generic import FormView
-
 from obp.api import API, APIError
-
 from .forms import CreateBranchForm
+from base.views import get_banks
 
 class IndexBranchesView(LoginRequiredMixin, FormView):
     """Index view for branches"""
@@ -173,24 +172,11 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
         messages.success(self.request, msg)
         return super(IndexBranchesView, self).form_valid(form)
 
-    def get_banks(self):
-        api = API(self.request.session.get('obp'))
-        try:
-            urlpath = '/banks'
-            result = api.get(urlpath)
-            if 'banks' in result:
-                return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
-            else:
-                return []
-        except APIError as err:
-            messages.error(self.request, err)
-            return []
-
     def get_branches(self, context):
 
         api = API(self.request.session.get('obp'))
         try:
-            self.bankids = self.get_banks()
+            self.bankids = get_banks(self.request)
             branches_list = []
             for bank_id in self.bankids:
                 urlpath = '/banks/{}/branches'.format(bank_id)
@@ -212,7 +198,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
         branches_list = self.get_branches(context)
         context.update({
             'branches_list': branches_list,
-            'bankids': self.bankids
+            'bankids': get_banks(self.request)
         })
         return context
 

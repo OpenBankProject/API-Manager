@@ -81,7 +81,6 @@ class ExportCsvView(LoginRequiredMixin, View):
            for bank_id in self.bankids:
                urlpath = '/banks/{}/products'.format(bank_id)
                result = api.get(urlpath)
-               #print(result)
                if 'products' in result:
                    products_list.extend(result['products'])
        except APIError as err:
@@ -89,12 +88,11 @@ class ExportCsvView(LoginRequiredMixin, View):
        except Exception as inst:
            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
        response = HttpResponse(content_type = 'text/csv')
-       response['Content-Disposition'] = 'attachment;filename= Atms'+ str(datetime.datetime.now())+'.csv'
+       response['Content-Disposition'] = 'attachment;filename= Product'+ str(datetime.datetime.now())+'.csv'
        writer = csv.writer(response)
-       writer.writerow(["product_code","bank_id","name","parent_product_code","more_info_url","terms_and_conditions_url","description", "license", "id", "name"])
-       for user in atms_list:
+       writer.writerow(["product_code","bank_id","name","parent_product_code","more_info_url","terms_and_conditions_url","description"])
+       for user in products_list:
           writer.writerow([user['product_code'],user['bank_id'], user['name'], user["parent_product_code"], user["more_info_url"],
-                             user["terms_and_conditions_url"], user["description"], user["license"]['id'], user["license"]['name']])
+                             user["terms_and_conditions_url"], user["description"]])
        return response
 
-       #print(atms_list)
