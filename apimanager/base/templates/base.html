@@ -75,7 +75,7 @@
                                 <li {% if product_list_url in request.path %} class="active" {% endif %}><a href="{{ product_list_url }}">{% trans "Product List" %}</a></li>
                             </ul>
                         </li>
-                        {% url "config-index" as config_index_url %} {% url "webui-index" as webui_props_index_url %} {% url "methodrouting-index" as methodrouting_index_url %} {% url "connectormethod" as connectormethod_url %} {% url "dynamicendpoints-index" as dynamic_endpoints_index_url %} {% url "apicollections-index" as api_collections_index_url %}
+                        {% url "config-index" as config_index_url %} {% url "webui-index" as webui_props_index_url %} {% url "methodrouting-index" as methodrouting_index_url %} {% url "connectormethod" as connectormethod_url %} {% url "dynamicendpoints-index" as dynamic_endpoints_index_url %} {% url "apicollections-index" as api_collections_index_url %} {% url "apicollection-list" as api_collections_list_url %}
                         <li class="dropdown{% if config_index_url in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Configurations" %}</a>
                             <ul class="dropdown-menu">
@@ -91,6 +91,7 @@
                                 </li>
                                 <hr class="dropdown-hr">
                                 <li {% if api_collections_index_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
+                                <li {% if api_collections_list_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_list_url }}">{% trans "My API Collection List" %}</a></li>
                             </ul>
                         </li>
                         {% if SHOW_API_TESTER %}
