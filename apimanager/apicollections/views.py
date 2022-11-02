@@ -113,7 +113,7 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/api-collections-ids/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_id'],kwargs['operation_id'])
+            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
                 messages.error(request, result['message'])
