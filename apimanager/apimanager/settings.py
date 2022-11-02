@@ -68,7 +68,8 @@ INSTALLED_APPS = [
     'methodrouting',
     'connectormethod',
     'dynamicendpoints',
-    'apicollections'
+    'apicollections',
+    'apicollectionlist'
 ]
 
 MIDDLEWARE = [

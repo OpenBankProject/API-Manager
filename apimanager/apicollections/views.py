@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Views of config app
+Views of API Collection app
 """
 
 import json
@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 class IndexView(LoginRequiredMixin, FormView):
-    """Index view for config"""
+    """Index view for API Collection"""
     template_name = "apicollections/index.html"
     form_class = ApiCollectionsForm
     success_url = reverse_lazy('apicollections-index')
@@ -97,9 +97,7 @@ class DetailView(LoginRequiredMixin, FormView):
             else:
                 api_collection_endpoints=response['api_collection_endpoints']
         except APIError as err:
-            error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
-                                                   "Please check OBP-API server.    "
-                                                   "Details: " + str(err)))
+            messages.error(self.request, result['message'])
         except BaseException as err:
             error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
         else:
@@ -115,8 +113,7 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/api-collections-ids/{}/api-collection-endpoints/{}'\
-                .format(kwargs['api_collection_id'],kwargs['operation_id'])
+            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
                 messages.error(request, result['message'])
@@ -127,7 +124,6 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
             messages.error(request, err)
         except:
             messages.error(self.request, 'Unknown Error')
-
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
     
