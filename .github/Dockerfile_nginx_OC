@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/ubi9/python-39 AS builder
 USER 0
 RUN dnf update -y
 RUN dnf  install python3-psycopg2 -y
-ADD .. /app
+ADD . /app
 RUN  cp /app/.github/local_settings_container.py /app/apimanager/apimanager/local_settings.py
 RUN pip install -r /app/requirements.txt
 RUN chown  501 /
