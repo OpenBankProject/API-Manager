@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block page_title %} {{ block.super }} / {% trans "Account List" %}{% endblock page_title %} {% block content %}
+<div id="accounts_list">
+    <h1>{% trans "Account List" %}</h1>
+    <form class="form-inline" method="get">
+        <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv-account' %}';">
+    </form>
+<div class="table-responsive">
+    <table class="table table-hover tablesorter" id="accounts-list" aria-describedby="accounts list">
+        <thead>
+        <th scope="col">{% trans "Account Id" %}</th>
+        <th scope="col">{% trans "Bank Id" %}</th>
+        <th scope="col">{% trans "Label" %}</th>
+        <th scope="col">{% trans "More info" %}</th>
+        </thead>
+        <tbody>
+        {% for account in accounts_list %}
+        {% url 'account_update' account.id account.bank_id as url_account_update %}
+        <tr data-account-id="{{ account.id }}">
+            <td>{{ account.id }}</td>
+            <td>{{ account.bank_id }}</td>
+            <td>{{ account.label }}</td>
+            <td>
+                <div class="popuptext">
+                    <ul>
+                        <li>{% trans "Other Info" %}:
+                            <ul>
+                                <li>{{account.account_type}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td><a href="{{ url_atm_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'accountlist/css/accountlist.css' %}" rel="stylesheet"> {% endblock extracss %}

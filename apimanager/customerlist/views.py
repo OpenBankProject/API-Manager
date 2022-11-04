@@ -17,8 +17,6 @@ from obp.api import API, APIError
 from base.views import get_banks
 import csv
 
-
-
 class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
     template_name = "customerlist/customerlist.html"
     success_url = '/customers/list'
