@@ -26,10 +26,13 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
         api = API(self.request.session.get('obp'))
         try:
             apicollections_list = []
-            urlpath = '/my/api-collections'
+            urlpath = '/users'
             result = api.get(urlpath)
-            if 'api_collections' in result:
-                apicollections_list.extend(result['api_collections'])
+            for i in result["users"]:
+                urlpath = '/users/{}/api-collections'.format(i["user_id"])
+                result = api.get(urlpath)
+                if 'api_collections' in result:
+                   apicollections_list.extend(result['api_collections'])
         except APIError as err:
             messages.error(self.request, err)
             return []

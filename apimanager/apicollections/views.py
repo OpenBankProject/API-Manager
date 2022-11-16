@@ -44,7 +44,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
-            
+
             context.update({
                 'api_collections': api_collections
             })
@@ -55,15 +55,15 @@ class DetailView(LoginRequiredMixin, FormView):
     template_name = "apicollections/detail.html"
     form_class = ApiCollectionEndpointsForm
     success_url = reverse_lazy('my-api-collection-detail')
-    
+
     def form_valid(self, form):
         """Posts api collection endpoint data to API"""
         try:
             data = form.cleaned_data
             api = API(self.request.session.get('obp'))
             api_collection_id = super(DetailView, self).get_context_data()['view'].kwargs['api_collection_id']
-        
-            urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id) 
+
+            urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
             payload = {
                 'operation_id': data['operation_id']
             }
@@ -82,7 +82,7 @@ class DetailView(LoginRequiredMixin, FormView):
             messages.success(self.request, msg)
             self.success_url = self.request.path
             return super(DetailView, self).form_valid(form)
-        
+
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api_collection_id = context['view'].kwargs['api_collection_id']
@@ -113,7 +113,9 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
+            get_api_collection_byId_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
+            result = api.get(get_api_collection_byId_url)
+            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(result['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
                 messages.error(request, result['message'])
@@ -126,7 +128,7 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Unknown Error')
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
-    
+
 @exception_handle
 @csrf_exempt
 def apicollections_save(request):
