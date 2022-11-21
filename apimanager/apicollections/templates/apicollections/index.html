@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-                        <a class="api_collection_id" href="{{ url_collection_detail }}">{{ api_collection.api_collection_id }}</a></div>
+                        <a class="api_collection_id" href = "{{api_explorer_url}}">{{ api_collection.api_collection_id }}</a></div>
                 </div>
                 {% if api_collection.api_collection_id %}
                 <div class="col-xs-12 col-sm-2">
@@ -60,14 +60,19 @@
                     </div>
                 {%  endif %}
                 {%  if forloop.counter0 == 0 %}
-                <div class="col-sm-12 col-sm-2">
+                <div class="col-sm-6 col-sm-2">
                     <div class="form-group">
                         <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
                     </div>
                 </div>
                 {%  endif %}
                 {%  if forloop.counter0 > 0 %}
-                <div class="col-sm-12 col-sm-2">
+                <div class="col-sm-3 col-sm-1">
+                    <div class="form-group">
+                        <a type= "button" class="btn btn-primary btn-primary" href="{{ url_collection_detail }}">{% trans "View" %}</a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-sm-1">
                     <div class="form-group">
                         <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
                     </div>

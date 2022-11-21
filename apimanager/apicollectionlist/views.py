@@ -27,6 +27,7 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
         try:
             apicollections_list = []
             urlpath = '/users'
+
             result = api.get(urlpath)
             for i in result["users"]:
                 urlpath = '/users/{}/api-collections'.format(i["user_id"])
@@ -43,10 +44,20 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
         return apicollections_list
 
     def get_context_data(self, **kwargs):
+        api = API(self.request.session.get('obp'))
         context = super(IndexView, self).get_context_data(**kwargs)
+
         apicollections_list = self.get_apicollections(context)
+        try:
+            for apis in apicollections_list:
+                urlpath = "/users/user_id/{}".format(apis["user_id"])
+                result =  api.get(urlpath)
+                apis["username"] = result["username"]
+        except Exception as e:
+            messages.error(self.request, "Unknown Error {}".format(str(e)))
         context.update({
             'apicollections_list': apicollections_list,
+
         })
         return context
 

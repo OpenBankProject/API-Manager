@@ -46,7 +46,8 @@ class IndexView(LoginRequiredMixin, FormView):
             api_collections.insert(0,json.dumps(default_api_endpoint))
 
             context.update({
-                'api_collections': api_collections
+                'api_collections': api_collections,
+                "api_explorer_url": "http://localhost:8082/?version=OBPv5.0.0&operation_id=OBPv4_0_0-createMyApiCollection&currentTag=Api-Collection&locale=en_GB#OBPv4_0_0-createMyApiCollection"
             })
         return context
 
