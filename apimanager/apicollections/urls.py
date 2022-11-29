@@ -5,8 +5,7 @@ URLs for config app
 
 from django.conf.urls import url
 
-from apicollections.views import IndexView, apicollections_save, \
-    apicollections_delete, DetailView, DeleteCollectionEndpointView
+from apicollections.views import IndexView, apicollections_save, apicollections_delete, DetailView, DeleteCollectionEndpointView
 
 urlpatterns = [
     url(r'^$',

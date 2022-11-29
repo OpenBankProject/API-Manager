@@ -13,6 +13,7 @@ from django.urls import reverse, reverse_lazy
 from base.utils import exception_handle, error_once_only
 from .forms import ApiCollectionsForm, ApiCollectionEndpointsForm
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 
 class IndexView(LoginRequiredMixin, FormView):
@@ -47,7 +48,7 @@ class IndexView(LoginRequiredMixin, FormView):
 
             context.update({
                 'api_collections': api_collections,
-                "api_explorer_url": "http://localhost:8082/?version=OBPv5.0.0&operation_id=OBPv4_0_0-createMyApiCollection&currentTag=Api-Collection&locale=en_GB#OBPv4_0_0-createMyApiCollection"
+                "api_explorer_url": settings.API_EXPLORER
             })
         return context
 

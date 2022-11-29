@@ -137,6 +137,13 @@ DATABASE = {
         "PORT": "5432",
     }
 }
+
+# This is an optional setting.
+# CALLBACK_BASE_URL can be used to explicitly set the redirect base url that API Manager uses during OAuth authentication.
+# If CALLBACK_BASE_URL is not set, API Manager (this applicaiton) in the function "get_redirect_url" will use the Django HTTP_HOST environ field (see here: https://docs.djangoproject.com/en/4.1/ref/request-response/). Note, this  might be modified by NGINX via the directive: proxy_set_header Host $http_host;
+# In order to be explicit you can set it here e.g.
+# CALLBACK_BASE_URL="https://apimanager.example.com"
+
 ```
 
 
