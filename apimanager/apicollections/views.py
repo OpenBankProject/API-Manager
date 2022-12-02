@@ -48,7 +48,7 @@ class IndexView(LoginRequiredMixin, FormView):
 
             context.update({
                 'api_collections': api_collections,
-                "api_explorer_url": settings.API_EXPLORER
+                "collection_on_api_explorer_url": f"{settings.API_EXPLORER}/?version=OBPv5.0.0&operation_id=OBPv4_0_0-createMyApiCollection&currentTag=Api-Collection&locale=en_GB#OBPv4_0_0-createMyApiCollection"
             })
         return context
 

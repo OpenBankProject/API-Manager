@@ -28,12 +28,12 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
             apicollections_list = []
             urlpath = '/users'
 
-            result = api.get(urlpath)
-            for i in result["users"]:
+            get_all_users = api.get(urlpath)
+            for i in get_all_users["users"]:
                 urlpath = '/users/{}/api-collections'.format(i["user_id"])
-                result = api.get(urlpath)
-                if 'api_collections' in result:
-                   apicollections_list.extend(result['api_collections'])
+                get_api_collection_list = api.get(urlpath)
+                if 'api_collections' in get_api_collection_list:
+                   apicollections_list.extend(get_api_collection_list['api_collections'])
         except APIError as err:
             messages.error(self.request, err)
             return []
