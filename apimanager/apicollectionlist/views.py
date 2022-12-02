@@ -49,10 +49,10 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
 
         apicollections_list = self.get_apicollections(context)
         try:
-            for apis in apicollections_list:
-                urlpath = "/users/user_id/{}".format(apis["user_id"])
+            for final_collection_list in apicollections_list:
+                urlpath = "/users/user_id/{}".format(final_collection_list["user_id"])
                 result =  api.get(urlpath)
-                apis["username"] = result["username"]
+                final_collection_list["username"] = result["username"]
         except Exception as e:
             messages.error(self.request, "Unknown Error {}".format(str(e)))
         context.update({
