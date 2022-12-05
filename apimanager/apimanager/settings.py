@@ -253,6 +253,7 @@ API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 
 API_HOST = 'http://127.0.0.1:8080'
+API_EXPLORER = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
@@ -301,13 +302,14 @@ LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
 OVERRIDE_CSS_URL = None
 
 VERIFY = True
+CALLBACK_BASE_URL = ""
 
-# Local settings can override anything in here
+# Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa
 except ImportError:
     pass
-# EVERYTHING BELOW HERE WILL NOT BE OVERWRITTEN BY LOCALSETTINGS!
+# EVERYTHING BELOW HERE WILL *NOT* BE OVERWRITTEN BY LOCALSETTINGS!
 # DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
 # Settings here might use parts overwritten in local settings
