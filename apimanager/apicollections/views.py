@@ -47,6 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
+
             context.update({
                 'api_collections': api_collections,
             })
@@ -57,7 +58,6 @@ class DetailView(LoginRequiredMixin, FormView):
     template_name = "apicollections/detail.html"
     form_class = ApiCollectionEndpointsForm
     success_url = reverse_lazy('my-api-collection-detail')
-
     def form_valid(self, form):
         """Posts api collection endpoint data to API"""
         try:
@@ -87,7 +87,6 @@ class DetailView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api_collection_id = context['view'].kwargs['api_collection_id']
-
         api = API(self.request.session.get('obp'))
         urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
         api_collection_endpoints =[]
