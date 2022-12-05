@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
-                        <a class="api_collection_id" href = "{{collection_on_api_explorer_url}}">{{ api_collection.api_collection_id }}</a></div>
+                        <a class="api_collection_id" href ="#" onclick="api_explorer_url_locale('{{api_collection.collection_on_api_explorer_url}}')" target="_blank">{{ api_collection.api_collection_id }}</a></div>
                 </div>
                 {% if api_collection.api_collection_id %}
                 <div class="col-xs-12 col-sm-2">
@@ -86,5 +86,16 @@
 
 
 {% block extrajs %}
+<script>
+    function api_explorer_url_locale(collection_on_api_explorer_url) {
+         var currentURL = window.location.href.split("/");
+         if (currentURL[3] == "en") {
+            location.href = collection_on_api_explorer_url + "&locale=en_GB";
+            }
+         else {
+            location.href = collection_on_api_explorer_url + "&locale=es_ES";
+         }
+      }
+</script>
     <script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
 {% endblock extrajs %}

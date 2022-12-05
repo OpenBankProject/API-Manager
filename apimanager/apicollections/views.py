@@ -33,6 +33,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 api_collections=response['api_collections']
+                for locale in api_collections:
+                    locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={locale['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except BaseException as err:
@@ -45,10 +47,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
-
             context.update({
                 'api_collections': api_collections,
-                "collection_on_api_explorer_url": f"{settings.API_EXPLORER}/?version=OBPv5.0.0&operation_id=OBPv4_0_0-createMyApiCollection&currentTag=Api-Collection&locale=en_GB#OBPv4_0_0-createMyApiCollection"
             })
         return context
 
@@ -115,8 +115,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            get_api_collection_byId_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
-            result = api.get(get_api_collection_byId_url)
+            get_api_collection_by_Id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
+            result = api.get(get_api_collection_by_Id_url)
             urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(result['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
