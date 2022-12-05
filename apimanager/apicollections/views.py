@@ -47,6 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
+
             context.update({
                 'api_collections': api_collections,
             })
@@ -57,14 +58,12 @@ class DetailView(LoginRequiredMixin, FormView):
     template_name = "apicollections/detail.html"
     form_class = ApiCollectionEndpointsForm
     success_url = reverse_lazy('my-api-collection-detail')
-
     def form_valid(self, form):
         """Posts api collection endpoint data to API"""
         try:
             data = form.cleaned_data
             api = API(self.request.session.get('obp'))
             api_collection_id = super(DetailView, self).get_context_data()['view'].kwargs['api_collection_id']
-
             urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
             payload = {
                 'operation_id': data['operation_id']
@@ -130,7 +129,6 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Unknown Error')
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
-
 @exception_handle
 @csrf_exempt
 def apicollections_save(request):
