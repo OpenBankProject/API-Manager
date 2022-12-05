@@ -47,6 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
+
             context.update({
                 'api_collections': api_collections,
             })
@@ -63,6 +64,7 @@ class DetailView(LoginRequiredMixin, FormView):
             data = form.cleaned_data
             api = API(self.request.session.get('obp'))
             api_collection_id = super(DetailView, self).get_context_data()['view'].kwargs['api_collection_id']
+            urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
             urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
             payload = {
                 'operation_id': data['operation_id']
@@ -111,6 +113,7 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
+            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             get_api_collection_by_Id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
             result = api.get(get_api_collection_by_Id_url)
             urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(result['api_collection_name'],kwargs['operation_id'])
