@@ -50,7 +50,6 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
     def get_context_data(self, **kwargs):
         api = API(self.request.session.get('obp'))
         context = super(IndexView, self).get_context_data(**kwargs)
-
         apicollections_list = self.get_apicollections(context)
         try:
             for final_collection_list in apicollections_list:
@@ -61,7 +60,6 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
             messages.error(self.request, "Unknown Error {}".format(str(e)))
         context.update({
             'apicollections_list': apicollections_list,
-
         })
         return context
 
