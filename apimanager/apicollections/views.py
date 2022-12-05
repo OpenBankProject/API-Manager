@@ -64,6 +64,7 @@ class DetailView(LoginRequiredMixin, FormView):
             data = form.cleaned_data
             api = API(self.request.session.get('obp'))
             api_collection_id = super(DetailView, self).get_context_data()['view'].kwargs['api_collection_id']
+
             urlpath = '/my/api-collection-ids/{}/api-collection-endpoints'.format(api_collection_id)
             payload = {
                 'operation_id': data['operation_id']
@@ -72,7 +73,6 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-
         except:
             messages.error(self.request, 'Unknown Error')
             return super(DetailView, self).form_invalid(form)
@@ -84,6 +84,7 @@ class DetailView(LoginRequiredMixin, FormView):
             messages.success(self.request, msg)
             self.success_url = self.request.path
             return super(DetailView, self).form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api_collection_id = context['view'].kwargs['api_collection_id']
@@ -114,7 +115,6 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             get_api_collection_by_Id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
             result = api.get(get_api_collection_by_Id_url)
             urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(result['api_collection_name'],kwargs['operation_id'])
