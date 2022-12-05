@@ -3,83 +3,99 @@
 {% block page_title %}{{ block.super }} / API Collections{% endblock page_title %}
 
 {% block content %}
-    <h1>{% trans "My API Collections" %}</h1>
-    <div class="row">
-        <div class="col-xs-12 col-sm-2">
-            <label class="form-group">{% trans "API Collection Id" %}:</label> <br>
-        </div>
-        <div class="col-xs-12 col-sm-2">
-            <label class="form-group">{% trans "Collection Name" %}:</label> <br>
-        </div>
-        <div class="col-xs-12 col-sm-2">
-            <label class="form-group">{% trans "Is Sharable" %}:</label> <br>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <label class="form-group">{% trans "Description" %}:</label> <br>
+<h1>{% trans "My API Collections" %}</h1>
+<div class="row">
+    <div class="col-xs-12 col-sm-2">
+        <label class="form-group">{% trans "API Collection Id" %}:</label> <br>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="form-group">{% trans "Collection Name" %}:</label> <br>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="form-group">{% trans "Is Sharable" %}:</label> <br>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <label class="form-group">{% trans "Description" %}:</label> <br>
+    </div>
+</div>
+<form method="post">
+    {% csrf_token %}
+    {% for api_collection in api_collections %}
+    {% url 'my-api-collection-detail' api_collection.api_collection_id as url_collection_detail %}
+    <div class="runner">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <a class="api_collection_id" href ="#" onclick="api_explorer_url_locale('{{api_collection.collection_on_api_explorer_url}}')" target="_blank">{{ api_collection.api_collection_id }}</a></div>
+            </div>
+            {% if api_collection.api_collection_id %}
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <div>{{ api_collection.api_collection_name }}</div></div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <div>{{ api_collection.is_sharable }}</div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div cols="40" rows="1" class="form-control">{{api_collection.description}}</div>
+            </div>
+            {% else %}
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <input class="api_collection_name" value="Customer">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <select class="api_collection_is_sharable form-control">
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <textarea cols="40" rows="1" class="form-control api_collection_description">{% trans "Describe the purpose of the collection" %}</textarea>
+            </div>
+            {%  endif %}
+            {%  if forloop.counter0 == 0 %}
+            <div class="col-sm-6 col-sm-2">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
+                </div>
+            </div>
+            {%  endif %}
+            {%  if forloop.counter0 > 0 %}
+            <div class="col-sm-3 col-sm-1">
+                <div class="form-group">
+                    <a type= "button" class="btn btn-primary btn-primary" href="{{ url_collection_detail }}">{% trans "View" %}</a>
+                </div>
+            </div>
+            <div class="col-sm-3 col-sm-1">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
+                </div>
+            </div>
+            {%  endif %}
         </div>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        {% for api_collection in api_collections %}
-        {% url 'my-api-collection-detail' api_collection.api_collection_id as url_collection_detail %}
-        <div class="runner">
-            <div class="row">
-                <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1">
-                        <a class="api_collection_id" href="{{ url_collection_detail }}">{{ api_collection.api_collection_id }}</a></div>
-                </div>
-                {% if api_collection.api_collection_id %}
-                <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1">
-                        <div>{{ api_collection.api_collection_name }}</div></div>
-                </div>
-                <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1">
-                        <div>{{ api_collection.is_sharable }}</div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                    <div cols="40" rows="1" class="form-control">{{api_collection.description}}</div>
-                </div>
-                {% else %}
-                    <div class="col-xs-12 col-sm-2">
-                        <div class="form-group" cols="1" rows="1">
-                            <input class="api_collection_name" value="Customer">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-2">
-                        <div class="form-group" cols="1" rows="1">
-                            <select class="api_collection_is_sharable form-control">
-                                <option value="True">True</option>
-                                <option value="False">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <textarea cols="40" rows="1" class="form-control api_collection_description">{% trans "Describe the purpose of the collection" %}</textarea>
-                    </div>
-                {%  endif %}
-                {%  if forloop.counter0 == 0 %}
-                <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
-                    </div>
-                </div>
-                {%  endif %}
-                {%  if forloop.counter0 > 0 %}
-                <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
-                    </div>
-                </div>
-                {%  endif %}
-            </div>
-        </div>
     {% endfor %}
-    </form>
+</form>
 {% endblock %}
 
 
 {% block extrajs %}
-    <script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
+<script>
+    function api_explorer_url_locale(collection_on_api_explorer_url) {
+         var currentURL = window.location.href.split("/");
+         if (currentURL[3] == "en") {
+            location.href = collection_on_api_explorer_url + "&locale=en_GB";
+            }
+         else {
+            location.href = collection_on_api_explorer_url + "&locale=es_ES";
+         }
+      }
+</script>
+<script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
 {% endblock extrajs %}
