@@ -47,7 +47,6 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
-
             context.update({
                 'api_collections': api_collections,
             })
@@ -83,7 +82,6 @@ class DetailView(LoginRequiredMixin, FormView):
             messages.success(self.request, msg)
             self.success_url = self.request.path
             return super(DetailView, self).form_valid(form)
-
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         api_collection_id = context['view'].kwargs['api_collection_id']
@@ -128,7 +126,6 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Unknown Error')
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
-
 @exception_handle
 @csrf_exempt
 def apicollections_save(request):
