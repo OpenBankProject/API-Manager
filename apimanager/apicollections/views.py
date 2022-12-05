@@ -47,6 +47,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 "description":"Describe the purpose of the collection"
             }
             api_collections.insert(0,json.dumps(default_api_endpoint))
+
             context.update({
                 'api_collections': api_collections,
             })
