@@ -16,7 +16,7 @@ from .api import API, APIError
 from .authenticator import AuthenticatorError
 from .forms import DirectLoginForm, GatewayLoginForm
 from .oauth import OAuthAuthenticator
-
+from django.conf import settings
 
 class LoginToDjangoMixin(object):
     """Mixin to login to Django from views."""
@@ -53,8 +53,12 @@ class OAuthInitiateView(RedirectView):
         Gets the callback URI to where the user shall be returned after
         initiation at OAuth server
         """
-        base_url = '{}://{}'.format(
-            request.scheme, request.environ['HTTP_HOST'])
+
+        if settings.CALLBACK_BASE_URL:
+            base_url = settings.CALLBACK_BASE_URL
+        else:
+            base_url = '{}://{}'.format(
+                request.scheme, request.environ['HTTP_HOST'])
         uri = base_url + reverse('oauth-authorize')
         if 'next' in request.GET:
             uri = '{}?next={}'.format(uri, request.GET['next'])
