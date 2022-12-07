@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}
 {% block page_title %} {{ block.super }} / {% trans "Customer List" %}{% endblock page_title %} {% block content %}
 <div id="apicollectionlist">
-    <h1>{% trans "My API Collection List" %}</h1>
+    <h1>{% trans "API Collection List" %}</h1>
     <form class="form-inline" method="get">
         <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv-apicollection' %}';">
     </form>
@@ -9,17 +9,17 @@
         <table class="table table-hover tablesorter" id="apicollectionlist" aria-describedby="apicollectionlist list">
             <thead>
             <th scope="col">{% trans "API Collection Id" %}</th>
-            <th scope="col">{% trans "User Id" %}</th>
+            <th scope="col">{% trans "User Name" %}</th>
             <th scope="col">{% trans "API Collection Name" %}</th>
             <th scope="col">{% trans "More info" %}</th>
             </thead>
             <tbody>
             {% for apicollection in apicollections_list %}
 
-            {% url 'apicollection_update' apicollection.api_collection_id apicollection.user_id as url_apicollection_update %}
+            {% url 'my-api-collection-detail' apicollection.api_collection_id as url_collection_detail %}
             <tr id="{{ apicollection.api_collection_id }}">
                 <td>{{ apicollection.api_collection_id }}</td>
-                <td>{{ apicollection.user_id }}</td>
+                <td>{{ apicollection.username }}</td>
                 <td>{{ apicollection.api_collection_name }}</td>
                 <td>
                     <div class="popuptext">
@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                 </td>
-                <td><a href="{{ url_apicollection_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+                <td><a type= "button" class="btn btn-primary" href= "{{ url_collection_detail }}">{% trans "View" %}</a></td>
             </tr>
             {% endfor %}
             </tbody>

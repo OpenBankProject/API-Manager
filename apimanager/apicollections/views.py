@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 from base.utils import exception_handle, error_once_only
 from .forms import ApiCollectionsForm, ApiCollectionEndpointsForm
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for API Collection"""
@@ -32,6 +32,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 api_collections=response['api_collections']
+                for locale in api_collections:
+                    locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={locale['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except BaseException as err:
@@ -113,6 +115,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
+            get_api_collection_by_Id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
+            result = api.get(get_api_collection_by_Id_url)
             urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
