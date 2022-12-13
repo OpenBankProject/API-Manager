@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}
 {% block page_title %} {{ block.super }} / {% trans "Customer List" %}{% endblock page_title %} {% block content %}
 <div id="apicollectionlist">
-    <h1>{% trans "API Collection List" %}</h1>
+    <h1>{% trans " All API Collections" %}</h1>
     <form class="form-inline" method="get">
         <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv-apicollection' %}';">
     </form>
     <div class="table-responsive">
         <table class="table table-hover tablesorter" id="apicollectionlist" aria-describedby="apicollectionlist list">
             <thead>
-            <th scope="col">{% trans "API Collection Id" %}</th>
+            <th scope="col">{% trans "API Collection" %}</th>
             <th scope="col">{% trans "User Name" %}</th>
             <th scope="col">{% trans "API Collection Name" %}</th>
             <th scope="col">{% trans "More info" %}</th>

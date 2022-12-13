@@ -92,7 +92,7 @@
                                 </li>
                                 <hr class="dropdown-hr">
                                 <li {% if api_collections_index_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
-                                <li {% if api_collections_list_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_list_url }}">{% trans "My API Collection List" %}</a></li>
+                                <li {% if api_collections_list_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_list_url }}">{% trans "All API Collections" %}</a></li>
                             </ul>
                         </li>
                         {% if SHOW_API_TESTER %}
