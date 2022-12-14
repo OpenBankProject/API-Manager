@@ -13,7 +13,7 @@ $(document).ready(function($) {
 		var json_editor_id= $(runner).find('.jsoneditor_div')[0].id;
 		var json_editor_number = json_editor_id.replace("jsoneditor","");
 		var container = $("#"+json_editor_id);
-		parameters = JSON.parse($(runner).find('textarea[name="parameters"]').text());
+		var parameters = JSON.parse($(runner).find('textarea[name="parameters"]').text());
 		var jsoneditor_div =  $(runner).find('.jsoneditor_div');
 		//make sure only create one jsoneditor_div block 
 		if(!(jsoneditor_div.css("display") ==="block")){
@@ -31,7 +31,7 @@ $(document).ready(function($) {
 		var runner = $(this).parent().parent().parent();
 		var jsoneditor_id= $(runner).find('.jsoneditor_div')[0].id
 		var json_editor_number = jsoneditor_id.replace("jsoneditor","")
-		parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
+		var parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
 		console.log("parameters_Json_editor:"+parameters_Json_editor)
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
@@ -47,7 +47,7 @@ $(document).ready(function($) {
 	$('.runner button.forDelete').click(function() {
 		var t = $(this);
 		var runner = $(this).parent().parent().parent();
-		dynamic_endpoint_id = $(runner).find('.dynamic_endpoint_id').text();
+		var dynamic_endpoint_id = $(runner).find('.dynamic_endpoint_id').text();
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('dynamicendpoints/delete/dynamicendpoint', {

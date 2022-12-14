@@ -144,6 +144,22 @@ def apicollections_save(request):
     result = api.post(urlpath, payload = payload)
     return result
 
+@exception_handle
+@csrf_exempt
+def connectormethod_update(request):
+    connector_method_id = request.POST.get('api_collection_id').strip()
+    urlpath = '/management/api-collection/{}'.format(connector_method_id) #TODO : Wainting for URL
+    api = API(request.session.get('obp'))
+    #Update Endpoint Payload define
+    payload = {
+        'api_collection_is_sharable': request.POST.get('api_collection_is_sharable'),
+        'method_body': request.POST.get('api_collection_method_body_update').strip()
+    }
+    result = HttpResponse(content_type = 'application/json')
+    result = api.put(urlpath, payload=payload)
+    return result
+
+
 
 @exception_handle
 @csrf_exempt

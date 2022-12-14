@@ -68,7 +68,7 @@ class APIMetricsForm(MetricsForm):
         ('true', 'Yes'),
         ('false', 'No'),
     )
-    VERB = (
+    VERB_SELECTION = (
         ('', _('Any')),
         ('DELETE', 'DELETE'),
         ('GET', 'GET'),
@@ -125,9 +125,9 @@ class APIMetricsForm(MetricsForm):
         ),
         required=False,
     )
-    verb = forms.ChoiceField(
-        label=_('Verb'),
-        choices=VERB,
+    verb_selection = forms.ChoiceField(
+        label=_('Verb Select'),
+        choices=VERB_SELECTION,
         widget=forms.Select(
             attrs={
                 'class': 'form-control',

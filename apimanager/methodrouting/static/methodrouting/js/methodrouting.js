@@ -13,7 +13,7 @@ $(document).ready(function($) {
 		var json_editor_id= $(runner).find('.jsoneditor_div')[0].id;
 		var json_editor_number = json_editor_id.replace("jsoneditor","");
 		var container = $("#"+json_editor_id);
-		parameters = JSON.parse($(runner).find('textarea[name="parameters"]').text());
+		var parameters = JSON.parse($(runner).find('textarea[name="parameters"]').text());
 		var jsoneditor_div =  $(runner).find('.jsoneditor_div');
 		//make sure only create one jsoneditor_div block, click once to open and then close the block.
 		if (typeof json_editors[json_editor_number] === 'undefined') {
@@ -32,12 +32,12 @@ $(document).ready(function($) {
 	$('.runner button.forSave').click(function() {
 		var t = $(this);
 		var runner = $(this).parent().parent().parent();
-		method_routing_id = $(runner).find('.method_routing_id').text();
-		method_name = $(runner).find('.method_name').text();
-		connector_name = $(runner).find('.connector_name').val();
-		bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
-		is_bank_id_exact_match = $(runner).find('.is_bank_id_exact_match').val();
-		parameters = $(runner).find('textarea[name="parameters"]').val();
+		var method_routing_id = $(runner).find('.method_routing_id').text();
+		var method_name = $(runner).find('.method_name').text();
+		var connector_name = $(runner).find('.connector_name').val();
+		var bank_id_pattern = $(runner).find('textarea[name="bank_id_pattern"]').val();
+		var is_bank_id_exact_match = $(runner).find('.is_bank_id_exact_match').val();
+		var parameters = $(runner).find('textarea[name="parameters"]').val();
 		var jsoneditor_id= $(runner).find('.jsoneditor_div')[0].id;
 		var json_editor_number = jsoneditor_id.replace("jsoneditor","");
 		//if the user do not click the `parameters` box, then there is no json_editors here,so we use the parameters directly.

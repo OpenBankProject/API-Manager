@@ -4,6 +4,7 @@ Views of config app
 """
 
 import json
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from obp.api import API, APIError
