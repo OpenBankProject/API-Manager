@@ -73,8 +73,8 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except BaseException as err:
+            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
             return super(DetailView, self).form_invalid(form)
         if 'code' in api_collection_endpoint and api_collection_endpoint['code']>=400:
             messages.error(self.request, api_collection_endpoint['message'])
@@ -126,8 +126,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except BaseException as err:
+            messages.error(self.request, 'Unknown Error', err)
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
     
@@ -155,7 +155,6 @@ def connectormethod_update(request):
         'api_collection_is_sharable': request.POST.get('api_collection_is_sharable'),
         'method_body': request.POST.get('api_collection_method_body_update').strip()
     }
-    result = HttpResponse(content_type = 'application/json')
     result = api.put(urlpath, payload=payload)
     return result
 

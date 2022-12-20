@@ -1,11 +1,10 @@
 $(document).ready(function($) {
     $('.runner button.forSave').click(function(e) {
         e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var connector_method_name = $(runner).find('.connector_method_name').val();
-        var connector_method_programming_lang = $(runner).find('.connector_method_programming_lang').val();
-        var connector_method_body = $(runner).find('.connector_method_body').val();
+        let runner = $(this).parent().parent().parent();
+        let connector_method_name = $(runner).find('.connector_method_name').val();
+        let connector_method_programming_lang = $(runner).find('.connector_method_programming_lang').val();
+        let connector_method_body = $(runner).find('.connector_method_body').val();
 
         $('.runner button.forSave').attr("disabled", "disabled");
         $('.runner button.forDelete').attr("disabled", "disabled");
@@ -20,11 +19,10 @@ $(document).ready(function($) {
 
     $('.runner button.forUpdate').click(function(e) {
         e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var connector_method_id = $(runner).find('.connector_method_id').html();
-        var connector_method_programming_lang_update = $(runner).find('.connector_method_programming_lang_update').val();
-        var connector_method_body_update = $(runner).find('.connector_method_body_update').val();
+        let runner = $(this).parent().parent().parent();
+        let connector_method_id = $(runner).find('.connector_method_id').html();
+        let connector_method_programming_lang_update = $(runner).find('.connector_method_programming_lang_update').val();
+        let connector_method_body_update = $(runner).find('.connector_method_body_update').val();
 
         $('.runner button.forSave').attr("disabled", "disabled");
         $('.runner button.forUpdate').attr("disabled", "disabled");

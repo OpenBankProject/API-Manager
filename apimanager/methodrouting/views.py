@@ -51,13 +51,13 @@ class IndexView(LoginRequiredMixin, FormView):
                     method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
 
             if(str(settings.API_ROOT).find("127.0.0.1") == -1):
-                methodSwaggerUrl = '{}/message-docs?connector=stored_procedure_vDec2019#'.format(settings.API_HOST.replace(".openbankproject.", "-explorer.openbankproject."))
+                method_Swagger_Url = '{}/message-docs?connector=stored_procedure_vDec2019#'.format(settings.API_HOST.replace(".openbankproject.", "-explorer.openbankproject."))
             else:
-                methodSwaggerUrl = "http://127.0.0.1:8082/message-docs?connector=stored_procedure_vDec2019#"
+                method_Swagger_Url = "http://127.0.0.1:8082/message-docs?connector=stored_procedure_vDec2019#"
             
             context.update({
                 'method_routings': method_routings,
-                "methodSwaggerUrl": methodSwaggerUrl
+                "method_Swagger_Url": method_Swagger_Url
             })
         return context
 
@@ -68,7 +68,6 @@ def methodrouting_save(request):
     connector_name = request.POST.get('connector_name')
     bank_id_pattern = request.POST.get('bank_id_pattern')
     is_bank_id_exact_match = request.POST.get('is_bank_id_exact_match')
-    parameters = request.POST.get('parameters')
     method_routing_id = request.POST.get('method_routing_id')
     parameters_Json_editor = request.POST.get('parameters_Json_editor')
     #from sonarcloud: Dynamic code execution should not be vulnerable to injection attacks

@@ -354,7 +354,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         # If include OBP Apps is selected
         if cleaned_data.get('include_obp_apps'):
-            app_names = app_names
+            pass
         else:
             for app in app_names:
                 if app in local_settings.EXCLUDE_APPS:
@@ -654,9 +654,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         for api in top_apis:
             api['Implemented_by_partial_function'] = api['Implemented_by_partial_function'] + '(' + api['implemented_in_version'] + ')'
         top_apis = top_apis[:10]
-        # for api in top_apis:
-        #     #print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOP APIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-        #     print(str(top_apis.index(api) + 1) + "," + api['Implemented_by_partial_function'] + "," + str(api['count']))
+        # for api in top_apis.
         top_apis = reversed(top_apis)
         return top_apis
 
@@ -812,8 +810,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             if form.is_valid():
                 is_included_obp_apps = form.cleaned_data.get('include_obp_apps')
                 exclude_app_names = form.cleaned_data.get("exclude_app_names")
-                #if exclude_app_names not in local_settings.EXCLUDE_APPS:
-                #    error_once_only(self.request, "Invalid Exclude App Name, Please select" + str(local_settings.EXCLUDE_APPS) + "Anyone of these")
                 form_to_date_string = form.data['to_date']
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
 

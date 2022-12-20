@@ -274,10 +274,10 @@ class IndexView(LoginRequiredMixin, FormView):
 @exception_handle
 @csrf_exempt
 def dynamicendpoints_save(request):
-    parameters_Json_editor = request.POST.get('parameters_Json_editor')
+    parameters_Json_editor_dynamic = request.POST.get('parameters_Json_editor')
     api = API(request.session.get('obp'))
     urlpath = '/management/dynamic-endpoints'
-    result = api.post(urlpath, payload=json.loads(parameters_Json_editor) )
+    result = api.post(urlpath, payload=json.loads(parameters_Json_editor_dynamic) )
     return result
 
 

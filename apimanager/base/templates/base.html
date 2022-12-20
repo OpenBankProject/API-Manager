@@ -14,7 +14,6 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/jsoneditor.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/obpjsoneditor.css' %}" rel="stylesheet">
-    <!--<link href="{{ override_css_url }}" rel="stylesheet">-->
     {% block extracss %}{% endblock extracss %}
 </head>
 
@@ -63,7 +62,7 @@
                         <li class="dropdown{% if customers_create_url in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Resources" %}</a>
                             <ul class="dropdown-menu">
-                                <li {% if system_view_url in request.path %} class="active" {% endif %}><a href="{{ system_view_url }}">{% trans "System View" %}</a></li>
+                                <li {% if system_view_url in request.path %} class="active" {% endif %}><a href="{{ system_view_url }}">{% trans "System Views" %}</a></li>
                                 <hr class="dropdown-hr">
                                 <li {% if accounts_create_url in request.path %} class="active" {% endif %}><a href="{{ accounts_create_url }}">{% trans "Account Create" %}</a></li>
                                 <li {% if accounts_list_url in request.path %} class="active" {% endif %}><a href="{{ accounts_list_url }}">{% trans "Account List" %}</a></li>
@@ -92,6 +91,7 @@
                                 </li>
                                 <hr class="dropdown-hr">
                                 <li {% if api_collections_index_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_index_url }}">{% trans "My API Collections" %}</a></li>
+                                <hr class="dropdown-hr">
                                 <li {% if api_collections_list_url in request.path %} class="active" {% endif %}><a href="{{ api_collections_list_url }}">{% trans "All API Collections" %}</a></li>
                             </ul>
                         </li>
@@ -100,19 +100,16 @@
                             <a href="{{ API_TESTER_URL }}">{% trans "API Tester" %}</a>
                         </li>
                         {% endif %}
-                        <!--<ul class="nav navbar-nav navbar-right" style="padding-top:13px; margin-left:12rem">-->
                             <li>
                                 {% if user.is_authenticated %}
                                 <p class="navbar-right button-select"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a href="/logout" class="btn btn-default">{% trans "Logout" %} </a></p>
                                 {% endif %}
                             </li>
-                        <!--</ul>-->
-                        <li class="language-select"><a style="color:#fff;">Language
+                        <li class="language-select language_underline_format"><a style="color:#fff; text-decoration: none !important;">Language
                             <span id="uk">EN</span>
                             |
                             <span id="es">ES</span></a></li>
                     </ul>
-                    <!--/.nav-collapse -->
                 </div>
                 </div>
         </nav>
