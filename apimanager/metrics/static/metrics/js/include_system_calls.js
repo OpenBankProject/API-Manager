@@ -5,7 +5,7 @@ document.getElementsByClassName("include_system_calls")[0].innerHTML=`<div>
     </div>`
 
     function systemCalls(){
-    var checkbox = document.getElementById('include_system_calls_id');
+    let checkbox = document.getElementById('include_system_calls_id');
     if (checkbox.checked == false) {
 	   document.getElementById("obp_app_table").style.display = "none";
     }else{

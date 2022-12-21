@@ -68,7 +68,7 @@ class APIMetricsForm(MetricsForm):
         ('true', 'Yes'),
         ('false', 'No'),
     )
-    VERB_SELECTION = (
+    SELECT_VERB = (
         ('', _('Any')),
         ('DELETE', 'DELETE'),
         ('GET', 'GET'),
@@ -127,7 +127,7 @@ class APIMetricsForm(MetricsForm):
     )
     verb_selection = forms.ChoiceField(
         label=_('Verb Select'),
-        choices=VERB_SELECTION,
+        choices=SELECT_VERB,
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -213,31 +213,15 @@ class ConnectorMetricsForm(MetricsForm):
 class CustomSummaryForm(forms.Form):
     to_date = forms.DateField(
         label=_('To Date'),
-        # input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # ),
         widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
 
     from_date_custom = forms.DateField(
         label=_('From Date'),
-        #input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # )
         widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        #initial=str(datetime.now().strftime('%Y-%m-%d')),
         initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
     )
     exclude_app_names = forms.CharField(
@@ -259,16 +243,8 @@ class CustomSummaryForm(forms.Form):
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
         label=_('To Date'),
-        # input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # ),
         widget=DatePickerInput(format='%Y-%m-%d'),
         required=True,
-        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime('%Y-%m-%d')),
     )
     exclude_app_names = forms.CharField(

@@ -74,7 +74,7 @@
     		<div class="tab-pane active">
     			<h2>{% trans "Period" %}: {% trans "From" %}{{ from_date }} {% trans "to" %} {{ to_date }}</h2>
 
-		<table border="1" id="obp_app_table">
+		<table border="1" id="obp_app_table" summary="Table about call APIs in every hours">
             <tr>
                 <th></th>
                 <th></th>
@@ -89,11 +89,11 @@
 			</tr>
 			<tr>
 				<td>{% trans "Calls per minute" %}:</td>
-				<td bgcolor="#FF0000">{%for item in calls_per_hour_list%}<li>{{item}}</li>{% endfor %}</td>
+				<td style="background-color:#FF0000">{%for item in calls_per_hour_list%}<li><ol>{{item}}</ol></li>{% endfor %}</td>
 			</tr>
 			<tr>
 				<td>{% trans "Calls per minute" %}:</td>
-				<td bgcolor="#FF0000"><img src="data:image/png;base64, {{ per_hour_chart }}" alt="somealt" /></td>
+				<td style="background-color:#FF0000"><img src="data:image/png;base64, {{ per_hour_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
 				<td>{% trans "Average number of calls hour" %}: </td>

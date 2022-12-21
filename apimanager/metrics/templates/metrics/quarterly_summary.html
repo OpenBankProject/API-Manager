@@ -18,7 +18,6 @@
 			<li><a href="{% url 'metrics-summary' %}?{{ request.GET.urlencode }}">{% trans "Month" %}</a></li>
     		<li><a href="{% url 'weekly-summary' %}?{{ request.GET.urlencode }}">{% trans "Week" %}</a></li>
 			<li><a href="{% url 'daily-summary' %}?{{ request.GET.urlencode }}">{% trans "Day" %}</a></li>
-			<!--<li><a href="{% url 'hourly-summary' %}?{{ request.GET.urlencode }}">Hour</a></li>-->
 			<li><a href="{% url 'custom-summary' %}?{{ request.GET.urlencode }}">{% trans "Custom" %}</a></li>
     	{% endblock nav_tabs %}
     	</ul>

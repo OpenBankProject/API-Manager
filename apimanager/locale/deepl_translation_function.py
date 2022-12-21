@@ -1,7 +1,6 @@
 import requests
 import os
 import dotenv
-#from deepl_translation_fun import trasnlator
 
 BASE_DIR = os.getcwd() #method tells us the location of current working directory
 
