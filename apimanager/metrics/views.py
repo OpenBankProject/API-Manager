@@ -354,9 +354,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             app_names.append(apps["app_name"])
 
         # If include OBP Apps is selected
-        if cleaned_data.get('include_obp_apps'):
-            app_names = app_names
-        else:
+        if not cleaned_data.get('include_obp_apps'):
             for app in app_names:
                 if app in local_settings.EXCLUDE_APPS:
                     app_names.remove(app)
@@ -620,8 +618,9 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     users_with_cansearchwarehouse.append(user["username"])
                     email_with_cansearchwarehouse.append(user["email"])
 
-    def _pull_data(self, data, urlpath, data_key):
+    def _api_data(self, urlpath, data_key):
         api = API(self.request.session.get('obp'))
+        data = []
         try:
             data = api.get(urlpath)
             if data is not None and 'code' in data and data['code']==403:
@@ -642,7 +641,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         else:
             urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-        top_apis = self._pull_data(top_apis, urlpath, 'top_apis')
+        top_apis = self._api_data(urlpath, 'top_apis')
 
         for api in top_apis:
             if api['Implemented_by_partial_function'] == "":
@@ -661,7 +660,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-        top_consumers = self._pull_data(top_consumers, urlpath, 'top_consumers')
+        top_consumers = self._api_data(urlpath, 'top_consumers')
 
         for consumer in top_consumers:
             if consumer['app_name'] == "":
