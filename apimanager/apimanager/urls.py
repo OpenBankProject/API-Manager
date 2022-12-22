@@ -54,7 +54,7 @@ urlpatterns += i18n_patterns(
     url(r'^connectormethod/', include('connectormethod.urls')),
     url(r'^dynamicendpoints/', include('dynamicendpoints.urls')),
     url(r'^apicollections/', include('apicollections.urls')),
-    url(r'^apicollections/list', include('apicollectionlist.urls')),
+    url(r'^apicollections-list', include('apicollectionlist.urls')),
 )
     #prefix_default_language=False,
 #)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

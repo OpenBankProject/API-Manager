@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 from base.utils import exception_handle, error_once_only
 from .forms import ApiCollectionsForm, ApiCollectionEndpointsForm
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for API Collection"""
@@ -32,6 +32,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 api_collections=response['api_collections']
+                for locale in api_collections:
+                    locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={locale['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except BaseException as err:
@@ -71,8 +73,8 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except BaseException as err:
+            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
             return super(DetailView, self).form_invalid(form)
         if 'code' in api_collection_endpoint and api_collection_endpoint['code']>=400:
             messages.error(self.request, api_collection_endpoint['message'])
@@ -113,6 +115,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
+            get_api_collection_by_id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
+            result = api.get(get_api_collection_by_id_url)
             urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
@@ -122,8 +126,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except BaseException as err:
+            messages.error(self.request, 'Unknown Error', err)
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
     
@@ -139,6 +143,21 @@ def apicollections_save(request):
     }
     result = api.post(urlpath, payload = payload)
     return result
+
+@exception_handle
+@csrf_exempt
+def connectormethod_update(request):
+    connector_method_id = request.POST.get('api_collection_id').strip()
+    urlpath = '/management/api-collection/{}'.format(connector_method_id) #TODO : Wainting for URL
+    api = API(request.session.get('obp'))
+    #Update Endpoint Payload define
+    payload = {
+        'api_collection_is_sharable': request.POST.get('api_collection_is_sharable'),
+        'method_body': request.POST.get('api_collection_method_body_update').strip()
+    }
+    result = api.put(urlpath, payload=payload)
+    return result
+
 
 
 @exception_handle

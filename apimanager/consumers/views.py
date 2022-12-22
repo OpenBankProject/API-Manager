@@ -16,9 +16,6 @@ from base.filters import BaseFilter, FilterTime
 
 from .forms import ApiConsumersForm
 
-# import logging
-# logger = logging.getLogger(__name__)
-
 
 class FilterAppType(BaseFilter):
     """Filter consumers by application type"""
@@ -129,7 +126,6 @@ class DetailView(LoginRequiredMixin, FormView):
                 'per_week_call_limit': data['per_week_call_limit'],
                 'per_month_call_limit': data['per_month_call_limit']
             }
-            user = self.api.put(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(api_consumers_form)
@@ -191,8 +187,8 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
                 messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown")
+        except APIError as err:
+            messages.error(self.request, err)
 
         urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()
