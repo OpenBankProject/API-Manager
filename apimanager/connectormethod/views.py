@@ -73,6 +73,5 @@ def connectormethod_update(request):
         'programming_lang': request.POST.get('connector_method_programming_lang_update'),
         'method_body': request.POST.get('connector_method_body_update').strip()
     }
-    result = HttpResponse(content_type = 'application/json')
     result = api.put(urlpath, payload=payload)
     return result
