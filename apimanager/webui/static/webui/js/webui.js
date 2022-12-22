@@ -1,10 +1,10 @@
 $(document).ready(function($) {
     $('.runner button.forSave').click(function(e) {
         e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
-        var web_ui_props_value = $(runner).find('.web_ui_props_value').val();
+        const t = $(this);
+        const runner = t.parent().parent().parent();
+        const web_ui_props_name = $(runner).find('.web_ui_props_name').text();
+        const web_ui_props_value = $(runner).find('.web_ui_props_value').val();
         $('.runner button.forSave').attr("disabled", "disabled");
         $('.runner button.forDelete').attr("disabled", "disabled");
         $.post('save/method', {
@@ -17,13 +17,10 @@ $(document).ready(function($) {
 
     $('.runner button.forDelete').click(function(e) {
         e.preventDefault();
-        var t = $(this);
-        var runner = t.parent().parent().parent();
-        var web_ui_props_name = $(runner).find('.web_ui_props_name').text();
-        var textArea = runner.find('.web_ui_props_value');
-        var props_id = $(runner).find('.web_ui_props_id');
-        var web_ui_props_id = props_id.val();
-        var webui = $('#webui');
+        const t = $(this);
+        const runner = t.parent().parent().parent();
+        const props_id = $(runner).find('.web_ui_props_id');
+        const web_ui_props_id = props_id.val();
         $('.runner button.forSave').attr("disabled", "disabled");
         $('.runner button.forDelete').attr("disabled", "disabled");
         $.post('delete/method', {
