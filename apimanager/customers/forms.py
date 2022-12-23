@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from obp.api import APIError
 
+PLACEHOLDER = "2013-01-22T00:08:00Z"
 
 class CreateCustomerForm(forms.Form):
     bank_id = forms.ChoiceField(
@@ -83,7 +84,7 @@ class CreateCustomerForm(forms.Form):
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER,
                 'class': 'form-control',
             }
         ),
@@ -94,7 +95,7 @@ class CreateCustomerForm(forms.Form):
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER,
                 'class': 'form-control',
             }
         ),
@@ -125,7 +126,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Date of Birth of Dependants'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z, 2010-01-22T00:08:00Z',
+                'placeholder': f'{PLACEHOLDER}, 2010-01-22T00:08:00Z',
                 'class': 'form-control',
             }
         ),
@@ -206,7 +207,7 @@ class CreateCustomerForm(forms.Form):
         input_formats=[settings.API_DATETIMEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER,
                 'class': 'form-control',
             }
         ),

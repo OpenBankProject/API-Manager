@@ -7,7 +7,7 @@ $(document).ready(function($) {
 	
 	//each dynamic_endpoint will have each own json_editor, and will put data into it when click `parameter` box
 	//and will use the data from click `save` button.
-	var json_editors = []
+	let json_editors = []
 	$('.parameters').click(function() {
 		let runner = $(this).parent().parent().parent();
 		let json_editor_id= $(runner).find('.jsoneditor_div')[0].id;

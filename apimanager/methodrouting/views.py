@@ -38,7 +38,7 @@ class IndexView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
         except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+            error_once_only(self.request, err)
         else:
             for i in range(len(method_routings)):
                 #if the parameters are empty, we provide the example value.
