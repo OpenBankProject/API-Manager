@@ -304,6 +304,9 @@ OVERRIDE_CSS_URL = None
 VERIFY = True
 CALLBACK_BASE_URL = ""
 
+# Global
+UNDEFINED = "<undefined>"
+
 # Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa

@@ -107,18 +107,6 @@ class API(object):
         response = self.call('PUT', url, payload)
         return self.handle_response(response)
 
-    # def handle_response_404(self, response, prefix):
-    #     msg = '{} {}: {}'.format(
-    #         prefix, response.status_code, response.text)
-    #     log(logging.ERROR, msg)
-    #     raise APIError(msg)
-    # 
-    # def handle_response_500(self, response, prefix):
-    #     msg = '{} {}: {}'.format(
-    #         prefix, response.status_code, response.text)
-    #     log(logging.ERROR, msg)
-    #     raise APIError(msg)
-
     def handle_response_error(self, prefix, error):
         if 'Invalid or expired access token' in error:
             raise APIError(error)

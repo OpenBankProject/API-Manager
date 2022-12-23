@@ -36,8 +36,8 @@ class IndexProductView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         return form
 
     def form_valid(self, form):
@@ -91,8 +91,8 @@ class UpdateProductView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         try:
             result = self.api.get(urlpath)
             fields['parent_product_code'].initial = self.kwargs['parent_product_code']
@@ -155,7 +155,7 @@ class UpdateProductView(LoginRequiredMixin, FormView):
 
 @exception_handle
 @csrf_exempt
-def createList(request):
+def create_list(request):
     print(request.POST, "createProductList listt")
     return HttpResponse("<h1>View 1</h1>")
 
