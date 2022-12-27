@@ -37,7 +37,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 method_routings=response['method_routings']
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
+        except Exception as err:
             error_once_only(self.request, err)
         else:
             for i in range(len(method_routings)):
