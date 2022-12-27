@@ -46,6 +46,7 @@ def api_username(request):
         apicaches=cache.get(cache_key)
     except Exception as err:
         apicaches=None
+        messages.error(request, err)
     if not apicaches is None:
         return apicaches
     else:
