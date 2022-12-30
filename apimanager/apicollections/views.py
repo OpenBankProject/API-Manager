@@ -37,7 +37,7 @@ class IndexView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
         except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+            error_once_only(self.request, err)
         else:
             # set the default endpoint there, the first item will be the new endpoint.
             default_api_endpoint = {
@@ -73,8 +73,8 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            error_once_only(self.request, err)
             return super(DetailView, self).form_invalid(form)
         if 'code' in api_collection_endpoint and api_collection_endpoint['code']>=400:
             messages.error(self.request, api_collection_endpoint['message'])
@@ -100,8 +100,8 @@ class DetailView(LoginRequiredMixin, FormView):
                 api_collection_endpoints=response['api_collection_endpoints']
         except APIError as err:
             messages.error(self.request, result['message'])
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            error_once_only(self.request, err)
         else:
             context.update({
                 'api_collection_endpoints': api_collection_endpoints,
@@ -126,7 +126,7 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except BaseException as err:
+        except Exception as err:
             messages.error(self.request, 'Unknown Error', err)
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)

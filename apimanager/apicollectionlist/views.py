@@ -41,8 +41,8 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
         except APIError as err:
             messages.error(self.request, err)
             return []
-        except Exception as inst:
-            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
+        except Exception as err:
+            messages.error(self.request, err)
             return []
 
         return apicollections_list
