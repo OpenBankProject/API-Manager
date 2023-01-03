@@ -36,7 +36,7 @@ class IndexView(LoginRequiredMixin, FormView):
                     locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={locale['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
+        except Exception as err:
             error_once_only(self.request, err)
         else:
             # set the default endpoint there, the first item will be the new endpoint.
