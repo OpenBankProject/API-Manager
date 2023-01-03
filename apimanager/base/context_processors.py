@@ -72,6 +72,7 @@ def authenticated_name(request, get_current_user_api_url):
             nametodisplay = email
         else:
             nametodisplay = username
+        return nametodisplay
     except APIError as err:
         messages.error(request, err)
     except Exception as err:

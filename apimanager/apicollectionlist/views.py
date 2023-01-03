@@ -56,7 +56,7 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
                 url_path = "/users/user_id/{}".format(final_collection_list["user_id"])
                 result =  api.get(url_path)
                 final_collection_list["username"] = result["username"]
-        except Exception as e:
+        except Exception as err:
             messages.error(self.request, err)
         context.update({
             'apicollections_list': apicollections_list,
