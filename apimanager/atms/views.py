@@ -149,8 +149,8 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 "supported_currencies":[data["supported_currencies"]],
                 "notes":[data["notes"]],
                 "location_categories":[data["location_categories"]],
-                **self._index_boolean_payload1(data),
-                **self._index_boolean_payload2(data),
+                **self._boolean_payload1(data),
+                **self._boolean_payload2(data),
 
             }
             result = self.api.post(urlpath, payload=payload)
@@ -181,7 +181,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             }
         }
 
-    def _index_boolean_payload1(self, data):
+    def _boolean_payload1(self, data):
         return {
             "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
             "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
@@ -190,7 +190,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false"
         }
 
-    def _index_boolean_payload2(self, data):
+    def _boolean_payload2(self, data):
         return {
             "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
             "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",

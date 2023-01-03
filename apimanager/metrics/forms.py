@@ -16,6 +16,7 @@ from apimanager.settings import API_MANAGER_DATE_FORMAT
 API_DATEFORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = "FORM_CONTROL"
 FROM_DATE = "From Date"
+TO_DATE = "To Date"
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
@@ -31,7 +32,7 @@ class MetricsForm(forms.Form):
         required=False,
     )
     to_date = forms.DateTimeField(
-        label=_('To Date'),
+        label=_(TO_DATE),
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -216,7 +217,7 @@ class ConnectorMetricsForm(MetricsForm):
 
 class CustomSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label=_('To Date'),
+        label=_(TO_DATE),
         widget=DatePickerInput(format='API_MANAGER_DATE_FORMAT'),
         required=True,
         initial=str(datetime.now().strftime('API_MANAGER_DATE_FORMAT')),
@@ -246,7 +247,7 @@ class CustomSummaryForm(forms.Form):
 
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label=_('To Date'),
+        label=_(TO_DATE),
         widget=DatePickerInput(format='API_MANAGER_DATE_FORMAT'),
         required=True,
         initial=str(datetime.now().strftime('API_MANAGER_DATE_FORMAT')),

@@ -57,7 +57,7 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
                 result =  api.get(url_path)
                 final_collection_list["username"] = result["username"]
         except Exception as e:
-            messages.error(self.request, "Unknown Error {}".format(str(e)))
+            messages.error(self.request, err)
         context.update({
             'apicollections_list': apicollections_list,
         })
