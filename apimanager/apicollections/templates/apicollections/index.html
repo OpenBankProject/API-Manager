@@ -27,7 +27,7 @@
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
                         {% if api_collection.api_collection_id %}
-                        <a class="api_collection_id btn btn-primary" onclick="api_explorer_url_locale('{{api_collection.collection_on_api_explorer_url}}')">Try It</a>
+                        <a class="api_collection_id btn btn-primary" onclick="api_explorer_url_locale('{{api_collection.collection_on_api_explorer_url}}')" value="{{api_collection.api_collection_id}}">Try It</a>
                 {% endif %}
                 </div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
                         <div>
-                            <input class="api_collection_is_sharable form-control" value="{{ api_collection.api_collection_name }}">
+                            <input class="api_collection_name form-control" value="{{ api_collection.api_collection_name }}">
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-3">
-                    <textarea cols="40" rows="1" class="form-control api_collection_method_body_update" style="margin: 5px -2px 5px 0px; height: 138px; width: 100%;">{{api_collection.description}}</textarea>
+                    <textarea cols="40" rows="1" class="form-control api_collection_description" style="margin: 5px -2px 5px 0px; height: 138px; width: 100%;">{{api_collection.description}}</textarea>
                 </div>
                 {% else %}
                     <div class="col-xs-12 col-sm-2">
@@ -83,11 +83,11 @@
                         <a type= "button" class="btn btn-primary" href="{{ url_collection_detail }}">{% trans "Edit" %}</a>
                     </div>
                 </div>
-                <!--<div class="col-sm-3 col-sm-1">
+                <div class="col-sm-3 col-sm-1">
                     <div class="form-group">
                         <button class="btn btn-primary forUpdate">{% trans "Update" %}</button>
                     </div>
-                </div>-->
+                </div>
                 <div class="col-sm-3 col-sm-1">
                     <div class="form-group">
                         <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
