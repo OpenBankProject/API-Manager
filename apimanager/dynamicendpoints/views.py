@@ -38,7 +38,7 @@ class IndexView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
-            messages.error(self.request, err)
+            error_once_only(self.request, err)
         else:
             # set the default endpoint there, the first item will be the new endpoint.
             default_dynamic_endpoint = {

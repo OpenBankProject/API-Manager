@@ -55,6 +55,7 @@ def api_username(request):
             apicaches=cache.set(cache_key, {'API_USERNAME': nametodisplay})
             LOGGER.warning('The cache setting api_user_name is: {}'.format(nametodisplay))
             LOGGER.warning('The cache setting key is: {}'.format(cache_key))
+        return {'API_USERNAME': nametodisplay}
 
 def authenticated_name(request, get_current_user_api_url):
     try:
@@ -71,7 +72,7 @@ def authenticated_name(request, get_current_user_api_url):
             nametodisplay = email
         else:
             nametodisplay = username
-        return {'API_USERNAME': nametodisplay}
+        return nametodisplay
     except APIError as err:
         messages.error(request, err)
     except Exception as err:
