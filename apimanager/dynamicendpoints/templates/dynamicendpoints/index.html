@@ -21,7 +21,7 @@
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
                     {% if dynamic_endpoint.dynamicendpoint_on_api_explorer_url %}
-                    <a class="dynamic_endpoint_id btn btn-primary" onclick="api_explorer_url_locale('{{dynamic_endpoint.dynamicendpoint_on_api_explorer_url}}')" value="{{dynamic_endpoint.dynamic_endpoint_id}}">Try It</a>
+                    <a class="dynamic_endpoint_id btn btn-primary" onclick="redirect_api_explorer_url('{{dynamic_endpoint.dynamicendpoint_on_api_explorer_url}}')" value="{{dynamic_endpoint.dynamic_endpoint_id}}">Try It</a>
                     {% else %}
                     <span>{{dynamic_endpoint.dynamic_endpoint_id}}</span>
                     {% endif %}

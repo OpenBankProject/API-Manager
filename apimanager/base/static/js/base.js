@@ -1,6 +1,6 @@
 $(document).ready(function($) {
     var currentURL = window.location.href;
-        const element = document.getElementById('uk')
+        const element = document.getElementById('gb')
         element.addEventListener("click", () => {
             if (currentURL.includes("/es/")) {
                 location.href = currentURL.split("/es/")[0] + "/en/" + currentURL.split("/es/")[1]
@@ -20,7 +20,7 @@ $(document).ready(function($) {
 	});
 });
 
-function api_explorer_url_locale(api_explorer_url) {
+function redirect_api_explorer_url(api_explorer_url) {
      var currentURL = window.location.href.split("/");
      if (currentURL[3] == "en") {
         location.href = api_explorer_url + "&locale=en_GB";

@@ -27,7 +27,7 @@
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
                         {% if api_collection.api_collection_id %}
-                        <a class="api_collection_id btn btn-primary" onclick="api_explorer_url_locale('{{api_collection.collection_on_api_explorer_url}}')" value="{{api_collection.api_collection_id}}">Try It</a>
+                        <a class="api_collection_id btn btn-primary" onclick="redirect_api_explorer_url('{{api_collection.collection_on_api_explorer_url}}')" value="{{api_collection.api_collection_id}}">Try It</a>
                 {% endif %}
                 </div>
                 </div>
