@@ -292,6 +292,7 @@ def dynamicendpoints_save(request):
 @csrf_exempt
 def dynamicendpoints_delete(request):
     dynamic_endpoint_id = request.POST.get('dynamic_endpoint_id')
+
     api = API(request.session.get('obp'))
     urlpath = '/management/dynamic-endpoints/{}'.format(dynamic_endpoint_id)
     result = api.delete(urlpath)
