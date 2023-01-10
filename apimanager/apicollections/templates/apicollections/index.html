@@ -102,16 +102,6 @@
 
 
 {% block extrajs %}
-<script>
-    function api_explorer_url_locale(collection_on_api_explorer_url) {
-         var currentURL = window.location.href.split("/");
-         if (currentURL[3] == "en") {
-            location.href = collection_on_api_explorer_url + "&locale=en_GB";
-            }
-         else {
-            location.href = collection_on_api_explorer_url + "&locale=es_ES";
-         }
-      }
-</script>
     <script type="text/javascript" src="{% static 'apicollections/js/apicollections.js' %}"></script>
+    <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
 {% endblock extrajs %}

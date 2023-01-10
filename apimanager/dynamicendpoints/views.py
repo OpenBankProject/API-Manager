@@ -12,6 +12,7 @@ from base.utils import exception_handle, error_once_only
 from .forms import DynamicEndpointsForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 DEFINITIONS_USER = "#/definitions/user"
 UNEXPECTED_ERROR = "unexpected error"
@@ -35,6 +36,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 dynamic_endpoints=response['dynamic_endpoints']
+                for locale in dynamic_endpoints:
+                    locale["dynamicendpoint_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-dynamic_endpoint-id={locale['dynamic_endpoint_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -289,7 +292,6 @@ def dynamicendpoints_save(request):
 @csrf_exempt
 def dynamicendpoints_delete(request):
     dynamic_endpoint_id = request.POST.get('dynamic_endpoint_id')
-
     api = API(request.session.get('obp'))
     urlpath = '/management/dynamic-endpoints/{}'.format(dynamic_endpoint_id)
     result = api.delete(urlpath)
