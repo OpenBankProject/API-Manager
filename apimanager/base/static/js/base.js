@@ -1,4 +1,5 @@
 $(document).ready(function($) {
+    // Select a language from navbar which want to change.
     var currentURL = window.location.href;
         const element = document.getElementById('gb')
         element.addEventListener("click", () => {
@@ -20,6 +21,7 @@ $(document).ready(function($) {
 	});
 });
 
+// Redirect to API-Explorer, just click on Try Ii button in API-Collection and Dynamic Endpoint after success response.
 function redirect_api_explorer_url(api_explorer_url) {
      var currentURL = window.location.href.split("/");
      if (currentURL[3] == "en") {

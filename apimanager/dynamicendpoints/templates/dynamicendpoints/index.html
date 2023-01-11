@@ -20,6 +20,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-2">
                 <div class="form-group" cols="1" rows="1">
+                    <!--Add Try It button using Dynamic Endpoint ID after success response for redirecting API-Explorer-->
                     {% if dynamic_endpoint.dynamicendpoint_on_api_explorer_url %}
                     <a class="dynamic_endpoint_id btn btn-primary" onclick="redirect_api_explorer_url('{{dynamic_endpoint.dynamicendpoint_on_api_explorer_url}}')" value="{{dynamic_endpoint.dynamic_endpoint_id}}">Try It</a>
                     {% else %}

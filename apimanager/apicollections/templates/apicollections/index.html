@@ -26,6 +26,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <div class="form-group" cols="1" rows="1">
+                        <!--Add Try It button using API-Collection ID after success response for redirecting API-Explorer-->
                         {% if api_collection.api_collection_id %}
                         <a class="api_collection_id btn btn-primary" onclick="redirect_api_explorer_url('{{api_collection.collection_on_api_explorer_url}}')" value="{{api_collection.api_collection_id}}">Try It</a>
                 {% endif %}
