@@ -308,7 +308,10 @@ CALLBACK_BASE_URL = ""
 UNDEFINED = "<undefined>"
 
 # Local settings can replace any value ABOVE
-from apimanager.local_settings import BASE_DIR, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT, SECRET_KEY, API_HOST, OAUTH_CONSUMER_KEY, OAUTH_CONSUMER_SECRET # noqa
+try:
+    from apimanager.local_settings import *     # noqa
+except ImportError:
+    pass
 # EVERYTHING BELOW HERE WILL *NOT* BE OVERWRITTEN BY LOCALSETTINGS!
 # DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
