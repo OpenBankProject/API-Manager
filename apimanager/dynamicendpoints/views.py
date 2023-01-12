@@ -36,7 +36,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 dynamic_endpoints=response['dynamic_endpoints']
-                #Accessing API-Explorer URL, parameters API-Collection Id and selected Language
+                #Accessing API-Explorer URL, parameters API-Collection Id and selected Language eg. locale=en_GB (for English)
                 for locale in dynamic_endpoints:
                     locale["dynamicendpoint_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-dynamic_endpoint-id={locale['dynamic_endpoint_id']}"
         except APIError as err:
