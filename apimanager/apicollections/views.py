@@ -148,7 +148,7 @@ def apicollections_save(request):
 @csrf_exempt
 def connectormethod_update(request):
     connector_method_id = request.POST.get('api_collection_id').strip()
-    urlpath = '/management/api-collection/{}'.format(connector_method_id) #TODO : Wainting for URL
+    urlpath = '/management/api-collection/{}'.format(connector_method_id)
     api = API(request.session.get('obp'))
     #Update Endpoint Payload define
     payload = {
