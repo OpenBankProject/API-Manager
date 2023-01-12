@@ -146,14 +146,14 @@ def apicollections_save(request):
 
 @exception_handle
 @csrf_exempt
-def connectormethod_update(request):
+def apicollections_update(request):
     connector_method_id = request.POST.get('api_collection_id').strip()
-    urlpath = '/management/api-collection/{}'.format(connector_method_id)
+    urlpath = '/my/api-collections/{}'.format(connector_method_id)
     api = API(request.session.get('obp'))
-    #Update Endpoint Payload define
     payload = {
-        'api_collection_is_sharable': request.POST.get('api_collection_is_sharable'),
-        'method_body': request.POST.get('api_collection_method_body_update').strip()
+        'api_collection_name': request.POST.get('api_collection_name').strip(),
+        'is_sharable': True if request.POST.get('api_collection_is_sharable').strip().lower() == "true" else False,
+        'description': request.POST.get('api_collection_description').strip()
     }
     result = api.put(urlpath, payload=payload)
     return result
