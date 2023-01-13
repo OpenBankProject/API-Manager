@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
 from apicollections.views import IndexView
 from obp.api import API, APIError
+from django.conf import settings
 import csv
 
 
@@ -38,6 +39,8 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
                 api_collections_for_user = api.get(api_collections_for_user_url_path)
                 if 'api_collections' in api_collections_for_user:
                    apicollections_list.extend(api_collections_for_user['api_collections'])
+            for locale in apicollections_list:
+                locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={locale['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
             return []
