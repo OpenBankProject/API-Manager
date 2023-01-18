@@ -18,13 +18,16 @@
 
             {% url 'my-api-collection-detail' apicollection.api_collection_id as url_collection_detail %}
             <tr id="{{ apicollection.api_collection_id }}">
-                <td>{{ apicollection.api_collection_id }}</td>
+                <!--Add Try It button using API-Collection ID after success response for redirecting API-Explorer-->
+                <td>{% if apicollection.api_collection_id  %}
+                <a class="api_collection_id btn btn-primary" onclick="redirect_api_explorer_url('{{apicollection.collection_on_api_explorer_url}}')" value="{{apicollection.api_collection_id}}">Try It</a>
+                {% endif %}</td>
                 <td>{{ apicollection.username }}</td>
                 <td>{{ apicollection.api_collection_name }}</td>
                 <td>
                     <div class="popuptext">
                         <ul>
-                            <li>{% trans "Other Info" %}:
+                            <li>{% trans "Is Sharable" %}:
                                 <ul>
                                     <li>{{apicollection.is_sharable}}</li>
                                 </ul>
@@ -39,5 +42,8 @@
         </table>
     </div>
 </div>
-{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+{% endblock %}
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
+{% endblock extrajs %} {% block extracss %}
 <link href="{% static 'customerlist/css/customerlist.css' %}" rel="stylesheet"> {% endblock extracss %}
