@@ -253,7 +253,7 @@ API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 
 API_HOST = 'http://127.0.0.1:8080'
-API_EXPLORER = 'http://127.0.0.1:8082'
+API_EXPLORER_HOST = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
