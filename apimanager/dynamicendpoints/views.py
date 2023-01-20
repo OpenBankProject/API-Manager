@@ -37,8 +37,8 @@ class IndexView(LoginRequiredMixin, FormView):
             else:
                 dynamic_endpoints=response['dynamic_endpoints']
                 #Accessing API-Explorer URL, parameters API-Collection Id and selected Language eg. locale=en_GB (for English)
-                for ac in dynamic_endpoints:
-                    ac["dynamicendpoint_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-dynamic_endpoint-id={ac['dynamic_endpoint_id']}"
+                for de in dynamic_endpoints:
+                    de["dynamicendpoint_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-dynamic_endpoint-id={de['dynamic_endpoint_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
