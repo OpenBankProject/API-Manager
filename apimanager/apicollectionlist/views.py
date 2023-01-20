@@ -39,8 +39,8 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
                 api_collections_for_user = api.get(api_collections_for_user_url_path)
                 if 'api_collections' in api_collections_for_user:
                    apicollections_list.extend(api_collections_for_user['api_collections'])
-            for api_collection_id_with_locale in apicollections_list:
-                api_collection_id_with_locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={api_collection_id_with_locale['api_collection_id']}"
+            for ac in apicollections_list:
+                ac["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-collection-id={ac['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
             return []

@@ -32,8 +32,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 api_collections=response['api_collections']
-                for api_collection_id_with_locale in api_collections:
-                    api_collection_id_with_locale["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER}/?api-collection-id={api_collection_id_with_locale['api_collection_id']}"
+                for ac in api_collections:
+                    ac["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-collection-id={ac['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
