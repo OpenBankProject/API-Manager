@@ -15,9 +15,10 @@ API_DATEFORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
 FROM_DATE = 'From Date'
 TO_DATE = 'To Date'
+
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
-        label=_(FROM_DATE ),
+        label=_(FROM_DATE),
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
@@ -172,7 +173,7 @@ class APIMetricsForm(MetricsForm):
 class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
     from_date = forms.DateTimeField(
-        label=_(FROM_DATE ),
+        label=_(FROM_DATE),
         input_formats=[settings.API_DATEFORMAT],
         widget=forms.DateTimeInput(
             attrs={
