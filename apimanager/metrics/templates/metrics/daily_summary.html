@@ -5,6 +5,7 @@
 
 {% block page_title %}{{ block.super }} / API Usage Report{% endblock page_title %}
 
+{% load bootstrap3 %}
 {% block content %}
 
 <div id="metrics">
@@ -25,9 +26,7 @@
 
 	<div id="metrics-filter">
 
-		<!--{% load bootstrap3 %}       {# import bootstrap4/bootstrap3 #}-->
-		<!--{% bootstrap_css %}         {# Embed Bootstrap CSS #}-->
-		{% static bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+		{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 
 		{% block extrahead %}       {# Extra Resources Start #}
 		{{ form.media }}            {# Form required JS and CSS #}
