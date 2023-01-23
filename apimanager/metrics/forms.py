@@ -224,7 +224,7 @@ class CustomSummaryForm(forms.Form):
     )
 
     from_date_custom = forms.DateField(
-        label=_(FROM_DATE ),
+        label=_(FROM_DATE),
         widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
         initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
