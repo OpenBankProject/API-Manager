@@ -9,7 +9,7 @@ from datetime import date
 from django.forms.widgets import SelectMultiple, CheckboxInput, CheckboxSelectMultiple
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
-
+from apimanager.settings import API_MANAGER_DATE_FORMAT
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 API_DATEFORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
@@ -216,16 +216,16 @@ class ConnectorMetricsForm(MetricsForm):
 class CustomSummaryForm(forms.Form):
     to_date = forms.DateField(
         label=_(TO_DATE),
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        initial=str(datetime.now().strftime('%Y-%m-%d')),
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
 
     from_date_custom = forms.DateField(
         label=_(FROM_DATE ),
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
+        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
     )
     exclude_app_names = forms.CharField(
         label=_('Exclude App Names'),
@@ -246,10 +246,10 @@ class CustomSummaryForm(forms.Form):
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
         label=_(TO_DATE),
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
         #initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d')),
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
     exclude_app_names = forms.CharField(
         label=_('Exclude App Names'),
