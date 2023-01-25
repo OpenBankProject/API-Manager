@@ -239,7 +239,7 @@ class CustomSummaryForm(forms.Form):
         required=False,
         initial='API-Manager',
     )
-    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
+    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Data'))
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
@@ -263,7 +263,7 @@ class MonthlyMetricsSummaryForm(forms.Form):
         required=False,
         initial='API-Manager',
     )
-    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
+    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Data'))
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
