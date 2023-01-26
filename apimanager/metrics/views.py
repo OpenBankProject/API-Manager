@@ -711,6 +711,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     def median_time_to_first_api_call(self, from_date, to_date):
         return 0 #TODO this cost too much time, do not use this at the moment.
         form = self.get_form()
+        form = self.get_form()
+        new_apps_list = []
+        apps = []
+        apps_list = self.get_all_consumers()
 
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.MONTHLY)
 
