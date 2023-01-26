@@ -44,7 +44,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         """Scrubs data in the given consumers to adher to certain formats"""
         for consumer in consumers:
             consumer['created'] = datetime.strptime(
-                consumer['created'], settings.API_DATETIMEFORMAT)
+                consumer['created'], settings.API_DATE_TIME_FORMAT)
         return consumers
 
     def compile_statistics(self, consumers):
@@ -146,7 +146,7 @@ class DetailView(LoginRequiredMixin, FormView):
             urlpath = '/management/consumers/{}'.format(self.kwargs['consumer_id'])
             consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
-                consumer['created'], settings.API_DATETIMEFORMAT)
+                consumer['created'], settings.API_DATE_TIME_FORMAT)
 
             call_limits_urlpath = '/management/consumers/{}/consumer/call-limits'.format(self.kwargs['consumer_id'])
             consumer_call_limtis = api.get(call_limits_urlpath)

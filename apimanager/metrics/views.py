@@ -11,7 +11,7 @@ from enum import Enum
 
 from django.conf import settings
 from apimanager import local_settings
-from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATEFORMAT, API_DATETIMEFORMAT
+from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATE_FORMAT, API_DATE_TIME_FORMAT
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
@@ -112,7 +112,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.datetime.strptime(
-                metric['date'], settings.API_DATETIMEFORMAT)
+                metric['date'], settings.API_DATE_TIME_FORMAT)
         return metrics
 
     def to_api(self, cleaned_data):
@@ -127,7 +127,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
             # Maybe we should define the API format as Django format to not
             # have to convert in places like this?
             if value.__class__.__name__ == 'datetime':
-                value = value.strftime(settings.API_DATEFORMAT)
+                value = value.strftime(settings.API_DATE_FORMAT)
             if value:
                 # API does not like quoted data
                 params.append('{}={}'.format(name, value))
@@ -224,7 +224,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.datetime.strptime(
-                metric['date'], API_DATEFORMAT)
+                metric['date'], API_DATE_FORMAT)
         return metrics
 
     def to_api(self, cleaned_data):
@@ -239,7 +239,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             # Maybe we should define the API format as Django format to not
             # have to convert in places like this?
             if value.__class__.__name__ == 'datetime':
-                value = value.strftime(settings.API_DATEFORMAT)
+                value = value.strftime(settings.API_DATE_FORMAT)
             if value:
                 # API does not like quoted data
                 params.append('{}={}'.format(name, value))
@@ -266,17 +266,18 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 urlpath =  urlpath + '?from_date={}&to_date={}'.format(from_date, to_date)
             cache_key = get_cache_key_for_current_call(self.request, urlpath)
-            apicaches = None
+            #api_cache = None
+            api_cache = None
             try:
-                apicaches = cache.get(cache_key)
+                api_cache = cache.get(cache_key)
             except Exception as err:
-                apicaches = None
-            if apicaches is not None:
-                metrics = apicaches
+                api_cache = None
+            if api_cache is not None:
+                metrics = api_cache
             else:
                 api = API(self.request.session.get('obp'))
                 metrics = api.get(urlpath)
-                apicaches = cache.set(cache_key, metrics)
+                api_cache = cache.set(cache_key, metrics)
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_URL_MSG, urlpath))
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_KEY_MSG, cache_key))
 
@@ -293,8 +294,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                                       to_date, urlpath):
         api_calls_total = metrics[0]["count"]
         average_response_time = metrics[0]["average_response_time"]
-        to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
-        from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
+        to_date = datetime.datetime.strptime(to_date, API_DATE_FORMAT)
+        from_date = datetime.datetime.strptime(from_date, API_DATE_FORMAT)
         number_of_days = abs((to_date - from_date).days)
         # if number_of_days= 0, then it means calls_per_hour
         average_calls_per_day = api_calls_total if (number_of_days == 0) else api_calls_total / number_of_days
@@ -341,12 +342,12 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def get_total_number_of_apps(self, cleaned_data, from_date, to_date):
         apps = []
-        from_date = datetime.datetime.strptime(from_date, API_DATEFORMAT)
-        to_date = datetime.datetime.strptime(to_date, API_DATEFORMAT)
+        from_date = datetime.datetime.strptime(from_date, API_DATE_FORMAT)
+        to_date = datetime.datetime.strptime(to_date, API_DATE_FORMAT)
         apps_list =  self.get_all_consumers()
 
         for app in apps_list:
-            app_created_date = datetime.datetime.strptime(app["created"], API_DATETIMEFORMAT)
+            app_created_date = datetime.datetime.strptime(app["created"], API_DATE_TIME_FORMAT)
 
             if app_created_date < from_date and app_created_date > to_date:
                 apps_list.remove(app)
@@ -382,13 +383,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         urlpath = '/management/consumers'
         api = API(self.request.session.get('obp'))
         cache_key = get_cache_key_for_current_call(self.request, urlpath)
-        apicaches = None
+        api_cache = None
         try:
-            apicaches = cache.get(cache_key)
+            api_cache = cache.get(cache_key)
         except Exception as err:
-            apicaches = None
-        if apicaches is not None:
-            apps_list = apicaches
+            api_cache = None
+        if api_cache is not None:
+            apps_list = api_cache
         else:
             try:
                 apps = api.get(urlpath)
@@ -409,8 +410,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         """
 
         # we need to convert string to datetime object, then we can calculate the date
-        from_datetime_object = datetime.datetime.strptime(from_date_string, API_DATEFORMAT)
-        to_datetime_object = datetime.datetime.strptime(to_date_string , API_DATEFORMAT)
+        from_datetime_object = datetime.datetime.strptime(from_date_string, API_DATE_FORMAT)
+        to_datetime_object = datetime.datetime.strptime(to_date_string , API_DATE_FORMAT)
         time_delta_in_loop = from_datetime_object + timedelta(**delta)
 
         result_list = []
@@ -419,8 +420,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         while time_delta_in_loop <= to_datetime_object:
             try:
                 # here we need to first convert datetime object to String
-                form_date= from_datetime_object.strftime(API_DATEFORMAT)
-                to_date= time_delta_in_loop.strftime(API_DATEFORMAT)
+                form_date= from_datetime_object.strftime(API_DATE_FORMAT)
+                to_date= time_delta_in_loop.strftime(API_DATE_FORMAT)
                 aggregate_metrics = self.get_aggregate_metrics(form_date, to_date, is_included_obp_apps)
                 result = aggregate_metrics[0]
                 result_list_pure.append(result)
@@ -748,7 +749,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
                 if (web_page_type == SummaryType.QUARTERLY):
                     # for one quarter, the from_date is 90 days ago.
-                    from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
+                    from_date = (datetime.datetime.strptime(to_date, API_DATE_FORMAT) - timedelta(90)).strftime(API_DATE_FORMAT)
                     calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date, exclude_app_names)
                     per_month_chart = self.plot_line_chart(calls_per_month, month_list, 'month')
 
@@ -802,8 +803,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
                     'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
                     'api_host_name': api_host_name,
-                    'from_date': (datetime.datetime.strptime(from_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
-                    'to_date': (datetime.datetime.strptime(to_date, API_DATEFORMAT)).strftime('%Y-%m-%d'),
+                    'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
+                    'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
                     'top_apis': top_apis,
                     'top_apis_bar_chart': top_apis_bar_chart,
                     'top_consumers_bar_chart': top_consumers_bar_chart,
@@ -840,7 +841,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
         if (web_page_type == SummaryType.QUARTERLY):
             # for one quarter, the from_date is 90 days ago.
-            from_date = (datetime.datetime.strptime(to_date, API_DATEFORMAT) - timedelta(90)).strftime(API_DATEFORMAT)
+            from_date = (datetime.datetime.strptime(to_date, API_DATE_FORMAT) - timedelta(90)).strftime(API_DATE_FORMAT)
             calls_per_month_list, calls_per_month, month_list = self.calls_per_month(is_included_obp_apps, from_date, to_date, exclude_app_names)
             per_month_chart = self.plot_line_chart(calls_per_month, month_list, 'month')
 

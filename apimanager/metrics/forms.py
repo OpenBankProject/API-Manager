@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 from apimanager.settings import API_MANAGER_DATE_FORMAT
 
-API_DATEFORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+API_DATE_FORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
 FROM_DATE = 'From Date'
 TO_DATE = 'To Date'
@@ -21,10 +21,10 @@ TO_DATE = 'To Date'
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        input_formats=[settings.API_DATEFORMAT],
+        input_formats=[settings.API_DATE_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': API_DATEFORMAT_PLACEHOLDER,
+                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
                 'class': FORM_CONTROL,
             }
         ),
@@ -33,10 +33,10 @@ class MetricsForm(forms.Form):
     )
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
-        input_formats=[settings.API_DATEFORMAT],
+        input_formats=[settings.API_DATE_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': API_DATEFORMAT_PLACEHOLDER,
+                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
                 'class': FORM_CONTROL,
             }
         ),
@@ -176,10 +176,10 @@ class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        input_formats=[settings.API_DATEFORMAT],
+        input_formats=[settings.API_DATE_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': API_DATEFORMAT_PLACEHOLDER,
+                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
                 'class': FORM_CONTROL,
             }
         ),
