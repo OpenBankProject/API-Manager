@@ -253,9 +253,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         There are different use cases, so we accept different parameters.
         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
         """
+        api_calls_total = 0
+        average_response_time = 0
+        average_calls_per_day = 0
         try:
-            api_calls_total = 0
-            average_response_time = 0
             urlpath = '/management/aggregate-metrics'
             if only_show_api_explorer_metrics:
                 urlpath = urlpath + '?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
@@ -281,11 +282,12 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
             api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
                 api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, urlpath)
-            return api_calls_total, average_response_time, int(average_calls_per_day)
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
             error_once_only(self.request, err)
+        finally:
+            return api_calls_total, average_response_time, int(average_calls_per_day)
 
     def get_internal_api_call_metrics(self, api_calls_total, average_response_time, cache_key, from_date, metrics,
                                       to_date, urlpath):
