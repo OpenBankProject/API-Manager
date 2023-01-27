@@ -81,7 +81,7 @@ class CreateCustomerForm(forms.Form):
     )
     face_image_date = forms.DateTimeField(
         label=_('Face Image Date'),
-        input_formats=[settings.API_DATETIMEFORMAT],
+        input_formats=[settings.API_DATE_TIME_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': PLACEHOLDER,
@@ -92,7 +92,7 @@ class CreateCustomerForm(forms.Form):
     )
     date_of_birth = forms.DateTimeField(
         label=_('Date of Birth'),
-        input_formats=[settings.API_DATETIMEFORMAT],
+        input_formats=[settings.API_DATE_TIME_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': PLACEHOLDER,
@@ -204,7 +204,7 @@ class CreateCustomerForm(forms.Form):
     )
     last_ok_date = forms.DateTimeField(
         label=_('Last OK Date'),
-        input_formats=[settings.API_DATETIMEFORMAT],
+        input_formats=[settings.API_DATE_TIME_FORMAT],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': PLACEHOLDER,
@@ -221,14 +221,14 @@ class CreateCustomerForm(forms.Form):
     def clean_face_image_date(self):
         data = self.cleaned_data['face_image_date']
         if data:
-            return data.strftime(settings.API_DATETIMEFORMAT)
+            return data.strftime(settings.API_DATE_TIME_FORMAT)
         else:
             return None
 
     def clean_date_of_birth(self):
         data = self.cleaned_data['date_of_birth']
         if data:
-            return data.strftime(settings.API_DATETIMEFORMAT)
+            return data.strftime(settings.API_DATE_TIME_FORMAT)
         else:
             return None
 
