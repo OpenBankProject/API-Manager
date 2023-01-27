@@ -266,7 +266,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 urlpath =  urlpath + '?from_date={}&to_date={}'.format(from_date, to_date)
             cache_key = get_cache_key_for_current_call(self.request, urlpath)
-            #api_cache = None
             api_cache = None
             try:
                 api_cache = cache.get(cache_key)
@@ -715,6 +714,62 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         new_apps_list = []
         apps = []
         apps_list = self.get_all_consumers()
+
+        for app in apps_list:
+            created_date = datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
+            created_date = created_date.strftime(API_DATE_FORMAT)
+            created_date = datetime.datetime.strptime(created_date, API_DATE_FORMAT)
+            if created_date >= datetime.datetime.strptime(from_date, API_DATE_FORMAT):
+                new_apps_list.append(app)
+
+        times_to_first_call = []
+
+        strfrom_date=datetime.datetime.strptime(from_date, API_DATE_FORMAT)
+        strto_date=datetime.datetime.strptime(to_date, API_DATE_FORMAT)
+        for app in new_apps_list:
+            urlpath_metrics = '/management/metrics?from_date={}&to_date={}&consumer_id={}&sort_by={}&direction={}&limit={}'.format(
+                from_date, to_date, app['consumer_id'], 'date', 'asc', '1')
+            cache_key = get_cache_key_for_current_call(self.request, urlpath_metrics)
+            api = API(self.request.session.get('obp'))
+            try:
+                api_cache=None
+                try:
+                    api_cache=cache.get(cache_key)
+                except Exception as err:
+                    api_cache=None
+                metrics=[]
+                if not api_cache is None:
+                    metrics=api_cache
+                else:
+                    metrics = api.get(urlpath_metrics)
+
+                    if metrics is not None and 'code' in metrics and metrics['code'] == 403:
+                        error_once_only(self.request, metrics['message'])
+                        if(metrics['message'].startswith('OBP-20006')):
+                            break
+                        metrics = []
+                    else:
+                        metrics = list(metrics['metrics'])
+                        cache.set(cache_key, metrics)
+                        LOGGER.warning('The cache is setting, url is: {}'.format(urlpath_metrics))
+                        LOGGER.warning('The cache is setting key is: {}'.format(cache_key))
+                if metrics:
+                    time_difference = datetime.datetime.strptime(metrics[0]['date'], '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.datetime.strptime(app['created'], '%Y-%m-%dT%H:%M:%SZ')
+                    times_to_first_call.append(time_difference.total_seconds())
+
+
+            except APIError as err:
+                error_once_only(self.request, err)
+            except Exception as err:
+                error_once_only(self.request, 'Unknown Error. {}'.format(err))
+
+        if times_to_first_call:
+            median = statistics.median(times_to_first_call)
+            delta = datetime.timedelta(seconds=median)
+        else:
+            delta = 0
+
+        return delta
 
     def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.MONTHLY)
 
