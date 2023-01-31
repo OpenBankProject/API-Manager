@@ -248,7 +248,6 @@ class MyDetailView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, err)
-
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
         })
@@ -348,7 +347,6 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
             redirect_url = reverse('my-user-detail',kwargs={"user_id":kwargs['user_id']})
         else:
              redirect_url = reverse('users-index')
-
         return HttpResponseRedirect(redirect_url)
 
 
@@ -390,8 +388,8 @@ class UserStatusUpdateView(LoginRequiredMixin, View):
 
         except APIError as err:
             messages.error(request, err)
-        except Exception as e:
-            messages.error(self.request, 'Unknown Error' + str(e))
+        except Exception as err:
+            messages.error(self.request, err)
 
         # from sonarcloud: Change this code to not perform redirects based on user-controlled data.
         redirect_url_from_gui = request.POST.get('next', reverse('users-index'))
