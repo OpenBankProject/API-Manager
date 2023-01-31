@@ -248,7 +248,6 @@ class MyDetailView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, err)
-        user["entitlements"]["list"] = sorted(user["entitlements"]["list"], key=lambda d: d['role_name'])
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
         })
@@ -340,7 +339,7 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
         except Exception as err:
             messages.error(self.request, err)
 
-        # from sonarcloud: Change this code to not perform redirects based on user-controlled data.    
+        # from sonarcloud: Change this code to not perform redirects based on user-controlled data.
         redirect_url_from_gui = request.POST.get('next', reverse('users-index'))
         if "/users/all/user_id/" in str(redirect_url_from_gui):
             redirect_url = reverse('users-detail',kwargs={"user_id":kwargs['user_id']})
@@ -348,7 +347,6 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
             redirect_url = reverse('my-user-detail',kwargs={"user_id":kwargs['user_id']})
         else:
              redirect_url = reverse('users-index')
-        
         return HttpResponseRedirect(redirect_url)
 
 
@@ -360,11 +358,33 @@ class UserStatusUpdateView(LoginRequiredMixin, View):
         api = API(self.request.session.get('obp'))
         try:
             if(request.POST.get("Delete")):
-                self._delete_user(api, request, args, kwargs)
+                urlpath = '/users/{}'.format(kwargs['user_id'])
+                result = api.delete(urlpath)
+                if result is not None and 'code' in result and result['code'] >= 400:
+                    messages.error(request, result['message'])
+                else:
+                    msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
+                    messages.success(request, msg)
             elif(request.POST.get("Lock")):
-                self._lock_user(api, request, args, kwargs)
+                urlpath = '/users/{}/locks'.format(kwargs['username'])
+                result = api.post(urlpath, None)
+                if result is not None and 'code' in result and result['code'] >= 400:
+                    messages.error(request, result['message'])
+                else:
+                    msg = 'User {} has been lock.'.format(kwargs['username'])
+                    messages.success(request, msg)
             else:
-                self._lock_status_user(api, request, args, kwargs)
+                urlpath = '/users/{}/lock-status'.format(kwargs['username'])
+                result = api.put(urlpath, None)
+                #if result is not None and 'code' in result and result['code'] >= 400:
+                if 'code' in result and result['code'] == 404:
+                    msg = 'User {} has been unlocked.'.format(kwargs['username'])
+                    messages.success(request, msg)
+                else:
+                    messages.error(request, result['message'])
+                #else:
+                #    msg = 'User {} has been unlocked.'.format(kwargs['username'])
+                #    messages.success(request, msg)
 
         except APIError as err:
             messages.error(request, err)
@@ -382,36 +402,6 @@ class UserStatusUpdateView(LoginRequiredMixin, View):
 
         return HttpResponseRedirect(redirect_url)
 
-    def _delete_user(self, api, request, *args, **kwargs):
-        urlpath = '/users/{}'.format(kwargs['user_id'])
-        result = api.delete(urlpath)
-        if result is not None and 'code' in result and result['code'] >= 400:
-            messages.error(request, result['message'])
-        else:
-            msg = 'User with ID {} has been deleted.'.format(kwargs['user_id'])
-            messages.success(request, msg)
-
-    def _lock_user(self, api, request, *args, **kwargs):
-        urlpath = '/users/{}/locks'.format(kwargs['username'])
-        result = api.post(urlpath, None)
-        if result is not None and 'code' in result and result['code'] >= 400:
-            messages.error(request, result['message'])
-        else:
-            msg = 'User {} has been lock.'.format(kwargs['username'])
-            messages.success(request, msg)
-
-    def _lock_status_user(self, api, request, *args, **kwargs):
-        urlpath = '/users/{}/lock-status'.format(kwargs['username'])
-        result = api.put(urlpath, None)
-        #if result is not None and 'code' in result and result['code'] >= 400:
-        if 'code' in result and result['code'] == 404:
-            msg = 'User {} has been unlocked.'.format(kwargs['username'])
-            messages.success(request, msg)
-        else:
-            messages.error(request, result['message'])
-        #else:
-        #    msg = 'User {} has been unlocked.'.format(kwargs['username'])
-        #    messages.success(request, msg)
 
 class ExportCsvView(LoginRequiredMixin, View):
     """View to export the user to csv"""
@@ -449,4 +439,3 @@ class ExportCsvView(LoginRequiredMixin, View):
             writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
                              user['last_marketing_agreement_signed_date']])
         return response
-
