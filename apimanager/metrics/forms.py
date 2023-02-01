@@ -23,7 +23,7 @@ class MetricsForm(forms.Form):
         label=_(FROM_DATE),
         widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=False,
-        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
+        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
