@@ -244,9 +244,9 @@ LOGGING = {
 LOGIN_URL = reverse_lazy('home')
 
 #Map Java: yyyy-MM-dd'T'HH:mm'Z'
-API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 # the API_Manager the web form date format, eg: 2020-10-11
 API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
@@ -257,7 +257,7 @@ API_EXPLORER_HOST = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
-API_VERSION = '5.1.0'
+API_VERSION = '5.0.0'
 
 # URL to API Tester
 API_TESTER_URL = 'https://www.example.com'

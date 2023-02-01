@@ -227,9 +227,9 @@ EXCLUDE_URL_PATTERN = []
 API_EXPLORER_APP_NAME = 'xxx'
 
 #Map Java: yyyy-MM-dd'T'HH:mm'Z'
-API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
+API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
 
 ```
 

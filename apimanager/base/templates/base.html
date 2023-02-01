@@ -66,7 +66,7 @@
                                 <hr class="dropdown-hr">
                                 <li {% if accounts_create_url in request.path %} class="active" {% endif %}><a href="{{ accounts_create_url }}">{% trans "Account Create" %}</a></li>
                                 <li {% if accounts_list_url in request.path %} class="active" {% endif %}><a href="{{ accounts_list_url }}">{% trans "Account List" %}</a></li>
-                                <li {% if customers_create_url in request.path %} class="active" {% endif %}><a href="{{ customers_create_url }}">{% trans "Customers" %}</a></li>
+                                <li {% if customers_create_url in request.path %} class="active" {% endif %}><a href="{{ customers_create_url }}">{% trans "Customer Create" %}</a></li>
                                 <li {% if customer_list_url in request.path %} class="active" {% endif %}><a href="{{ customer_list_url }}">{% trans "Customer List" %}</a></li>
                                 <li {% if branches_list_url in request.path %} class="active" {% endif %}><a href="{{ branches_list_url }}">{% trans "Branches" %}</a></li>
                                 <li {% if atms_create_url in request.path %} class="active" {% endif %}><a href="{{ atms_create_url }}">{% trans "ATM Create" %}</a></li>

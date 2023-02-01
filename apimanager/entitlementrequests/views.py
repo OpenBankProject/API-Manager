@@ -24,7 +24,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         """Scrubs data in the given entitlement requests to adher to certain formats"""
         for entitlement_request in entitlement_requests:
             entitlement_request['created'] = datetime.strptime(
-                entitlement_request['created'], settings.API_DATETIMEFORMAT)
+                entitlement_request['created'], settings.API_DATE_TIME_FORMAT)
         return entitlement_requests
 
     def get_context_data(self, **kwargs):

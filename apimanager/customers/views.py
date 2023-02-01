@@ -38,7 +38,7 @@ class CreateView(LoginRequiredMixin, FormView):
         except Exception as err:
             messages.error(self.request, err)
         fields['last_ok_date'].initial =\
-            datetime.datetime.now().strftime(settings.API_DATETIMEFORMAT)
+            datetime.datetime.now().strftime(settings.API_DATE_TIME_FORMAT)
         return form
 
     def form_valid(self, form):
@@ -71,7 +71,7 @@ class CreateView(LoginRequiredMixin, FormView):
             'employment_status': data['employment_status'],
             'kyc_status': data['kyc_status'],
             'last_ok_date':
-                data['last_ok_date'].strftime(settings.API_DATETIMEFORMAT),
+                data['last_ok_date'].strftime(settings.API_DATE_TIME_FORMAT),
         }
         try:
             result = self.api.post(urlpath, payload=payload)
