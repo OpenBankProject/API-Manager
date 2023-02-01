@@ -1,5 +1,5 @@
 $(document).ready(function($) {
-	let barChart = Chart($("#barchart"), {
+	let barChart = new Chart($("#barchart"), {
 		type: 'horizontalBar',
 		data: {
 			labels: BarchartData['labels'],
