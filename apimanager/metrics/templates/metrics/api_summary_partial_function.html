@@ -4,7 +4,7 @@
 
 {% block nav_tabs %}
 	<a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">{% trans "List" %}</a>
-	<a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}" class="active">{% trans "Summary by Partial Function" %}</a>
+	<li class="active"><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">{% trans "Summary by Partial Function" %}</a></li>
 {% endblock nav_tabs %}
 
 {% block tab_content %}
