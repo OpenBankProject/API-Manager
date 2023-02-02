@@ -1,6 +1,5 @@
 document.getElementsByClassName("include_system_calls")[0].innerHTML=`<div>
-      <input type="checkbox" id="include_system_calls_id" name="Include System Calls"
-             >
+      <input type="checkbox" id="include_system_calls_id" name="Include System Calls">
       <label for="systemCalls">Include System Calls</label>
     </div>`
 

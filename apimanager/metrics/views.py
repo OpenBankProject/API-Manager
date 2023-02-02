@@ -504,6 +504,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         buf.close()
         # Clear the previous plot.
         plt.gcf().clear()
+        print(image_base64, "image_base64")
         return image_base64
 
     def _day(self, plot_data, date_month_list, date_list):
@@ -783,11 +784,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             per_hour_chart=[]
             if form.is_valid():
                 is_included_obp_apps = form.cleaned_data.get('include_obp_apps')
+                print(is_included_obp_apps, "is_included_obp_apps")
                 exclude_app_names = form.cleaned_data.get("exclude_app_names")
                 #if exclude_app_names not in local_settings.EXCLUDE_APPS:
                 #    error_once_only(self.request, "Invalid Exclude App Name, Please select" + str(local_settings.EXCLUDE_APPS) + "Anyone of these")
                 form_to_date_string = form.data['to_date']
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
+                print(to_date, "to_date")
 
                 if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
@@ -821,9 +824,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 if (web_page_type == SummaryType.CUSTOM):
                     # for one month, the from_date is x day ago.
                     form_from_date_string = form.data['from_date_custom']
+                    print(form_from_date_string, "form_from_date_string")
                     from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
+                    print(from_date, "from_date123")
                     calls_per_day_list, calls_per_day, date_list = self.calls_per_day(is_included_obp_apps, from_date, to_date, exclude_app_names)
+                    print(calls_per_day_list, calls_per_day, date_list, "list")
                     per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    print(per_day_chart, "per_day_chart123")
 
                 api_host_name = API_HOST
                 top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date, exclude_app_names)
@@ -945,4 +952,6 @@ class HourlySummaryView(MonthlyMetricsSummaryView):
 class CustomSummaryView(MonthlyMetricsSummaryView):
     form_class = CustomSummaryForm
     template_name = 'metrics/custom_summary.html'
-    def get_context_data(self, **kwargs): return self.prepare_general_context(SummaryType.CUSTOM, **kwargs)
+    def get_context_data(self, **kwargs):
+        print(self.prepare_general_context(SummaryType.CUSTOM, **kwargs), "self.elf.prepare_general_context(SummaryType.CUSTOM, **kwargs)")
+        return self.prepare_general_context(SummaryType.CUSTOM, **kwargs)
