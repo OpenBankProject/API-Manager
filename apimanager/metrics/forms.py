@@ -21,26 +21,15 @@ TO_DATE = 'To Date'
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        input_formats=[settings.API_DATE_FORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
-                'class': FORM_CONTROL,
-            }
-        ),
-        initial='2020-01-01T00:00:00.000Z',
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=False,
+        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
-        input_formats=[settings.API_DATE_FORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
-                'class': FORM_CONTROL,
-            }
-        ),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=False,
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
     limit = forms.IntegerField(
         label=_('Limit'),
@@ -176,15 +165,9 @@ class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        input_formats=[settings.API_DATE_FORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': API_DATE_FORMAT_PLACEHOLDER,
-                'class': FORM_CONTROL,
-            }
-        ),
-        initial='2020-01-01T00:00:00.000Z',
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
+        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
     )
     connector_name = forms.CharField(
         label=_('Connector Name'),
