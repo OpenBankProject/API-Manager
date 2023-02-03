@@ -63,14 +63,14 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">{% trans "Update Filter" %}</button>
+			<button type="submit" class="btn btn-primary" onclick="systemCalls()">{% trans "Update Filter" %}</button>
 		</form>
 	</div>
     	<div class="tab-content">
 			{% if form.include_obp_apps.value %}
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<h2>{% trans "Period" %}: {% trans "From" %}{{ from_date }} {% trans "to" %}{{ to_date }} </h2>
+    			<h2>{% trans "Period" %}: {% trans "From: " %}{{ from_date }} {% trans "To: " %}{{ to_date }} </h2>
 
 		<table border="1">
             <tr>
@@ -146,7 +146,7 @@
     		</div>
     		{% endblock tab_content %}
 			{% else %}
-			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
+			<h2>{% trans "Period: " %} : {% trans "From: " %} {{ from_date }} {% trans "To: " %} {{ to_date }}</h2>
 			{% endif %}
     	</div>
     </div>

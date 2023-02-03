@@ -206,7 +206,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         We need a bound form because we already send a request to the API
         without user intervention on initial request
         """
-        if (self.request.GET) and (web_page_type != SummaryType.CUSTOM):
+        if (self.request.GET) or (web_page_type == SummaryType.CUSTOM):
             data = self.request.GET
         else:
             fields = self.form_class.declared_fields
@@ -253,10 +253,9 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         There are different use cases, so we accept different parameters.
         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
         """
-        api_calls_total = 0
-        average_response_time = 0
-        average_calls_per_day = 0
         try:
+            api_calls_total = 0
+            average_response_time = 0
             urlpath = '/management/aggregate-metrics'
             if only_show_api_explorer_metrics:
                 urlpath = urlpath + '?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
@@ -271,7 +270,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api_cache = cache.get(cache_key)
             except Exception as err:
                 api_cache = None
-            if api_cache is not None:
+            if not api_cache is None:
                 metrics = api_cache
             else:
                 api = API(self.request.session.get('obp'))
@@ -282,12 +281,11 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
             api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
                 api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, urlpath)
+            return api_calls_total, average_response_time, int(average_calls_per_day)
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
             error_once_only(self.request, err)
-        finally:
-            return api_calls_total, average_response_time, int(average_calls_per_day)
 
     def get_internal_api_call_metrics(self, api_calls_total, average_response_time, cache_key, from_date, metrics,
                                       to_date, urlpath):
@@ -310,6 +308,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
          only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
          """
         apps = []
+        form = self.get_form()
         active_apps_list = []
         if is_included_obp_apps:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}'.format(from_date, to_date, exclude_app_names)
@@ -876,7 +875,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 error_once_only(self.request, str(form.errors))
         except Exception as err:
             error_once_only(self.request, err)
-
     def _daily_and_weekly(self, web_page_type, is_included_obp_apps, to_date, exclude_app_names, per_hour_chart, per_day_chart, from_date):
         if (web_page_type == SummaryType.DAILY):
             # for one day, the from_date is 1 day ago.
