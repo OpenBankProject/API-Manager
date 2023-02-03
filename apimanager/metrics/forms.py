@@ -210,7 +210,7 @@ class CustomSummaryForm(forms.Form):
         label=_(FROM_DATE),
         widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
+        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     exclude_app_names = forms.CharField(
         label=_('Exclude App Names'),
