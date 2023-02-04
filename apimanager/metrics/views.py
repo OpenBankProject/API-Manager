@@ -200,13 +200,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     template_name = 'metrics/monthly_summary.html'
     api_urlpath = None
 
-    def get_form(self, web_page_type = ""):
+    def get_form(self):
         """
         Get bound form either from request.GET or initials
         We need a bound form because we already send a request to the API
         without user intervention on initial request
         """
-        if (self.request.GET) or (web_page_type == SummaryType.CUSTOM):
+        if self.request.GET:
             data = self.request.GET
         else:
             fields = self.form_class.declared_fields
@@ -261,7 +261,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 urlpath = urlpath + '?from_date={}&to_date={}&app_name={}'.format(from_date, to_date, API_EXPLORER_APP_NAME)
             elif ((not only_show_api_explorer_metrics) and (not is_included_obp_apps)):
                 urlpath = urlpath + '?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                    from_date, to_date, ",".join(local_settings.EXCLUDE_APPS),",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
+                    from_date, to_date, ",".join(local_settings.EXCLUDE_APPS),",".join(local_settings.EXCLUDE_FUNCTIONS), ",".join(local_settings.EXCLUDE_URL_PATTERN))
             else:
                 urlpath =  urlpath + '?from_date={}&to_date={}'.format(from_date, to_date)
             cache_key = get_cache_key_for_current_call(self.request, urlpath)
@@ -774,7 +774,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def prepare_general_context(self, web_page_type,  **kwargs):
         try:
-            form = self.get_form(web_page_type)
+            form = self.get_form()
             per_day_chart=[]
             calls_per_month_list=[]
             per_month_chart=[]
