@@ -51,12 +51,6 @@
 						{{ form.exclude_app_names }}
 					</div>
 				</div>
-				<div class="col-xs-4 col-sm-3">
-					<div class="form-group include_system_calls">
-						{{ form.include_obp_apps }}
-						{{ form.include_obp_apps.label_tag }}
-					</div>
-				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">{% trans "Update Filter" %}</button>
 		</form>
@@ -64,7 +58,6 @@
 	</div>
 
     	<div class="tab-content">
-			{% if form.include_obp_apps.value %}
     		{% block tab_content %}
     		<div class="tab-pane active">
     			<h2>{% trans "Period" %}: {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
@@ -142,9 +135,6 @@
 		</table>
     		</div>
     		{% endblock tab_content %}
-			{% else %}
-			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
-			{% endif %}
     	</div>
     </div>
 
