@@ -11,6 +11,7 @@ RUN touch /logs/gunicorn.error.log
 RUN chgrp -R 0 /logs && chmod -R g+rwX /logs
 WORKDIR /app
 RUN ./apimanager/manage.py migrate
+RUN chown -R 501:0 ./*
 USER 501
 WORKDIR /app/apimanager
 EXPOSE 8000
