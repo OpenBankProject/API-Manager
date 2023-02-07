@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">{% trans "Update Filter" %}</button>
+			<button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
 		</form>
 	</div>
     	<div class="tab-content">
@@ -75,10 +75,10 @@
 				<td>{% trans "Total API calls" %}:</td>
 				<td>{{ api_calls }}</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "API calls made using API Explorer" %}:</td>
 				<td>{{ calls_by_api_explorer }} ({% widthratio calls_by_api_explorer api_calls 100 %} %)</td>
-			</tr>
+			</tr>-->
 
 			<tr>
 				<td>{% trans "Calls per day" %}:</td>
@@ -119,7 +119,7 @@
 				<td>{% trans "Top 10 Consumers" %}:</td>
 				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "Top Warehouse APIs" %}:</td>
 				<td>{% if top_warehouse_apis %}{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
@@ -135,7 +135,7 @@
 			<tr>
 				<td>{% trans "Users with role CanSearchWarehouse" %}:</td>
 				<td>{% if user_email_cansearchwarehouse %}{% for key, value in user_email_cansearchwarehouse.items %} {{key}}, {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
-			</tr>
+			</tr>-->
 
 		</table>
     		</div>
