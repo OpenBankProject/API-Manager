@@ -51,10 +51,10 @@
 					</div>
 				</div>
 				<div class="col-xs-4 col-sm-3">
-					{% if form.exclude_app_names.errors %}<div class="alert alert-danger">{{ form.exclude_app_names.errors }}</div>{% endif %}
+					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.exclude_app_names.label_tag }}
-						{{ form.exclude_app_names }}
+						{{ form.include_app_names.label_tag }}
+						{{ form.include_app_names }}
 					</div>
 				</div>
 			</div>
