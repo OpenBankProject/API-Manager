@@ -33,6 +33,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import statistics
+import urllib.parse
+
 
 CACHE_SETTING_URL_MSG = "The cache setting url is"
 CACHE_SETTING_KEY_MSG = "The cache setting key is"
@@ -268,12 +270,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         input_string = include_app_names.strip()
         result = ""
         if input_string != "":
-            input_list = input_string.split(",")
+            input_list = input_string.strip().split(",")
             print("input_list is:", input_list)
             cleaned_list = [item.strip() for item in input_list]
             print("cleaned_list is: ", cleaned_list)
             cleaned_string=', '.join([str(item) for item in cleaned_list])
-            url_encoded_string = cleaned_string
+            print("cleaned_string is:", cleaned_string)
+            url_encoded_string = urllib.parse.quote(cleaned_string)
+            print("url_encoded_string is:", url_encoded_string)
             if len(cleaned_list) == 0:
                 result = ""
             elif len(cleaned_list) == 1:
