@@ -271,13 +271,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         result = ""
         if input_string != "":
             input_list = input_string.strip().split(",")
-            print("input_list is:", input_list)
+            #print("input_list is:", input_list)
             cleaned_list = [item.strip() for item in input_list]
-            print("cleaned_list is: ", cleaned_list)
+            #print("cleaned_list is: ", cleaned_list)
             cleaned_string=', '.join([str(item) for item in cleaned_list])
-            print("cleaned_string is:", cleaned_string)
+            #print("cleaned_string is:", cleaned_string)
             url_encoded_string = urllib.parse.quote(cleaned_string)
-            print("url_encoded_string is:", url_encoded_string)
+            #print("url_encoded_string is:", url_encoded_string)
             if len(cleaned_list) == 0:
                 result = ""
             elif len(cleaned_list) == 1:
@@ -304,8 +304,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             #
             #else:
             url_path =  url_path + '?from_date={}&to_date={}{}'.format(from_date, to_date, self.get_app_name_parameters(include_app_names))
-            print("get_app_name_parameters(include_app_names) is:", self.get_app_name_parameters(include_app_names))
-            print("url_path is: ", url_path)
+            #print("get_app_name_parameters(include_app_names) is:", self.get_app_name_parameters(include_app_names))
+            #print("url_path is: ", url_path)
             cache_key = get_cache_key_for_current_call(self.request, url_path)
             api_cache = None
             try:
