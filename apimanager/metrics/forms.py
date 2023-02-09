@@ -212,18 +212,16 @@ class CustomSummaryForm(forms.Form):
         required=True,
         initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
     )
-    #exclude_app_names = forms.CharField(
-    #    label=_('Exclude App Names'),
-    #    widget=forms.TextInput(
-    #        attrs={
-    #            'class': FORM_CONTROL,
-    #        }
-    #    ),
-    #    required=False,
-    #    initial='API-Manager',
-    #)
-    #include_obp_apps = forms.BooleanField(required=False, label=_('Include System Data'))
-    include_obp_apps = forms.BooleanField(required=False)
+    include_app_names = forms.CharField(
+        label=_('Include App Names'),
+        widget=forms.TextInput(
+            attrs={
+                'class': FORM_CONTROL,
+            }
+        ),
+        required=False,
+    )
+
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
@@ -237,16 +235,15 @@ class MonthlyMetricsSummaryForm(forms.Form):
         #initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
         initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
-    #exclude_app_names = forms.CharField(
-    #    label=_('Exclude App Names'),
-    #    widget=forms.TextInput(
-    #        attrs={
-    #            'class': FORM_CONTROL,
-    #        }
-    #    ),
-    #    required=False,
-    #    initial='API-Manager',
-    #)
+    include_app_names = forms.CharField(
+        label=_('Include App Names'),
+        widget=forms.TextInput(
+            attrs={
+                'class': FORM_CONTROL,
+            }
+        ),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
