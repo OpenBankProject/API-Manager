@@ -253,8 +253,34 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         return params
 
     def get_app_name_parameters(self, include_app_names):
-        return "Simon Say" + include_app_names
-
+        #if len(app_names) == 1:
+        #    return
+        #1. Parse include_app_names create a list using a commo (,) separator
+        #2. Trim each word (remove space),
+        #3. Then is one word, &app_name = thing
+        #4. IF IT IS MORE than one word then return number of app without space
+        #5. return either &app_name=thing
+        #6. Or
+        #7. return &include_app_names=thing1,thing2,
+        #8. url encode
+        #app_names = []
+        #input_string = "simon says, foo, bar , App 2 "
+        input_string = include_app_names.strip()
+        result = ""
+        if input_string != "":
+            input_list = input_string.split(",")
+            print("input_list is:", input_list)
+            cleaned_list = [item.strip() for item in input_list]
+            print("cleaned_list is: ", cleaned_list)
+            cleaned_string=', '.join([str(item) for item in cleaned_list])
+            url_encoded_string = cleaned_string
+            if len(cleaned_list) == 0:
+                result = ""
+            elif len(cleaned_list) == 1:
+                result = "&app_name={}".format(url_encoded_string)
+            else:
+                result = "&include_app_names={}".format(url_encoded_string)
+        return result
     def get_aggregate_metrics(self, from_date, to_date, include_app_names):
         """
         Gets the metrics from the API, using given parameters,
@@ -273,7 +299,9 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             #        from_date, to_date, ",".join(local_settings.EXCLUDE_FUNCTIONS), ",".join(local_settings.EXCLUDE_URL_PATTERN))
             #
             #else:
-            url_path =  url_path + '?from_date={}&to_date={}'.format(from_date, to_date)
+            url_path =  url_path + '?from_date={}&to_date={}{}'.format(from_date, to_date, self.get_app_name_parameters(include_app_names))
+            print("get_app_name_parameters(include_app_names) is:", self.get_app_name_parameters(include_app_names))
+            print("url_path is: ", url_path)
             cache_key = get_cache_key_for_current_call(self.request, url_path)
             api_cache = None
             try:
