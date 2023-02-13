@@ -20,16 +20,27 @@ TO_DATE = 'To Date'
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
-        label=_(FROM_DATE),
-        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
+        label=_('From Date'),
+        input_formats=[settings.API_DATEFORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': str((datetime.now()-timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+                'class': 'form-control',
+            }
+        ),
+        #initial='2020-01-01T00:00:00.000Z',
         required=False,
-        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     to_date = forms.DateTimeField(
-        label=_(TO_DATE),
-        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
+        label=_('To Date'),
+        input_formats=[settings.API_DATEFORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': str((datetime.now()).strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+                'class': 'form-control',
+            }
+        ),
         required=False,
-        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
     limit = forms.IntegerField(
         label=_('Limit'),

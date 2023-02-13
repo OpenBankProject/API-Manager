@@ -305,26 +305,32 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             #else:
             url_path =  url_path + '?from_date={}&to_date={}{}'.format(from_date, to_date, self.get_app_name_parameters(include_app_names))
             #print("get_app_name_parameters(include_app_names) is:", self.get_app_name_parameters(include_app_names))
-            #print("url_path is: ", url_path)
             cache_key = get_cache_key_for_current_call(self.request, url_path)
+            #print("cache_key is: ", cache_key)  #return cache_key
             api_cache = None
             try:
                 api_cache = cache.get(cache_key)
+                print("Cache HIT is:", api_cache)
+                #print("api_cache is: ", api_cache) #return fields name,which use cashe e.g. [{'count': 39814, 'average_response_time': 71.01, 'minimum_response_time': 1.0, 'maximum_response_time': 20229.0}]
             except Exception as err:
                 api_cache = None
             if not api_cache is None:
                 metrics = api_cache
+                #print("metrics1 is:", metrics) #same response like api_cache is:
             else:
                 api = API(self.request.session.get('obp'))
+                print("Cache MISS is:", api)
                 metrics = api.get(url_path)
+                print("Cache HIT is: ", metrics) ##same response like api_cache is:
                 api_cache = cache.set(cache_key, metrics)
+                #print("api_cache is", api_cache) #return none
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_URL_MSG, url_path))
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_KEY_MSG, cache_key))
 
             api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
                 api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, url_path)
             return api_calls_total, average_response_time, int(average_calls_per_day)
-        except APIError as err:
+        except APIError as err:  #if API rasie any error then going for debug bug.
             if DEBUG:
                 raise(err)
             error_once_only(self.request, err)
@@ -471,6 +477,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 form_date= from_datetime_object.strftime(API_DATE_FORMAT)
                 to_date= time_delta_in_loop.strftime(API_DATE_FORMAT)
                 aggregate_metrics = self.get_aggregate_metrics(form_date, to_date, include_app_names)
+                print("aggregate_metrics is", aggregate_metrics)
                 result = aggregate_metrics[0]
                 result_list_pure.append(result)
                 result_list.append('{} - {} # {}'.format(from_datetime_object, time_delta_in_loop, result))
@@ -856,11 +863,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             per_hour_chart=[]
             if form.is_valid():
                 # = form.cleaned_data.get('include_obp_apps')
-                include_app_names = form.cleaned_data.get("include_app_names")
+                include_app_names = form.cleaned_data.get("include_app_names") #getting a element out of dictionary
                 #if exclude_app_names not in local_settings.EXCLUDE_APPS:
                 #    error_once_only(self.request, "Invalid Exclude App Name, Please select" + str(local_settings.EXCLUDE_APPS) + "Anyone of these")
                 form_to_date_string = form.data['to_date']
+                print("form_to_date_string is:", form_to_date_string)
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
+                print("to_date is:", to_date)
 
                 if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
@@ -898,7 +907,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
                     #calls_per_day_list, calls_per_day, date_list = self.calls_per_day(, from_date, to_date)
                     calls_per_day_list, calls_per_day, date_list = self.calls_per_day(from_date, to_date,include_app_names)
-                    per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    if (len(calls_per_day) <= 31):
+                        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    else:
+                        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "month")
 
                 api_host_name = API_HOST
                 top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
@@ -911,6 +923,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
                 top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
                 api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(from_date, to_date, include_app_names)
+                print("api_calls, average_response_time, average_calls_per_day is:", api_calls, average_response_time, average_calls_per_day)
                 unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
                     form.cleaned_data, from_date, to_date)
                 active_apps_list = self.get_active_apps(from_date, to_date)
@@ -934,8 +947,11 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
                     'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
                     'api_host_name': api_host_name,
-                    'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
-                    'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
+                    'include_app_names': include_app_names,
+                    #'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
+                    'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%d %B %Y'),
+                    #'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
+                    'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%d %B %Y'),
                     'top_apis': top_apis,
                     'top_apis_bar_chart': top_apis_bar_chart,
                     'top_consumers_bar_chart': top_consumers_bar_chart,
