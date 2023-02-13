@@ -919,6 +919,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 context.update({
                     'form': form,
                     'api_calls': api_calls,
+                    'include_app_names': include_app_names,
                     'calls_per_month_list': calls_per_month_list,
                     'per_month_chart': per_month_chart,
                     'per_day_chart': per_day_chart,
@@ -934,8 +935,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
                     'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
                     'api_host_name': api_host_name,
-                    'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
-                    'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%Y-%m-%d'),
+                    'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT)).strftime('%d %B %Y'),
+                    'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT)).strftime('%d %B %Y'),
                     'top_apis': top_apis,
                     'top_apis_bar_chart': top_apis_bar_chart,
                     'top_consumers_bar_chart': top_consumers_bar_chart,
