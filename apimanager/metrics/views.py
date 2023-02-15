@@ -898,7 +898,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
                     #calls_per_day_list, calls_per_day, date_list = self.calls_per_day(, from_date, to_date)
                     calls_per_day_list, calls_per_day, date_list = self.calls_per_day(from_date, to_date,include_app_names)
-                    per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    if (len(calls_per_day) <= 31):
+                        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
+                    else:
+                        per_day_chart = self.plot_line_chart(calls_per_day, date_list, "month")
 
                 api_host_name = API_HOST
                 top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
