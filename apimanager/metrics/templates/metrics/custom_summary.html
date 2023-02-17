@@ -145,6 +145,9 @@
 
 {% endblock %}
 
+{% block extrajs %}
+<link href="{% static 'metrics/js/spinner.js' %}" rel="stylesheet">
+{% endblock extrajs %}
 {% block extracss %}
 		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
 {% endblock extracss %}
