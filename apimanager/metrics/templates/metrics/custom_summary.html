@@ -63,7 +63,7 @@
     	<div class="tab-content">
     		{% block tab_content %}
     		<div class="tab-pane active">
-				<h2>{% if include_app_names != "" %} {{ include_app_names }} : {% endif %}{{ from_date }} - {{ to_date }}</h2>
+			<h2>{% if include_app_names != "" %} {{ include_app_names }} : {% endif %}{{ from_date }} - {{ to_date }}</h2>
 
 		<table border="1">
             <tr>
@@ -144,6 +144,7 @@
 </div>
 
 {% endblock %}
+
 {% block extrajs %}
 <link href="{% static 'metrics/js/spinner.js' %}" rel="stylesheet">
 {% endblock extrajs %}
