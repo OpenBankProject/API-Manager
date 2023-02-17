@@ -57,19 +57,7 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
-			<script>
-			$(document).ready(function () {
-				$('.btn').on('click', function() {
-					var e=this;
-					setTimeout(function() {
-						e.innerHTML='<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-						e.disabled=true;
-					},0);
-					return true;
-				});
-			});
-			</script>
+			<button type="submit" class="btn btn-primary spinner">{% trans "Search" %}</button>
 		</form>
 	</div>
     	<div class="tab-content">
@@ -157,6 +145,9 @@
 
 {% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'metrics/js/include_system_calls.js' %}"></script>
+{% endblock extrajs %}
 {% block extracss %}
 		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
 {% endblock extracss %}
