@@ -6,7 +6,7 @@ URLs for config app
 from django.conf.urls import url
 
 from apicollections.views import IndexView, apicollections_save, \
-    apicollections_delete, DetailView, DeleteCollectionEndpointView
+    apicollections_delete, DetailView, DeleteCollectionEndpointView, apicollections_update
 
 urlpatterns = [
     url(r'^$',
@@ -14,6 +14,8 @@ urlpatterns = [
         name='apicollections-index'),
     url(r'save/apicollection', apicollections_save,
         name='apicollection-save'),
+    url(r'update/apicollection', apicollections_update,
+        name='apicollection-update'),
     url(r'delete/apicollection', apicollections_delete,
         name='apicollection-delete'),
     url(r'^my-api-collection-ids/(?P<api_collection_id>[\w\@\.\+-]+)$',

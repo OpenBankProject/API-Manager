@@ -4,6 +4,7 @@ Views of config app
 """
 
 import json
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from obp.api import API, APIError
@@ -11,7 +12,12 @@ from base.utils import exception_handle, error_once_only
 from .forms import DynamicEndpointsForm
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
+DEFINITIONS_USER = "#/definitions/user"
+UNEXPECTED_ERROR = "unexpected error"
+RESPONSES_UNEXPECTED_ERROR = "#/responses/unexpectedError"
+DEFINITIONS_API_ERROR = "#/definitions/APIError"
 
 class IndexView(LoginRequiredMixin, FormView):
     """Index view for config"""
@@ -30,10 +36,13 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 dynamic_endpoints=response['dynamic_endpoints']
+                #Accessing API-Explorer URL, parameters API-Collection Id and selected Language eg. locale=en_GB (for English)
+                for de in dynamic_endpoints:
+                    de["dynamicendpoint_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-dynamic_endpoint-id={de['dynamic_endpoint_id']}"
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            error_once_only(self.request, err)
         else:
             # set the default endpoint there, the first item will be the new endpoint.
             default_dynamic_endpoint = {
@@ -63,20 +72,20 @@ class IndexView(LoginRequiredMixin, FormView):
                                     "in":"body",
                                     "required":True,
                                     "schema":{
-                                        "$ref":"#/definitions/user"
+                                        "$ref":DEFINITIONS_USER
                                     }
                                 }],
                                 "responses":{
                                     "201":{
                                         "description":"create user successful and return created user object",
                                         "schema":{
-                                            "$ref":"#/definitions/user"
+                                            "$ref": DEFINITIONS_USER
                                         }
                                     },
                                     "500":{
-                                        "description":"unexpected error",
+                                        "description":UNEXPECTED_ERROR,
                                         "schema":{
-                                            "$ref":"#/responses/unexpectedError"
+                                            "$ref":RESPONSES_UNEXPECTED_ERROR
                                         }
                                     }
                                 }
@@ -93,7 +102,7 @@ class IndexView(LoginRequiredMixin, FormView):
                                     "200":{
                                         "description":"the successful get requested user by user ID",
                                         "schema":{
-                                            "$ref":"#/definitions/user"
+                                            "$ref":DEFINITIONS_USER
                                         }
                                     },
                                     "400":{
@@ -105,13 +114,13 @@ class IndexView(LoginRequiredMixin, FormView):
                                     "404":{
                                         "description":"user not found",
                                         "schema":{
-                                            "$ref":"#/definitions/APIError"
+                                            "$ref":DEFINITIONS_API_ERROR
                                         }
                                     },
                                     "500":{
-                                        "description":"unexpected error",
+                                        "description":UNEXPECTED_ERROR,
                                         "schema":{
-                                            "$ref":"#/responses/unexpectedError"
+                                            "$ref":RESPONSES_UNEXPECTED_ERROR
                                         }
                                     }
                                 }
@@ -125,13 +134,13 @@ class IndexView(LoginRequiredMixin, FormView):
                                     "200":{
                                         "description":"get all users",
                                         "schema":{
-                                            "$ref":"#/definitions/users"
+                                            "$ref":DEFINITIONS_USER
                                         }
                                     },
                                     "404":{
                                         "description":"user not found",
                                         "schema":{
-                                            "$ref":"#/definitions/APIError"
+                                            "$ref":DEFINITIONS_API_ERROR
                                         }
                                     }
                                 }
@@ -144,20 +153,20 @@ class IndexView(LoginRequiredMixin, FormView):
                                     "in":"body",
                                     "required":True,
                                     "schema":{
-                                        "$ref":"#/definitions/user"
+                                        "$ref":DEFINITIONS_USER
                                     }
                                 }],
                                 "responses":{
                                     "200":{
                                         "description":"create user successful and return created user object",
                                         "schema":{
-                                            "$ref":"#/definitions/user"
+                                            "$ref":DEFINITIONS_USER
                                         }
                                     },
                                     "500":{
-                                        "description":"unexpected error",
+                                        "description":UNEXPECTED_ERROR,
                                         "schema":{
-                                            "$ref":"#/responses/unexpectedError"
+                                            "$ref":RESPONSES_UNEXPECTED_ERROR
                                         }
                                     }
                                 }
@@ -181,9 +190,9 @@ class IndexView(LoginRequiredMixin, FormView):
                                         }
                                     },
                                     "500":{
-                                        "description":"unexpected error",
+                                        "description":UNEXPECTED_ERROR,
                                         "schema":{
-                                            "$ref":"#/responses/unexpectedError"
+                                            "$ref":RESPONSES_UNEXPECTED_ERROR
                                         }
                                     }
                                 }
@@ -217,7 +226,7 @@ class IndexView(LoginRequiredMixin, FormView):
                             "description":"array of users",
                             "type":"array",
                             "items":{
-                                "$ref":"#/definitions/user"
+                                "$ref":DEFINITIONS_USER
                             }
                         },
                         "APIError":{
@@ -237,15 +246,15 @@ class IndexView(LoginRequiredMixin, FormView):
                     },
                     "responses":{
                         "unexpectedError":{
-                            "description":"unexpected error",
+                            "description":UNEXPECTED_ERROR,
                             "schema":{
-                                "$ref":"#/definitions/APIError"
+                                "$ref":DEFINITIONS_API_ERROR
                             }
                         },
                         "invalidRequest":{
                             "description":"invalid request",
                             "schema":{
-                                "$ref":"#/definitions/APIError"
+                                "$ref":DEFINITIONS_API_ERROR
                             }
                         }
                     },
@@ -273,10 +282,10 @@ class IndexView(LoginRequiredMixin, FormView):
 @exception_handle
 @csrf_exempt
 def dynamicendpoints_save(request):
-    parameters_Json_editor = request.POST.get('parameters_Json_editor')
+    parameters_Json_editor_dynamic = request.POST.get('parameters_Json_editor')
     api = API(request.session.get('obp'))
     urlpath = '/management/dynamic-endpoints'
-    result = api.post(urlpath, payload=json.loads(parameters_Json_editor) )
+    result = api.post(urlpath, payload=json.loads(parameters_Json_editor_dynamic) )
     return result
 
 

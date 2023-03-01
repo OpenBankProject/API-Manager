@@ -89,7 +89,7 @@ or maybe upgrade dependency version, If still facing issue to run **pip install 
 ├── static-collected 
 └── venv
 ```
-6. Then, update information in local_setting.py file, the example is below for updating information. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_SECRET** to run this app. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API). 
+6. Then, update information in local_setting.py file, the example is below for updating information. For this file, required **OAUTH_CONSUMER_KEY** and **OAUTH_CONSUMER_SECRET** to run this app. For this purpose, must be OBP-API running locally. Follow these steps to run [OBP-API Local](https://github.com/OpenBankProject/OBP-API).
 
 
 ```python
@@ -137,6 +137,13 @@ DATABASE = {
         "PORT": "5432",
     }
 }
+
+# This is an optional setting.
+# CALLBACK_BASE_URL can be used to explicitly set the redirect base url that API Manager uses during OAuth authentication.
+# If CALLBACK_BASE_URL is not set, API Manager (this applicaiton) in the function "get_redirect_url" will use the Django HTTP_HOST environ field (see here: https://docs.djangoproject.com/en/4.1/ref/request-response/). Note, this  might be modified by NGINX via the directive: proxy_set_header Host $http_host;
+# In order to be explicit you can set it here e.g.
+# CALLBACK_BASE_URL="https://apimanager.example.com"
+
 ```
 
 
@@ -220,9 +227,9 @@ EXCLUDE_URL_PATTERN = []
 API_EXPLORER_APP_NAME = 'xxx'
 
 #Map Java: yyyy-MM-dd'T'HH:mm'Z'
-API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
+API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
 
 ```
 

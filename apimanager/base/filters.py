@@ -77,7 +77,7 @@ class FilterTime(BaseFilter):
         print(filtered)
         for item in data:
             item_date = datetime.strptime(
-                item[self.time_fieldname], settings.API_DATETIMEFORMAT)
+                item[self.time_fieldname], settings.API_DATE_TIME_FORMAT)
             if now - item_date <= delta:
                 filtered.append(item)
         return filtered

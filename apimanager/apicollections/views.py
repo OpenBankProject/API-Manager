@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Views of config app
+Views of API Collection app
 """
 
 import json
@@ -13,10 +13,10 @@ from django.urls import reverse, reverse_lazy
 from base.utils import exception_handle, error_once_only
 from .forms import ApiCollectionsForm, ApiCollectionEndpointsForm
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 
 class IndexView(LoginRequiredMixin, FormView):
-    """Index view for config"""
+    """Index view for API Collection"""
     template_name = "apicollections/index.html"
     form_class = ApiCollectionsForm
     success_url = reverse_lazy('apicollections-index')
@@ -32,10 +32,12 @@ class IndexView(LoginRequiredMixin, FormView):
                 error_once_only(self.request, response['message'])
             else:
                 api_collections=response['api_collections']
+                for ac in api_collections:
+                    ac["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-collection-id={ac['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            error_once_only(self.request, err)
         else:
             # set the default endpoint there, the first item will be the new endpoint.
             default_api_endpoint = {
@@ -71,8 +73,8 @@ class DetailView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(form)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as err:
+            error_once_only(self.request, err)
             return super(DetailView, self).form_invalid(form)
         if 'code' in api_collection_endpoint and api_collection_endpoint['code']>=400:
             messages.error(self.request, api_collection_endpoint['message'])
@@ -97,11 +99,9 @@ class DetailView(LoginRequiredMixin, FormView):
             else:
                 api_collection_endpoints=response['api_collection_endpoints']
         except APIError as err:
-            error_once_only(self.request, Exception("OBP-API server is not running or do not response properly. "
-                                                   "Please check OBP-API server.    "
-                                                   "Details: " + str(err)))
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+            messages.error(self.request, result['message'])
+        except Exception as err:
+            error_once_only(self.request, err)
         else:
             context.update({
                 'api_collection_endpoints': api_collection_endpoints,
@@ -115,8 +115,9 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
         """Deletes api collection endpoint from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/api-collections-ids/{}/api-collection-endpoints/{}'\
-                .format(kwargs['api_collection_id'],kwargs['operation_id'])
+            get_api_collection_by_id_url = "/my/api-collections/{}".format(kwargs["api_collection_id"])
+            result = api.get(get_api_collection_by_id_url)
+            urlpath = '/my/api-collections/{}/api-collection-endpoints/{}'.format(kwargs['api_collection_name'],kwargs['operation_id'])
             result = api.delete(urlpath)
             if result is not None and 'code' in result and result['code']>=400:
                 messages.error(request, result['message'])
@@ -125,9 +126,8 @@ class DeleteCollectionEndpointView(LoginRequiredMixin, FormView):
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
-
+        except Exception as err:
+            messages.error(self.request, 'Unknown Error', err)
         redirect_url = reverse('my-api-collection-detail',kwargs={"api_collection_id":kwargs['api_collection_id']})
         return HttpResponseRedirect(redirect_url)
     
@@ -143,6 +143,21 @@ def apicollections_save(request):
     }
     result = api.post(urlpath, payload = payload)
     return result
+
+@exception_handle
+@csrf_exempt
+def apicollections_update(request):
+    connector_method_id = request.POST.get('api_collection_id').strip()
+    urlpath = '/my/api-collections/{}'.format(connector_method_id)
+    api = API(request.session.get('obp'))
+    payload = {
+        'api_collection_name': request.POST.get('api_collection_name').strip(),
+        'is_sharable': True if request.POST.get('api_collection_is_sharable').strip().lower() == "true" else False,
+        'description': request.POST.get('api_collection_description').strip()
+    }
+    result = api.put(urlpath, payload=payload)
+    return result
+
 
 
 @exception_handle

@@ -3,6 +3,7 @@
 
 {% block page_title %}{{ block.super }} / API Usage Report{% endblock page_title %}
 
+{% load bootstrap3 %}
 {% block content %}
 
 <div id="metrics">
@@ -24,8 +25,6 @@
 
 	<div id="metrics-filter">
 
-		<!--{% load bootstrap3 %}       {# import bootstrap4/bootstrap3 #}-->
-		<!--{% bootstrap_css %}         {# Embed Bootstrap CSS #}-->
 		{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 
 		{% block extrahead %}       {# Extra Resources Start #}
@@ -50,31 +49,24 @@
 					</div>
 				</div>
 				<div class="col-xs-4 col-sm-3">
-					{% if form.exclude_app_names.errors %}<div class="alert alert-danger">{{ form.exclude_app_names.errors }}</div>{% endif %}
+					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.exclude_app_names.label_tag }}
-						{{ form.exclude_app_names }}
-					</div>
-				</div>
-				<div class="col-xs-4 col-sm-3">
-					<div class="form-group include_system_calls">
-						{{ form.include_obp_apps }}
-						{{ form.include_obp_apps.label_tag }}
+						{{ form.include_app_names.label_tag }}
+						{{ form.include_app_names }}
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
+			<button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
 		</form>
 
 	</div>
 
     	<div class="tab-content">
-			{% if form.include_obp_apps.value %}
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<h2>{% trans "Period" %}: {% trans "From" %}{{ from_date }} {% trans "to" %} {{ to_date }}</h2>
+			<h2>{% if include_app_names != "" %} {{ include_app_names }} : {% endif %}{{ from_date }} - {{ to_date }}</h2>
 
-		<table border="1" id="obp_app_table">
+		<table border="1" summary="Table about call APIs in every hours">
             <tr>
                 <th></th>
                 <th></th>
@@ -83,17 +75,17 @@
 				<td>{% trans "API calls" %}:</td>
 				<td>{{ api_calls }}</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "API calls made using API Explorer" %}:</td>
 				<td>{{ calls_by_api_explorer }} ({% widthratio calls_by_api_explorer api_calls 100 %} %)</td>
+			</tr>-->
+			<tr>
+				<td>{% trans "Calls per minute" %}:</td>
+				<td style="background-color:#FF0000">{%for item in calls_per_hour_list%}<li><ol>{{item}}</ol></li>{% endfor %}</td>
 			</tr>
 			<tr>
 				<td>{% trans "Calls per minute" %}:</td>
-				<td bgcolor="#FF0000">{%for item in calls_per_hour_list%}<li>{{item}}</li>{% endfor %}</td>
-			</tr>
-			<tr>
-				<td>{% trans "Calls per minute" %}:</td>
-				<td bgcolor="#FF0000"><img src="data:image/png;base64, {{ per_hour_chart }}" alt="somealt" /></td>
+				<td style="background-color:#FF0000"><img src="data:image/png;base64, {{ per_hour_chart }}" alt="somealt" /></td>
 			</tr>
 			<tr>
 				<td>{% trans "Average number of calls hour" %}: </td>
@@ -126,7 +118,7 @@
 				<td>{% trans "Top APIs" %}:</td>
 				<td><img src="data:image/png;base64, {{ top_apis_bar_chart }}" alt="somealt" /></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "Top Warehouse APIs" %}:</td>
 				<td>{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}</td>
 			</tr>
@@ -143,14 +135,11 @@
 			<tr>
 				<td>{% trans "CanSearchWarehouse users" %}:</td>
 				<td>{{number_of_users_with_cansearchwarehouse}}</td>
-			</tr>
+			</tr>-->
 
 		</table>
     		</div>
     		{% endblock tab_content %}
-			{% else %}
-			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
-			{% endif %}
     	</div>
     </div>
 

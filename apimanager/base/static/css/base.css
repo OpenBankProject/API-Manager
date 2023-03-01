@@ -208,13 +208,17 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 
 .language-select {
-    text-decoration: none;
-    color:#fff;
     margin-left:5rem;
+    text-decoration: none !important;
 }
 #uk {
     cursor:pointer;
 }
 #es {
     cursor:pointer;
-}1
+}
+.language_underline_format > a > span:hover
+ {
+    text-decoration: underline;
+    font-weight: bold !important;
+}

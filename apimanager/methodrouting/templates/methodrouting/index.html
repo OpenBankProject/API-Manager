@@ -71,11 +71,11 @@
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                         {% elif method_routing.connector_name == "rest_vMar2019" %}
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option> # This will be selected
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018</option>
-                            <option value="mapped">{% trans "mapped</option>
-                            <option value="akka_vDec2018">{% trans "akka_vDec2018</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019</option>
-                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019</option>
+                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
+                            <option value="mapped">{% trans "mapped" %}</option>
+                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
+                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
+                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                         {% elif method_routing.connector_name == "kafka_vMay2019" %}
                             <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option> # This will be selected
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
@@ -99,7 +99,7 @@
                     <textarea class="form-control" rows="1"
                               name="bank_id_pattern">{{ method_routing.bank_id_pattern }}</textarea>
                 </div>
-                <div class="col-xs-12 col-sm-1" align="center">
+                <div class="col-xs-12 col-sm-1" style="align-self:center;">
                     <select class="is_bank_id_exact_match form-control">
                         {% if method_routing.is_bank_id_exact_match == False %}
                             <option value="False">{% trans "False" %}</option>

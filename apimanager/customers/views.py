@@ -35,10 +35,10 @@ class CreateView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         fields['last_ok_date'].initial =\
-            datetime.datetime.now().strftime(settings.API_DATETIMEFORMAT)
+            datetime.datetime.now().strftime(settings.API_DATE_TIME_FORMAT)
         return form
 
     def form_valid(self, form):
@@ -71,15 +71,15 @@ class CreateView(LoginRequiredMixin, FormView):
             'employment_status': data['employment_status'],
             'kyc_status': data['kyc_status'],
             'last_ok_date':
-                data['last_ok_date'].strftime(settings.API_DATETIMEFORMAT),
+                data['last_ok_date'].strftime(settings.API_DATE_TIME_FORMAT),
         }
         try:
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
         msg = 'Customer number {} for user {} has been created successfully!'.format(  # noqa
             result['customer_number'], data['username'])

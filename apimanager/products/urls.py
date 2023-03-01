@@ -5,7 +5,7 @@ URLs for metrics app
 
 from django.conf.urls import url
 
-from .views import IndexProductView, UpdateProductView, createList
+from .views import IndexProductView, UpdateProductView, create_list
 
 urlpatterns = [
     url(r'^create',
@@ -15,6 +15,6 @@ urlpatterns = [
                UpdateProductView.as_view(),
                name='products_update'),
     url(r'^createProductList',
-       createList,
+       create_list,
        name = 'create-product-list'),
 ]

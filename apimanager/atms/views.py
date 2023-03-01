@@ -15,6 +15,8 @@ from obp.api import API, APIError
 from .forms import CreateAtmForm
 from django.utils.translation import ugettext_lazy as _
 
+CHOOSE = "Choose..."
+
 class IndexAtmsView(LoginRequiredMixin, FormView):
 
     """Index view for ATMs"""
@@ -33,12 +35,12 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
         fields = form.fields
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
-            fields['is_accessible'].choices = [('',_('Choose...')),(True, True), (False, False)]
-            fields['has_deposit_capability'].choices = [('',_('Choose...')),(True, True), (False, False)]
-            fields['supported_languages'].choices = [('',_('Choose...')),("en", "en"), ("fr", "fr"), ("de", "de")]
-            fields['notes'].choices = [('',_('Choose...')),("String1", "String1"), ("String2", "String2")]
-            fields['supported_currencies'].choices = [('',_('Choose...')),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
-            fields['location_categories'].choices = [('',_('Choose...')),("ATBI", "ATBI"), ("ATBE", "ATBE")]
+            fields['is_accessible'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
+            fields['has_deposit_capability'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
+            fields['supported_languages'].choices = [('',_(CHOOSE)),("en", "en"), ("fr", "fr"), ("de", "de")]
+            fields['notes'].choices = [('',_(CHOOSE)),("String1", "String1"), ("String2", "String2")]
+            fields['supported_currencies'].choices = [('',_(CHOOSE)),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            fields['location_categories'].choices = [('',_(CHOOSE)),("ATBI", "ATBI"), ("ATBE", "ATBE")]
             fields['lobby'].initial = json.dumps({
                             "monday": [
                                 {
@@ -111,16 +113,8 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                 "bank_id": data["bank_id"],
                 "name": data["name"],
                 "address": json.loads(data['address']),
-                "location": {
-                    "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
-                    "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
-                },
-                "meta": {
-                    "license": {
-                    "id": "ODbL-1.0",
-                    "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
-                    }
-                },
+                "location": self._location(data),
+                "meta": self._meta(data),
                 "monday": {
                     "opening_time": "",
                     "closing_time": ""
@@ -149,30 +143,22 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
                     "opening_time": "",
                     "closing_time": ""
                 },
-                "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
-                "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
-                "more_info": data["more_info"] if data["more_info"]!="" else "false",
-                "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
                 "supported_languages":[data["supported_languages"]],
                 "services":[data["services"]],
                 "accessibility_features":[data["accessibility_features"]],
                 "supported_currencies":[data["supported_currencies"]],
                 "notes":[data["notes"]],
                 "location_categories":[data["location_categories"]],
-                "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false",
-                "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
-                "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
-                "site_name": data["site_name"] if data["site_name"]!="" else "false",
-                "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
-                "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
-                "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false",
+                **self._boolean_payload1(data),
+                **self._boolean_payload2(data),
+
             }
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
-            messages.error(self.request, "Unknown Error")
+            messages.error(self.request, err)
             return super(IndexAtmsView, self).form_invalid(form)
         except Exception as err:
-            messages.error(self.request, "Unknown Error")
+            messages.error(self.request, err)
             return super(IndexAtmsView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
             messages.error(self.request, result['message'])
@@ -180,6 +166,39 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
         msg = 'atm {} for Bank {} has been created successfully!'.format(result["id"],result['bank_id'])
         messages.success(self.request, msg)
         return super(IndexAtmsView, self).form_valid(form)
+
+    def _location(self, data):
+        return  {
+            "latitude": float(data["location_latitude"]) if data["location_latitude"] is not None else "",
+            "longitude": float(data["location_longitude"]) if data["location_longitude"] is not None else ""
+        }
+
+    def _meta(self, data):
+        return {
+            "license": {
+            "id": "ODbL-1.0",
+            "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
+            }
+        }
+
+    def _boolean_payload1(self, data):
+        return {
+            "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
+            "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
+            "more_info": data["more_info"] if data["more_info"]!="" else "false",
+            "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
+            "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false"
+        }
+
+    def _boolean_payload2(self, data):
+        return {
+            "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
+            "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
+            "site_name": data["site_name"] if data["site_name"]!="" else "false",
+            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
+            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
+            "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false"
+        }
 
 class UpdateAtmsView(LoginRequiredMixin, FormView):
     template_name = "atms/update.html"
@@ -200,8 +219,8 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         try:
             result = self.api.get(urlpath)
             fields['bank_id'].initial = self.kwargs['bank_id']
@@ -214,14 +233,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['meta_license_name'].initial = result['meta']['license']['name']
             fields['minimum_withdrawal'].initial = result['minimum_withdrawal']
             fields['branch_identification'].initial = result['branch_identification']
-            if result['is_accessible'].lower()=='true':
-                fields['is_accessible'].choices = [(True, True), (False, False)]
-            else:
-                fields['is_accessible'].choices = [(False, False), (True, True)]
-            if result['has_deposit_capability'].lower()=='true':
-                fields['has_deposit_capability'].choices = [(True, True), (False, False)]
-            else:
-                fields['has_deposit_capability'].choices = [(False, False), (True, True)]
             fields['has_deposit_capability'].initial = result['accessibility_features']
             fields['site_identification'].initial = result['site_identification']
             fields['site_name'].initial = result['site_name']
@@ -232,35 +243,53 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            if result['supported_languages'][0].lower()=='en':
-                fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
-            elif result['supported_languages'][0].lower()=='fr':
-                fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
-            else:
-                fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
-            fields['supported_languages'].initial = result['supported_languages']
-            if result['supported_currencies'][0].lower()=='EUR':
-                  fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
-            elif result['supported_currencies'][0].lower()=='MXN':
-                  fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
-            else:
-                  fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
-            fields['supported_currencies'].initial = result['supported_currencies']
-            if result['notes'][0].lower()=='string1':
-                  fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
-            else:
-                  fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
-            fields['notes'].initial = result['notes']
-            if result['location_categories'][0].lower()=='atbi':
-                 fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
-            else:
-                 fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
-            fields['location_categories'].initial = result['location_categories']
+            self._paylod_choices(result, fields)
+            self._paylod_languages_and_currencies(result, fields)
+            self._paylod_notes_and_categories(result, fields)
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
         return form
+
+    def _paylod_choices(self, result, fields):
+        if result['is_accessible'].lower()=='true':
+            fields['is_accessible'].choices = [(True, True), (False, False)]
+        else:
+            fields['is_accessible'].choices = [(False, False), (True, True)]
+        if result['has_deposit_capability'].lower()=='true':
+            fields['has_deposit_capability'].choices = [(True, True), (False, False)]
+        else:
+            fields['has_deposit_capability'].choices = [(False, False), (True, True)]
+
+    def _paylod_languages_and_currencies(self, result, fields):
+        if result['supported_languages'][0].lower()=='en':
+            fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
+        elif result['supported_languages'][0].lower()=='fr':
+            fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
+        else:
+            fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
+        fields['supported_languages'].initial = result['supported_languages']
+        if result['supported_currencies'][0].lower()=='EUR':
+              fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+        elif result['supported_currencies'][0].lower()=='MXN':
+              fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
+        else:
+              fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
+        fields['supported_currencies'].initial = result['supported_currencies']
+
+    def _paylod_notes_and_categories(self, result, fields):
+        if result['notes'][0].lower()=='string1':
+              fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
+        else:
+              fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
+        fields['notes'].initial = result['notes']
+        if result['location_categories'][0].lower()=='atbi':
+             fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
+        else:
+             fields['location_categories'].choices = [("ATBE", "ATBE"),("ATBI", "ATBI")]
+        fields['location_categories'].initial = result['location_categories']
+
     def form_valid(self, form):
         data = form.cleaned_data
         urlpath = '/banks/{}/atms/{}'.format(data["bank_id"],data["atm_id"])
@@ -307,23 +336,14 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
                 "opening_time": " ",
                 "closing_time": " "
             },
-            "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
-            "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
-            "more_info": data["more_info"] if data["more_info"]!="" else "false",
-            "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
             "supported_languages":[data["supported_languages"]],
             "services":[data["services"]],
             "accessibility_features":[data["accessibility_features"]],
             "supported_currencies":[data["supported_currencies"]],
             "notes":[data["notes"]],
             "location_categories":[data["location_categories"]],
-            "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false",
-            "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
-            "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
-            "site_name": data["site_name"] if data["site_name"]!="" else "false",
-            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
-            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
-            "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false",
+            **self._update_boolean_payload1(data),
+            **self._update_boolean_payload2(data)
         }
         try:
             result = self.api.put(urlpath, payload=payload)
@@ -340,6 +360,25 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             data["atm_id"], data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateAtmsView, self).form_valid(form)
+
+    def _update_boolean_payload1(self, data):
+        return {
+            "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
+            "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
+            "more_info": data["more_info"] if data["more_info"]!="" else "false",
+            "has_deposit_capability": data["has_deposit_capability"] if data["has_deposit_capability"]!="" else "false",
+            "minimum_withdrawal": data["minimum_withdrawal"] if data["minimum_withdrawal"]!="" else "false"
+        }
+
+    def _update_boolean_payload2(self, data):
+        return {
+            "branch_identification": data["branch_identification"] if data["branch_identification"]!="" else "false",
+            "site_identification": data["site_identification"] if data["site_identification"]!="" else "false",
+            "site_name": data["site_name"] if data["site_name"]!="" else "false",
+            "cash_withdrawal_national_fee": data["cash_withdrawal_national_fee"] if data["cash_withdrawal_national_fee"]!="" else "false",
+            "cash_withdrawal_international_fee": data["cash_withdrawal_international_fee"] if data["cash_withdrawal_international_fee"]!="" else "false",
+            "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false"
+        }
 
     def get_context_data(self, **kwargs):
         context = super(UpdateAtmsView, self).get_context_data(**kwargs)

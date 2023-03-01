@@ -120,7 +120,7 @@
     		</div>
 
 
-    		<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
+    		<button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
     	</form>
     </div>
 
@@ -140,7 +140,7 @@
     					<thead>
     					<tr>
     						<th scope="col">#</th>
-    						<th scope="col">{% trans "Verb" %}</th>
+    						<th scope="col">{% trans "Verb Select" %}</th>
     						<th scope="col">{% trans "URL" %}</th>
     						<th scope="col">{% trans "Date" %}</th>
 							<th scope="col">{% trans "Duration(ms)" %}</th>
@@ -151,7 +151,7 @@
     					{% for metric in metrics %}
     						<tr>
     							<td>{{ forloop.counter }}</td>
-    							<td>{{ metric.verb }}</td>
+    							<td>{{ metric.verb_selection }}</td>
     							<td>
     								{{ metric.url }}
     							</td>

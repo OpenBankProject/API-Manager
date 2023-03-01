@@ -17,8 +17,6 @@ from obp.api import API, APIError
 from base.views import get_banks
 import csv
 
-
-
 class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
     template_name = "customerlist/customerlist.html"
     success_url = '/customers/list'
@@ -28,9 +26,7 @@ class CustomerListView(CreateView, LoginRequiredMixin, FormView ):
         try:
             self.bankids = get_banks(self.request)
             customers_list = []
-            #for bank_id in self.bankids:
             urlpath = '/customers'
-            #urlpath = 'http://127.0.0.1:8080/obp/v4.0.0/my/customers'
             result = api.get(urlpath)
             if 'customers' in result:
                 customers_list.extend(result['customers'])

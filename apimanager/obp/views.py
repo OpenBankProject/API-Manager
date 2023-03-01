@@ -16,6 +16,7 @@ from .api import API, APIError
 from .authenticator import AuthenticatorError
 from .forms import DirectLoginForm, GatewayLoginForm
 from .oauth import OAuthAuthenticator
+from django.conf import settings
 
 
 class LoginToDjangoMixin(object):
@@ -31,8 +32,8 @@ class LoginToDjangoMixin(object):
             data = api.get('/users/current')
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as err:
+            messages.error(self.request, err)
             return False
         else:
             userid = data['user_id'] or data['email']
@@ -53,8 +54,11 @@ class OAuthInitiateView(RedirectView):
         Gets the callback URI to where the user shall be returned after
         initiation at OAuth server
         """
-        base_url = '{}://{}'.format(
-            request.scheme, request.environ['HTTP_HOST'])
+        if settings.CALLBACK_BASE_URL:
+            base_url = settings.CALLBACK_BASE_URL
+        else:
+            base_url = '{}://{}'.format(
+                request.scheme, request.environ['HTTP_HOST'])
         uri = base_url + reverse('oauth-authorize')
         if 'next' in request.GET:
             uri = '{}?next={}'.format(uri, request.GET['next'])
@@ -69,8 +73,8 @@ class OAuthInitiateView(RedirectView):
         except AuthenticatorError as err:
             messages.error(self.request, err)
             return reverse('home')
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as err:
+            messages.error(self.request, err)
             return reverse('home')
         else:
             self.request.session['obp'] = {
@@ -95,8 +99,8 @@ class OAuthAuthorizeView(RedirectView, LoginToDjangoMixin):
             authenticator.set_access_token(authorization_url)
         except AuthenticatorError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, 'Unknown Error')
+        except Exception as err:
+            messages.error(self.request, err)
         else:
             session_data['authenticator_kwargs'] = {
                 'token': authenticator.token,

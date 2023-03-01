@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block page_title %}{{ block.super }} / API Usage Report{% endblock page_title %}
+{% load bootstrap3 %}
 {% block content %}
 <div id="metrics">
 	<h1>{% trans "API Usage Report" %}</h1>
@@ -14,15 +15,12 @@
 			<li><a href="{% url 'metrics-summary' %}?{{ request.GET.urlencode }}">{% trans "Month" %}</a></li>
     		<li><a href="{% url 'weekly-summary' %}?{{ request.GET.urlencode }}">{% trans "Week" %}</a></li>
 			<li><a href="{% url 'daily-summary' %}?{{ request.GET.urlencode }}">{% trans "Day" %}</a></li>
-			<!--<li><a href="{% url 'hourly-summary' %}?{{ request.GET.urlencode }}">Hour</a></li>-->
 			<li class="active"><a href="{% url 'custom-summary' %}?{{ request.GET.urlencode }}">{% trans "Custom" %}</a></li>
     	{% endblock nav_tabs %}
     	</ul>
 
 	<div id="metrics-filter">
 
-		<!--{% load bootstrap3 %}       {# import bootstrap4/bootstrap3 #}-->
-		<!--{% bootstrap_css %}         {# Embed Bootstrap CSS #}-->
 		{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 
 		{% block extrahead %}       {# Extra Resources Start #}
@@ -40,39 +38,32 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.from_date_custom.errors %}<div class="alert alert-danger">{{ form.from_date_custom.errors }}</div>{% endif %}
 					<div class="form-group">
-						<strong>{% trans "from_date_custom" %} </strong>
+						<strong>{% trans "From Date Custom" %} </strong>
 						{{ form.from_date_custom }}
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						<strong>{% trans "to_date" %} </strong>
+						<strong>{% trans "To Date Custom" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>
 				<div class="col-xs-4 col-sm-3">
-					{% if form.exclude_app_names.errors %}<div class="alert alert-danger">{{ form.exclude_app_names.errors }}</div>{% endif %}
+					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
-						{{ form.exclude_app_names.label_tag }}
-						{{ form.exclude_app_names }}
-					</div>
-				</div>
-				<div class="col-xs-4 col-sm-3">
-					<div class="form-group include_system_calls">
-						{{ form.include_obp_apps }}
-						{{ form.include_obp_apps.label_tag }}
+						{{ form.include_app_names.label_tag }}
+						{{ form.include_app_names }}
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">{% trans "Update filter" %}</button>
+			<button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
 		</form>
 	</div>
     	<div class="tab-content">
-			{% if form.include_obp_apps.value %}
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<h2>{% trans "Period" %}: {% trans "From" %}{{ from_date }} {% trans "to" %}{{ to_date }} </h2>
+			<h2>{% if include_app_names != "" %} {{ include_app_names }} : {% endif %}{{ from_date }} - {{ to_date }}</h2>
 
 		<table border="1">
             <tr>
@@ -83,10 +74,10 @@
 				<td>{% trans "Total API calls" %}:</td>
 				<td>{{ api_calls }}</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "API calls made using API Explorer" %}:</td>
 				<td>{{ calls_by_api_explorer }} ({% widthratio calls_by_api_explorer api_calls 100 %} %)</td>
-			</tr>
+			</tr>-->
 
 			<tr>
 				<td>{% trans "Calls per day (last 30 days)" %}:</td>
@@ -126,7 +117,7 @@
 				<td>{% trans "Top 10 Consumers" %}:</td>
 				<td><img src="data:image/png;base64, {{ top_consumers_bar_chart }}" alt="somealt" /></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>{% trans "Top Warehouse APIs" %}:</td>
 				<td>{% if top_warehouse_apis %}{%for element in top_warehouse_apis%} <p>{{ element.Implemented_by_partial_function }} : {{ element.count }}</p> {% endfor %}{% else %} <p>N/A</p>{% endif %}</td>
 			</tr>
@@ -142,14 +133,11 @@
 			<tr>
 				<td>{% trans "Users with role CanSearchWarehouse" %}:</td>
 				<td>{% if user_email_cansearchwarehouse %}{% for key, value in user_email_cansearchwarehouse.items %} {{key}}, {% endfor %}{% else %} <p>{% trans "N/A" %}</p>{% endif %}</td>
-			</tr>
+			</tr>-->
 
 		</table>
     		</div>
     		{% endblock tab_content %}
-			{% else %}
-			<h2>{% trans "Period" %} : {% trans "From" %} {{ from_date }} {% trans "to" %} {{ to_date }}</h2>
-			{% endif %}
     	</div>
     </div>
 
@@ -157,6 +145,9 @@
 
 {% endblock %}
 
+{% block extrajs %}
+<link href="{% static 'metrics/js/spinner.js' %}" rel="stylesheet">
+{% endblock extrajs %}
 {% block extracss %}
 		<link href="{% static 'metrics/css/metrics.css' %}" rel="stylesheet">
 {% endblock extracss %}

@@ -11,37 +11,31 @@ from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+from apimanager.settings import API_MANAGER_DATE_FORMAT
 
+API_DATE_FORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+FORM_CONTROL = 'form-control'
+FROM_DATE = 'From Date'
+TO_DATE = 'To Date'
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
-        label=_('From Date'),
-        input_formats=[settings.API_DATEFORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                'class': 'form-control',
-            }
-        ),
-        initial='2020-01-01T00:00:00.000Z',
+        label=_(FROM_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=False,
+        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     to_date = forms.DateTimeField(
-        label=_('To Date'),
-        input_formats=[settings.API_DATEFORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                'class': 'form-control',
-            }
-        ),
+        label=_(TO_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=False,
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
     limit = forms.IntegerField(
         label=_('Limit'),
         widget=forms.NumberInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         initial=100,
@@ -51,7 +45,7 @@ class MetricsForm(forms.Form):
         label=_('Offset'),
         widget=forms.NumberInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         initial=0,
@@ -91,7 +85,7 @@ class APIMetricsForm(MetricsForm):
         label=_('Consumer ID'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -100,7 +94,7 @@ class APIMetricsForm(MetricsForm):
         label=_('User ID'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -110,7 +104,7 @@ class APIMetricsForm(MetricsForm):
         choices=ANONYMOUS,
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         initial='',
@@ -120,7 +114,7 @@ class APIMetricsForm(MetricsForm):
         label=_('App Name'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -130,7 +124,7 @@ class APIMetricsForm(MetricsForm):
         choices=VERB,
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         initial='',
@@ -140,7 +134,7 @@ class APIMetricsForm(MetricsForm):
         label=_('URL'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -149,7 +143,7 @@ class APIMetricsForm(MetricsForm):
         label=_('Implemented By Partial Function'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -159,7 +153,7 @@ class APIMetricsForm(MetricsForm):
         choices=VERSION,
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         initial='',
@@ -170,22 +164,16 @@ class APIMetricsForm(MetricsForm):
 class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
     from_date = forms.DateTimeField(
-        label=_('From Date'),
-        input_formats=[settings.API_DATEFORMAT],
-        widget=forms.DateTimeInput(
-            attrs={
-                'placeholder': "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                'class': 'form-control',
-            }
-        ),
-        initial='2020-01-01T00:00:00.000Z',
+        label=_(FROM_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
+        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
     )
     connector_name = forms.CharField(
         label=_('Connector Name'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -194,7 +182,7 @@ class ConnectorMetricsForm(MetricsForm):
         label=_('Function Name'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -203,7 +191,7 @@ class ConnectorMetricsForm(MetricsForm):
         label=_('Correlation ID'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
@@ -212,45 +200,28 @@ class ConnectorMetricsForm(MetricsForm):
 
 class CustomSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label=_('To Date'),
-        # input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # ),
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        label=_(TO_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d')),
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
 
     from_date_custom = forms.DateField(
-        label=_('From Date'),
-        #input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # )
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        label=_(FROM_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        #initial=str(datetime.now().strftime('%Y-%m-%d')),
-        initial=(datetime.now() - timedelta(6)).strftime('%Y-%m-%d'),
+        initial=(datetime.now() - timedelta(6)).strftime(API_MANAGER_DATE_FORMAT),
     )
-    exclude_app_names = forms.CharField(
-        label=_('Exclude App Names'),
+    include_app_names = forms.CharField(
+        label=_('Include App Names'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
-        initial='API-Manager',
     )
-    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
+
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
@@ -258,30 +229,21 @@ class CustomSummaryForm(forms.Form):
 
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label=_('To Date'),
-        # input_formats=[settings.API_DATEFORMAT],
-        # widget=forms.DateTimeInput(
-        #     attrs={
-        #         'placeholder': 'yyyy-mm-ddThh:mm:ss',
-        #         'class': 'form-control',
-        #     }
-        # ),
-        widget=DatePickerInput(format='%Y-%m-%d'),
+        label=_(TO_DATE),
+        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
         required=True,
-        # initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
-        initial=str(datetime.now().strftime('%Y-%m-%d')),
+        #initial=str(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')),
+        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
-    exclude_app_names = forms.CharField(
-        label=_('Exclude App Names'),
+    include_app_names = forms.CharField(
+        label=_('Include App Names'),
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': FORM_CONTROL,
             }
         ),
         required=False,
-        initial='API-Manager',
     )
-    include_obp_apps = forms.BooleanField(required=False, label=_('Include System Date'))
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')

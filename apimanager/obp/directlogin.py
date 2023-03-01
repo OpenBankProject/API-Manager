@@ -49,7 +49,7 @@ class DirectLoginAuthenticator(Authenticator):
             raise AuthenticatorError(Exception("The OBP-API server is not running or does not respond properly."
                                                "Please check OBP-API server.    "
                                                "Details: "+str(err)))
-        except BaseException as err:
+        except Exception as err:
             raise AuthenticatorError(Exception("Unknown Error. Details:"+ str(err)))
 
         # This is the direct-Login Token:

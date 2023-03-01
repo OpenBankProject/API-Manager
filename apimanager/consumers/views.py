@@ -16,9 +16,6 @@ from base.filters import BaseFilter, FilterTime
 
 from .forms import ApiConsumersForm
 
-# import logging
-# logger = logging.getLogger(__name__)
-
 
 class FilterAppType(BaseFilter):
     """Filter consumers by application type"""
@@ -47,7 +44,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         """Scrubs data in the given consumers to adher to certain formats"""
         for consumer in consumers:
             consumer['created'] = datetime.strptime(
-                consumer['created'], settings.API_DATETIMEFORMAT)
+                consumer['created'], settings.API_DATE_TIME_FORMAT)
         return consumers
 
     def compile_statistics(self, consumers):
@@ -129,7 +126,6 @@ class DetailView(LoginRequiredMixin, FormView):
                 'per_week_call_limit': data['per_week_call_limit'],
                 'per_month_call_limit': data['per_month_call_limit']
             }
-            user = self.api.put(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(DetailView, self).form_invalid(api_consumers_form)
@@ -150,7 +146,7 @@ class DetailView(LoginRequiredMixin, FormView):
             urlpath = '/management/consumers/{}'.format(self.kwargs['consumer_id'])
             consumer = api.get(urlpath)
             consumer['created'] = datetime.strptime(
-                consumer['created'], settings.API_DATETIMEFORMAT)
+                consumer['created'], settings.API_DATE_TIME_FORMAT)
 
             call_limits_urlpath = '/management/consumers/{}/consumer/call-limits'.format(self.kwargs['consumer_id'])
             consumer_call_limtis = api.get(call_limits_urlpath)
@@ -191,8 +187,8 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
                 messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown")
+        except APIError as err:
+            messages.error(self.request, err)
 
         urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()

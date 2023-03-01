@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'obp',
     'consumers',
     'accounts',
+    'accountlist',
     'systemviews',
     'users',
     'branches',
@@ -68,7 +69,8 @@ INSTALLED_APPS = [
     'methodrouting',
     'connectormethod',
     'dynamicendpoints',
-    'apicollections'
+    'apicollections',
+    'apicollectionlist'
 ]
 
 MIDDLEWARE = [
@@ -242,15 +244,16 @@ LOGGING = {
 LOGIN_URL = reverse_lazy('home')
 
 #Map Java: yyyy-MM-dd'T'HH:mm'Z'
-API_DATETIMEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-API_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 # the API_Manager the web form date format, eg: 2020-10-11
 API_MANAGER_DATE_FORMAT= '%Y-%m-%d'
 
 
 API_HOST = 'http://127.0.0.1:8080'
+API_EXPLORER_HOST = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
@@ -299,13 +302,17 @@ LOGO_URL = 'https://static.openbankproject.com/images/OBP/favicon.png'
 OVERRIDE_CSS_URL = None
 
 VERIFY = True
+CALLBACK_BASE_URL = ""
 
-# Local settings can override anything in here
+# Global
+UNDEFINED = "<undefined>"
+
+# Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa
 except ImportError:
     pass
-# EVERYTHING BELOW HERE WILL NOT BE OVERWRITTEN BY LOCALSETTINGS!
+# EVERYTHING BELOW HERE WILL *NOT* BE OVERWRITTEN BY LOCALSETTINGS!
 # DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
 # Settings here might use parts overwritten in local settings
