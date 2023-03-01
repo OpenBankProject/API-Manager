@@ -21,6 +21,7 @@ from obp.api import API, APIError, LOGGER
 from .forms import APIMetricsForm, ConnectorMetricsForm, MonthlyMetricsSummaryForm, CustomSummaryForm
 from pylab import *
 from django.core.cache import cache
+from base.views import get_consumers, get_api_versions
 import traceback
 try:
     # Python 2
@@ -179,6 +180,32 @@ class APIMetricsView(MetricsView):
     form_class = APIMetricsForm
     template_name = 'metrics/api.html'
     api_urlpath = '/management/metrics'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.api = API(request.session.get('obp'))
+        return super(APIMetricsView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self, *args, **kwargs):
+        form = super(APIMetricsView, self).get_form(*args, **kwargs)
+        # Cannot add api in constructor: super complains about unknown kwarg
+        form.api = self.api
+        fields = form.fields
+        try:
+            fields['consumer_id'].choices = self.api.get_consumer_id_choices()
+            #fields['apiShortVersion'].choices = self.api.get_api_version_choices()
+        except APIError as err:
+            messages.error(self.request, err)
+        except Exception as err:
+            messages.error(self.request, err)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super(APIMetricsView, self).get_context_data(**kwargs)
+        context.update({
+            'consumer_id': get_consumers(self.request)
+            #'API_VERSION': get_api_versions(self.request)
+        })
+        return context
 
 
 class APISummaryPartialFunctionView(APIMetricsView):

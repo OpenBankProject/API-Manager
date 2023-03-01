@@ -38,7 +38,7 @@ class MetricsForm(forms.Form):
                 'class': FORM_CONTROL,
             }
         ),
-        initial=100,
+        initial=1000,
         required=False,
     )
     offset = forms.IntegerField(
@@ -69,25 +69,15 @@ class APIMetricsForm(MetricsForm):
         ('POST', 'POST'),
         ('PUT', 'PUT'),
     )
-    VERSION = (
-        ('', _('Any')),
-        ('v1.2', '1.2'),
-        ('v1.2.1', '1.2.1'),
-        ('v1.3.0', '1.3.0'),
-        ('v1.4.0', '1.4.0'),
-        ('v2.0.0', '2.0.0'),
-        ('v2.1.0', '2.1.0'),
-        ('v2.2.0', '2.2.0'),
-        ('v3.0.0', '3.0.0'),
-    )
 
-    consumer_id = forms.CharField(
+    consumer_id = forms.ChoiceField(
         label=_('Consumer ID'),
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
                 'class': FORM_CONTROL,
             }
         ),
+        choices=[],
         required=False,
     )
     user_id = forms.CharField(
@@ -107,7 +97,7 @@ class APIMetricsForm(MetricsForm):
                 'class': FORM_CONTROL,
             }
         ),
-        initial='',
+        initial='false',
         required=False,
     )
     app_name = forms.CharField(
@@ -150,16 +140,16 @@ class APIMetricsForm(MetricsForm):
     )
     implemented_in_version = forms.ChoiceField(
         label=_('Implemented In Version'),
-        choices=VERSION,
+        #choices=VERSION,
         widget=forms.Select(
             attrs={
                 'class': FORM_CONTROL,
             }
         ),
-        initial='',
+        choices=[],
+        #initial='',
         required=False,
     )
-
 
 class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
