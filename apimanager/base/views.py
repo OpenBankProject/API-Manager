@@ -21,6 +21,31 @@ def get_banks(request):
     except APIError as err:
         messages.error(self.request, err)
         return []
+def get_consumers(request):
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/management/consumers'
+        result = api.get(urlpath)
+        if 'consumers' in result:
+            return [consumer['consumer_id'] for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id'])]
+        else:
+            return []
+    except APIError as err:
+        messages.error(self.request, err)
+        return []
+
+def get_api_versions(request):
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/api/versions'
+        result = api.get(urlpath)
+        if 'scanned_api_versions' in result:
+            return [apiversion['apiShortVersion'] for apiversion in sorted(result['scanned_api_versions'], key=lambda d: d['apiShortVersion'])]
+        else:
+            return []
+    except APIError as err:
+        messages.error(self.request, err)
+        return []
 
 class HomeView(TemplateView):
     """View for home page"""
