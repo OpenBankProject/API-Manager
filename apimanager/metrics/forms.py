@@ -17,20 +17,34 @@ API_DATE_FORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
 FROM_DATE = 'From Date'
 TO_DATE = 'To Date'
+API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
+        input_formats=[settings.API_DATE_FORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': API_DATE_FORMAT,
+                'class': FORM_CONTROL,
+            }
+        ),
+        initial=(datetime.now() - timedelta(30)).strftime(API_DATE_FORMAT),
         required=False,
-        initial=(datetime.now() - timedelta(30)).strftime(API_MANAGER_DATE_FORMAT),
     )
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
-        widget=DatePickerInput(format=API_MANAGER_DATE_FORMAT),
+        input_formats=[settings.API_DATE_FORMAT],
+        widget=forms.DateTimeInput(
+            attrs={
+                'placeholder': API_DATE_FORMAT,
+                'class': FORM_CONTROL,
+            }
+        ),
+        initial=str(datetime.now().strftime(API_DATE_FORMAT)),
         required=False,
-        initial=str(datetime.now().strftime(API_MANAGER_DATE_FORMAT)),
     )
+
     limit = forms.IntegerField(
         label=_('Limit'),
         widget=forms.NumberInput(
