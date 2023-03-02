@@ -172,8 +172,8 @@ class API(object):
         """Gets a list of APIs Version and APIs Version as used by form choices"""
         choices = [('', _('Choose ...'))]
         result = self.get('/api/versions')
-        for apiversion in sorted(result['scanned_api_versions'], key=lambda d: d['apiShortVersion']) :
-            choices.append((apiversion['apiShortVersion'], apiversion['apiShortVersion']))
+        for version in sorted(result['scanned_api_versions'], key=lambda d: d['API_VERSION']) :
+            choices.append((version['API_VERSION'], version['API_VERSION']))
         return choices
 
 

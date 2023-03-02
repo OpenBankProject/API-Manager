@@ -192,7 +192,7 @@ class APIMetricsView(MetricsView):
         fields = form.fields
         try:
             fields['consumer_id'].choices = self.api.get_consumer_id_choices()
-            #fields['apiShortVersion'].choices = self.api.get_api_version_choices()
+            fields['implemented_in_version'].choices = self.api.get_api_version_choices()
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -202,8 +202,8 @@ class APIMetricsView(MetricsView):
     def get_context_data(self, **kwargs):
         context = super(APIMetricsView, self).get_context_data(**kwargs)
         context.update({
-            'consumer_id': get_consumers(self.request)
-            #'API_VERSION': get_api_versions(self.request)
+            'consumer_id': get_consumers(self.request),
+            'API_VERSION': get_api_versions(self.request)
         })
         return context
 
