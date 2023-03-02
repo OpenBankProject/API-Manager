@@ -40,7 +40,7 @@ def get_api_versions(request):
         urlpath = '/api/versions'
         result = api.get(urlpath)
         if 'scanned_api_versions' in result:
-            return [apiversion['apiShortVersion'] for apiversion in sorted(result['scanned_api_versions'], key=lambda d: d['apiShortVersion'])]
+            return [apiversion['API_VERSION'] for apiversion in sorted(result['scanned_api_versions'], key=lambda d: d['API_VERSION'])]
         else:
             return []
     except APIError as err:
