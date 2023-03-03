@@ -43,7 +43,6 @@ class MetricsForm(forms.Form):
         initial=str(datetime.now().strftime(settings.API_DATE_FORMAT)),
         required=False,
     )
-
     limit = forms.IntegerField(
         label=_('Limit'),
         widget=forms.NumberInput(
