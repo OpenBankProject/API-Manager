@@ -11,13 +11,12 @@ from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
-from apimanager.settings import API_MANAGER_DATE_FORMAT
+from apimanager.settings import API_MANAGER_DATE_FORMAT, API_DATE_FORMAT
 
 API_DATE_FORMAT_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
 FROM_DATE = 'From Date'
 TO_DATE = 'To Date'
-API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
@@ -29,7 +28,7 @@ class MetricsForm(forms.Form):
                 'class': FORM_CONTROL,
             }
         ),
-        initial=(datetime.now() - timedelta(30)).strftime(API_DATE_FORMAT),
+        initial=(datetime.now() - timedelta(30)).strftime(settings.API_DATE_FORMAT),
         required=False,
     )
     to_date = forms.DateTimeField(
@@ -41,7 +40,7 @@ class MetricsForm(forms.Form):
                 'class': FORM_CONTROL,
             }
         ),
-        initial=str(datetime.now().strftime(API_DATE_FORMAT)),
+        initial=str(datetime.now().strftime(settings.API_DATE_FORMAT)),
         required=False,
     )
 
