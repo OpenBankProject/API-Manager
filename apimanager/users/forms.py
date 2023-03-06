@@ -11,14 +11,15 @@ class AddEntitlementForm(forms.Form):
         widget=forms.HiddenInput(),
         required=True,
     )
-    role_name = forms.CharField(
+    role_name = forms.ChoiceField(
         label=_('Role name'),
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
                 'class': 'form-control',
             }
         ),
-        required=True,
+        choices=[],
+        required=False,
     )
     bank_id = forms.ChoiceField(
         label=_('Bank'),
