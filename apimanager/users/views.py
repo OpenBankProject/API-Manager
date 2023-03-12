@@ -137,6 +137,7 @@ class DetailView(LoginRequiredMixin, FormView):
         form = super(DetailView, self).get_form(*args, **kwargs)
         try:
             form.fields['bank_id'].choices = self.api.get_bank_id_choices()
+            form.fields['role_name'].choices = self.api.get_user_role_choices()
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -188,6 +189,7 @@ class DetailView(LoginRequiredMixin, FormView):
 
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
+            'role': get_role_list(self.request)
         })
         return context
 
