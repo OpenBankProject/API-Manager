@@ -176,14 +176,6 @@ class API(object):
             choices.append((version['API_VERSION'], version['API_VERSION']))
         return choices
 
-    def get_user_role_choices(self):
-        """Gets a list of APIs roles and APIs roles as used by form choices"""
-        choices = [('', _('Choose ...'))]
-        result = self.get('/roles')
-        for role in sorted(result['roles'], key=lambda d: d['role']) :
-            choices.append((role['role'], role['role']))
-        return choices
-
     def get_user_id_choices(self):
         """Gets a list of user ids and usernames as used by form choices"""
         choices = [('', _('Choose ...'))]

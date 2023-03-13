@@ -47,19 +47,6 @@ def get_api_versions(request):
         messages.error(self.request, err)
         return []
 
-def get_role_list(request):
-    api = API(request.session.get('obp'))
-    try:
-        urlpath = '/roles'
-        result = api.get(urlpath)
-        if 'roles' in result:
-            return [role['role'] for role in sorted(result['roles'], key=lambda d: d['role'])]
-        else:
-            return []
-    except APIError as err:
-        messages.error(self.request, err)
-        return []
-
 class HomeView(TemplateView):
     """View for home page"""
     template_name = "home.html"
