@@ -12,7 +12,6 @@ from django.views.generic import FormView, TemplateView, View
 from base.filters import BaseFilter
 from obp.api import API, APIError
 from .forms import AddEntitlementForm,CreateInvitationForm
-from base.views import get_role_list
 import csv
 
 class FilterRoleName(BaseFilter):
@@ -137,7 +136,6 @@ class DetailView(LoginRequiredMixin, FormView):
         form = super(DetailView, self).get_form(*args, **kwargs)
         try:
             form.fields['bank_id'].choices = self.api.get_bank_id_choices()
-            form.fields['role_name'].choices = self.api.get_user_role_choices()
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -189,7 +187,6 @@ class DetailView(LoginRequiredMixin, FormView):
 
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
-            'role': get_role_list(self.request)
         })
         return context
 
@@ -207,7 +204,6 @@ class MyDetailView(LoginRequiredMixin, FormView):
         form = super(MyDetailView, self).get_form(*args, **kwargs)
         try:
             form.fields['bank_id'].choices = self.api.get_bank_id_choices()
-            form.fields['role_name'].choices = self.api.get_user_role_choices()
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -254,7 +250,6 @@ class MyDetailView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
-            'role': get_role_list(self.request)
         })
         return context
 
