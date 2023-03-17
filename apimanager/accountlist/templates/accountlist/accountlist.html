@@ -11,7 +11,7 @@
         <th scope="col">{% trans "Account Id" %}</th>
         <th scope="col">{% trans "Bank Id" %}</th>
         <th scope="col">{% trans "Label" %}</th>
-        <th scope="col">{% trans "More info" %}</th>
+        <th scope="col">{% trans "Product Code" %}</th>
         </thead>
         <tbody>
         {% for account in accounts_list %}
@@ -20,18 +20,7 @@
             <td>{{ account.id }}</td>
             <td>{{ account.bank_id }}</td>
             <td>{{ account.label }}</td>
-            <td>
-                <div class="popuptext">
-                    <ul>
-                        <li>{% trans "Other Info" %}:
-                            <ul>
-                                <li>{{account.account_type}}</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-            <td><a href="{{ url_atm_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+            <td>{{ account.account_type }}</td>
         </tr>
         {% endfor %}
 
