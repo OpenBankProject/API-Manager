@@ -10,17 +10,6 @@ import random
 
 class CreateAccountForm(forms.Form):
 
-    account_id = forms.CharField(
-        label=_('Account Id'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'account-id-{}'.format(random.randint(1,1000)),
-                'class': 'form-control',
-            }
-        ),
-        initial='account-id-{}'.format(random.randint(1,1000)),
-    )
-
     user_id = forms.CharField(
         label=_('User Id'),
         widget=forms.TextInput(
@@ -44,7 +33,7 @@ class CreateAccountForm(forms.Form):
         label=_('Label'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Select the label'),
+                'placeholder': _('Select The Label'),
                 'class': 'form-control',
             }
         ),
@@ -52,7 +41,7 @@ class CreateAccountForm(forms.Form):
     )
 
     product_code = forms.CharField(
-        label=_('Write Product Code'),
+        label=_('Product Code'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': "1234BW",
@@ -96,7 +85,7 @@ class CreateAccountForm(forms.Form):
     )
 
     account_routings_scheme = forms.CharField(
-        label=_('Account Number'),
+        label=_('Account Routing Scheme'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Account Number',
@@ -107,7 +96,7 @@ class CreateAccountForm(forms.Form):
     )
 
     account_routings_address = forms.CharField(
-        label=_('Address'),
+        label=_('Account Routing Address'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Address',
@@ -116,56 +105,7 @@ class CreateAccountForm(forms.Form):
         ),
         required=False,
     )
-    account_attributes_product_code = forms.CharField(
-           label=_('Account Attribute Product Code'),
-           widget=forms.TextInput(
-               attrs={
-                   'placeholder': '1234BW',
-                   'class': 'form-control',
-               }
-           ),
-           required=False,
-       )
-    account_attributes_id = forms.CharField(
-           label=_('Account Attribute Id'),
-           widget=forms.TextInput(
-               attrs={
-                   'placeholder': '613c83ea-80f9-4560-8404-b9cd4ec42a7f',
-                   'class': 'form-control',
-               }
-           ),
-           required=False,
-       )
-    account_attributes_name = forms.CharField(
-           label=_('Account Attribute Name'),
-           widget=forms.TextInput(
-               attrs={
-                   'placeholder': 'OVERDRAFT_START_DATE',
-                   'class': 'form-control',
-               }
-           ),
-           required=False,
-       )
-    account_attributes_value = forms.CharField(
-           label=_('Thursday'),
-           widget=forms.TextInput(
-               attrs={
-                   'placeholder': '2012-04-23',
-                   'class': 'form-control',
-               }
-           ),
-           required=False,
-       )
-    account_attributes_instance_code = forms.CharField(
-           label=_('Account Attribute Instance Code'),
-           widget=forms.TextInput(
-               attrs={
-                   'placeholder': 'LKJL98769F',
-                   'class': 'form-control',
-               }
-           ),
-           required=False,
-       )
+
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
