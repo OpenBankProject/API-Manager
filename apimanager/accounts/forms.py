@@ -88,7 +88,7 @@ class CreateAccountForm(forms.Form):
         label=_('Account Routing Scheme'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Account Number',
+                'placeholder': _('IBAN'),
                 'class': 'form-control',
             }
         ),
@@ -99,7 +99,7 @@ class CreateAccountForm(forms.Form):
         label=_('Account Routing Address'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Address',
+                'placeholder': _('DE2100100100006820101'),
                 'class': 'form-control',
             }
         ),
