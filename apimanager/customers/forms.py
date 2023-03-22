@@ -7,9 +7,13 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from apimanager.settings import API_FIELD_DATE_FORMAT, API_FIELD_TIME_FORMAT
+from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+from datetime import datetime, timedelta
 from obp.api import APIError
 
-PLACEHOLDER = "2013-01-22T00:08:00Z"
+PLACEHOLDER = "2013-01-22"
+PLACEHOLDER1 = "00:00:00"
 
 class CreateCustomerForm(forms.Form):
     bank_id = forms.ChoiceField(
@@ -21,11 +25,11 @@ class CreateCustomerForm(forms.Form):
         ),
         choices=[],
     )
-    username = forms.CharField(
-        label=_('Username'),
+    user_id = forms.CharField(
+        label=_('User Id'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('The name of the user'),
+                'placeholder': _('The ID of the user'),
                 'class': 'form-control',
             }
         ),
@@ -90,16 +94,22 @@ class CreateCustomerForm(forms.Form):
         ),
         required=False,
     )
-    date_of_birth = forms.DateTimeField(
-        label=_('Date of Birth'),
-        input_formats=[settings.API_DATE_TIME_FORMAT],
-        widget=forms.DateTimeInput(
+    date_of_birth_date = forms.DateField(
+            label=_("Date of Birth"),
+            widget=DatePickerInput(format=API_FIELD_DATE_FORMAT),
+            required=True,
+            initial=str(datetime.now().strftime(API_FIELD_DATE_FORMAT)),
+        )
+    date_of_birth_time = forms.TimeField(
+        label=_('Time of Birth'),
+        widget=forms.TimeInput(
+            format='%H:%M:%S',
             attrs={
-                'placeholder': PLACEHOLDER,
+                'placeholder': PLACEHOLDER1,
                 'class': 'form-control',
             }
         ),
-        required=True,
+        required=False,
     )
     relationship_status = forms.CharField(
         label=_('Relationship Status'),
@@ -225,13 +235,6 @@ class CreateCustomerForm(forms.Form):
         else:
             return None
 
-    def clean_date_of_birth(self):
-        data = self.cleaned_data['date_of_birth']
-        if data:
-            return data.strftime(settings.API_DATE_TIME_FORMAT)
-        else:
-            return None
-
     def clean_dob_of_dependants(self):
         data = self.cleaned_data['dob_of_dependants']
         if data:
@@ -240,13 +243,6 @@ class CreateCustomerForm(forms.Form):
             return []
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        if not hasattr(self, 'api'):
-            raise forms.ValidationError('No API object available')
-        try:
-            user = self.api.get('/users/username/{}'.format(username))
-        except APIError as err:
-            raise forms.ValidationError(err)
-        else:
-            self.cleaned_data['user_id'] = user['user_id']
-        return username
+        self.cleaned_data['user_id'] = self.cleaned_data["user_id"]
+        user_id = self.cleaned_data['user_id']
+        return user_id
