@@ -234,22 +234,6 @@ class CreateCustomerForm(forms.Form):
         else:
             return None
 
-    """ def clean_date_of_birth_date(self):
-        print("Hello from clean_date_of_birth_date")
-        data = self.cleaned_data['date_of_birth_date']
-        print("data is:::::", data)
-        if data:
-            return data.strftime(settings.API_FIELD_DATE_FORMAT)
-        else:
-            return None
-
-    def clean_date_of_birth_time(self):
-            data = self.cleaned_data['date_of_birth_time']
-            if data:
-                return data.strftime(settings.API_FIELD_TIME_FORMAT)
-            else:
-                return None"""
-
     def clean_dob_of_dependants(self):
         data = self.cleaned_data['dob_of_dependants']
         if data:
@@ -260,17 +244,4 @@ class CreateCustomerForm(forms.Form):
     def clean_username(self):
         self.cleaned_data['user_id'] = self.cleaned_data["username"]
         user_id = self.cleaned_data['user_id']
-        """  print("username is::.", username)
-        if not hasattr(self, 'api'):
-            print("Hello World")
-            raise forms.ValidationError('No API object available')
-        try:
-            print("Hello world1")
-            user = self.api.get('/users/username/{}'.format(username))
-        except APIError as err:
-            print("Hello world1")
-            raise forms.ValidationError(err)
-        else:
-            self.cleaned_data['user_id'] = user['user_id']
-        print("username is", username) """
         return user_id
