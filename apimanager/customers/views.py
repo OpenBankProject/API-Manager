@@ -86,6 +86,6 @@ class CreateView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
         msg = 'Customer number {} for user_id {} has been created successfully!' .format(  # noqa
-            result['customer_number'], data['user_id'])
+            data['customer_number'], data['user_id'])
         messages.success(self.request, msg)
         return super(CreateView, self).form_valid(form)
