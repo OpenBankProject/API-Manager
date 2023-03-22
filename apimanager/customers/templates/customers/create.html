@@ -4,9 +4,14 @@
 
 {% block page_title %}{{ block.super }} / {% trans "Customers" %}{% endblock page_title %}
 
-
+{% load bootstrap3 %}
 {% block content %}
 <div id="customers">
+    {% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+
+    {% block extrahead %}       {# Extra Resources Start #}
+    {{ form.media }}            {# Form required JS and CSS #}
+    {% endblock %}
     <h1>{% trans "Create Customer" %}</h1>
 
     <form action="{% url 'customers-create' %}" method="post">
@@ -26,10 +31,10 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
-                {% if form.username.errors %}<div class="alert alert-danger">{{ form.username.errors }}</div>{% endif %}
+                {% if form.user_id.errors %}<div class="alert alert-danger">{{ form.user_id.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
+                    {{ form.user_id.label_tag }}
+                    {{ form.user_id }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -83,14 +88,21 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                {% if form.date_of_birth.errors %}<div class="alert alert-danger">{{ form.date_of_birth.errors }}</div>{% endif %}
+            <div class="col-xs-12 col-sm-4">
+                {% if form.date_of_birth_date.errors %}<div class="alert alert-danger">{{ form.date_of_birth_date.errors }}</div>{% endif %}
                 <div class="form-group">
-                    {{ form.date_of_birth.label_tag }}
-                    {{ form.date_of_birth }}
+                    {{ form.date_of_birth_date.label_tag }}
+                    {{ form.date_of_birth_date }}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.date_of_birth_time.errors %}<div class="alert alert-danger">{{ form.date_of_birth_time.errors }}</div>{% endif %}
+                <div class="form-group">
+                    {{ form.date_of_birth_time.label_tag }}
+                    {{ form.date_of_birth_time }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
                 {% if form.relationship_status.errors %}<div class="alert alert-danger">{{ form.relationship_status.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.relationship_status.label_tag }}
