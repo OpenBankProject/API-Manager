@@ -89,21 +89,21 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-6">
                 {% if form.date_of_birth_date.errors %}<div class="alert alert-danger">{{ form.date_of_birth_date.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.date_of_birth_date.label_tag }}
                     {{ form.date_of_birth_date }}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4" style="display:none">
                 {% if form.date_of_birth_time.errors %}<div class="alert alert-danger">{{ form.date_of_birth_time.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.date_of_birth_time.label_tag }}
                     {{ form.date_of_birth_time }}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-6">
                 {% if form.relationship_status.errors %}<div class="alert alert-danger">{{ form.relationship_status.errors }}</div>{% endif %}
                 <div class="form-group">
                     {{ form.relationship_status.label_tag }}
