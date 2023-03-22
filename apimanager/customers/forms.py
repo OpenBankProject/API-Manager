@@ -6,6 +6,7 @@ Forms of customers app
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+
 from apimanager.settings import API_FIELD_DATE_FORMAT, API_FIELD_TIME_FORMAT
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 from datetime import datetime, timedelta
@@ -242,6 +243,6 @@ class CreateCustomerForm(forms.Form):
             return []
 
     def clean_username(self):
-        self.cleaned_data['user_id'] = self.cleaned_data["username"]
+        self.cleaned_data['user_id'] = self.cleaned_data["user_id"]
         user_id = self.cleaned_data['user_id']
         return user_id

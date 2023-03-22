@@ -44,7 +44,6 @@ class CreateView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         date_of_birth_date = form.cleaned_data['date_of_birth_date']
         date_of_birth_time = form.cleaned_data['date_of_birth_time']
-        print("date_of_birth", dob_date, dob_time)
         final_date_of_birth = str(date_of_birth_date) + "T" + str(date_of_birth_time) + "Z"
         form.cleaned_data['date_of_birth'] = final_date_of_birth
         data = form.cleaned_data
