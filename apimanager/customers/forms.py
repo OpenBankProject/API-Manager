@@ -85,7 +85,7 @@ class CreateCustomerForm(forms.Form):
     )
     face_image_date = forms.DateTimeField(
         label=_('Face Image Date'),
-        input_formats=[settings.API_DATE_TIME_FORMAT],
+        input_formats=[settings.API_DATE_FORMAT_WITH_MILLISECONDS],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': PLACEHOLDER,
@@ -214,7 +214,7 @@ class CreateCustomerForm(forms.Form):
     )
     last_ok_date = forms.DateTimeField(
         label=_('Last OK Date'),
-        input_formats=[settings.API_DATE_TIME_FORMAT],
+        input_formats=[settings.API_DATE_FORMAT_WITH_MILLISECONDS],
         widget=forms.DateTimeInput(
             attrs={
                 'placeholder': PLACEHOLDER,
@@ -231,7 +231,7 @@ class CreateCustomerForm(forms.Form):
     def clean_face_image_date(self):
         data = self.cleaned_data['face_image_date']
         if data:
-            return data.strftime(settings.API_DATE_TIME_FORMAT)
+            return data.strftime(settings.API_DATE_FORMAT_WITH_MILLISECONDS)
         else:
             return None
 

@@ -244,9 +244,9 @@ LOGGING = {
 LOGIN_URL = reverse_lazy('home')
 
 #Map Java: yyyy-MM-dd'T'HH:mm'Z'
-API_DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+API_DATE_FORMAT_WITH_SECONDS = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-API_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+API_DATE_FORMAT_WITH_MILLISECONDS = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 # the API_Manager the web form date format, eg: 2020-10-11
 API_MANAGER_DATE_FORMAT= '%Y-%m-%d'

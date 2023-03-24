@@ -241,14 +241,16 @@ class MyDetailView(LoginRequiredMixin, FormView):
         # The API needs a call 'get user by id'!
         user = {}
         try:
-            urlpath = '/users/current'
-            user = self.api.get(urlpath)
+            # URL to get current user from the API
+            api_url_path = '/users/current'
+            user = self.api.get(api_url_path)
             context['form'].fields['user_id'].initial = user['user_id']
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, err)
         context.update({
+            #TODO: apiuser to api_user
             'apiuser': user,  # 'user' is logged-in user in template context
         })
         return context
