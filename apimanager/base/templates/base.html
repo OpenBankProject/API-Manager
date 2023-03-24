@@ -36,7 +36,7 @@
                         <li {% if consumers_index_url in request.path %} class="active" {% endif %}><a href="{{ consumers_index_url }}">{% trans "Consumers" %}</a></li>
                         {% url "entitlementrequests-index" as entitlementrequests_index_url %}
                         <li {% if entitlementrequests_index_url in request.path %} class="active" {% endif %}><a href="{{ entitlementrequests_index_url }}">{% trans "Entitlement Requests" %}</a></li>
-                        {% url "users-index" as users_index_url %} {% url 'my-user-detail' API_USER_ID as url_users_detail %} {% url "my-user-invitation" as my_user_invitation %}
+                        {% url "users-index" as users_index_url %} {% url 'my-user-detail' as url_users_detail %} {% url "my-user-invitation" as my_user_invitation %}
                         <li class="dropdown{% if users_index_url in request.path or url_users_detail in request.path or my_user_invitation in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Users" %}</a>
                             <ul class="dropdown-menu">

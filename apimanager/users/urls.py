@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^all/user_id/(?P<user_id>[\w\@\.\+-]+)$',
         DetailView.as_view(),
         name='users-detail'),
-    url(r'^myuser/user_id/(?P<user_id>[\w\@\.\+-]+)$',
+    url(r'^myuser$',
         MyDetailView.as_view(),
         name='my-user-detail'),
     url(r'^myuser/invitation$',
