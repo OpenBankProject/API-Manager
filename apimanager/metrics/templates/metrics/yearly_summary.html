@@ -51,6 +51,13 @@
 					</div>
 				</div>
 				<div class="col-xs-4 col-sm-3">
+					{% if form.to_date_time.errors %}<div class="alert alert-danger">{{ form.to_date_time.errors }}</div>{% endif %}
+					<div class="form-group">
+						{{ form.to_date_time.label_tag }}
+						{{ form.to_date_time }}
+					</div>
+				</div>
+				<div class="col-xs-4 col-sm-3">
 					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
 						{{ form.include_app_names.label_tag }}
