@@ -37,9 +37,9 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
             fields['has_deposit_capability'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
-            fields['supported_languages'].choices = [('',_(CHOOSE)),("en", "en"), ("fr", "fr"), ("de", "de")]
+            fields['supported_languages'].choices = [('',_(CHOOSE)),("en", "en"), ("fr", "fr"), ("de", "de"), ("es", "es")]
             fields['notes'].choices = [('',_(CHOOSE)),("String1", "String1"), ("String2", "String2")]
-            fields['supported_currencies'].choices = [('',_(CHOOSE)),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
+            fields['supported_currencies'].choices = [('',_(CHOOSE)),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")] # TODO: get from API
             fields['location_categories'].choices = [('',_(CHOOSE)),("ATBI", "ATBI"), ("ATBE", "ATBE")]
             fields['lobby'].initial = json.dumps({
                             "monday": [
@@ -264,11 +264,13 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
 
     def _paylod_languages_and_currencies(self, result, fields):
         if result['supported_languages'][0].lower()=='en':
-            fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de")]
+            fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de"), ("es", "es")]
         elif result['supported_languages'][0].lower()=='fr':
-            fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de")]
+            fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de"), ("es", "es")]
+        elif result['supported_languages'][0].lower()=='es':
+            fields['supported_languages'].choices = [("es", "es"), ("en", "en"), ("de", "de"), ("fr", "fr")]
         else:
-            fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en")]
+            fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en"), ("es", "es")]
         fields['supported_languages'].initial = result['supported_languages']
         if result['supported_currencies'][0].lower()=='EUR':
               fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
