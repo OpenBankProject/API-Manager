@@ -492,12 +492,13 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         result_list = []
         result_list_pure = []
         date_list = []
+        #while time_delta_in_loop <= to_datetime_object:
         while time_delta_in_loop <= to_datetime_object + timedelta(days=1, hours=1):
             try:
                 # here we need to first convert datetime object to String
-                form_date= from_datetime_object.strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
+                from_date= from_datetime_object.strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
                 to_date= time_delta_in_loop.strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
-                aggregate_metrics = self.get_aggregate_metrics(form_date, to_date, include_app_names)
+                aggregate_metrics = self.get_aggregate_metrics(from_date, to_date, include_app_names)
                 result = aggregate_metrics[0]
                 result_list_pure.append(result)
                 result_list.append('{} - {} # {}'.format(from_datetime_object, time_delta_in_loop, result))
@@ -510,6 +511,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
             from_datetime_object = time_delta_in_loop
             time_delta_in_loop = time_delta_in_loop + timedelta(**delta)
+            print("time_delta_in_loop in **delta is", time_delta_in_loop)
 
         return (result_list, result_list_pure, date_list)
 
@@ -876,6 +878,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
     def prepare_general_context(self, web_page_type,  **kwargs):
         try:
             form = self.get_form()
+            print("form from get_form", form)
             per_day_chart=[]
             calls_per_month_list=[]
             per_month_chart=[]
@@ -893,7 +896,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 #to_date = datetime.datetime.strptime(f"{form.data['to_date']}T{form.data['to_date_time']}Z", API_DATE_FORMAT_WITH_SECONDS ).strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
                 if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
-                    from_date = return_to_days_ago(to_date, 1)
+                    from_date = return_to_days_ago(to_date, 0)
                     calls_per_hour_list, calls_per_hour, hour_list = self.calls_per_hour(from_date, to_date, include_app_names)
                     per_hour_chart = self.plot_line_chart(calls_per_hour, hour_list, 'hour')
 

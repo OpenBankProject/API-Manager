@@ -7,7 +7,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from apimanager.settings import API_FIELD_DATE_FORMAT, API_FIELD_TIME_FORMAT
+from apimanager.settings import API_DATE_FORMAT_WITH_DAY, API_FIELD_TIME_FORMAT
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 from datetime import datetime, timedelta
 from obp.api import APIError
@@ -96,9 +96,9 @@ class CreateCustomerForm(forms.Form):
     )
     date_of_birth_date = forms.DateField(
             label=_("Date of Birth"),
-            widget=DatePickerInput(format=API_FIELD_DATE_FORMAT),
+            widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
             required=True,
-            initial=str(datetime.now().strftime(API_FIELD_DATE_FORMAT)),
+            initial=str(datetime.now().strftime(API_DATE_FORMAT_WITH_DAY)),
         )
     date_of_birth_time = forms.TimeField(
         label=_('Time of Birth'),

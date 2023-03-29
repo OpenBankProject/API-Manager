@@ -33,7 +33,7 @@
 		{{ form.media }}            {# Form required JS and CSS #}
 		{% endblock %}
 
-		<h2>{% trans "Filter" %}</h2>
+		<h2>{% trans "Year" %}</h2>
 		<form action="{% url 'yearly-summary' %}" method="get">
 			{% if form.non_field_errors %}
 			<div class="alert alert-danger">
