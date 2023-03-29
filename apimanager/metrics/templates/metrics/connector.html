@@ -3,9 +3,13 @@
 {% load i18n %}
 
 {% block page_title %}{{ block.super }} / Connector Metrics{% endblock page_title %}
-
+{% load bootstrap3 %}
 {% block content %}
 <div id="metrics">
+	{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+	{% block extrahead %}       {# Extra Resources Start #}
+	{{ form.media }}            {# Form required JS and CSS #}
+	{% endblock %}
 	<h1>{% trans "Connector Metrics" %}</h1>
 
 	<div id="metrics-filter">

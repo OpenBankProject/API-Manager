@@ -25,26 +25,37 @@ PLACEHOLDER2 = "00:00:00"
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        input_formats=[settings.API_DATE_FORMAT_WITH_MILLISECONDS],
-        widget=forms.DateTimeInput(
+        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        required=True,
+        initial=(datetime.now() - timedelta(1)).strftime(API_DATE_FORMAT_WITH_DAY),
+    )
+    from_time = forms.TimeField(
+        label=_('From Time'),
+        widget=forms.TimeInput(
+            format='%H:%M:%S',
             attrs={
-                'placeholder': API_DATE_FORMAT_WITH_MILLISECONDS,
-                'class': FORM_CONTROL,
+                'placeholder': PLACEHOLDER2,
+                'class': 'form-control',
             }
         ),
-        initial=(datetime.now() - timedelta(30)).strftime(settings.API_DATE_FORMAT_WITH_MILLISECONDS),
         required=False,
     )
+
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
-        input_formats=[settings.API_DATE_FORMAT_WITH_MILLISECONDS],
-        widget=forms.DateTimeInput(
+        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        required=True,
+        initial=(datetime.now() - timedelta()).strftime(API_DATE_FORMAT_WITH_DAY),
+    )
+    to_date_time = forms.TimeField(
+        label=_('To Time'),
+        widget=forms.TimeInput(
+            format='%H:%M:%S',
             attrs={
-                'placeholder': API_DATE_FORMAT_WITH_MILLISECONDS,
-                'class': FORM_CONTROL,
+                'placeholder': PLACEHOLDER1,
+                'class': 'form-control',
             }
         ),
-        initial=str(datetime.now().strftime(settings.API_DATE_FORMAT_WITH_MILLISECONDS)),
         required=False,
     )
     limit = forms.IntegerField(
@@ -253,7 +264,7 @@ class CustomSummaryForm(forms.Form):
 
 class MonthlyMetricsSummaryForm(forms.Form):
     to_date = forms.DateField(
-        label=_("Date"),
+        label=_("To Date"),
         widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
         required=True,
         initial=str(datetime.now().strftime(API_DATE_FORMAT_WITH_DAY)),
