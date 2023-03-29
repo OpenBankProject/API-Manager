@@ -928,7 +928,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     # for one month, the from_date is x day ago.
                     form_from_date_string = form.data['from_date_custom']
                     from_date = convert_form_date_to_obpapi_datetime_format(form_from_date_string)
-                    #calls_per_day_list, calls_per_day, date_list = self.calls_per_day(, from_date, to_date)
                     calls_per_day_list, calls_per_day, date_list = self.calls_per_day(from_date, to_date, include_app_names)
                     if (len(calls_per_day) <= 31):
                         per_day_chart = self.plot_line_chart(calls_per_day, date_list, "day")
