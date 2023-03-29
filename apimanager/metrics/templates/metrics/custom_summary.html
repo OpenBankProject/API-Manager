@@ -27,7 +27,7 @@
 		{{ form.media }}            {# Form required JS and CSS #}
 		{% endblock %}
 
-		<h2>{% trans "Filter" %}</h2>
+		<h2>{% trans "Custom Date Range " %}</h2>
 		<form action="{% url 'custom-summary' %}" method="get">
 			{% if form.non_field_errors %}
 			<div class="alert alert-danger">
@@ -42,13 +42,13 @@
 						{{ form.from_date_custom }}
 					</div>
 					</div>
-				<div class="col-xs-6 col-sm-3">
+				<!--<div class="col-xs-6 col-sm-3">
 					{% if form.from_time_custom.errors %}<div class="alert alert-danger">{{ form.from_time_custom.errors }}</div>{% endif %}
 					<div class="form-group">
 						<strong>{% trans "From Time" %} </strong>
 						{{ form.from_time_custom }}
 					</div>
-				</div>
+				</div>-->
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
@@ -56,13 +56,13 @@
 						{{ form.to_date }}
 					</div>
 				</div>
-				<div class="col-xs-6 col-sm-3">
+				<!--<div class="col-xs-6 col-sm-3">
 					{% if form.to_date_time.errors %}<div class="alert alert-danger">{{ form.to_date_time.errors }}</div>{% endif %}
 					<div class="form-group">
 						<strong>{% trans "To Time" %} </strong>
 						{{ form.to_date_time }}
 					</div>
-				</div>
+				</div>-->
 				<div class="col-xs-4 col-sm-3">
 					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">

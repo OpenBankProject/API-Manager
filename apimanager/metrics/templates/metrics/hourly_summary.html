@@ -31,7 +31,7 @@
 		{{ form.media }}            {# Form required JS and CSS #}
 		{% endblock %
 
-		<h2>{% trans "Filter" %}</h2>
+		<h2>{% trans "Hour" %}</h2>
 		<form action="{% url 'hourly-summary' %}" method="get">
 			{% if form.non_field_errors %}
 			<div class="alert alert-danger">
@@ -44,17 +44,17 @@
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
-						<strong>{% trans "to_date" %} </strong>
+						<strong>{% trans "To Date" %} </strong>
 						{{ form.to_date }}
 					</div>
 				</div>
-				<div class="col-xs-4 col-sm-3">
+				<!--<div class="col-xs-4 col-sm-3">
 					{% if form.to_date_time.errors %}<div class="alert alert-danger">{{ form.to_date_time.errors }}</div>{% endif %}
 					<div class="form-group">
 						{{ form.to_date_time.label_tag }}
 						{{ form.to_date_time }}
 					</div>
-				</div>
+				</div>-->
 				<div class="col-xs-4 col-sm-3">
 					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
