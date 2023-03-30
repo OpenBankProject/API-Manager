@@ -261,9 +261,9 @@ class CreateAtmForm(forms.Form):
         ),
         required=False,
     )
-    location_categories = forms.ChoiceField(
+    location_categories = forms.CharField(
         label=_('Location Category'),
-        widget=forms.Select(
+        widget=forms.TextInput(
            attrs={
               'class': 'form-control',
            }
