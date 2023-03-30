@@ -252,9 +252,9 @@ class CreateAtmForm(forms.Form):
         ),
         required=False,
     )
-    notes = forms.ChoiceField(
+    notes = forms.CharField(
         label=_('Notes'),
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={
                'class': 'form-control',
             }
