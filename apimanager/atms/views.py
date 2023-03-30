@@ -236,13 +236,28 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
             fields['cash_withdrawal_international_fee'].initial = result['cash_withdrawal_international_fee']
             fields['balance_inquiry_fee'].initial = result['balance_inquiry_fee']
-            fields['services'].placeholder = result['services']
-            fields['located_at'].initial = result['located_at']
+            my_services = result["services"]
+            services_initial = ','.join(my_services)
+            fields['services'].initial = services_initial
+
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            fields['notes'].placeholder = result['notes']
-            fields['location_categories'].placeholder = result['location_categories']
-            fields['supported_currencies'].placeholder = result['supported_currencies']
+
+            my_notes = result["notes"]
+            note_initial = ','.join(my_notes)
+            fields['notes'].initial = note_initial
+
+            my_location_categories = result['location_categories']
+            location_categories_initial = ','.join(my_location_categories)
+            fields['location_categories'].initial = location_categories_initial
+
+            my_supported_currencies = result['supported_currencies']
+            supported_currencies_initial = ','.join(my_supported_currencies)
+            fields['supported_currencies'].initial = supported_currencies_initial
+
+            my_supported_languages = result['supported_languages']
+            supported_languages_initial = ','.join(my_supported_languages)
+            fields['supported_languages'].initial = supported_languages_initial
             self._paylod_choices(result, fields)
         except APIError as err:
             messages.error(self.request, err)
