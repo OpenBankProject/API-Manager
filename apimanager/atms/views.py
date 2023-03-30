@@ -38,7 +38,6 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['is_accessible'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
             fields['has_deposit_capability'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
             fields['supported_languages'].choices = [('',_(CHOOSE)),("en", "en"), ("fr", "fr"), ("de", "de"), ("es", "es")]
-            #fields['notes'].choices = [('',_(CHOOSE)),("String1", "String1"), ("String2", "String2")]
             fields['supported_currencies'].choices = [('',_(CHOOSE)),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")] # TODO: get from API
             fields['location_categories'].choices = [('',_(CHOOSE)),("ATBI", "ATBI"), ("ATBE", "ATBE")]
             fields['lobby'].initial = json.dumps({
@@ -246,7 +245,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['notes'].initial = result['notes']
             self._paylod_choices(result, fields)
             self._paylod_languages_and_currencies(result, fields)
-            #self._paylod_notes_and_categories(result, fields)
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -282,11 +280,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         fields['supported_currencies'].initial = result['supported_currencies']
 
     def _paylod_notes_and_categories(self, result, fields):
-        """ if result['notes'][0].lower()=='string1':
-              fields['notes'].choices = [("String1", "String1"),("String2", "String2")]
-        else:
-              fields['notes'].choices = [("String2", "String2"),("String1", "String1")]
-        fields['notes'].initial = result['notes'] """
         if result['location_categories'][0].lower()=='atbi':
              fields['location_categories'].choices = [("ATBI", "ATBI"),("ATBE", "ATBE")]
         else:
