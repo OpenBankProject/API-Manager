@@ -37,8 +37,6 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
             fields['is_accessible'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
             fields['has_deposit_capability'].choices = [('',_(CHOOSE)),(True, True), (False, False)]
-            fields['supported_languages'].choices = [('',_(CHOOSE)),("en", "en"), ("fr", "fr"), ("de", "de"), ("es", "es")]
-            fields['supported_currencies'].choices = [('',_(CHOOSE)),("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")] # TODO: get from API
             fields['lobby'].initial = json.dumps({
                             "monday": [
                                 {
@@ -101,6 +99,7 @@ class IndexAtmsView(LoginRequiredMixin, FormView):
 
         return form
 
+    # Form Valid, when create a new ATM
     def form_valid(self, form):
         try:
             data = form.cleaned_data
@@ -237,14 +236,14 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
             fields['cash_withdrawal_international_fee'].initial = result['cash_withdrawal_international_fee']
             fields['balance_inquiry_fee'].initial = result['balance_inquiry_fee']
-            fields['services'].initial = result['services']
+            fields['services'].placeholder = result['services']
             fields['located_at'].initial = result['located_at']
             fields['more_info'].initial = result['more_info']
             fields['located_at'].initial = result['located_at']
-            fields['notes'].initial = result['notes']
-            fields['location_categories'].initial = result['location_categories']
+            fields['notes'].placeholder = result['notes']
+            fields['location_categories'].placeholder = result['location_categories']
+            fields['supported_currencies'].placeholder = result['supported_currencies']
             self._paylod_choices(result, fields)
-            self._paylod_languages_and_currencies(result, fields)
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -261,24 +260,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         else:
             fields['has_deposit_capability'].choices = [(False, False), (True, True)]
 
-    def _paylod_languages_and_currencies(self, result, fields):
-        if result['supported_languages'][0].lower()=='en':
-            fields['supported_languages'].choices = [("en", "en"), ("fr", "fr"), ("de", "de"), ("es", "es")]
-        elif result['supported_languages'][0].lower()=='fr':
-            fields['supported_languages'].choices = [("fr", "fr"), ("en", "en"), ("de", "de"), ("es", "es")]
-        elif result['supported_languages'][0].lower()=='es':
-            fields['supported_languages'].choices = [("es", "es"), ("en", "en"), ("de", "de"), ("fr", "fr")]
-        else:
-            fields['supported_languages'].choices = [("de", "de"),("fr", "fr"), ("en", "en"), ("es", "es")]
-        fields['supported_languages'].initial = result['supported_languages']
-        if result['supported_currencies'][0].lower()=='EUR':
-              fields['supported_currencies'].choices = [("EUR", "EUR"), ("MXN", "MXN"), ("USD", "USD")]
-        elif result['supported_currencies'][0].lower()=='MXN':
-              fields['supported_currencies'].choices = [("MXN", "MXN"), ("EUR", "EUR"), ("USD", "USD")]
-        else:
-              fields['supported_currencies'].choices = [("USD", "USD"),("MXN", "MXN"), ("EUR", "EUR")]
-        fields['supported_currencies'].initial = result['supported_currencies']
-
+    #Check form validation, when update previous ATM
     def form_valid(self, form):
         data = form.cleaned_data
         urlpath = '/banks/{}/atms/{}'.format(data["bank_id"],data["atm_id"])
