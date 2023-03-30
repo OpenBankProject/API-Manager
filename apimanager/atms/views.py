@@ -230,7 +230,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['meta_license_name'].initial = result['meta']['license']['name']
             fields['minimum_withdrawal'].initial = result['minimum_withdrawal']
             fields['branch_identification'].initial = result['branch_identification']
-            fields['has_deposit_capability'].initial = result['accessibility_features']
             fields['site_identification'].initial = result['site_identification']
             fields['site_name'].initial = result['site_name']
             fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
@@ -258,6 +257,11 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_supported_languages = result['supported_languages']
             supported_languages_initial = ','.join(my_supported_languages)
             fields['supported_languages'].initial = supported_languages_initial
+
+            my_accessibility_features = result['accessibility_features']
+            my_accessibility_features_initial = ','.join(my_accessibility_features)
+            fields['accessibility_features'].initial = my_accessibility_features_initial
+
             self._paylod_choices(result, fields)
         except APIError as err:
             messages.error(self.request, err)
