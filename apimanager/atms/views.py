@@ -230,7 +230,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             fields['meta_license_name'].initial = result['meta']['license']['name']
             fields['minimum_withdrawal'].initial = result['minimum_withdrawal']
             fields['branch_identification'].initial = result['branch_identification']
-
             fields['site_identification'].initial = result['site_identification']
             fields['site_name'].initial = result['site_name']
             fields['cash_withdrawal_national_fee'].initial = result['cash_withdrawal_national_fee']
