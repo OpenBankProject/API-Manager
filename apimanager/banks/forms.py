@@ -29,7 +29,7 @@ class CreateBankForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=True
+        required=False
     )
 
     full_name = forms.CharField(
@@ -80,7 +80,7 @@ class CreateBankForm(forms.Form):
         label=_('Bank Routing Address'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': '',
+                'placeholder': 'Bank Routing Address',
                 'class': 'form-control',
             }
         ),

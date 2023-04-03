@@ -16,21 +16,11 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4">
-        {% if form.bank_id.errors %}
-        <div class="alert alert-danger">{{ form.bank_id.errors }}</div>
-        {% endif %}
-        <div class="form-group">
-          {{ form.bank_id.label_tag }} {{ form.bank_id }}
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-4">
         {% if form.bank_code.errors %}
         <div class="alert alert-danger">{{ form.bank_code.errors }}</div>
         {% endif %}
         <div class="form-group">{{ form.bank_code.label_tag }} {{ form.bank_code }}</div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-xs-12 col-sm-4">
         {% if form.full_name.errors %}
         <div class="alert alert-danger">{{ form.full_name.errors }}</div>
@@ -39,6 +29,9 @@
           {{ form.full_name.label_tag }} {{ form.full_name }}
         </div>
       </div>
+    </div>
+    <div class="row">
+
       <div class="col-xs-12 col-sm-4">
         {% if form.logo.errors %}
         <div class="alert alert-danger">
@@ -59,8 +52,6 @@
           {{ form.website.label_tag }} {{ form.website }}
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-xs-12 col-sm-4">
         {% if form.bank_routings_scheme.errors %}
         <div class="alert alert-danger">
@@ -71,6 +62,9 @@
           {{ form.bank_routings_scheme.label_tag }} {{ form.bank_routings_scheme }}
         </div>
       </div>
+    </div>
+    <div class="row">
+
       <div class="col-xs-12 col-sm-4">
         {% if form.bank_routings_address.errors %}
         <div class="alert alert-danger">{{ form.bank_routings_address.errors }}</div>
