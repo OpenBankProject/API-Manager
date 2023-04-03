@@ -253,11 +253,12 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_location_categories = result['location_categories']
             location_categories_initial = ','.join(my_location_categories)
             fields['location_categories'].initial = location_categories_initial
-
             my_supported_currencies = result['supported_currencies']
+
             supported_currencies_initial = ','.join(my_supported_currencies)
             fields['supported_currencies'].initial = supported_currencies_initial
             my_supported_languages = result['supported_languages']
+
             supported_languages_initial = ','.join(my_supported_languages)
             fields['supported_languages'].initial = supported_languages_initial
             my_accessibility_features = result['accessibility_features']
