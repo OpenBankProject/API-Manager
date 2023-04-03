@@ -265,12 +265,12 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_accessibility_features = result['accessibility_features']
             my_accessibility_features_initial = ','.join(my_accessibility_features)
             fields['accessibility_features'].initial = my_accessibility_features_initial
-            self._paylod_choices(result, fields)
+            self._payload_choices(result, fields)
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
         return form
 
-    def _paylod_choices(self, result, fields):
+    def _payload_choices(self, result, fields):
         if result['is_accessible'].lower()=='true':
             fields['is_accessible'].choices = [(True, True), (False, False)]
         else:
