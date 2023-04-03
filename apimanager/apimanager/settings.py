@@ -258,7 +258,7 @@ API_EXPLORER_HOST = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
 API_BASE_PATH = '/obp/v'
-API_VERSION = '5.0.0'
+API_VERSION = '5.1.0'
 
 # URL to API Tester
 API_TESTER_URL = 'https://www.example.com'
