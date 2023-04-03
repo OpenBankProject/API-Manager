@@ -14,6 +14,9 @@ from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import CreateAtmForm
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse, reverse_lazy
+from base.utils import exception_handle, error_once_only
 
 CHOOSE = "Choose..."
 
@@ -211,7 +214,9 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         # Cannot add api in constructor: super complains about unknown kwarg
         form.api = self.api
         fields = form.fields
-        urlpath = "/banks/{}/atms/{}".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
+        urlpath = "/banks/{}/atms/{}".format(self.kwargs['bank_id'], self.kwargs['atm_id']) #Add new attribute urlpath
+        atm_attributes_url_path = "/banks/{}/atms/{}/attributes".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
+
         try:
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
@@ -265,8 +270,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             self._paylod_choices(result, fields)
         except APIError as err:
             messages.error(self.request, err)
-        except Exception as err:
-            messages.error(self.request, "Unknown Error {}".format(err))
         return form
 
     def _paylod_choices(self, result, fields):
@@ -350,7 +353,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             data["atm_id"], data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateAtmsView, self).form_valid(form)
-
     def _update_boolean_payload1(self, data):
         return {
             "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
@@ -370,13 +372,73 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false"
         }
 
+    def bank_attributes(self, **kwargs):
+        atm_attributes_url_path = "/banks/{}/atms/{}/attributes".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
+        try:
+            atm_attributes_result = self.api.get(atm_attributes_url_path)["bank_attributes"]
+            print("atm_attributes_result is:", atm_attributes_result)
+            return atm_attributes_result
+        except Exception as err:
+            messages.error(self.request, "Unknown Error {}".format(err))
+        return " "
+
+
     def get_context_data(self, **kwargs):
         context = super(UpdateAtmsView, self).get_context_data(**kwargs)
         self.bank_id = self.kwargs['bank_id']
         self.atm_id = self.kwargs['atm_id']
         context.update({
             'atm_id': self.atm_id,
-            'bank_id': self.bank_id
+            'bank_id': self.bank_id,
+            "bank_attributes_list": self.bank_attributes(**kwargs)
         })
+        print("context", context)
         return context
+
+
+@exception_handle
+@csrf_exempt
+def atm_attribute_save(request):
+    api = API(request.session.get('obp'))
+    #urlpath = '/my/api-collections'
+    urlpath_save = '/banks/{}/atms/{}/attributes'.format(bank_id, atm_id)
+
+    print("urlpath_save is:", urlpath_save)
+    payload = {
+        'name': request.POST.get('name').strip(),
+        'type': request.POST.get('type').strip(),
+        'value': request.POST.get('value').strip(),
+        'is_active': True
+    }
+    result = api.post(urlpath_save, payload = payload)
+    print("result", result)
+    return result
+
+
+@exception_handle
+@csrf_exempt
+def atm_attribute_update(request):
+    urlpath_update = '/banks/{}/atms/{}/attributes/{}'.format(data["bank_id"],data["atm_id"], data["atm_attribute_id"])
+    print("urlpath_update is:", urlpath_update)
+    api = API(request.session.get('obp'))
+    payload = {
+        'name': request.POST.get('name').strip(),
+        'type': request.POST.get('type').strip(),
+        'value': request.POST.get('value').strip(),
+        'is_active': True
+    }
+    result = api.put(urlpath, payload=payload)
+    return result
+
+
+@exception_handle
+@csrf_exempt
+def atm_attribute_delete(request):
+    api = API(request.session.get('obp'))
+    urlpath_delete = '/banks/{}/atms/{}/attributes/{}'.format(bank_id, atm_id, atm_attribute_id)
+    print("urlpath_delete is:", urlpath_delete)
+    result = api.delete(urlpath_delete)
+    return result
+
+
 
