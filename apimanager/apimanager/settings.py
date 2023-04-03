@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'users',
     'branches',
     'atms',
+    'banks',
     'atmlist',
     'products',
     'productlist',

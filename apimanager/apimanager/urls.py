@@ -42,6 +42,7 @@ urlpatterns += i18n_patterns(
     url(r'^users/', include('users.urls')),
     url(r'^branches/', include('branches.urls')),
     url(r'^atms/', include('atms.urls')),
+    url(r'^banks/', include('banks.urls')),
     url(r'^atms/list', include('atmlist.urls')),
     url(r'^products/', include('products.urls')),
     url(r'^products/list', include('productlist.urls')),
