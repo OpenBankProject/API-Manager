@@ -257,11 +257,11 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_supported_currencies = result['supported_currencies']
             supported_currencies_initial = ','.join(my_supported_currencies)
             fields['supported_currencies'].initial = supported_currencies_initial
-
             my_supported_languages = result['supported_languages']
             supported_languages_initial = ','.join(my_supported_languages)
             fields['supported_languages'].initial = supported_languages_initial
             my_accessibility_features = result['accessibility_features']
+
             my_accessibility_features_initial = ','.join(my_accessibility_features)
             fields['accessibility_features'].initial = my_accessibility_features_initial
             self._paylod_choices(result, fields)
@@ -350,8 +350,8 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             data["atm_id"], data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateAtmsView, self).form_valid(form)
-    def _update_boolean_payload1(self, data):
 
+    def _update_boolean_payload1(self, data):
         return {
             "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
             "located_at": data["located_at"] if data["located_at"]!="no-example-provided" else " ",
