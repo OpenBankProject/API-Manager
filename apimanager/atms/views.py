@@ -265,11 +265,12 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_accessibility_features = result['accessibility_features']
             my_accessibility_features_initial = ','.join(my_accessibility_features)
             fields['accessibility_features'].initial = my_accessibility_features_initial
+            self._payload_choices(result, fields)
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
         return form
 
-    def _paylod_choices(self, result, fields):
+    def _payload_choices(self, result, fields):
         if result['is_accessible'].lower()=='true':
             fields['is_accessible'].choices = [(True, True), (False, False)]
         else:
@@ -370,10 +371,10 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             "balance_inquiry_fee": data["balance_inquiry_fee"] if data["balance_inquiry_fee"]!="" else "false"
         }
 
-    def bank_attributes(self, **kwargs):
+    def atm_attributes(self, **kwargs):
         atm_attributes_url_path = "/banks/{}/atms/{}/attributes".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
         try:
-            atm_attributes_result = self.api.get(atm_attributes_url_path)["bank_attributes"]
+            atm_attributes_result = self.api.get(atm_attributes_url_path)["atm_attributes"]
             return atm_attributes_result
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
@@ -387,7 +388,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
         context.update({
             'atm_id': self.atm_id,
             'bank_id': self.bank_id,
-            "bank_attributes_list": self.bank_attributes(**kwargs)
+            "atm_attributes_list": self.atm_attributes(**kwargs)
         })
         return context
 
