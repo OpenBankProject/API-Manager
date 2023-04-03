@@ -213,7 +213,90 @@
         </div>
 
         <input type="submit" value="Update" class="btn btn-primary" />
+        <div class="row">
+            <h1>Hello ATM Attribute</h1>
+            <div class="col-xs-12 col-sm-2">
+                <label class="form-group">{% trans "API Attribute Id" %}:</label> <br>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="form-group">{% trans "Attribute Name" %}:</label> <br>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="form-group">{% trans "Attribute Type" %}:</label> <br>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label class="form-group">{% trans "Attribute Value" %}:</label> <br>
+            </div>
+        </div>
+        {% for attribute in bank_attributes %}
+        <h1> Hello World: {{  attribute }} </h1>
+        {% url 'my-atm-attribute-detail' attribute.atm_attribute_id as url_atm_attribute_detail %}
+        <div class="runner">
+            <div class="row">
+                {% if attribute.atm_attribute_id %}
+                <h1> Hello: {{ attribute }}</h1>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_name form-control" value="{{ attribute.name }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_type form-control" value="{{ attribute.type }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_value form-control" value="{{ attribute.value }}">
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_name" value="Attribute Name">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_type" value="Attribute Type">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_value" value="Attribute Value">
+                    </div>
+                </div>
+                {%  endif %}
+                {%  if forloop.counter0 == 0 %}
+                <div class="col-sm-6 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
+                    </div>
+                </div>
+                {%  endif %}
+                {%  if forloop.counter0 > 0 %}
+                <div class="col-sm-3 col-sm-1">
+                    <div class="form-group">
+                        <button class="btn btn-primary forUpdate">{% trans "Update" %}</button>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-sm-1">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
+                    </div>
+                </div>
+                {%  endif %}
+            </div>
+        </div>
+        {% endfor %}
     </form>
+
 </div>
 {% endblock content %} {% block extrajs %} {% comment %}
 <script type="text/javascript" src="{% static 'atms/js/atms.js' %}"></script>
