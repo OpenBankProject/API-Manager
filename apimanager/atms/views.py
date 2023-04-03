@@ -266,7 +266,6 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
             my_accessibility_features = result['accessibility_features']
             my_accessibility_features_initial = ','.join(my_accessibility_features)
             fields['accessibility_features'].initial = my_accessibility_features_initial
-
             self._paylod_choices(result, fields)
         except APIError as err:
             messages.error(self.request, err)
@@ -421,6 +420,7 @@ def atm_attribute_save(request):
 @exception_handle
 @csrf_exempt
 def atm_attribute_update(request):
+    atm_attribute_id = request.POST.get('atm_attribute_id').strip()
     urlpath_update = '/banks/{}/atms/{}/attributes/{}'.format(data["bank_id"],data["atm_id"], data["atm_attribute_id"])
     print("urlpath_update is:", urlpath_update)
     api = API(request.session.get('obp'))
@@ -437,6 +437,11 @@ def atm_attribute_update(request):
 @exception_handle
 @csrf_exempt
 def atm_attribute_delete(request):
+    bank_id = request.POST.get('bank_id').strip()
+    print("bank_id", bank_id)
+    atm_id = request.POST.get('atm_id').strip()
+    atm_attribute_id = request.POST.get('atm_attribute_id').strip()
+
     api = API(request.session.get('obp'))
     urlpath_delete = '/banks/{}/atms/{}/attributes/{}'.format(bank_id, atm_id, atm_attribute_id)
     print("urlpath_delete is:", urlpath_delete)
