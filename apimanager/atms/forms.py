@@ -206,14 +206,14 @@ class CreateAtmForm(forms.Form):
             required=False,
        )
     has_deposit_capability = forms.ChoiceField(
-         label=_('Deposit Capabilities'),
-         widget=forms.Select(
-              attrs={
-                     'class': 'form-control',
-              }
-         ),
-         required=False,
-    )
+             label=_('Deposit Capabilities'),
+             widget=forms.Select(
+                  attrs={
+                         'class': 'form-control',
+                  }
+             ),
+             required=False,
+        )
     supported_languages = forms.CharField(
             label=_('Supported Languages'),
             widget=forms.TextInput(
