@@ -401,6 +401,9 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
 def atm_attribute_save(request):
     api = API(request.session.get('obp'))
     #urlpath = '/my/api-collections'
+    bank_id = request.POST.get('bank_id').strip()
+    print("bank_id", bank_id)
+    atm_id = request.POST.get('atm_id').strip()
     urlpath_save = '/banks/{}/atms/{}/attributes'.format(bank_id, atm_id)
 
     print("urlpath_save is:", urlpath_save)
