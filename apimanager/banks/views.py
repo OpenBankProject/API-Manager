@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class IndexBanksView(LoginRequiredMixin, FormView):
 
-    """Index view for Bankss"""
+    """Index view for Banks"""
     template_name = "banks/index.html"
     form_class = CreateBankForm
     success_url = reverse_lazy('banks_create')
@@ -44,7 +44,6 @@ class IndexBanksView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            print(data, "This is a data")
             urlpath = '/banks'
             payload ={
                 "id": data["bank_id"],
