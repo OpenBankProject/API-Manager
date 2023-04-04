@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-URLs for ATM list app
+URLs for Bank list app
 """
 
 from django.conf.urls import url
@@ -9,8 +9,8 @@ from .views import BankListView, ExportCsvView
 urlpatterns = [
     url(r'^$',
         BankListView.as_view(),
-        name='atm-list'),
+        name='bank-list'),
     url(r'^export_csv$',
             ExportCsvView.as_view(),
-            name='export-csv')
+            name='export-bank-csv')
 ]

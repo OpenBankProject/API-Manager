@@ -19,21 +19,22 @@ import csv
 
 
 
-class AtmListView(IndexBanksView, LoginRequiredMixin, FormView ):
+class BankListView(IndexBanksView, LoginRequiredMixin, FormView ):
     template_name = "banklist/banklist.html"
     success_url = '/banks/list'
 
-    def get_atms(self,context):
+    def get_banks(self,context):
         api = API(self.request.session.get('obp'))
         try:
-            self.bankids = get_banks(self.request)
-            atms_list = []
-            for bank_id in self.bankids:
-                urlpath = '/banks/{}/atms'.format(bank_id)
-                result = api.get(urlpath)
-                #print(result)
-                if 'atms' in result:
-                    atms_list.extend(result['atms'])
+            urlpath = '/banks'
+            result = api.get(urlpath)
+            print("result is from get_banks:", result)
+            banks_list = []
+            if 'banks' in result:
+                banks_list.extend(result["banks"])
+                """ return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
+            else:
+                return [] """
         except APIError as err:
             messages.error(self.request, err)
             return []
@@ -41,13 +42,12 @@ class AtmListView(IndexBanksView, LoginRequiredMixin, FormView ):
             messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
             return []
 
-        return atms_list
+        return banks_list
     def get_context_data(self, **kwargs):
-        context = super(IndexAtmsView, self).get_context_data(**kwargs)
-        atms_list = self.get_atms(context)
+        context = super(BankListView, self).get_context_data(**kwargs)
+        banks_list = self.get_banks(context)
         context.update({
-            'atms_list': atms_list,
-            'bankids': get_banks(self.request)
+            'banks_list': banks_list
         })
         return context
 class ExportCsvView(LoginRequiredMixin, View):

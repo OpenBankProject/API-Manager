@@ -1,39 +1,29 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}
-{% block page_title %} {{ block.super }} / {% trans "ATM List" %}{% endblock page_title %} {% block content %}
-<div id="atms">
-    <h1>{% trans "ATM List" %}</h1>
+{% block page_title %} {{ block.super }} / {% trans "Bank List" %}{% endblock page_title %} {% block content %}
+<div id="banks">
+    <h1>{% trans "Bank List" %}</h1>
     <form class="form-inline" method="get">
-        <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv' %}';">
+        <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-bank-csv' %}';">
     </form>
 <div class="table-responsive">
     <table class="table table-hover tablesorter" id="atms-list" aria-describedby="atms list">
         <thead>
-        <th scope="col">{% trans "ATM Id" %}</th>
         <th scope="col">{% trans "Bank Id" %}</th>
-        <th scope="col">{% trans "ATM Name" %}</th>
-        <th scope="col">{% trans "More info" %}</th>
+        <th scope="col">{% trans "Short Name" %}</th>
+        <th scope="col">{% trans "Full Name" %}</th>
+        <th scope="col">{% trans "Logo" %}</th>
         </thead>
         <tbody>
-        {% for atm in atms_list %}
+        {% for bank in banks_list %}
 
-        {% url 'atms_update' atm.id atm.bank_id as url_atm_update %}
-        <tr data-atm-id="{{ atm.id }}">
-            <td>{{ atm.id }}</td>
-            <td>{{ atm.bank_id }}</td>
-            <td>{{ atm.name }}</td>
-            <td>
-                <div class="popuptext">
-                    <ul>
-                        <li>{% trans "Address" %}:
-                            <ul>
-                                <li>line1: {{atm.address.line_1}}</li>
-                            </ul>
-                        </li>
+        {% url 'banks_update' bank.id as url_bank_update %}
+        <tr data-bank-id="{{ bank.id }}">
+            <td>{{ bank.id }}</td>
+            <td>{{ bank.short_name }}</td>
+            <td>{{ bank.full_name }}</td>
+            <td>{{ bank.logo }}</td>
 
-                    </ul>
-                </div>
-            </td>
-            <td><a href="{{ url_atm_update }}" class="btn btn-primary">{% trans "Detail" %}</a></td>
+            <td><a href="{{ url_bank_update }}" class="btn btn-primary">{% trans "Detail" %}</a></td>
         </tr>
         {% endfor %}
 
