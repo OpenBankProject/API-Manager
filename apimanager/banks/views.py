@@ -15,8 +15,6 @@ from obp.api import API, APIError
 from .forms import CreateBankForm
 from django.utils.translation import ugettext_lazy as _
 
-CHOOSE = "Choose..."
-
 class IndexBanksView(LoginRequiredMixin, FormView):
 
     """Index view for Bankss"""
@@ -35,7 +33,6 @@ class IndexBanksView(LoginRequiredMixin, FormView):
         fields = form.fields
         try:
             pass
-            #fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -43,7 +40,7 @@ class IndexBanksView(LoginRequiredMixin, FormView):
 
         return form
 
-    # Form Valid, when create a new ATM
+    # Form Valid, when create a new Bank
     def form_valid(self, form):
         try:
             data = form.cleaned_data
