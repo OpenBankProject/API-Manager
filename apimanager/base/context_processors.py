@@ -9,7 +9,7 @@ from django.contrib import messages
 from obp.api import API, APIError, LOGGER
 from django.core.cache import cache
 
-USER_CURRENT = "/users/current"
+USER_CURRENT = "v5.1.0/users/current"
 
 def api_root(request):
     """Returns the configured API_ROOT"""

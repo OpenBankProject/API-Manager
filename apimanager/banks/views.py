@@ -44,7 +44,7 @@ class IndexBanksView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            urlpath = '/banks'
+            urlpath = 'v5.1.0/banks'
             payload ={
                 "id": data["bank_id"],
                 "bank_code": data["bank_code"],
