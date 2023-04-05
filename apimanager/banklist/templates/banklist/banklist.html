@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block page_title %} {{ block.super }} / {% trans "Bank List" %}{% endblock page_title %} {% block content %}
+<div id="banks">
+    <h1>{% trans "Bank List" %}</h1>
+<div class="table-responsive">
+    <table class="table table-hover tablesorter" id="atms-list" aria-describedby="atms list">
+        <thead>
+        <th scope="col">{% trans "Bank Id" %}</th>
+        <th scope="col">{% trans "Short Name" %}</th>
+        <th scope="col">{% trans "Full Name" %}</th>
+        <th scope="col">{% trans "Logo" %}</th>
+        </thead>
+        <tbody>
+        {% for bank in banks_list %}
+
+        {% url 'banks_update' bank.id as url_bank_update %}
+        <tr data-bank-id="{{ bank.id }}">
+            <td>{{ bank.id }}</td>
+            <td>{{ bank.short_name }}</td>
+            <td>{{ bank.full_name }}</td>
+            <td>{{ bank.logo }}</td>
+
+            <td><a href="{{ url_bank_update }}" class="btn btn-primary">{% trans "Detail" %}</a></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}
