@@ -258,8 +258,8 @@ API_HOST = 'http://127.0.0.1:8080'
 API_EXPLORER_HOST = 'http://127.0.0.1:8082'
 # Only override this if you have a separate portal instance
 API_PORTAL = API_HOST
-API_BASE_PATH = '/obp/v'
-API_VERSION = '5.1.0'
+API_BASE_PATH = '/obp/'
+#API_VERSION = '5.1.0'
 
 # URL to API Tester
 API_TESTER_URL = 'https://www.example.com'
@@ -318,10 +318,11 @@ except ImportError:
 # DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 
 # Settings here might use parts overwritten in local settings
-API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
+#API_ROOT = API_HOST + API_BASE_PATH + API_VERSION
+API_ROOT = API_HOST + API_BASE_PATH
 # For some reason, swagger is not available at the latest API version
-API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
-
+#API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + API_VERSION + '/swagger'  # noqa
+API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v5.1.0/swagger'  # noqa
 if not OAUTH_CONSUMER_KEY:
     raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
 if not OAUTH_CONSUMER_SECRET:
