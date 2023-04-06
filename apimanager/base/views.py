@@ -2,7 +2,7 @@
 """
 Views for base app
 """
-
+from django.contrib import messages
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import render
@@ -19,7 +19,7 @@ def get_banks(request):
         else:
             return []
     except APIError as err:
-        messages.error(self.request, err)
+        messages.error(request, err)
         return []
 def get_consumers(request):
     api = API(request.session.get('obp'))
