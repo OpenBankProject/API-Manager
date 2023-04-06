@@ -44,7 +44,7 @@ class IndexBanksView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            urlpath = 'v5.1.0/banks'
+            urlpath = '/banks'
             payload ={
                 "id": data["bank_id"],
                 "bank_code": data["bank_code"],
@@ -96,7 +96,7 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         try:
 
-           urlpath = 'v5.1.0/banks/{}'.format(self.kwargs["bank_id"])
+           urlpath = '/banks/{}'.format(self.kwargs["bank_id"])
            result = self.api.get(urlpath)
            fields['bank_id'].initial = self.kwargs['bank_id']
            fields['bank_code'].initial = result['bank_code']
@@ -116,7 +116,7 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         print("data is:", data)
-        urlpath = 'v5.1.0/banks'
+        urlpath = '/banks'
         payload ={
             "id": data["bank_id"],
             "bank_code": data["bank_code"],

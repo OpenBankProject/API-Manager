@@ -27,7 +27,7 @@ class AccountListView(IndexAccountsView, LoginRequiredMixin, FormView ):
             #self.bankids = self.get_banks()
             accounts_list = []
             #for bank_id in self.bankids:
-            urlpath = 'v5.1.0/my/accounts'
+            urlpath = '/my/accounts'
             result = api.get(urlpath)
             if 'accounts' in result:
                 accounts_list.extend(result['accounts'])
@@ -55,7 +55,7 @@ class ExportCsvView(LoginRequiredMixin, View):
            self.bankids = get_banks(self.request)
            accounts_list = []
            for bank_id in self.bankids:
-               urlpath = 'v5.1.0/banks/{}/accounts'.format(bank_id)
+               urlpath = '/banks/{}/accounts'.format(bank_id)
                result = api.get(urlpath)
                if 'accounts' in result:
                    accounts_list.extend(result['accounts'])

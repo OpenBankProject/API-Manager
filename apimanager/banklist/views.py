@@ -23,7 +23,7 @@ class BankListView(IndexBanksView, LoginRequiredMixin, FormView ):
     def get_banks(self,context):
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = 'v5.1.0/banks'
+            urlpath = '/banks'
             result = api.get(urlpath)
             banks_list = []
             if 'banks' in result:

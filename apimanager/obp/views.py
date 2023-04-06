@@ -29,7 +29,7 @@ class LoginToDjangoMixin(object):
         # Here, we already get the Token for the api call.
         api = API(self.request.session.get('obp'))
         try:
-            data = api.get('v5.1.0/users/current')
+            data = api.get('/users/current')
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:

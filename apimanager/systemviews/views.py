@@ -23,7 +23,7 @@ class SystemView(LoginRequiredMixin, FormView):
         api = API(self.request.session.get('obp'))
         try:
             system_view = []
-            urlpath = 'v5.1.0/system-views/owner'
+            urlpath = '/system-views/owner'
             result = api.get(urlpath)
             system_view = result
         except APIError as err:

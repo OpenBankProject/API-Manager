@@ -12,7 +12,7 @@ from obp.api import API, APIError
 def get_banks(request):
     api = API(request.session.get('obp'))
     try:
-        urlpath = 'v5.1.0/banks'
+        urlpath = '/banks'
         result = api.get(urlpath)
         if 'banks' in result:
             return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
