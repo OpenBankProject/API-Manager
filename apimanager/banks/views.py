@@ -38,6 +38,7 @@ class IndexBanksView(LoginRequiredMixin, FormView):
             messages.error(self.request, err)
         except Exception as err:
             messages.error(self.request, err)
+
         return form
 
     # Form Valid, when create a new Bank

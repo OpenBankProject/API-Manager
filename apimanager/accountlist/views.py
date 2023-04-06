@@ -55,7 +55,7 @@ class ExportCsvView(LoginRequiredMixin, View):
            self.bankids = get_banks(self.request)
            accounts_list = []
            for bank_id in self.bankids:
-               urlpath = '/banks/{}/accounts'.format(bank_id)
+               urlpath = 'banks/{}/accounts'.format(bank_id)
                result = api.get(urlpath)
                if 'accounts' in result:
                    accounts_list.extend(result['accounts'])
