@@ -2,7 +2,7 @@
 """
 Views for base app
 """
-
+from django.contrib import messages
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import render
@@ -12,14 +12,14 @@ from obp.api import API, APIError
 def get_banks(request):
     api = API(request.session.get('obp'))
     try:
-        urlpath = '/banks'
+        urlpath = 'v5.1.0/banks'
         result = api.get(urlpath)
         if 'banks' in result:
             return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
         else:
             return []
     except APIError as err:
-        messages.error(self.request, err)
+        messages.error(request, err)
         return []
 def get_consumers(request):
     api = API(request.session.get('obp'))

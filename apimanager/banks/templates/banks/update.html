@@ -72,19 +72,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                {% if form.address.errors %}
-                <div class="alert alert-danger">{{ form.address.errors }}</div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.address.label_tag }} {{ form.address }}
-                </div>
-            </div>
-        </div>
         <input type="submit" value="Update" class="btn btn-primary"/>
     </form>
 </div>
 
-{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+{% endblock content %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
 <link href="{% static 'banks/css/banks.css' %}" rel="stylesheet"/> {% endblock extracss %}
