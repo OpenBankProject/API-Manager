@@ -70,12 +70,14 @@ class API(object):
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
+        url = settings.API_ROOT["v500"] + urlpath
         response = self.handle_response(self.call('GET', url))
         if response is not None and 'code' in response:
-            raise APIError(response['message'])
-        else:    
-            return response
+            url = settings.API_ROOT["v510"] + urlpath
+            response = self.handle_response(self.call('GET', url))
+            if response is not None and 'code' in response:
+                raise APIError(response['message'])
+        return response
 
     def delete(self, urlpath):
         """
@@ -83,9 +85,14 @@ class API(object):
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
-        response = self.call('DELETE', url)
-        return self.handle_response(response)
+        url = settings.API_ROOT["v500"] + urlpath
+        response = self.handle_response(self.call('DELETE', url))
+        if response is not None and 'code' in response:
+            url = settings.API_ROOT["v510"] + urlpath
+            response = self.handle_response(self.call('DELETE', url))
+            if response is not None and 'code' in response:
+                raise APIError(response['message'])
+        return response
 
     def post(self, urlpath, payload):
         """
@@ -93,19 +100,28 @@ class API(object):
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
-        response = self.call('POST', url, payload)
-        return self.handle_response(response)
-
+        url = settings.API_ROOT["v500"] + urlpath
+        response = self.handle_response(self.call('POST', url, payload))
+        if response is not None and 'code' in response:
+            url = settings.API_ROOT["v510"] + urlpath
+            response = self.handle_response(self.call('POST', url, payload))
+            if response is not None and 'code' in response:
+                raise APIError(response['message'])
+        return response
     def put(self, urlpath, payload):
         """
         Puts data on given urlpath with given payload
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
-        response = self.call('PUT', url, payload)
-        return self.handle_response(response)
+        url = settings.API_ROOT["v500"] + urlpath
+        response = self.handle_response(self.call('PUT', url, payload))
+        if response is not None and 'code' in response:
+            url = settings.API_ROOT["v510"] + urlpath
+            response = self.handle_response(self.call('PUT', url, payload))
+            if response is not None and 'code' in response:
+                raise APIError(response['message'])
+        return response
 
     def handle_response_error(self, prefix, error):
         if 'Invalid or expired access token' in error:
