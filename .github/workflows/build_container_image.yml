@@ -2,7 +2,7 @@ name: build and publish container
 
 on: [push]
 env:
-  DOCKER_HUB_ORGANIZATION: ${{ vars.DOCKER_HUB_ORGANIZATION }
+  DOCKER_HUB_ORGANIZATION: ${{ vars.DOCKER_HUB_ORGANIZATION }}
   DOCKER_HUB_REPOSITORY_NGINX: apimanager-nginx
   DOCKER_HUB_REPOSITORY: api-manager
 
