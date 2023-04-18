@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse, reverse_lazy
 from base.utils import exception_handle, error_once_only
+from django.conf import settings
 
 CHOOSE = "Choose..."
 
@@ -203,6 +204,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
     template_name = "atms/update.html"
     success_url = '/atms/list'
     form_class = CreateAtmForm
+    v510 = settings.API_ROOT['v510']
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
@@ -374,7 +376,7 @@ class UpdateAtmsView(LoginRequiredMixin, FormView):
     def atm_attributes(self, **kwargs):
         atm_attributes_url_path = "/banks/{}/atms/{}/attributes".format(self.kwargs['bank_id'], self.kwargs['atm_id'])
         try:
-            atm_attributes_result = self.api.get(atm_attributes_url_path)["atm_attributes"]
+            atm_attributes_result = self.api.get(atm_attributes_url_path, version=self.v510)["atm_attributes"]
             return atm_attributes_result
         except Exception as err:
             messages.error(self.request, "Unknown Error {}".format(err))
