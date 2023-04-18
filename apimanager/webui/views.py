@@ -38,8 +38,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 context.update(response)
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
-            messages.error(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            messages.error(self.request, err)
         return context
 
     def get_form(self, *args, **kwargs):
@@ -65,7 +65,6 @@ def webui_save(request):
 @csrf_exempt
 def webui_delete(request):
     web_ui_props_id = request.POST.get('web_ui_props_id')
-    web_ui_props_name = request.POST.get('web_ui_props_name')
     if web_ui_props_id == 'default' or web_ui_props_id == '' or web_ui_props_id is None:
         return {'code':403,'message':'Cann\'t delete web_ui_props_id default'}
     else:

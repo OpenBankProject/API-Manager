@@ -2,7 +2,7 @@
 """
 Views for base app
 """
-
+from django.contrib import messages
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import render
@@ -16,6 +16,31 @@ def get_banks(request):
         result = api.get(urlpath)
         if 'banks' in result:
             return [bank['id'] for bank in sorted(result['banks'], key=lambda d: d['id'])]
+        else:
+            return []
+    except APIError as err:
+        messages.error(request, err)
+        return []
+def get_consumers(request):
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/management/consumers'
+        result = api.get(urlpath)
+        if 'consumers' in result:
+            return [consumer['consumer_id'] for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id'])]
+        else:
+            return []
+    except APIError as err:
+        messages.error(self.request, err)
+        return []
+
+def get_api_versions(request):
+    api = API(request.session.get('obp'))
+    try:
+        urlpath = '/api/versions'
+        result = api.get(urlpath)
+        if 'scanned_api_versions' in result:
+            return [apiversion['API_VERSION'] for apiversion in sorted(result['scanned_api_versions'], key=lambda d: d['API_VERSION'])]
         else:
             return []
     except APIError as err:

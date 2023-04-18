@@ -12,6 +12,7 @@ from datetime import datetime
 from django.conf import settings
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from apimanager.settings import UNDEFINED
 
 
 
@@ -23,7 +24,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
         """Scrubs data in the given entitlement requests to adher to certain formats"""
         for entitlement_request in entitlement_requests:
             entitlement_request['created'] = datetime.strptime(
-                entitlement_request['created'], settings.API_DATETIMEFORMAT)
+                entitlement_request['created'], settings.API_DATE_FORMAT_WITH_SECONDS )
         return entitlement_requests
 
     def get_context_data(self, **kwargs):
@@ -44,8 +45,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 entitlement_requests = sorted(entitlement_requests, key=lambda k: k['created'], reverse=True)
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         context.update({
             'entitlementrequests': entitlement_requests,
@@ -66,12 +67,12 @@ class RejectEntitlementRequest(LoginRequiredMixin, View):
                 messages.error(self.request, response['message'])
             else:
                 msg = 'Entitlement Request with role {} has been deleted.'.format(
-                    request.POST.get('role_name', '<undefined>'))
+                    request.POST.get('role_name', UNDEFINED))
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         return HttpResponseRedirect(reverse('entitlementrequests-index'))
 
@@ -86,32 +87,32 @@ class AcceptEntitlementRequest(LoginRequiredMixin, View):
         try:
             urlpath = '/users/{}/entitlements'.format(kwargs['user_id'])
             payload = {
-                'bank_id': request.POST.get('bank_id', '<undefined>'),
-                'role_name': request.POST.get('role_name', '<undefined>'),
+                'bank_id': request.POST.get('bank_id', UNDEFINED),
+                'role_name': request.POST.get('role_name', UNDEFINED),
             }
             response = api.post(urlpath, payload=payload)
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
-                msg = 'Entitlement with role {} has been added.'.format(request.POST.get('role_name', '<undefined>'))
+                msg = 'Entitlement with role {} has been added.'.format(request.POST.get('role_name', UNDEFINED))
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         try:
-            urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', '<undefined>'))
+            urlpath = '/entitlement-requests/{}'.format(request.POST.get('entitlement_request_id', UNDEFINED))
             response = api.delete(urlpath)
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
                 msg = 'Entitlement Request with role {} has been deleted.'.format(
-                    request.POST.get('role_name', '<undefined>'))
+                    request.POST.get('role_name', UNDEFINED))
                 messages.success(request, msg)
         except APIError as err:
             messages.error(request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         return HttpResponseRedirect(reverse('entitlementrequests-index'))

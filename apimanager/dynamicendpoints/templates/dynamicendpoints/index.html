@@ -4,53 +4,60 @@
 {% block page_title %}{{ block.super }} / Dynamic Endpoints{% endblock page_title %}
 
 {% block content %}
-    <h1>{% trans "Dynamic Endpoints" %}</h1>
-    <div class="row">
-        <div class="col-xs-12 col-sm-2">
-            <label class="form-group">{% trans "ENDPOINT ID" %}:</label> <br>
-        </div>
-        <div class="col-xs-12 col-sm-10">
-            <label class="form-group">{% trans "SWAGGER STRING" %}:</label> <br>
-        </div>
+<h1>{% trans "Dynamic Endpoints" %}</h1>
+<div class="row">
+    <div class="col-xs-12 col-sm-2">
+        <label class="form-group">{% trans "ENDPOINT ID" %}:</label> <br>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        {% for dynamic_endpoint in dynamic_endpoints %}
-        <div class="runner">
-            <div class="row">
-                <div class="col-xs-12 col-sm-2">
-                    <div class="form-group" cols="1" rows="1">
-                        <div class="dynamic_endpoint_id">{{ dynamic_endpoint.dynamic_endpoint_id }}</div></div>
-                </div>
-                
-                <div class="col-xs-12 col-sm-8">
-                    <textarea cols="40" rows="1" class="form-control parameters"
-                              name="parameters">{{ dynamic_endpoint.swagger_string }}</textarea>
-                </div>
-                {%  if forloop.counter0 == 0 %}
-                <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-green forSave">{% trans "Create" %} </button><span style="display: none;margin-left: 5px;background-color:#00cc00">{% trans "saved." %}</span>
-                    </div>
-                </div>
-                {%  endif %}
-                {%  if forloop.counter0 > 0 %}
-                <div class="col-sm-12 col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
-                    </div>
-                </div>
-                {%  endif %}
-                <div class="col-sm-12 col-sm-12">
-                    <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
+    <div class="col-xs-12 col-sm-10">
+        <label class="form-group">{% trans "SWAGGER STRING" %}:</label> <br>
+    </div>
+</div>
+<form method="post">
+    {% csrf_token %}
+    {% for dynamic_endpoint in dynamic_endpoints %}
+    <div class="runner">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <div class="form-group" cols="1" rows="1">
+                    <!--Add Try It button using Dynamic Endpoint ID after success response for redirecting API-Explorer-->
+                    {% if dynamic_endpoint.dynamicendpoint_on_api_explorer_url %}
+                    <a class="dynamic_endpoint_id btn btn-primary" onclick="redirect_api_explorer_url('{{dynamic_endpoint.dynamicendpoint_on_api_explorer_url}}')" value="{{dynamic_endpoint.dynamic_endpoint_id}}">Try It</a>
+                    {% else %}
+                    <span>{{dynamic_endpoint.dynamic_endpoint_id}}</span>
+                    {% endif %}
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-8">
+                    <textarea cols="40" rows="1" class="form-control parameters"
+                              name="parameters">{{ dynamic_endpoint.swagger_string }}</textarea>
+            </div>
+            {%  if forloop.counter0 == 0 %}
+            <div class="col-sm-12 col-sm-2">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-green forSave">{% trans "Create" %} </button><span style="display: none;margin-left: 5px;background-color:#00cc00">{% trans "saved." %}</span>
+                </div>
+            </div>
+            {%  endif %}
+            {%  if forloop.counter0 > 0 %}
+            <div class="col-sm-12 col-sm-2">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
+                </div>
+            </div>
+            {%  endif %}
+            <div class="col-sm-12 col-sm-12">
+                <div id="jsoneditor{{forloop.counter0}}" style="display: none" class ="jsoneditor_div"></div>
+            </div>
         </div>
+    </div>
     {% endfor %}
-    </form>
+</form>
 {% endblock %}
 
 
 {% block extrajs %}
-    <script type="text/javascript" src="{% static 'dynamicendpoints/js/dynamicendpoints.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'dynamicendpoints/js/dynamicendpoints.js' %}"></script>
+<script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
 {% endblock extrajs %}

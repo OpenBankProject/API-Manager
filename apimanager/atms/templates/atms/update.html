@@ -3,6 +3,8 @@
 <div id="atms">
     <h1>{% trans "ATM Detail" %}</h1>
     <h2>{{ bank_id }} : {{ atm_id }}</h2>
+    <input type="hidden" value="{{bank_id}}" id="current_bank_id" />
+    <input type="hidden" value="{{atm_id}}" id="current_atm_id" />
     <form method="post">
         {% csrf_token %} {% if form.non_field_errors %}
         <div class="alert alert-danger">
@@ -202,7 +204,6 @@
                     {{ form.address.label_tag }} {{ form.address }}
                 </div>
             </div>
-
             <div class="col-xs-12 col-sm-4">
                 {% if form.lobby.errors %}
                 <div class="alert alert-danger">{{ form.lobby.errors }}</div>{% endif %}
@@ -211,13 +212,164 @@
                 </div>
             </div>
         </div>
-
-        <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="submit" value="Update" class="btn btn-primary"/>
     </form>
-</div>
-{% endblock content %} {% block extrajs %} {% comment %}
-<script type="text/javascript" src="{% static 'atms/js/atms.js' %}"></script>
-<script type="text/javascript">
+    <form method ="POST">
+        {% csrf_token %}
+        <div class="row">
+            <h1>ATM Attributes</h1>
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Attribute Name" %}:</label> <br>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Attribute Type" %}:</label> <br>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <label class="form-group">{% trans "Attribute Value" %}:</label> <br>
+            </div>
+        </div>
+        <div class="runner">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_name" value="Attribute Name">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_type" value="Attribute Type">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <input class="atm_attribute_value" value="Attribute Value">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-sm-3">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-green forSave">{% trans "Create" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for attribute in atm_attributes_list %}
+        {% url 'my-atm-attribute-detail' attribute.atm_attribute_id as url_atm_attribute_detail %}
+        <div class="runner">
+
+            <div class="row">
+
+                {% if attribute.atm_attribute_id %}
+                <input type ="hidden" class="atm_attribute_id" value="{{ attribute.atm_attribute_id }}">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_name form-control" value="{{ attribute.name }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_type form-control" value="{{ attribute.type }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="form-group" cols="1" rows="1">
+                        <div>
+                            <input class="atm_attribute_value form-control" value="{{ attribute.value }}">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-sm-3 col-sm-1">
+                    <div class="form-group">
+                        <button class="btn btn-primary forUpdate">{% trans "Update" %}</button>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-sm-1">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-red forDelete">{% trans "Delete" %}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </form></div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function($) {
+    var bank_id = $('#current_bank_id').val();
+    var atm_id = $('#current_atm_id').val();
+    console.log(bank_id, atm_id)
+    $('.runner button.forSave').click(function(e) {
+        e.preventDefault();
+        let runner = $(this).parent().parent().parent();
+        let name = $(runner).find('.atm_attribute_name').val();
+        let type = $(runner).find('.atm_attribute_type').val();
+        let value = $(runner).find('.atm_attribute_value').val();
+        $('.runner button.forUpdate').attr("disabled","disabled");
+		$('.runner button.forSave').attr("disabled","disabled");
+		$('.runner button.forDelete').attr("disabled","disabled");
+		console.log(name, type, value, bank_id)
+		$.post('save/attribute', {
+			'name': name,
+			'type': type,
+			'value': value,
+			'bank_id': bank_id,
+			'atm_id' : atm_id
+		}, function (response) {
+			location.reload();
+
+		});
+    });
+    $('.runner button.forUpdate').click(function(e) {
+            e.preventDefault();
+            let runner = $(this).parent().parent().parent();
+            let atm_attribute_id = $(runner).find('.atm_attribute_id').attr("value");
+            console.log(atm_attribute_id)
+            let name = $(runner).find('.atm_attribute_name').val();
+            let type = $(runner).find('.atm_attribute_type').val();
+            let value = $(runner).find('.atm_attribute_value').val();
+            console.log(name, type, value, bank_id, atm_id)
+            $('.runner button.forUpdate').attr("disabled","disabled");
+    		$('.runner button.forSave').attr("disabled","disabled");
+    		$('.runner button.forDelete').attr("disabled","disabled");
+    		$.post('updateattribute/attribute', {
+    			'atm_attribute_id': atm_attribute_id,
+    			'name': name,
+    			'type': type,
+    			'value': value,
+    			'bank_id': bank_id,
+			    'atm_id' : atm_id
+    		}, function (response) {
+    			location.reload();
+    		});
+        });
+
+    $('.runner button.forDelete').click(function(e) {
+		e.preventDefault();
+        let runner = $(this).parent().parent().parent();
+        let atm_attribute_id = $(runner).find('.atm_attribute_id').attr("value");
+        console.log(atm_attribute_id)
+        $('.runner button.forUpdate').attr("disabled","disabled");
+		$('.runner button.forSave').attr("disabled","disabled");
+		$('.runner button.forDelete').attr("disabled","disabled");
+		$.post('delete/attribute', {
+			'atm_attribute_id': atm_attribute_id,
+			'bank_id': bank_id,
+			'atm_id' : atm_id
+		}, function (response) {
+			location.reload();
+		});
+});});
 </script>
+{% endblock content %}
+
+{% block extrajs %} {% comment %}
+
+<script type="text/javascript" src="{% static 'atms/js/atms.js' %}"></script>
+
 {% endcomment %} {% endblock extrajs %} {% block extracss %}
 <link href="{% static 'atms/css/atms.css' %}" rel="stylesheet"> {% endblock extracss %}

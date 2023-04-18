@@ -42,11 +42,13 @@ class IndexAccountsView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         try:
             data = form.cleaned_data
-            urlpath = '/banks/{}/accounts/{}'.format(data['bank_id'], data['account_id'])
+            #urlpath = '/banks/{}/accounts/{}'.format(data['bank_id'], data['account_id'])
+            urlpath = '/banks/{}/accounts'.format(data['bank_id'])
             payload ={
                 "user_id": data["user_id"],
                 "label": data["label"],
                 "product_code": data["product_code"],
+                "branch_id": data["branch_id"],
                 "balance": {
                     "currency": data["balance_currency"] if data["balance_currency"] is not None else "EUR",
                     "amount": data["balance_amount"] if data["balance_amount"] is not None else 0
@@ -56,7 +58,7 @@ class IndexAccountsView(LoginRequiredMixin, FormView):
                     "address": data["account_routings_address"] if data["account_routings_address"]!="" else "address"
                 }],
             }
-            result = self.api.put(urlpath, payload=payload)
+            result = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, "Unknown Error")
             return super(IndexAccountsView, self).form_invalid(form)

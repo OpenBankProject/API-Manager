@@ -7,8 +7,13 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from apimanager.settings import API_DATE_FORMAT_WITH_DAY, API_FIELD_TIME_FORMAT
+from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+from datetime import datetime, timedelta
 from obp.api import APIError
 
+PLACEHOLDER = "2013-01-22"
+PLACEHOLDER1 = "00:00:00"
 
 class CreateCustomerForm(forms.Form):
     bank_id = forms.ChoiceField(
@@ -20,11 +25,11 @@ class CreateCustomerForm(forms.Form):
         ),
         choices=[],
     )
-    username = forms.CharField(
-        label=_('Username'),
+    user_id = forms.CharField(
+        label=_('User Id'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('The name of the user'),
+                'placeholder': _('The ID of the user'),
                 'class': 'form-control',
             }
         ),
@@ -80,25 +85,31 @@ class CreateCustomerForm(forms.Form):
     )
     face_image_date = forms.DateTimeField(
         label=_('Face Image Date'),
-        input_formats=[settings.API_DATETIMEFORMAT],
+        input_formats=[settings.API_DATE_FORMAT_WITH_SECONDS ],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER,
                 'class': 'form-control',
             }
         ),
         required=False,
     )
-    date_of_birth = forms.DateTimeField(
-        label=_('Date of Birth'),
-        input_formats=[settings.API_DATETIMEFORMAT],
-        widget=forms.DateTimeInput(
+    date_of_birth_date = forms.DateField(
+            label=_("Date of Birth"),
+            widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+            required=True,
+            initial=str(datetime.now().strftime(API_DATE_FORMAT_WITH_DAY)),
+        )
+    date_of_birth_time = forms.TimeField(
+        label=_('Time of Birth'),
+        widget=forms.TimeInput(
+            format='%H:%M:%S',
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER1,
                 'class': 'form-control',
             }
         ),
-        required=True,
+        required=False,
     )
     relationship_status = forms.CharField(
         label=_('Relationship Status'),
@@ -125,7 +136,7 @@ class CreateCustomerForm(forms.Form):
         label=_('Date of Birth of Dependants'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z, 2010-01-22T00:08:00Z',
+                'placeholder': f'{PLACEHOLDER}, 2010-01-22T00:08:00Z',
                 'class': 'form-control',
             }
         ),
@@ -203,10 +214,10 @@ class CreateCustomerForm(forms.Form):
     )
     last_ok_date = forms.DateTimeField(
         label=_('Last OK Date'),
-        input_formats=[settings.API_DATETIMEFORMAT],
+        input_formats=[settings.API_DATE_FORMAT_WITH_SECONDS ],
         widget=forms.DateTimeInput(
             attrs={
-                'placeholder': '2013-01-22T00:08:00Z',
+                'placeholder': PLACEHOLDER,
                 'class': 'form-control',
             }
         ),
@@ -220,14 +231,7 @@ class CreateCustomerForm(forms.Form):
     def clean_face_image_date(self):
         data = self.cleaned_data['face_image_date']
         if data:
-            return data.strftime(settings.API_DATETIMEFORMAT)
-        else:
-            return None
-
-    def clean_date_of_birth(self):
-        data = self.cleaned_data['date_of_birth']
-        if data:
-            return data.strftime(settings.API_DATETIMEFORMAT)
+            return data.strftime(settings.API_DATE_FORMAT_WITH_SECONDS )
         else:
             return None
 
@@ -239,13 +243,6 @@ class CreateCustomerForm(forms.Form):
             return []
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        if not hasattr(self, 'api'):
-            raise forms.ValidationError('No API object available')
-        try:
-            user = self.api.get('/users/username/{}'.format(username))
-        except APIError as err:
-            raise forms.ValidationError(err)
-        else:
-            self.cleaned_data['user_id'] = user['user_id']
-        return username
+        self.cleaned_data['user_id'] = self.cleaned_data["user_id"]
+        user_id = self.cleaned_data['user_id']
+        return user_id

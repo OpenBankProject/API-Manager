@@ -35,13 +35,17 @@ class CreateView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         fields['last_ok_date'].initial =\
-            datetime.datetime.now().strftime(settings.API_DATETIMEFORMAT)
+            datetime.datetime.now().strftime(settings.API_DATE_FORMAT_WITH_SECONDS )
         return form
 
     def form_valid(self, form):
+        date_of_birth_date = form.cleaned_data['date_of_birth_date']
+        date_of_birth_time = form.cleaned_data['date_of_birth_time']
+        final_date_of_birth = str(date_of_birth_date) + "T" + str(date_of_birth_time) + "Z"
+        form.cleaned_data['date_of_birth'] = final_date_of_birth
         data = form.cleaned_data
         urlpath = '/banks/{}/customers'.format(data['bank_id'])
         payload = {
@@ -54,7 +58,7 @@ class CreateView(LoginRequiredMixin, FormView):
                 'url': data['face_image_url'],
                 'date': data['face_image_date'],
             },
-            'date_of_birth': data['date_of_birth'],
+            'date_of_birth': final_date_of_birth,
             'relationship_status': data['relationship_status'],
             'dependants': data['dependants'],
             'dob_of_dependants': data['dob_of_dependants'],
@@ -71,17 +75,17 @@ class CreateView(LoginRequiredMixin, FormView):
             'employment_status': data['employment_status'],
             'kyc_status': data['kyc_status'],
             'last_ok_date':
-                data['last_ok_date'].strftime(settings.API_DATETIMEFORMAT),
+                data['last_ok_date'].strftime(settings.API_DATE_FORMAT_WITH_SECONDS ),
         }
         try:
             result = self.api.post(urlpath, payload=payload)
         except APIError as err:
             messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
             return super(CreateView, self).form_invalid(form)
-        msg = 'Customer number {} for user {} has been created successfully!'.format(  # noqa
-            result['customer_number'], data['username'])
+        msg = 'Customer number {} for user_id {} has been created successfully!' .format(  # noqa
+            data['customer_number'], data['user_id'])
         messages.success(self.request, msg)
         return super(CreateView, self).form_valid(form)

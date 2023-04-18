@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.views.generic import FormView,TemplateView, View
 from apicollections.views import IndexView
 from obp.api import API, APIError
+from django.conf import settings
 import csv
 
 
@@ -23,25 +24,43 @@ class ApiCollectionListView(IndexView, LoginRequiredMixin, FormView ):
     success_url = '/apicollections/list'
 
     def get_apicollections(self, context):
+        """Get All user """
         api = API(self.request.session.get('obp'))
         try:
             apicollections_list = []
-            urlpath = '/my/api-collections'
-            result = api.get(urlpath)
-            if 'api_collections' in result:
-                apicollections_list.extend(result['api_collections'])
+            #TODO: NOTE- THIS RETURNS ALL USER. THIS IS A POTENTIAL PERFORMANCE ISSUE. WE NEED ENDPOINT FOR COLLECTION.
+            #Endpoint will return users.
+            get_all_users_url_path = '/users'
+
+            user = api.get(get_all_users_url_path)
+            for i in user["users"]:
+                # Returns the APIs collections for a user.
+                api_collections_for_user_url_path = '/users/{}/api-collections'.format(i["user_id"])
+                api_collections_for_user = api.get(api_collections_for_user_url_path)
+                if 'api_collections' in api_collections_for_user:
+                   apicollections_list.extend(api_collections_for_user['api_collections'])
+            for ac in apicollections_list:
+                ac["collection_on_api_explorer_url"] = f"{settings.API_EXPLORER_HOST}/?api-collection-id={ac['api_collection_id']}"
         except APIError as err:
             messages.error(self.request, err)
             return []
-        except Exception as inst:
-            messages.error(self.request, "Unknown Error {}".format(type(inst).__name__))
+        except Exception as err:
+            messages.error(self.request, err)
             return []
 
         return apicollections_list
 
     def get_context_data(self, **kwargs):
+        api = API(self.request.session.get('obp'))
         context = super(IndexView, self).get_context_data(**kwargs)
         apicollections_list = self.get_apicollections(context)
+        try:
+            for final_collection_list in apicollections_list:
+                url_path = "/users/user_id/{}".format(final_collection_list["user_id"])
+                result =  api.get(url_path)
+                final_collection_list["username"] = result["username"]
+        except Exception as err:
+            messages.error(self.request, err)
         context.update({
             'apicollections_list': apicollections_list,
         })

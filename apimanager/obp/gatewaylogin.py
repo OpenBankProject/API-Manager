@@ -56,7 +56,7 @@ class GatewayLoginAuthenticator(Authenticator):
             raise AuthenticatorError(Exception("The OBP-API server is not running or does not respond properly."
                                                "Please check OBP-API server.    "
                                                "Details: " + str(err)))
-        except BaseException as err:
+        except Exception as err:
             raise AuthenticatorError(Exception("Unknown Error. Details:" + str(err)))
         # this will show the obp errors
         if response.status_code != 200:

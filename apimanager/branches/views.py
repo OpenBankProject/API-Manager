@@ -15,6 +15,8 @@ from obp.api import API, APIError
 from .forms import CreateBranchForm
 from base.views import get_banks
 
+LICENSE_NAME = "license name"
+
 class IndexBranchesView(LoginRequiredMixin, FormView):
     """Index view for branches"""
     template_name = "branches/index.html"
@@ -122,8 +124,8 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
 
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
 
         return form
 
@@ -143,14 +145,14 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
                 "meta": {
                     "license": {
                         "id": "PDDL",
-                        "name": data["meta_license_name"] if data["meta_license_name"]!="" else "license name"
+                        "name": data["meta_license_name"] if data["meta_license_name"]!="" else LICENSE_NAME
                     }
                 },
                 "lobby": json.loads(data['lobby']),
                 "drive_up": json.loads(data["drive_up"]),
                 "branch_routing": {
-                    "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"]!="" else "license name",
-                    "address": data["branch_routing_address"] if data["branch_routing_address"]!="" else "license name"
+                    "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"]!="" else LICENSE_NAME,
+                    "address": data["branch_routing_address"] if data["branch_routing_address"]!="" else LICENSE_NAME
                 },
                 "is_accessible": data["is_accessible"] if data["is_accessible"]!="" else "false",
                 "accessibleFeatures": data["accessibleFeatures"] if data["accessibleFeatures"]!="" else "accessible features name",
@@ -163,7 +165,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             error_once_only(self.request, err)
             return super(IndexBranchesView, self).form_invalid(form)
         except Exception as err:
-            error_once_only(self.request, "Unknown Error")
+            error_once_only(self.request, err)
             return super(IndexBranchesView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
             error_once_only(self.request, result['message'])
@@ -222,8 +224,8 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
             fields['bank_id'].choices = self.api.get_bank_id_choices()
         except APIError as err:
             messages.error(self.request, err)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
         try:
             result = self.api.get(urlpath)
             fields['bank_id'].initial = self.kwargs['bank_id']
@@ -272,8 +274,8 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
             "lobby": json.loads(data["lobby"]),
             "drive_up": json.loads(data["drive_up"]),
             "branch_routing": {
-                "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"] != "" else "license name",
-                "address": data["branch_routing_address"] if data["branch_routing_address"] != "" else "license name"
+                "scheme": data["branch_routing_scheme"] if data["branch_routing_scheme"] != "" else LICENSE_NAME,
+                "address": data["branch_routing_address"] if data["branch_routing_address"] != "" else LICENSE_NAME
             },
             "is_accessible": data["is_accessible"],
             "accessibleFeatures": data["accessibleFeatures"],
@@ -289,8 +291,8 @@ class UpdateBranchesView(LoginRequiredMixin, FormView):
         except APIError as err:
             messages.error(self.request, err)
             return super(UpdateBranchesView, self).form_invalid(form)
-        except:
-            messages.error(self.request, "Unknown Error")
+        except Exception as err:
+            messages.error(self.request, err)
             return super(UpdateBranchesView, self).form_invalid(form)
         msg = 'Branch {} for Bank {} has been created successfully!'.format(  # noqa
             data["branch_id"], data["bank_id"])

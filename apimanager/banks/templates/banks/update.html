@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}  {% block page_title %}{{ block.super }} / Banks{% endblock page_title %} {% block content %}
+<div id="banks">
+    <h1>{% trans "Bank Detail" %}</h1>
+    <h2>{{ bank_id }}</h2>
+    <form method="post">
+        {% csrf_token %} {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_id.errors %}
+                <div class="alert alert-danger">{{ form.bank_id.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.bank_id.label_tag }} {{ form.bank_id }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_code.errors %}
+                <div class="alert alert-danger">{{ form.bank_code.errors }}</div>
+                {% endif %}
+                <div class="form-group">{{ form.bank_code.label_tag }} {{ form.bank_code }}</div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.full_name.errors %}
+                <div class="alert alert-danger">{{ form.full_name.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.full_name.label_tag }} {{ form.full_name }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.logo.errors %}
+                <div class="alert alert-danger">
+                    {{ form.logo.errors }}
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.logo.label_tag }} {{ form.logo }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.website.errors %}
+                <div class="alert alert-danger">
+                    {{ form.website.errors }}
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.website.label_tag }} {{ form.website }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_routings_scheme.errors %}
+                <div class="alert alert-danger">
+                    {{ form.bank_routings_scheme.errors }}
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.bank_routings_scheme.label_tag }} {{ form.bank_routings_scheme }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                {% if form.bank_routings_address.errors %}
+                <div class="alert alert-danger">{{ form.bank_routings_address.errors }}</div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.bank_routings_address.label_tag }} {{ form.bank_routings_address }}
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Update" class="btn btn-primary"/>
+    </form>
+</div>
+
+{% endblock content %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+<link href="{% static 'banks/css/banks.css' %}" rel="stylesheet"/> {% endblock extracss %}

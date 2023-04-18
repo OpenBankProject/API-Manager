@@ -34,8 +34,8 @@ class IndexView(LoginRequiredMixin, FormView):
                 connectormethod=response['connector_methods']
         except APIError as err:
             messages.error(self.request, err)
-        except BaseException as err:
-            error_once_only(self.request, (Exception("Unknown Error. Details:" + str(err))))
+        except Exception as err:
+            error_once_only(self.request, err)
         else:
             default_connector_method_endpoint = {
                             "connector_method_name": "Method Name",
@@ -73,6 +73,5 @@ def connectormethod_update(request):
         'programming_lang': request.POST.get('connector_method_programming_lang_update'),
         'method_body': request.POST.get('connector_method_body_update').strip()
     }
-    result = HttpResponse(content_type = 'application/json')
     result = api.put(urlpath, payload=payload)
     return result

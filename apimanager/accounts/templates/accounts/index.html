@@ -8,14 +8,6 @@
         {% endif %}
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                {% if form.account_id.errors %}
-                <div class="alert alert-danger">{{ form.account_id.errors }}</div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_id.label_tag }} {{ form.account_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
                 {% if form.user_id.errors %}
                 <div class="alert alert-danger">{{ form.user_id.errors }}</div>
                 {% endif %}
@@ -31,8 +23,6 @@
                     {{ form.label.label_tag }} {{ form.label }}
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.product_code.errors %}
                 <div class="alert alert-danger">
@@ -43,6 +33,8 @@
                     {{ form.product_code.label_tag }} {{ form.product_code }}
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.balance_currency.errors %}
                 <div class="alert alert-danger">
@@ -63,16 +55,15 @@
                     {{ form.balance_amount.label_tag }} {{ form.balance_amount }}
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.branch_id.errors %}
                 <div class="alert alert-danger">{{ form.branch_id.errors }}</div>
                 {% endif %}
                 <div class="form-group">
                     {{ form.branch_id.label_tag }} {{ form.branch_id }}
-                </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.account_routings_scheme.errors %}
                 <div class="alert alert-danger">
@@ -91,62 +82,12 @@
                     {{ form.account_routings_address.label_tag }} {{ form.account_routings_address }}
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                {% if form.account_attributes_product_code.errors %}
-                <div class="alert alert-danger">
-                    {{ form.account_attributes_product_code.errors }}
-                </div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_attributes_product_code.label_tag }} {{ form.account_attributes_product_code }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.account_attributes_id.errors %}
-                <div class="alert alert-danger">{{ form.account_attributes_id.errors }}</div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_attributes_id.label_tag }} {{ form.account_attributes_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.account_attributes_name.errors %}
-                <div class="alert alert-danger">{{ form.account_attributes_name.errors }}</div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_attributes_name.label_tag }} {{ form.account_attributes_name }}
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-xs-12 col-sm-4">
                 {% if form.bank_id.errors %}
                 <div class="alert alert-danger">{{ form.bank_id.errors }}</div>
                 {% endif %}
                 <div class="form-group">
                     {{ form.bank_id.label_tag }} {{ form.bank_id }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.account_attributes_value.errors %}
-                <div class="alert alert-danger">
-                    {{ form.account_attributes_value.errors }}
-                </div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_attributes_value.label_tag }} {{ form.account_attributes_value }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                {% if form.account_attributes_instance_code.errors %}
-                <div class="alert alert-danger">
-                    {{ form.account_attributes_instance_code.errors }}
-                </div>
-                {% endif %}
-                <div class="form-group">
-                    {{ form.account_attributes_instance_code.label_tag }} {{ form.account_attributes_instance_code }}
                 </div>
             </div>
         </div>

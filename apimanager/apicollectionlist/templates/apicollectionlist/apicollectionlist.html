@@ -1,30 +1,33 @@
 {% extends 'base.html' %} {% load static %} {% load i18n %}
 {% block page_title %} {{ block.super }} / {% trans "Customer List" %}{% endblock page_title %} {% block content %}
 <div id="apicollectionlist">
-    <h1>{% trans "My API Collection List" %}</h1>
+    <h1>{% trans " All API Collections" %}</h1>
     <form class="form-inline" method="get">
         <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %}' onclick="javascript: form.action='{% url 'export-csv-apicollection' %}';">
     </form>
     <div class="table-responsive">
         <table class="table table-hover tablesorter" id="apicollectionlist" aria-describedby="apicollectionlist list">
             <thead>
-            <th scope="col">{% trans "API Collection Id" %}</th>
-            <th scope="col">{% trans "User Id" %}</th>
+            <th scope="col">{% trans "API Collection" %}</th>
+            <th scope="col">{% trans "User Name" %}</th>
             <th scope="col">{% trans "API Collection Name" %}</th>
             <th scope="col">{% trans "More info" %}</th>
             </thead>
             <tbody>
             {% for apicollection in apicollections_list %}
 
-            {% url 'apicollection_update' apicollection.api_collection_id apicollection.user_id as url_apicollection_update %}
+            {% url 'my-api-collection-detail' apicollection.api_collection_id as url_collection_detail %}
             <tr id="{{ apicollection.api_collection_id }}">
-                <td>{{ apicollection.api_collection_id }}</td>
-                <td>{{ apicollection.user_id }}</td>
+                <!--Add Try It button using API-Collection ID after success response for redirecting API-Explorer-->
+                <td>{% if apicollection.api_collection_id  %}
+                <a class="api_collection_id btn btn-primary" onclick="redirect_api_explorer_url('{{apicollection.collection_on_api_explorer_url}}')" value="{{apicollection.api_collection_id}}">Try It</a>
+                {% endif %}</td>
+                <td>{{ apicollection.username }}</td>
                 <td>{{ apicollection.api_collection_name }}</td>
                 <td>
                     <div class="popuptext">
                         <ul>
-                            <li>{% trans "Other Info" %}:
+                            <li>{% trans "Is Sharable" %}:
                                 <ul>
                                     <li>{{apicollection.is_sharable}}</li>
                                 </ul>
@@ -32,12 +35,15 @@
                         </ul>
                     </div>
                 </td>
-                <td><a href="{{ url_apicollection_update }}" class="btn btn-primary">{% trans "View" %}</a></td>
+                <td><a type= "button" class="btn btn-primary" href= "{{ url_collection_detail }}">{% trans "View" %}</a></td>
             </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-{% endblock %} {% block extrajs %} {% endblock extrajs %} {% block extracss %}
+{% endblock %}
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
+{% endblock extrajs %} {% block extracss %}
 <link href="{% static 'customerlist/css/customerlist.css' %}" rel="stylesheet"> {% endblock extracss %}
