@@ -13,7 +13,7 @@ USER_CURRENT = "/users/current"
 
 def api_root(request):
     """Returns the configured API_ROOT"""
-    return {'API_ROOT': settings.API_ROOT["v500"]}
+    return {'API_ROOT': settings.API_ROOT}
 
 
 def portal_page(request):
@@ -38,7 +38,7 @@ def api_username(request):
     """Returns the API username/email of the logged-in user"""
     nametodisplay = 'not authenticated'
     get_current_user_api_url = USER_CURRENT
-    #Here we can not get the user from obp-api side, so we use the django auth user id here. 
+    #Here we can not get the user from obp-api side, so we use the django auth user id here.
     cache_key_django_user_id = request.session._session.get('_auth_user_id')
     cache_key = '{},{},{}'.format('api_username',get_current_user_api_url, cache_key_django_user_id)
     apicaches=None
