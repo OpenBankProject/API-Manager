@@ -1,0 +1,24 @@
+FROM registry.access.redhat.com/ubi9/python-39 AS builder
+USER 0
+RUN dnf update -y
+RUN dnf  install python3-psycopg2 -y
+ADD . /app
+RUN  cp /app/.github/local_settings_container.py /app/apimanager/apimanager/local_settings.py
+RUN pip install -r /app/requirements.txt
+RUN chown  501 /
+RUN chown -R 501 /app
+RUN chgrp -R 0 /app && chmod -R g+rwX /app
+USER 1001
+WORKDIR /app
+RUN python ./apimanager/manage.py collectstatic --noinput
+
+FROM registry.access.redhat.com/ubi9/nginx-120
+USER 0
+RUN dnf update -y
+ADD .github/apimanager.conf "${NGINX_DEFAULT_CONF_PATH}"
+COPY --from=builder /app/apimanager/static /opt/app-root/src
+RUN chgrp -R 0 /opt/app-root/src/ && chmod -R g+rwX /opt/app-root/src/
+USER 1001
+CMD nginx -g "daemon off;"
+
+
