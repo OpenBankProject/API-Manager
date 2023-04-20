@@ -324,7 +324,7 @@ API_ROOT = {
     "v510": OBPv510
 }
 # For some reason, swagger is not available at the latest API version
-#API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + OBPv500 + '/swagger'  # noqa
+API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + v5.1.0 + '/swagger'  # noqa
 
 if not OAUTH_CONSUMER_KEY:
     raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
