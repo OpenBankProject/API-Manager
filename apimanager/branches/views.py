@@ -168,7 +168,7 @@ class IndexBranchesView(LoginRequiredMixin, FormView):
             error_once_only(self.request, err)
             return super(IndexBranchesView, self).form_invalid(form)
         if 'code' in result and result['code']>=400:
-            error_once_only(self.request, result['message'])
+            messages.error(self.request, result['message'])
             return super(IndexBranchesView, self).form_valid(form)
         msg = 'Branch {} for Bank {} has been created successfully!'.format(result['id'], result['bank_id'])
         messages.success(self.request, msg)
