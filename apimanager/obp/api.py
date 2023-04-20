@@ -143,7 +143,7 @@ class API(object):
             return None
 
     """ def get_swagger(self):
-         """"""Gets the swagger definition from the API """"""
+        Gets the swagger definition from the API
         # Poor man's caching ...
         if not self.session_data.get('swagger'):
             # API throws 500 if authenticated via GatewayLogin ...
