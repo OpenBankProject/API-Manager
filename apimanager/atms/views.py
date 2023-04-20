@@ -410,7 +410,7 @@ def atm_attribute_save(request):
         'value': request.POST.get('value').strip(),
         'is_active': True
     }
-    result = api.post(urlpath_save, payload = payload)
+    result = api.post(urlpath_save, payload = payload, version=settings.API_ROOT['v510'])
     return result
 
 
@@ -428,7 +428,7 @@ def atm_attribute_update(request):
         'value': request.POST.get('value').strip(),
         'is_active': True
     }
-    result = api.put(urlpath_update, payload=payload)
+    result = api.put(urlpath_update, payload=payload, version=settings.API_ROOT['v510'])
     return result
 
 
@@ -441,7 +441,7 @@ def atm_attribute_delete(request):
 
     api = API(request.session.get('obp'))
     urlpath_delete = '/banks/{}/atms/{}/attributes/{}'.format(bank_id, atm_id, atm_attribute_id)
-    result = api.delete(urlpath_delete)
+    result = api.delete(urlpath_delete, version=settings.API_ROOT['v510'])
     return result
 
 
