@@ -155,7 +155,7 @@ def apicollections_update(request):
         'is_sharable': True if request.POST.get('api_collection_is_sharable').strip().lower() == "true" else False,
         'description': request.POST.get('api_collection_description').strip()
     }
-    result = api.put(urlpath, payload=payload)
+    result = api.put(urlpath, payload=payload, version=settings.API_ROOT['v510'])
     return result
 
 

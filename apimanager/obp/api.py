@@ -142,8 +142,8 @@ class API(object):
         else:
             return None
 
-    def get_swagger(self):
-        """Gets the swagger definition from the API"""
+    """ def get_swagger(self):
+        Gets the swagger definition from the API
         # Poor man's caching ...
         if not self.session_data.get('swagger'):
             # API throws 500 if authenticated via GatewayLogin ...
@@ -151,7 +151,7 @@ class API(object):
             response = requests.get(settings.API_URL_SWAGGER)
             swagger = self.handle_response(response)
             self.session_data['swagger'] = swagger
-        return self.session_data.get('swagger')
+        return self.session_data.get('swagger') """
 
     def get_bank_id_choices(self):
         """Gets a list of bank ids and bank ids as used by form choices"""
