@@ -73,7 +73,7 @@
 					<form action="{% if consumer.enabled %}{% url 'consumers-disable' consumer.consumer_id %}{% else %}{% url 'consumers-enable' consumer.consumer_id %}{% endif %}?{{ request.GET.urlencode }}" method="post">
 						{% csrf_token %}
 						{% if consumer.enabled %}<button class="btn btn-primary btn-sm btn-red">{% trans "Disable" %}</button>{% else %}<button class="btn btn-primary btn-green btn-sm">{% trans "Enable" %}</button>{% endif %}
-							<a href="{{ url_detail }}" class="btn btn-primary btn-sm" role="button">{% trans "View" %}</a>
+							<a href="{{ url_detail }}" class="btn btn-primary btn-sm" role="button">{% trans "Detail" %}</a>
 					</form>
 				</td>
 			</tr>
