@@ -87,6 +87,37 @@ class CreateBankForm(forms.Form):
         required=False,
     )
 
+    type_attribute = forms.CharField(
+        label=_('Type'),
+        widget=forms.TextInput(
+            attrs={
+               'placeholder': _('Type'),
+               'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+    name_attribute = forms.CharField(
+        label=_('Attribute Name'),
+        widget=forms.TextInput(
+            attrs={
+               'placeholder': _('Name'),
+               'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+    value_attribute = forms.CharField(
+            label=_('Value'),
+            widget=forms.TextInput(
+                attrs={
+                   'placeholder': _('2012-04-23'),
+                   'class': 'form-control',
+                }
+            ),
+            required=False,
+        )
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(CreateBankForm, self).__init__(*args, **kwargs)
