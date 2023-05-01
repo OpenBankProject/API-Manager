@@ -36,6 +36,12 @@ class AddEntitlementForm(forms.Form):
         super(AddEntitlementForm, self).__init__(*args, **kwargs)
 
 class CreateInvitationForm(forms.Form):
+
+    USER_CHOICE = (
+        ('', _('Any')),
+        ('DEVELOPER', 'DEVELOPER'),
+        ('CUSTOMER', 'CUSTOMER'),
+    )
     bank_id = forms.ChoiceField(
         label=_('Bank'),
         widget=forms.Select(
@@ -93,14 +99,15 @@ class CreateInvitationForm(forms.Form):
         ),
         required=True,
     )
-    purpose = forms.CharField(
+    purpose = forms.ChoiceField(
         label=_('Purpose'),
-        widget=forms.TextInput(
+        choices=USER_CHOICE,
+        widget=forms.Select(
             attrs={
-                'placeholder': _('For the Bank App'),
                 'class': 'form-control',
             }
         ),
+        initial='',
         required=False,
     )
 

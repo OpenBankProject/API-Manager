@@ -5,7 +5,7 @@
 
 {% block content %}
     <div id="user-invitation">
-        <h1>{% trans "Invite Developer" %}</h1>
+        <h1>{% trans "Invite User" %}</h1>
 
         <form action="{% url 'my-user-invitation' %}" method="post">
             {% csrf_token %}
@@ -42,22 +42,31 @@
                 <div class="col-xs-12 col-sm-4">
                     {% if form.email.errors %}<div class="alert alert-danger">{{ form.email.errors }}</div>{% endif %}
                     <div class="form-group">
-                        <strong>{% trans "email" %} </strong>
+                        <strong>{% trans "Email" %} </strong>
                         {{ form.email }}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-4">
                     {% if form.company.errors %}<div class="alert alert-danger">{{ form.company.errors }}</div>{% endif %}
                     <div class="form-group">
-                        <strong>{% trans "company" %} </strong>
+                        <strong>{% trans "Company" %} </strong>
                         {{ form.company }}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-4">
                     {% if form.country.errors %}<div class="alert alert-danger">{{ form.country.errors }}</div>{% endif %}
                     <div class="form-group">
-                        <strong>{% trans "country" %} </strong>
+                        <strong>{% trans "Country" %} </strong>
                         {{ form.country }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    {% if form.purpose.errors %}<div class="alert alert-danger">{{ form.purpose.errors }}</div>{% endif %}
+                    <div class="form-group">
+                        <strong>{% trans "Purpose" %} </strong>
+                        {{ form.purpose }}
                     </div>
                 </div>
             </div>
@@ -69,9 +78,9 @@
                     <th scope="col">{% trans "First Name" %}</th>
                     <th scope="col">{% trans "Last Name" %}</th>
                     <th scope="col">{% trans "Email" %}</th>
-                    <th scope="col">{% trans "company" %}</th>
-                    <th scope="col">{% trans "country" %}</th>
-                    <th scope="col">{% trans "status" %}</th>
+                    <th scope="col">{% trans "Company" %}</th>
+                    <th scope="col">{% trans "Country" %}</th>
+                    <th scope="col">{% trans "Status" %}</th>
                     </thead>
                     <tbody>
                     {% for invitation in invitations %}

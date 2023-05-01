@@ -44,7 +44,7 @@
                                 <hr class="dropdown-hr">
                                 <li {% ifequal request.path url_users_detail %} class="active" {% endifequal %}><a href="{{ url_users_detail }}">{% trans "My User" %}</a></li>
                                 <hr class="dropdown-hr">
-                                <li {% ifequal request.path my_user_invitation %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite Developer" %}</a></li>
+                                <li {% ifequal request.path my_user_invitation %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite User" %}</a></li>
                             </ul>
                         </li>
                         {% url "api-metrics" as api_metrics_url %} {% url "connector-metrics" as connector_metrics_url %} {% url "metrics-summary" as metrics_summary_url %}
