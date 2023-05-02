@@ -13,7 +13,7 @@ USER_CURRENT = "/users/current"
 
 def api_root(request):
     """Returns the configured API_ROOT"""
-    return {'API_ROOT': settings.API_ROOT}
+    return {'API_ROOT': settings.API_ROOT['v500']}
 
 
 def portal_page(request):
