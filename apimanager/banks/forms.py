@@ -10,6 +10,13 @@ import random
 
 class CreateBankForm(forms.Form):
 
+    ATTRIBUTE_TYPE = (
+        ('', _('Any')),
+        ('STRING', 'STRING'),
+        ('INTEGER', 'INTEGER'),
+        ('DOUBLE', 'DOUBLE'),
+        ('DATE_WITH_DAY', 'DATE_WITH_DAY'),
+    )
     bank_id = forms.CharField(
         label=_('Bank Id'),
         widget=forms.TextInput(
@@ -87,36 +94,16 @@ class CreateBankForm(forms.Form):
         required=False,
     )
 
-    type_attribute = forms.CharField(
+    type_attribute = forms.ChoiceField(
         label=_('Type'),
-        widget=forms.TextInput(
+        choices=ATTRIBUTE_TYPE,
+        widget=forms.Select(
             attrs={
-               'placeholder': _('Type'),
-               'class': 'form-control',
+               'class': 'form-control bank_attribute_type',
             }
         ),
         required=False,
     )
-    name_attribute = forms.CharField(
-        label=_('Attribute Name'),
-        widget=forms.TextInput(
-            attrs={
-               'placeholder': _('Name'),
-               'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
-    value_attribute = forms.CharField(
-            label=_('Value'),
-            widget=forms.TextInput(
-                attrs={
-                   'placeholder': _('2012-04-23'),
-                   'class': 'form-control',
-                }
-            ),
-            required=False,
-        )
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
