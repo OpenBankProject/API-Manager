@@ -174,7 +174,6 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
 @csrf_exempt
 def bank_attribute_save(request):
     api = API(request.session.get('obp'))
-    #urlpath = '/my/api-collections'
     bank_id = request.POST.get('bank_id').strip()
     urlpath_save = '/banks/{}/attribute'.format(bank_id)
 
@@ -185,7 +184,6 @@ def bank_attribute_save(request):
         'is_active': True
     }
     result = api.post(urlpath_save, payload = payload, version=settings.API_ROOT['v510'])
-    print("result", result)
     return result
 
 
