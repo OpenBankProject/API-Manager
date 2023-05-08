@@ -276,7 +276,7 @@ class CreateAtmForm(forms.Form):
         choices=ATTRIBUTE_TYPE,
         widget=forms.Select(
             attrs={
-               'class': 'form-control bank_attribute_type',
+               'class': 'form-control atm_attribute_type',
             }
         ),
         required=False,
