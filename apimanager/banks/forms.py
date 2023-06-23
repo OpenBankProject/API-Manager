@@ -10,6 +10,13 @@ import random
 
 class CreateBankForm(forms.Form):
 
+    ATTRIBUTE_TYPE = (
+        ('', _('Any')),
+        ('STRING', 'STRING'),
+        ('INTEGER', 'INTEGER'),
+        ('DOUBLE', 'DOUBLE'),
+        ('DATE_WITH_DAY', 'DATE_WITH_DAY'),
+    )
     bank_id = forms.CharField(
         label=_('Bank Id'),
         widget=forms.TextInput(
@@ -82,6 +89,17 @@ class CreateBankForm(forms.Form):
             attrs={
                 'placeholder': 'Bank Routing Address',
                 'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+
+    type_attribute = forms.ChoiceField(
+        label=_('Type'),
+        choices=ATTRIBUTE_TYPE,
+        widget=forms.Select(
+            attrs={
+               'class': 'form-control bank_attribute_type',
             }
         ),
         required=False,

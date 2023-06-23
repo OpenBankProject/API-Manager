@@ -44,8 +44,9 @@ $(document).ready(function($) {
 	});
 
 	$('.runner button.forDelete').click(function() {
+	    e.preventDefault();
 		let runner = $(this).parent().parent().parent();
-		let dynamic_endpoint_id = $(runner).find('.dynamic_endpoint_id').text();
+		let dynamic_endpoint_id = $(runner).find('.dynamic_endpoint_id').attr("value");
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
 		$.post('dynamicendpoints/delete/dynamicendpoint', {

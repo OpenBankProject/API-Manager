@@ -24,13 +24,13 @@ class AccountListView(IndexAccountsView, LoginRequiredMixin, FormView ):
     def get_accountlist(self, context):
         api = API(self.request.session.get('obp'))
         try:
-            #self.bankids = self.get_banks()
+            self.bankids = get_banks(self.request)
             accounts_list = []
-            #for bank_id in self.bankids:
-            urlpath = '/my/accounts'
-            result = api.get(urlpath)
-            if 'accounts' in result:
-                accounts_list.extend(result['accounts'])
+            for bank_id in self.bankids:
+                urlpath = '/management/banks/{}/fast-firehose/accounts'.format(bank_id)
+                result = api.get(urlpath)
+                if 'accounts' in result:
+                    accounts_list.extend(result['accounts'])
         except APIError as err:
             messages.error(self.request, err)
             return []
@@ -43,7 +43,7 @@ class AccountListView(IndexAccountsView, LoginRequiredMixin, FormView ):
             accounts_list = self.get_accountlist(context)
             context.update({
                 'accounts_list': accounts_list,
-                #'bankids': bankids
+                'bankids': get_banks(self.request)
             })
             return context
 class ExportCsvView(LoginRequiredMixin, View):

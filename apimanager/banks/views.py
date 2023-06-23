@@ -9,12 +9,15 @@ Views of banks app
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView
 from obp.api import API, APIError
 from .forms import CreateBankForm
 from django.utils.translation import ugettext_lazy as _
 from apimanager.settings import DEBUG
+from django.views.decorators.csrf import csrf_exempt
+from base.utils import exception_handle, error_once_only
+from django.conf import settings
 
 class IndexBanksView(LoginRequiredMixin, FormView):
 
@@ -78,6 +81,7 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
     template_name = "banks/update.html"
     form_class = CreateBankForm
     success_url = '/banks/list'
+    v510 = settings.API_ROOT['v510']
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
@@ -147,3 +151,67 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
             data["bank_id"])
         messages.success(self.request, msg)
         return super(UpdateBanksView, self).form_valid(form)
+
+    def bank_attributes(self, **kwargs):
+        bank_attributes_url_path = "/banks/{}/attributes".format(self.kwargs['bank_id'])
+        try:
+            bank_attributes_result = self.api.get(bank_attributes_url_path, version=self.v510)["bank_attributes"]
+            return bank_attributes_result
+        except Exception as err:
+            messages.error(self.request, "Unknown Error {}".format(err))
+        return " "
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateBanksView, self).get_context_data(**kwargs)
+        self.bank_id = self.kwargs['bank_id']
+        context.update({
+            'bank_id': self.bank_id,
+            "bank_attributes_list": self.bank_attributes(**kwargs)
+        })
+        return context
+
+@exception_handle
+@csrf_exempt
+def bank_attribute_save(request):
+    api = API(request.session.get('obp'))
+    bank_id = request.POST.get('bank_id').strip()
+    urlpath_save = '/banks/{}/attribute'.format(bank_id)
+
+    payload = {
+        'name': request.POST.get('name').strip(),
+        'type': request.POST.get('type').strip(),
+        'value': request.POST.get('value').strip(),
+        'is_active': True
+    }
+    result = api.post(urlpath_save, payload = payload, version=settings.API_ROOT['v510'])
+    return result
+
+
+@exception_handle
+@csrf_exempt
+def bank_attribute_update(request):
+    bank_id = request.POST.get('bank_id').strip()
+    bank_attribute_id = request.POST.get('bank_attribute_id').strip()
+    api = API(request.session.get('obp'))
+    urlpath_update = '/banks/{}/attributes/{}'.format(bank_id, bank_attribute_id)
+
+    payload = {
+        'name': request.POST.get('name').strip(),
+        'type': request.POST.get('type').strip(),
+        'value': request.POST.get('value').strip(),
+        'is_active': True
+    }
+    result = api.put(urlpath_update, payload=payload, version=settings.API_ROOT['v510'])
+    return result
+
+
+@exception_handle
+@csrf_exempt
+def bank_attribute_delete(request):
+    bank_id = request.POST.get('bank_id').strip()
+    bank_attribute_id = request.POST.get('bank_attribute_id').strip()
+    api = API(request.session.get('obp'))
+    urlpath_delete = '/banks/{}/attributes/{}'.format(bank_id, bank_attribute_id)
+    result = api.delete(urlpath_delete, version=settings.API_ROOT['v510'])
+    return result
+

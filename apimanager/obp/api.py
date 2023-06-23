@@ -43,7 +43,7 @@ class API(object):
             self.start_session(session_data)
         self.session_data = session_data
 
-    def call(self, method='GET', url='', payload=None):
+    def call(self, method='GET', url='', payload=None, version=settings.API_ROOT['v500']):
         """Workhorse which actually calls the API"""
         log(logging.INFO, '{} {}'.format(method, url))
         if payload:
@@ -64,46 +64,46 @@ class API(object):
         response.execution_time = elapsed
         return response
 
-    def get(self, urlpath=''):
+    def get(self, urlpath='', version=settings.API_ROOT['v500']):
         """
         Gets data from the API
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
+        url = version + urlpath
         response = self.handle_response(self.call('GET', url))
         if response is not None and 'code' in response:
             raise APIError(response['message'])
-        else:    
+        else:
             return response
 
-    def delete(self, urlpath):
+    def delete(self, urlpath, version=settings.API_ROOT['v500']):
         """
         Deletes data from the API
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
+        url = version + urlpath
         response = self.call('DELETE', url)
         return self.handle_response(response)
 
-    def post(self, urlpath, payload):
+    def post(self, urlpath, payload, version=settings.API_ROOT['v500']):
         """
         Posts data to given urlpath with given payload
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
+        url = version + urlpath
         response = self.call('POST', url, payload)
         return self.handle_response(response)
 
-    def put(self, urlpath, payload):
+    def put(self, urlpath, payload, version=settings.API_ROOT['v500']):
         """
         Puts data on given urlpath with given payload
 
         Convenience call which uses API_ROOT from settings
         """
-        url = settings.API_ROOT + urlpath
+        url = version + urlpath
         response = self.call('PUT', url, payload)
         return self.handle_response(response)
 
@@ -142,8 +142,8 @@ class API(object):
         else:
             return None
 
-    def get_swagger(self):
-        """Gets the swagger definition from the API"""
+    """ def get_swagger(self):
+        Gets the swagger definition from the API
         # Poor man's caching ...
         if not self.session_data.get('swagger'):
             # API throws 500 if authenticated via GatewayLogin ...
@@ -151,7 +151,7 @@ class API(object):
             response = requests.get(settings.API_URL_SWAGGER)
             swagger = self.handle_response(response)
             self.session_data['swagger'] = swagger
-        return self.session_data.get('swagger')
+        return self.session_data.get('swagger') """
 
     def get_bank_id_choices(self):
         """Gets a list of bank ids and bank ids as used by form choices"""
