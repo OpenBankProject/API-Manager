@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/python-39:1-125
+FROM registry.access.redhat.com/ubi9/python-39:latest
 USER root
 RUN dnf update -y
 RUN dnf  install python3-psycopg2 -y
