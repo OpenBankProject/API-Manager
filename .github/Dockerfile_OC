@@ -1,8 +1,7 @@
-FROM python:3-slim
+FROM registry.access.redhat.com/ubi9/python-39:1-125
 USER root
-RUN apt update
-RUN apt upgrade -y
-RUN apt install python3-psycopg2 -y
+RUN dnf update -y
+RUN dnf  install python3-psycopg2 -y
 ADD . /app
 COPY ./.github/local_settings_container.py /app/apimanager/apimanager/local_settings.py
 COPY ./.github/gunicorn.conf.py /app/gunicorn.conf.py
