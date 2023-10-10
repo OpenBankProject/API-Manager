@@ -17,7 +17,6 @@
 
             {% for customer in customers_list %}
 
-            {% url 'customers_update' customer.customer_id customer.bank_id as url_customer_update %}
             <tr id="{{ customer.customer_id }}">
                 <td>{{ customer.customer_id }}</td>
                 <td>{{ customer.bank_id }}</td>
@@ -33,7 +32,6 @@
                         </ul>
                     </div>
                 </td>
-                <td><a href="{{ url_customer_update }}" class="btn btn-primary">{% trans "Detail" %}</a></td>
             </tr>
             {% endfor %}
             </tbody>
