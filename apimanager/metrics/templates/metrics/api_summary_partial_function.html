@@ -3,8 +3,10 @@
 {% load i18n %}
 
 {% block nav_tabs %}
+    <ul>
 	<li><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">{% trans "List" %}</a></li>
 	<li><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">{% trans "Summary by Partial Function" %}</a></li>
+    </ul>
 {% endblock nav_tabs %}
 
 {% block tab_content %}
