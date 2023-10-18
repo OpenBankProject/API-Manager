@@ -29,5 +29,5 @@ urlpatterns = [
         name='user-status-update'),
     url(r'^export_csv$',
         ExportCsvView.as_view(),
-        name='export-csv')
+        name='export-csv-users')
 ]
