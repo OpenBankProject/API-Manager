@@ -9,5 +9,5 @@
         <input type="number" class="form-control" name="limit" id="limit" placeholder="50" value="{{ limit }}">
     </div>
     <input type="submit" class="btn btn-default" value ='{% trans "Refresh" %} ' onclick="javascript: form.action='';"></input>
-    <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %} ' onclick="javascript: form.action='{% url 'export-csv' %}';"></input>
+    <input type="submit" class="btn btn-default" value ='{% trans "Export CSV" %} ' onclick="javascript: form.action='{% url 'export-csv-users' %}';"></input>
 </form>
