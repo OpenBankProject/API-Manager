@@ -77,6 +77,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -87,6 +88,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+# Content Security Policy - External Urls for scripts, styles, and images should be included here
+
+CSP_IMG_SRC = ("'self'", 'https://static.openbankproject.com')
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",'https://cdnjs.cloudflare.com') #Change 'unsafe-inline' later to use Nonces
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
+CSP_INCLUDE_NONCE_IN = ['script-src', 'style-src']
 
 #cache the view page, we set 60s = 1m,
 # CACHE_MIDDLEWARE_SECONDS = 60
