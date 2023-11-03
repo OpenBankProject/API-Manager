@@ -90,6 +90,12 @@ MIDDLEWARE = [
 ]
 
 # Content Security Policy - External Urls for scripts, styles, and images should be included here
+#TODO these outside scripts should really just be loaded when we run "manage.py collectstatic"
+# Or the whole static folder could be uploaded to github, this prevents API manager breaking when
+# we run it on a server that may not connect to these sites
+
+#TODO inline script and style attributes should be modified in the template base.html so that they 
+# are no longer inline, this allows us to remove the 'unsafe-inline' policy.
 
 CSP_IMG_SRC = ("'self'", 'https://static.openbankproject.com')
 CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",'https://cdnjs.cloudflare.com') #Change 'unsafe-inline' later to use Nonces
