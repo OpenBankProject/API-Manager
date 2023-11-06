@@ -94,13 +94,12 @@ MIDDLEWARE = [
 # Or the whole static folder could be uploaded to github, this prevents API manager breaking when
 # we run it on a server that may not connect to these sites
 
-#TODO inline script and style attributes should be modified in the template base.html so that they 
-# are no longer inline, this allows us to remove the 'unsafe-inline' policy.
+# Inline styles loaded by jsoneditor.min.js have been allowed by adding their hashes to CSP_STYLE_SRC
 
 CSP_IMG_SRC = ("'self'", 'https://static.openbankproject.com')
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",'https://cdnjs.cloudflare.com') #Change 'unsafe-inline' later to use Nonces
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
-CSP_INCLUDE_NONCE_IN = ['script-src', 'style-src']
+CSP_STYLE_SRC = ("'self' 'sha256-z2a+NIknPDE7NIEqE1lfrnG39eWOhJXWsXHYGGNb5oU=' 'sha256-Dn0vMZLidJplZ4cSlBMg/F5aa7Vol9dBMHzBF4fGEtk=' 'sha256-sA0hymKbXmMTpnYi15KmDw4u6uRdLXqHyoYIaORFtjU=' 'sha256-jUuiwf3ITuJc/jfynxWHLwTZifHIlhddD8NPmmVBztk=' 'sha256-RqzjtXRBqP4i+ruV3IRuHFq6eGIACITqGbu05VSVXsI='", 'https://cdnjs.cloudflare.com', )
+CSP_SCRIPT_SRC = ("'self'", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com', "'unsafe-hashes'")
+CSP_INCLUDE_NONCE_IN = ['script-src', 'style-src'] 
 
 #cache the view page, we set 60s = 1m,
 # CACHE_MIDDLEWARE_SECONDS = 60
@@ -137,7 +136,8 @@ TEMPLATES = [
                 'base.context_processors.api_tester_url',
                 'base.context_processors.portal_page',
                 'base.context_processors.logo_url',
-                'base.context_processors.override_css_url'
+                'base.context_processors.override_css_url',
+                'csp.context_processors.nonce'
             ],
         },
     },
