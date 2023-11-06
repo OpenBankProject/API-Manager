@@ -6,3 +6,7 @@ input#id_kyc_status {
     width: auto;
     margin: -4px 0;
 }
+
+.displaynone {
+    display:none;
+}
