@@ -284,6 +284,13 @@ SHOW_API_TESTER = False
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
 
+# Session Cookie Settings
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 300
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+
 # Paths on API_HOST to OAuth
 OAUTH_TOKEN_PATH = '/oauth/initiate'
 OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
