@@ -31,7 +31,7 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li> <a class="obp-home-button" href="{% url 'home' %}"><img src="{{ logo_url }}" alt="brand"></a></li>
-                        <li><a href="{{ API_PORTAL }}">{% trans "Home" %}</a></li>
+                        <li><a id="api_home_link" href="{{ API_PORTAL }}">{% trans "Home" %}</a></li>
                         {% url "consumers-index" as consumers_index_url %}
                         <li {% if consumers_index_url in request.path %} class="active" {% endif %}><a href="{{ consumers_index_url }}">{% trans "Consumers" %}</a></li>
                         {% url "entitlementrequests-index" as entitlementrequests_index_url %}
@@ -104,7 +104,11 @@
                         {% endif %}
                             <li>
                                 {% if user.is_authenticated %}
-                                <p class="navbar-right button-select"><span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;<a href="/logout" class="btn btn-default">{% trans "Logout" %} </a></p>
+                                <p class="navbar-right button-select">
+                                    <span id="navbar-login-username">{{API_USERNAME}}</span>&nbsp;&nbsp;
+                                    <a id="logout" href="/logout" class="btn btn-default">{% trans "Logout" %}</a> 
+                                    <span class="badge badge-secondary" id="countdown-timer-span"></span> 
+                                </p>
                                 {% endif %}
                             </li>
                         <li class="language-select language_underline_format"><a>Language
@@ -146,6 +150,7 @@
     <script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jsoneditor.min.js' %}"></script>
+    <script type="module" defer src="{% static 'js/inactivity.js' %}"></script>
     {% block extrajs %}{% endblock extrajs %}
 </body>
 
