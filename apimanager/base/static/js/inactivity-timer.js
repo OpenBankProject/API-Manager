@@ -8,13 +8,15 @@ function addSeconds(date, seconds) {
 }
 
 export function showCountdownTimer() {
+  //TODO rather than display a timer the whole time in a span, make it only show when there are e.g. 30 seconds left.
+  // Maybe a whole page alert that the user will be logged out soon.
 
   // Get current date and time
   var now = new Date().getTime();
   let distance = countDownDate - now;
   // Output the result in an element with id="countdown-timer-span"
   let elementId = ("countdown-timer-span");
-  document.getElementById(elementId).innerHTML = "in " + Math.floor(distance / 1000) + "s";
+  document.getElementById(elementId).innerHTML = Math.floor(distance / 1000) + "s";
 
   // If the count down is over release resources
   if (distance < 0) {
