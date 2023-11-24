@@ -156,9 +156,12 @@
     					<tr>
     						<th scope="col">#</th>
     						<th scope="col">{% trans "Verb Select" %}</th>
-    						<th scope="col">{% trans "URL" %}</th>
+    						<th scope="col" class="col-2">{% trans "URL" %}</th>
+							<th scope="col">{% trans "Source IP" %}</th>
+							<th scope="col">{% trans "Target IP" %}</th>
     						<th scope="col">{% trans "Date" %}</th>
 							<th scope="col">{% trans "Duration(ms)" %}</th>
+							<th scope="col">{% trans "Response Body" %}</th>
     						<th scope="col">{% trans "Details" %}</th>
     					</tr>
     					</thead>
@@ -167,11 +170,12 @@
     						<tr>
     							<td>{{ forloop.counter }}</td>
     							<td>{{ metric.verb_selection }}</td>
-    							<td>
-    								{{ metric.url }}
-    							</td>
+    							<td>{{ metric.url }}</td>
+								<td>{{ metric.source_ip}}</td>
+								<td>{{ metric.target_ip }}</td>
     							<td>{{ metric.date|date:"Y-m-d H:i:s.u" }}</td>
 								<td>{{ metric.duration }}</td>
+								<td>{{ metric.response_body }}</td>
     							<td>
     								<ul>
     									<li>{% trans "User Name" %}: {{ metric.user_name }}</li>

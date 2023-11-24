@@ -4,7 +4,7 @@ Views for base app
 """
 from django.contrib import messages
 from django.conf import settings
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.shortcuts import render
 from obp.forms import DirectLoginForm, GatewayLoginForm
 from obp.api import API, APIError
