@@ -150,24 +150,26 @@
     	<div class="tab-content">
     		{% block tab_content %}
     		<div class="tab-pane active">
-    			<div class="table-responsive">
+    			<div class="table-responsive-md">
     				<table class="table table-hover tablesorter" aria-describedby="api list">
     					<thead>
-    					<tr>
+							<th scope="col" class="sortless"></th>
     						<th scope="col">#</th>
-    						<th scope="col">{% trans "Verb Select" %}</th>
+    						<th scope="col" class="sortless">{% trans "Verb Select" %}</th>
     						<th scope="col" class="col-2">{% trans "URL" %}</th>
 							<th scope="col">{% trans "Source IP" %}</th>
 							<th scope="col">{% trans "Target IP" %}</th>
     						<th scope="col">{% trans "Date" %}</th>
 							<th scope="col">{% trans "Duration(ms)" %}</th>
-							<th scope="col">{% trans "Response Body" %}</th>
-    						<th scope="col">{% trans "Details" %}</th>
     					</tr>
     					</thead>
     					<tbody>
     					{% for metric in metrics %}
-    						<tr>
+							{% with i=forloop.counter|stringformat:"s" %}
+							{% with data_id="data"|add:i %}
+							{% with data_id_selector="#"|add:data_id %}
+							<tr data-toggle="collapse" data-target={{ data_id_selector }} class="accordion-toggle" data-toggle="tooltip" data-placement="top" title="Show Detail">
+								<td><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
     							<td>{{ forloop.counter }}</td>
     							<td>{{ metric.verb_selection }}</td>
     							<td>{{ metric.url }}</td>
@@ -175,19 +177,43 @@
 								<td>{{ metric.target_ip }}</td>
     							<td>{{ metric.date|date:"Y-m-d H:i:s.u" }}</td>
 								<td>{{ metric.duration }}</td>
-								<td>{{ metric.response_body }}</td>
-    							<td>
-    								<ul>
-    									<li>{% trans "User Name" %}: {{ metric.user_name }}</li>
-    									<li>{% trans "User ID" %}: {{ metric.user_id }}</li>
-    									<li>{% trans "Developer Email" %}: {{ metric.developer_email }}</li>
-    									<li>{% trans "App Name" %}: {{ metric.app_name }}</li>
-    									<li>{% trans "Consumer ID" %}: {{ metric.consumer_id }}</li>
-    									<li>{% trans "Implemented by Partial Function" %}: {{ metric.implemented_by_partial_function }}</li>
-    									<li>{% trans "Implemented In Version" %}: {{ metric.implemented_in_version }}</li>
-    								</ul>
-    							</td>
     						</tr>
+
+							<tr class="expand-child">
+								<td colspan="12" class="hiddenRow">
+									<div class="accordian-body collapse" id={{ data_id }}>
+										<table class="table table-hover">
+											<thead>
+												<tr class="info filteredRow">
+													<th scope="col">{% trans "Response Body" %}</th>
+    												<th scope="col">{% trans "Details" %}</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<tr>
+													<td>{{ metric.response_body }}</td>
+													<td>
+														<ul>
+															<li>{% trans "User Name" %}: {{ metric.user_name }}</li>
+															<li>{% trans "User ID" %}: {{ metric.user_id }}</li>
+															<li>{% trans "Developer Email" %}: {{ metric.developer_email }}</li>
+															<li>{% trans "App Name" %}: {{ metric.app_name }}</li>
+															<li>{% trans "Consumer ID" %}: {{ metric.consumer_id }}</li>
+															<li>{% trans "Implemented by Partial Function" %}: {{ metric.implemented_by_partial_function }}</li>
+															<li>{% trans "Implemented In Version" %}: {{ metric.implemented_in_version }}</li>
+														</ul>
+													</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</td>
+							</tr>
+							{% endwith %}
+							{% endwith %}
+							{% endwith %}
     					{% endfor %}
     					</tbody>
     				</table>
