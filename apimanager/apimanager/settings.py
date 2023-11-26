@@ -354,8 +354,8 @@ if not OAUTH_CONSUMER_SECRET:
 
 CSP_IMG_SRC = ("'self' data:", 'https://static.openbankproject.com')
 CSP_STYLE_SRC = ("'self' 'sha256-z2a+NIknPDE7NIEqE1lfrnG39eWOhJXWsXHYGGNb5oU=' 'sha256-Dn0vMZLidJplZ4cSlBMg/F5aa7Vol9dBMHzBF4fGEtk=' 'sha256-sA0hymKbXmMTpnYi15KmDw4u6uRdLXqHyoYIaORFtjU=' 'sha256-jUuiwf3ITuJc/jfynxWHLwTZifHIlhddD8NPmmVBztk=' 'sha256-RqzjtXRBqP4i+ruV3IRuHFq6eGIACITqGbu05VSVXsI='", 'https://cdnjs.cloudflare.com', )
-CSP_SCRIPT_SRC = ("'self' 'unsafe-eval' 'sha256-4Hr8ttnXaUA4A6o0hGi3NUGNP2Is3Ep0W+rvm+W7BAk=' 'sha256-GgQWQ4Ejk4g9XpAZJ4YxIgZDgp7CdQCmqjMOMh9hD2g=' 'sha256-05NIAwVBHkAzKcXTfkYqTnBPtkpX+AmQvM/raql3qo0='", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
+CSP_SCRIPT_SRC = ("'self' 'unsafe-eval' 'sha256-CAykt4V7LQN6lEkjV8hZQx0GV6LTZZGUvQDqamuUq2Q=' 'sha256-4Hr8ttnXaUA4A6o0hGi3NUGNP2Is3Ep0W+rvm+W7BAk=' 'sha256-GgQWQ4Ejk4g9XpAZJ4YxIgZDgp7CdQCmqjMOMh9hD2g=' 'sha256-05NIAwVBHkAzKcXTfkYqTnBPtkpX+AmQvM/raql3qo0='", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
 CSP_FONT_SRC = ("'self'", 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/') 
 CSP_FRAME_ANCESTORS = ("'self'")
 CSP_FORM_ACTION = ("'self'")
-CSP_CONNECT_SRC = (API_HOST)
+CSP_CONNECT_SRC = ("'self'", API_HOST)
