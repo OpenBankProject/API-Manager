@@ -43,7 +43,7 @@ class API(object):
             self.start_session(session_data)
         self.session_data = session_data
 
-    def call(self, method='GET', url='', payload=None, version=settings.API_ROOT['v500']):
+    def call(self, method='GET', url='', payload=None, version=settings.API_ROOT[settings.API_ROOT_KEY]):
         """Workhorse which actually calls the API"""
         log(logging.INFO, '{} {}'.format(method, url))
         if payload:
@@ -64,7 +64,7 @@ class API(object):
         response.execution_time = elapsed
         return response
 
-    def get(self, urlpath='', version=settings.API_ROOT['v500']):
+    def get(self, urlpath='', version=settings.API_ROOT[settings.API_ROOT_KEY]):
         """
         Gets data from the API
 
@@ -77,7 +77,7 @@ class API(object):
         else:
             return response
 
-    def delete(self, urlpath, version=settings.API_ROOT['v500']):
+    def delete(self, urlpath, version=settings.API_ROOT[settings.API_ROOT_KEY]):
         """
         Deletes data from the API
 
@@ -87,7 +87,7 @@ class API(object):
         response = self.call('DELETE', url)
         return self.handle_response(response)
 
-    def post(self, urlpath, payload, version=settings.API_ROOT['v500']):
+    def post(self, urlpath, payload, version=settings.API_ROOT[settings.API_ROOT_KEY]):
         """
         Posts data to given urlpath with given payload
 
@@ -97,7 +97,7 @@ class API(object):
         response = self.call('POST', url, payload)
         return self.handle_response(response)
 
-    def put(self, urlpath, payload, version=settings.API_ROOT['v500']):
+    def put(self, urlpath, payload, version=settings.API_ROOT[settings.API_ROOT_KEY]):
         """
         Puts data on given urlpath with given payload
 

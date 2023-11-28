@@ -15,7 +15,6 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -77,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -123,7 +123,8 @@ TEMPLATES = [
                 'base.context_processors.api_tester_url',
                 'base.context_processors.portal_page',
                 'base.context_processors.logo_url',
-                'base.context_processors.override_css_url'
+                'base.context_processors.override_css_url',
+                'csp.context_processors.nonce'
             ],
         },
     },
@@ -268,6 +269,16 @@ SHOW_API_TESTER = False
 # Always save session$
 SESSION_SAVE_EVERY_REQUEST = True
 
+# Session Cookie Settings
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_AGE = 300
+
+# CSRF Cookie Settings
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+
 # Paths on API_HOST to OAuth
 OAUTH_TOKEN_PATH = '/oauth/initiate'
 OAUTH_AUTHORIZATION_PATH = '/oauth/authorize'
@@ -308,6 +319,8 @@ CALLBACK_BASE_URL = ""
 # Global
 UNDEFINED = "<undefined>"
 
+API_ROOT_KEY = "v500"
+
 # Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa
@@ -330,3 +343,19 @@ if not OAUTH_CONSUMER_KEY:
     raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_KEY')
 if not OAUTH_CONSUMER_SECRET:
     raise ImproperlyConfigured('Missing settings for OAUTH_CONSUMER_SECRET')
+
+#This has been moved to after API_HOST is imported so that connections to the API are allowed by the csp
+# Content Security Policy - External Urls for scripts, styles, and images should be included here
+#TODO these outside scripts should really just be loaded when we run "manage.py collectstatic"
+# Or the whole static folder could be uploaded to github, this prevents API manager breaking when
+# we run it on a server that may not connect to these sites
+
+# Inline styles loaded by jsoneditor.min.js have been allowed by adding their hashes to CSP_STYLE_SRC
+
+CSP_IMG_SRC = ("'self' data:", 'https://static.openbankproject.com')
+CSP_STYLE_SRC = ("'self' 'sha256-z2a+NIknPDE7NIEqE1lfrnG39eWOhJXWsXHYGGNb5oU=' 'sha256-Dn0vMZLidJplZ4cSlBMg/F5aa7Vol9dBMHzBF4fGEtk=' 'sha256-sA0hymKbXmMTpnYi15KmDw4u6uRdLXqHyoYIaORFtjU=' 'sha256-jUuiwf3ITuJc/jfynxWHLwTZifHIlhddD8NPmmVBztk=' 'sha256-RqzjtXRBqP4i+ruV3IRuHFq6eGIACITqGbu05VSVXsI='", 'https://cdnjs.cloudflare.com', )
+CSP_SCRIPT_SRC = ("'self' 'unsafe-eval' 'sha256-CAykt4V7LQN6lEkjV8hZQx0GV6LTZZGUvQDqamuUq2Q=' 'sha256-4Hr8ttnXaUA4A6o0hGi3NUGNP2Is3Ep0W+rvm+W7BAk=' 'sha256-GgQWQ4Ejk4g9XpAZJ4YxIgZDgp7CdQCmqjMOMh9hD2g=' 'sha256-05NIAwVBHkAzKcXTfkYqTnBPtkpX+AmQvM/raql3qo0='", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
+CSP_FONT_SRC = ("'self'", 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/') 
+CSP_FRAME_ANCESTORS = ("'self'")
+CSP_FORM_ACTION = ("'self'")
+CSP_CONNECT_SRC = ("'self'", API_HOST)

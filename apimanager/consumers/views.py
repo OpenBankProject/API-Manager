@@ -187,8 +187,6 @@ class EnableDisableView(LoginRequiredMixin, RedirectView):
                 messages.success(self.request, self.success)
         except APIError as err:
             messages.error(self.request, err)
-        except APIError as err:
-            messages.error(self.request, err)
 
         urlpath = self.request.POST.get('next', reverse('consumers-index'))
         query = self.request.GET.urlencode()
