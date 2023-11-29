@@ -31,7 +31,7 @@ def get_consumers(request):
         else:
             return []
     except APIError as err:
-        messages.error(self.request, err)
+        messages.error(request, err)
         return []
 
 def get_api_versions(request):
@@ -44,7 +44,7 @@ def get_api_versions(request):
         else:
             return []
     except APIError as err:
-        messages.error(self.request, err)
+        messages.error(request, err)
         return []
 
 class HomeView(TemplateView):
