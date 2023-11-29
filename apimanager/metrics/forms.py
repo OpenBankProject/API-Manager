@@ -10,54 +10,32 @@ from django.forms.widgets import SelectMultiple, CheckboxInput, CheckboxSelectMu
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
 
-from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
-from apimanager.settings import API_DATE_FORMAT_WITH_DAY, API_DATE_FORMAT_WITH_MILLISECONDS
-from apimanager.settings import API_DATE_FORMAT_WITH_DAY, API_FIELD_TIME_FORMAT
+from bootstrap_datepicker_plus import DateTimePickerInput
+from apimanager.settings import API_DATE_FORMAT_WITH_DAY_DATE_TIME
 
 API_DATE_FORMAT_WITH_MILLISECONDS_PLACEHOLDER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 FORM_CONTROL = 'form-control'
-FROM_DATE = 'From Date'
-TO_DATE = 'To Date'
+FROM_DATE = 'From Date Time'
+TO_DATE = 'To Date Time'
 PLACEHOLDER = "2013-01-22"
-PLACEHOLDER1 = "23:59:59"
+PLACEHOLDER1 = "2022-01-01 12:30:45"
 PLACEHOLDER2 = "00:00:00"
 
 class MetricsForm(forms.Form):
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=(datetime.now() - timedelta(1)).strftime(API_DATE_FORMAT_WITH_DAY),
-    )
-    from_time = forms.TimeField(
-        label=_('From Time'),
-        widget=forms.TimeInput(
-            format='%H:%M:%S',
-            attrs={
-                'placeholder': PLACEHOLDER2,
-                'class': 'form-control',
-            }
-        ),
-        required=False,
+        initial=(datetime.now() - timedelta(1)).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
 
     to_date = forms.DateTimeField(
         label=_(TO_DATE),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=(datetime.now() - timedelta()).strftime(API_DATE_FORMAT_WITH_DAY),
+        initial=(datetime.now() - timedelta()).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
-    to_date_time = forms.TimeField(
-        label=_('To Time'),
-        widget=forms.TimeInput(
-            format='%H:%M:%S',
-            attrs={
-                'placeholder': PLACEHOLDER1,
-                'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
+  
     limit = forms.IntegerField(
         label=_('Limit'),
         widget=forms.NumberInput(
@@ -179,9 +157,9 @@ class ConnectorMetricsForm(MetricsForm):
     # override from_date until API returns values without given date
     from_date = forms.DateTimeField(
         label=_(FROM_DATE),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime(API_DATE_FORMAT_WITH_DAY),
+        initial=(datetime.now() - timedelta(6)).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
     connector_name = forms.CharField(
         label=_('Connector Name'),
@@ -213,39 +191,17 @@ class ConnectorMetricsForm(MetricsForm):
 
 
 class CustomSummaryForm(forms.Form):
-    to_date = forms.DateField(
-        label=_("Date"),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+    to_date = forms.DateTimeField(
+        label=_(TO_DATE),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=str(datetime.now().strftime(API_DATE_FORMAT_WITH_DAY)),
+        initial=(datetime.now()).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
-    to_date_time = forms.TimeField(
-        label=_('Time'),
-        widget=forms.TimeInput(
-            format='%H:%M:%S',
-            attrs={
-                'placeholder': PLACEHOLDER2,
-                'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
-    from_date_custom = forms.DateField(
+    from_date_custom = forms.DateTimeField(
         label=_(FROM_DATE),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=(datetime.now() - timedelta(6)).strftime(API_DATE_FORMAT_WITH_DAY),
-    )
-    from_time_custom = forms.TimeField(
-        label=_('Time'),
-        widget=forms.TimeInput(
-            format='%H:%M:%S',
-            attrs={
-                'placeholder': PLACEHOLDER1,
-                'class': 'form-control',
-            }
-        ),
-        required=False,
+        initial=(datetime.now() - timedelta(6)).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
     include_app_names = forms.CharField(
         label=_('Include App Names'),
@@ -263,22 +219,11 @@ class CustomSummaryForm(forms.Form):
         super(CustomSummaryForm, self).__init__(*args, **kwargs)
 
 class MonthlyMetricsSummaryForm(forms.Form):
-    to_date = forms.DateField(
-        label=_("To Date"),
-        widget=DatePickerInput(format=API_DATE_FORMAT_WITH_DAY),
+    to_date = forms.DateTimeField(
+        label=_(TO_DATE),
+        widget=DateTimePickerInput(format=API_DATE_FORMAT_WITH_DAY_DATE_TIME),
         required=True,
-        initial=str(datetime.now().strftime(API_DATE_FORMAT_WITH_DAY)),
-    )
-    to_date_time = forms.TimeField(
-        label=_('Time'),
-        widget=forms.TimeInput(
-            format='%H:%M:%S',
-            attrs={
-                'placeholder': PLACEHOLDER1,
-                'class': 'form-control',
-            }
-        ),
-        required=False,
+        initial=(datetime.now()).strftime(API_DATE_FORMAT_WITH_DAY_DATE_TIME),
     )
     include_app_names = forms.CharField(
         label=_('Include App Names'),

@@ -4,7 +4,8 @@ Base utilities
 """
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from datetime import datetime, timedelta
-from apimanager.settings import API_DATE_FORMAT_WITH_MILLISECONDS, API_DATE_FORMAT_WITH_DAY
+from apimanager.settings import API_DATE_FORMAT_WITH_MILLISECONDS, API_DATE_FORMAT_WITH_DAY, \
+    API_DATE_FORMAT_WITH_DAY_DATE_TIME
 from base import context_processors
 from django.contrib import messages
 import functools
@@ -61,7 +62,7 @@ def convert_form_date_to_obpapi_datetime_format(form_to_date_string):
     """
        convert the String 2020-10-22 to 2020-10-22T00:00:00.000000Z
     """
-    return datetime.strptime(form_to_date_string, API_DATE_FORMAT_WITH_DAY).strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
+    return datetime.strptime(form_to_date_string, API_DATE_FORMAT_WITH_DAY_DATE_TIME).strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
 
 def return_to_days_ago(date, days):
     """

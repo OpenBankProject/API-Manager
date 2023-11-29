@@ -893,7 +893,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 print(form.data, "Form data")
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
                 print("to_date", to_date)
-                #to_date = datetime.datetime.strptime(f"{form.data['to_date']}T{form.data['to_date_time']}Z", API_DATE_FORMAT_WITH_SECONDS ).strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
                 if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
                     from_date = return_to_days_ago(to_date, 0)
