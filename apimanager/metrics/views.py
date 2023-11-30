@@ -149,16 +149,10 @@ class MetricsView(LoginRequiredMixin, TemplateView):
             metrics = api.get(urlpath)
             metrics = self.to_django(metrics['metrics'])
         except APIError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         except KeyError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, metrics['message'])
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         return metrics
 
@@ -352,12 +346,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api_calls_total, average_response_time, cache_key, from_date, metrics, to_date, url_path)
             return api_calls_total, average_response_time, int(average_calls_per_day)
         except APIError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
 
     def get_internal_api_call_metrics(self, api_calls_total, average_response_time, cache_key, from_date, metrics,
@@ -389,8 +379,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         else:
             urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
@@ -400,12 +388,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 apps = api.get(urlpath)
                 active_apps_list = list(apps['top_consumers'])
             except APIError as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
             except Exception as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
 
         return active_apps_list
@@ -469,12 +453,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_URL_MSG, urlpath))
                 LOGGER.warning('{0}: {1}'.format(CACHE_SETTING_KEY_MSG, cache_key))
             except APIError as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
             except Exception as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
         return apps_list
 
@@ -504,8 +484,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 result_list.append('{} - {} # {}'.format(from_datetime_object, time_delta_in_loop, result))
                 date_list.append(from_datetime_object)
             except Exception as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
                 break
 
@@ -688,8 +666,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         except KeyError as err:
             messages.error(self.request, 'KeyError: {}'.format(err))
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
 
         user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
@@ -714,12 +690,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 data = data[data_key]
         except APIError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         return data
 
@@ -772,12 +744,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 if "elasticSearchWarehouse" in api['Implemented_by_partial_function']:
                     top_warehouse_calls.append(api)
         except APIError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         return top_warehouse_calls
 
@@ -795,12 +763,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 top_apps_using_warehouse = top_apps_using_warehouse["top_consumers"][:2]
         except APIError as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
 
         return top_apps_using_warehouse
@@ -857,12 +821,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
 
             except APIError as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, err)
             except Exception as err:
-                if DEBUG:
-                    raise(err)
                 error_once_only(self.request, 'Unknown Error. {}'.format(err))
 
         if times_to_first_call:
@@ -893,7 +853,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 print(form.data, "Form data")
                 to_date = convert_form_date_to_obpapi_datetime_format(form_to_date_string)
                 print("to_date", to_date)
-                #to_date = datetime.datetime.strptime(f"{form.data['to_date']}T{form.data['to_date_time']}Z", API_DATE_FORMAT_WITH_SECONDS ).strftime(API_DATE_FORMAT_WITH_MILLISECONDS)
                 if (web_page_type == SummaryType.DAILY):
                     # for one day, the from_date is 1 day ago.
                     from_date = return_to_days_ago(to_date, 0)
@@ -981,8 +940,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 error_once_only(self.request, str(form.errors))
         except Exception as err:
-            if DEBUG:
-                raise(err)
             error_once_only(self.request, err)
     def _daily_and_weekly(self, web_page_type,to_date, per_hour_chart, per_day_chart, from_date):
         if (web_page_type == SummaryType.DAILY):

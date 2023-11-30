@@ -111,8 +111,6 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
            fields['bank_routings_scheme'].initial = result['bank_routings'][0]["scheme"]
            fields['bank_routings_address'].initial = result['bank_routings'][0]["address"]
         except Exception as err:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, "Unknown Error {}".format(err))
         return form
 
@@ -138,13 +136,9 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
                 messages.error(self.request, result['message'])
                 return super(UpdateBanksView, self).form_invalid(form)
         except APIError as err:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, err)
             return super(UpdateBanksView, self).form_invalid(form)
         except Exception as e:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, e)
             return super(UpdateBanksView, self).form_invalid(form)
         msg = 'Bank {} has been updated successfully!'.format(  # noqa

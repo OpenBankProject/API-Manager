@@ -251,6 +251,9 @@ API_DATE_FORMAT_WITH_SECONDS  = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 API_DATE_FORMAT_WITH_MILLISECONDS = '%Y-%m-%dT%H:%M:%S.%fZ'
 
+# the API_Manager the web form datetime format, eg: 2023-11-28 10:49:27
+API_DATE_FORMAT_WITH_DAY_DATE_TIME = '%Y-%m-%d %H:%M:%S'
+
 # the API_Manager the web form date format, eg: 2020-10-11
 API_DATE_FORMAT_WITH_DAY = '%Y-%m-%d'
 API_FIELD_TIME_FORMAT = '%H-%M-%S'
