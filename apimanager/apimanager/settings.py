@@ -319,7 +319,7 @@ CALLBACK_BASE_URL = ""
 # Global
 UNDEFINED = "<undefined>"
 
-API_ROOT_KEY = "v500"
+API_ROOT_KEY = "v510"
 
 # Local settings can replace any value ABOVE
 try:
