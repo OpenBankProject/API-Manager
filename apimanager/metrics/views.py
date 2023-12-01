@@ -146,7 +146,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         urlpath = '{}?{}'.format(self.api_urlpath, params)
         api = API(self.request.session.get('obp'))
         try:
-            metrics = api.get(urlpath)
+            metrics = api.get(urlpath, version=settings.API_VERSION["v510"])
             metrics = self.to_django(metrics['metrics'])
         except APIError as err:
             if DEBUG:
