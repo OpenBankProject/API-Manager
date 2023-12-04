@@ -3,7 +3,9 @@
 {% load i18n %}
 
 {% block page_title %}{{ block.super }} / API Metrics{% endblock page_title %}
-
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'metrics/js/lastEndpointMetric.js' %}"></script>
+{% endblock extrajs %}
 {% load bootstrap3 %}
 {% block content %}
 <div id="metrics">
@@ -12,7 +14,7 @@
 	{{ form.media }}            {# Form required JS and CSS #}
 	{% endblock %}
 	<h1>{% trans "API Metrics" %}</h1>
-
+    <h5 id ="last_endpoint">Last call: API Manager getMetrics costed 294 ms</h5>
     <div id="metrics-filter">
     	<h2>{% trans "Filter" %}</h2>
     	<form action="" method="get">
