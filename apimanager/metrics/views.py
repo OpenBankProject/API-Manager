@@ -389,30 +389,19 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         apps = []
         form = self.get_form()
         active_apps_list = []
-        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
+        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+            from_date, to_date, ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
         api = API(self.request.session.get('obp'))
         try:
             apps = api.get(urlpath)
             if apps is not None and 'code' in apps and apps['code']==403:
                 error_once_only(self.request, apps['message'])
             else:
-                active_apps_list = list(apps)
+                active_apps_list = list(apps['top_consumers'])
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
             error_once_only(self.request, err)
-        else:
-            urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-                from_date, to_date, ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-            api = API(self.request.session.get('obp'))
-            try:
-                apps = api.get(urlpath)
-                active_apps_list = list(apps['top_consumers'])
-            except APIError as err:
-                error_once_only(self.request, err)
-            except Exception as err:
-                error_once_only(self.request, err)
-
         return active_apps_list
 
 
@@ -718,12 +707,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def get_top_apis(self, cleaned_data, from_date, to_date):
         top_apis = []
-        #if cleaned_data.get('include_obp_apps'):
-        #    urlpath = '/management/metrics/top-apis?from_date={}&to_date={}'.format(from_date, to_date)
-        #else:
-        #    urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-        #        from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-        urlpath = '/management/metrics/top-apis?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+        urlpath = '/management/metrics/top-apis?limit=10&from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
         top_apis = self._api_data(urlpath, 'top_apis')
 
@@ -739,12 +723,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
     def get_top_consumers(self, cleaned_data, from_date, to_date):
         top_consumers = []
-        #if cleaned_data.get('include_obp_apps'):
-        #    urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}'.format(from_date, to_date)
-        #else:
-        #    urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_app_names={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
-        #        from_date, to_date, ",".join(local_settings.EXCLUDE_APPS), ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
-        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+        urlpath = '/management/metrics/top-consumers?limit=10&from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
                 from_date, to_date, ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
         top_consumers = self._api_data(urlpath, 'top_consumers')
 
@@ -752,7 +731,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
             if consumer['app_name'] == "":
                 top_consumers.remove(consumer)
 
-        top_consumers = top_consumers[:10]
         top_consumers = reversed(top_consumers)
 
         return top_consumers
