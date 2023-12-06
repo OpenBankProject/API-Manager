@@ -77,7 +77,7 @@ class APIMetricsForm(MetricsForm):
 
     consumer_id = forms.ChoiceField(
         label=_('Consumer ID'),
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={
                 'class': FORM_CONTROL,
             }

@@ -21,18 +21,6 @@ def get_banks(request):
     except APIError as err:
         messages.error(request, err)
         return []
-def get_consumers(request):
-    api = API(request.session.get('obp'))
-    try:
-        urlpath = '/management/consumers'
-        result = api.get(urlpath)
-        if 'consumers' in result:
-            return [consumer['consumer_id'] for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id'])]
-        else:
-            return []
-    except APIError as err:
-        messages.error(request, err)
-        return []
 
 def get_api_versions(request):
     api = API(request.session.get('obp'))

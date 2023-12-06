@@ -85,17 +85,17 @@
 				<td>{% trans "Average response time (ms)" %}:</td>
 				<td>{{ average_response_time }}</td>
 			</tr>
-			<tr>
-				<td>{% trans "Median time from consumer registration to first API call" %}:</td>
-				<td>{{ median_time_to_first_api_call }}</td>
-			</tr>
+			{#			<tr>#}
+{#				<td>{% trans "Median time from consumer registration to first API call" %}:</td>#}
+{#				<td>{{ median_time_to_first_api_call }}</td>#}
+{#			</tr>#}
 
 			<tr>
-				<td>{% trans "Apps with distinct names" %}:</td>
+				<td>{% trans "New apps with distinct names" %}:</td>
 				<td>{{ number_of_apps_with_unique_app_name }}</td>
 			</tr>
 			<tr>
-				<td>{% trans "Distinct developer email addresses" %}:</td>
+				<td>{% trans "New distinct developer email addresses" %}:</td>
 				<td>{{ number_of_apps_with_unique_developer_email }}</td>
 			</tr>
 

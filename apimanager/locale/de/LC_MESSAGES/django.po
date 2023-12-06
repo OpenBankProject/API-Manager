@@ -1075,12 +1075,12 @@ msgstr "Medianzeit von der Verbraucherregistrierung bis zum ersten API-Aufruf"
 #: metrics/templates/metrics/quarterly_summary.html:108
 #: metrics/templates/metrics/weekly_summary.html:106
 #: metrics/templates/metrics/yearly_summary.html:106
-msgid "Apps with distinct names"
+msgid "New apps with distinct names"
 msgstr "Apps mit eindeutigen Namen"
 
 #: metrics/templates/metrics/custom_summary.html:115
 #: metrics/templates/metrics/monthly_summary.html:118
-msgid "Distinct developer email addresses"
+msgid "New distinct developer email addresses"
 msgstr "Unterschiedliche Entwickler-E-Mail-Adressen"
 
 #: metrics/templates/metrics/custom_summary.html:120
@@ -1192,7 +1192,7 @@ msgstr "Durchschnittliche Anzahl der Anrufe pro Stunde"
 #: metrics/templates/metrics/hourly_summary.html:110
 #: metrics/templates/metrics/quarterly_summary.html:112
 #: metrics/templates/metrics/weekly_summary.html:110
-msgid "Apps with distinct developer email addresses"
+msgid "Apps with New distinct developer email addresses"
 msgstr "Apps mit unterschiedlichen Entwickler-E-Mail-Adressen"
 
 #: metrics/templates/metrics/hourly_summary.html:20
