@@ -344,14 +344,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         average_calls_per_day = api_calls_total if (number_of_days == 0) else api_calls_total / number_of_days
         return api_calls_total, average_calls_per_day, average_response_time
 
-    def get_active_apps(self, from_date, to_date):
+    def get_top_100_active_apps(self, from_date, to_date):
         """
          Gets the metrics from the API, using given parameters,
          """
         apps = []
         form = self.get_form()
         active_apps_list = []
-        urlpath = '/management/metrics/top-consumers?from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
+        urlpath = '/management/metrics/top-consumers?limit=100&from_date={}&to_date={}&exclude_implemented_by_partial_functions={}&exclude_url_pattern={}'.format(
             from_date, to_date, ",".join(EXCLUDE_FUNCTIONS), ",".join(EXCLUDE_URL_PATTERN))
         api = API(self.request.session.get('obp'))
         try:
@@ -831,7 +831,7 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(from_date, to_date, include_app_names)
                 unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
                     form.cleaned_data, from_date, to_date)
-                active_apps_list = self.get_active_apps(from_date, to_date)
+                active_apps_list = self.get_top_100_active_apps(from_date, to_date)
 
                 context = super(MonthlyMetricsSummaryView, self).get_context_data(**kwargs)
                 context.update({
