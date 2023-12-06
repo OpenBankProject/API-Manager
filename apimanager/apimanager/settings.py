@@ -117,7 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'base.context_processors.api_root',
+                'base.context_processors.api_version_processor',
                 'base.context_processors.api_username',
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
@@ -322,8 +322,6 @@ CALLBACK_BASE_URL = ""
 # Global
 UNDEFINED = "<undefined>"
 
-API_ROOT_KEY = "v500"
-
 # Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa
@@ -334,8 +332,8 @@ except ImportError:
 OBPv500 = API_HOST + '/obp/v5.0.0'
 OBPv510 = API_HOST + '/obp/v5.1.0'
 
-# Settings here might use parts overwritten in local settings
-API_ROOT = {
+# API Versions
+API_VERSION = {
     "v500": OBPv500,
     "v510": OBPv510
 }
