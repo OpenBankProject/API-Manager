@@ -209,10 +209,11 @@ def get_metric_last_endpoint(request):
     try:
         metric = api.get(urlpath)['metrics'][0]
         last_endpoint_metric={
-            'app_name':metric['app_name'],
-            'verb': metric['verb'], 
-            'implemented_by_partial_function': metric['implemented_by_partial_function'], 
-            'duration': metric['duration']
+            'implemented_by_partial_function':metric['implemented_by_partial_function'],
+            'duration': metric['duration'], 
+            'date': metric['date'], 
+            'verb': metric['verb'],
+            'url': metric['url']
         }
     except Exception as err:
         LOGGER.exception('error_once_only - Error Message: {}'.format(err))
