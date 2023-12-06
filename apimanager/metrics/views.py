@@ -203,7 +203,8 @@ class APIMetricsView(MetricsView):
         return context
 
 def get_metric_last_endpoint(request):
-    urlpath = "/management/metrics?limit=1"
+    to_date = datetime.datetime.now().strftime(settings.API_DATE_FORMAT_WITH_MILLISECONDS)
+    urlpath = "/management/metrics?limit=1&to_date="+to_date
     api = API(request.session.get('obp'))
     last_endpoint_metric={}
     try:
