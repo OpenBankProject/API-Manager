@@ -589,31 +589,31 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         plt.gcf().clear()
         return image_base64
 
-    def get_users_cansearchwarehouse(self):
-        users = []
-        users_with_cansearchwarehouse = []
-        email_with_cansearchwarehouse = []
-        api = API(self.request.session.get('obp'))
-        try:
-            urlpath = '/users'
-            users = api.get(urlpath)
-            if users is not None and 'code' in users and users['code'] == 403:
-                error_once_only(self.request, users['message'])
-            if 'users' not in users:
-                users['users']=[]
-            else:
-                self._update_user_with_cansearchwarehouse(users, users_with_cansearchwarehouse, email_with_cansearchwarehouse)
-            # fail gracefully in case API provides new structure
-        except APIError as err:
-            error_once_only(self.request, err)
-        except KeyError as err:
-            messages.error(self.request, 'KeyError: {}'.format(err))
-        except Exception as err:
-            error_once_only(self.request, err)
-
-        user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
-        number_of_users_with_cansearchwarehouse = len(user_email_cansearchwarehouse)
-        return user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse
+    # def get_users_cansearchwarehouse(self):
+    #     users = []
+    #     users_with_cansearchwarehouse = []
+    #     email_with_cansearchwarehouse = []
+    #     api = API(self.request.session.get('obp'))
+    #     try:
+    #         urlpath = '/users'
+    #         users = api.get(urlpath)
+    #         if users is not None and 'code' in users and users['code'] == 403:
+    #             error_once_only(self.request, users['message'])
+    #         if 'users' not in users:
+    #             users['users']=[]
+    #         else:
+    #             self._update_user_with_cansearchwarehouse(users, users_with_cansearchwarehouse, email_with_cansearchwarehouse)
+    #         # fail gracefully in case API provides new structure
+    #     except APIError as err:
+    #         error_once_only(self.request, err)
+    #     except KeyError as err:
+    #         messages.error(self.request, 'KeyError: {}'.format(err))
+    #     except Exception as err:
+    #         error_once_only(self.request, err)
+    # 
+    #     user_email_cansearchwarehouse = dict(zip(users_with_cansearchwarehouse, email_with_cansearchwarehouse))
+    #     number_of_users_with_cansearchwarehouse = len(user_email_cansearchwarehouse)
+    #     return user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse
 
     def _update_user_with_cansearchwarehouse(self, users, users_with_cansearchwarehouse, email_with_cansearchwarehouse):
         for user in users['users']:
@@ -820,14 +820,14 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
 
                 api_host_name = API_HOST
                 top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
-                user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
+                # user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
                 # median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
                 top_apis = self.get_top_apis(form.cleaned_data, from_date, to_date)
                 top_apis_bar_chart = self.plot_bar_chart(top_apis)
                 top_consumers = self.get_top_consumers(form.cleaned_data, from_date, to_date)
                 top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
-                top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
+                # top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
                 api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(from_date, to_date, include_app_names)
                 unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
                     form.cleaned_data, from_date, to_date)
@@ -848,10 +848,10 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                     'active_apps_list': active_apps_list,
                     'average_calls_per_day': average_calls_per_day,
                     'average_response_time': average_response_time,
-                    'top_warehouse_calls': top_warehouse_calls,
-                    'top_apps_using_warehouse': top_apps_using_warehouse,
-                    'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
-                    'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
+                    # 'top_warehouse_calls': top_warehouse_calls,
+                    # 'top_apps_using_warehouse': top_apps_using_warehouse,
+                    # 'user_email_cansearchwarehouse': user_email_cansearchwarehouse,
+                    # 'number_of_users_with_cansearchwarehouse': number_of_users_with_cansearchwarehouse,
                     'api_host_name': api_host_name,
                     'from_date': (datetime.datetime.strptime(from_date, API_DATE_FORMAT_WITH_MILLISECONDS)).strftime('%d %B %Y'),
                     'to_date': (datetime.datetime.strptime(to_date, API_DATE_FORMAT_WITH_MILLISECONDS)).strftime('%d %B %Y'),
