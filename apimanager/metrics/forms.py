@@ -43,7 +43,7 @@ class MetricsForm(forms.Form):
                 'class': FORM_CONTROL,
             }
         ),
-        initial=1000,
+        initial=5,
         required=False,
     )
     offset = forms.IntegerField(
