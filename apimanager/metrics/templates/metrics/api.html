@@ -3,7 +3,9 @@
 {% load i18n %}
 
 {% block page_title %}{{ block.super }} / API Metrics{% endblock page_title %}
-
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'metrics/js/lastEndpointMetric.js' %}"></script>
+{% endblock extrajs %}
 {% load bootstrap3 %}
 {% block content %}
 <div id="metrics">
@@ -12,7 +14,7 @@
 	{{ form.media }}            {# Form required JS and CSS #}
 	{% endblock %}
 	<h1>{% trans "API Metrics" %}</h1>
-
+    <p id ="last_endpoint">getBanks took 43ms at 2023-12-06T11:00:49Z GET /obp/v4.0.0/banks ms. </p>
     <div id="metrics-filter">
     	<h2>{% trans "Filter" %}</h2>
     	<form action="" method="get">

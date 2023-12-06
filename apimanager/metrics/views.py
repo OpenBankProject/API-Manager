@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 from django.conf import settings
+from django.http import JsonResponse
 from apimanager import local_settings
 from apimanager.settings import API_HOST, EXCLUDE_APPS, EXCLUDE_FUNCTIONS, EXCLUDE_URL_PATTERN, API_EXPLORER_APP_NAME, API_DATE_FORMAT_WITH_MILLISECONDS, API_DATE_FORMAT_WITH_SECONDS , DEBUG
 from django.contrib import messages
@@ -200,6 +201,26 @@ class APIMetricsView(MetricsView):
             'API_VERSION': get_api_versions(self.request)
         })
         return context
+
+def get_metric_last_endpoint(request):
+    to_date = datetime.datetime.now().strftime(settings.API_DATE_FORMAT_WITH_MILLISECONDS)
+    urlpath = "/management/metrics?limit=1&to_date="+to_date
+    api = API(request.session.get('obp'))
+    last_endpoint_metric={}
+    try:
+        metric = api.get(urlpath)['metrics'][0]
+        last_endpoint_metric={
+            'implemented_by_partial_function':metric['implemented_by_partial_function'],
+            'duration': metric['duration'], 
+            'date': metric['date'], 
+            'verb': metric['verb'],
+            'url': metric['url']
+        }
+    except Exception as err:
+        LOGGER.exception('error_once_only - Error Message: {}'.format(err))
+    
+    return JsonResponse(last_endpoint_metric)
+
 
 
 class APISummaryPartialFunctionView(APIMetricsView):
