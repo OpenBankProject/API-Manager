@@ -160,13 +160,6 @@ class API(object):
         for bank in sorted(result['banks'], key=lambda d: d['id']) :
             choices.append((bank['id'], bank['id']))
         return choices
-    def get_consumer_id_choices(self):
-        """Gets a list of Consumer ids and consumer ids as used by form choices"""
-        choices = [('', _('Choose ...'))]
-        result = self.get('/management/consumers')
-        for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id']) :
-            choices.append((consumer['consumer_id'], consumer['consumer_id']))
-        return choices
 
     def get_api_version_choices(self):
         """Gets a list of APIs Version and APIs Version as used by form choices"""
