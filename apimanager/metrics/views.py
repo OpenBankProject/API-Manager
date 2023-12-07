@@ -819,7 +819,8 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                         per_day_chart = self.plot_line_chart(calls_per_day, date_list, "month")
 
                 api_host_name = API_HOST
-                top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
+                # top_apps_using_warehouse = self.get_top_apps_using_warehouse(from_date, to_date)
+                # top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
                 # user_email_cansearchwarehouse, number_of_users_with_cansearchwarehouse = self.get_users_cansearchwarehouse()
                 # median_time_to_first_api_call = self.median_time_to_first_api_call(from_date, to_date)
 
@@ -827,7 +828,6 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
                 top_apis_bar_chart = self.plot_bar_chart(top_apis)
                 top_consumers = self.get_top_consumers(form.cleaned_data, from_date, to_date)
                 top_consumers_bar_chart = self.plot_topconsumer_bar_chart(top_consumers)
-                # top_warehouse_calls = self.get_top_warehouse_calls(form.cleaned_data, from_date, to_date)
                 api_calls, average_response_time, average_calls_per_day = self.get_aggregate_metrics(from_date, to_date, include_app_names)
                 unique_app_names, number_of_apps_with_unique_app_name, number_of_apps_with_unique_developer_email = self.get_total_number_of_apps(
                     form.cleaned_data, from_date, to_date)
