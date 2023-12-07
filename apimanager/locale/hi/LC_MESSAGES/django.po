@@ -1069,7 +1069,7 @@ msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NE
 #: metrics/templates/metrics/quarterly_summary.html:117
 #: metrics/templates/metrics/weekly_summary.html:115
 #: metrics/templates/metrics/yearly_summary.html:115
-msgid "Active Apps (at least one API call in the period)"
+msgid "Top 100 Active Apps (at least one API call in the period)"
 msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  00 HOURS 04 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
 
 #: metrics/templates/metrics/custom_summary.html:124

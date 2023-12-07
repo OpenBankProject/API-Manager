@@ -1427,8 +1427,8 @@ msgstr "Distintas direcciones de correo electrónico para desarrolladores"
 #: metrics/templates/metrics/quarterly_summary.html:124
 #: metrics/templates/metrics/weekly_summary.html:120
 #: metrics/templates/metrics/yearly_summary.html:122
-msgid "Active Apps (at least one API call in the period)"
-msgstr "Aplicaciones activas (al menos una llamada API en el periodo)"
+msgid "Top 100 Active Apps (at least one API call in the period)"
+msgstr "Top 100 Aplicaciones activas (al menos una llamada API en el periodo)"
 
 #: metrics/templates/metrics/custom_summary.html:122
 #: metrics/templates/metrics/daily_summary.html:125

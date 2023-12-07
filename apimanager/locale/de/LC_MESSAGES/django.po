@@ -1090,8 +1090,8 @@ msgstr "Unterschiedliche Entwickler-E-Mail-Adressen"
 #: metrics/templates/metrics/quarterly_summary.html:117
 #: metrics/templates/metrics/weekly_summary.html:115
 #: metrics/templates/metrics/yearly_summary.html:115
-msgid "Active Apps (at least one API call in the period)"
-msgstr "Aktive Apps (mindestens ein API-Aufruf im Zeitraum)"
+msgid "Top 100 Active Apps (at least one API call in the period)"
+msgstr "Top 100 Aktive Apps (mindestens ein API-Aufruf im Zeitraum)"
 
 #: metrics/templates/metrics/custom_summary.html:124
 #: metrics/templates/metrics/daily_summary.html:118
