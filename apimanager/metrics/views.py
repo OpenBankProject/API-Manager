@@ -115,7 +115,7 @@ class MetricsView(LoginRequiredMixin, TemplateView):
         """
         for metric in metrics:
             metric['date'] = datetime.datetime.strptime(
-                metric['date'], settings.API_DATE_FORMAT_WITH_SECONDS )
+                metric['date'], settings.API_DATE_FORMAT_WITH_MILLISECONDS).isoformat(timespec='milliseconds')
         return metrics
 
     def to_api(self, cleaned_data):
