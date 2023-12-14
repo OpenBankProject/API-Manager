@@ -4,9 +4,10 @@ URLs for users app
 """
 
 from django.conf.urls import url
+from django.urls import path
 
 from .views import IndexView, DetailView, MyDetailView, DeleteEntitlementView, InvitationView, UserStatusUpdateView, \
-    ExportCsvView
+    ExportCsvView, AutocompleteFieldView
 
 urlpatterns = [
     url(r'^all$',
@@ -29,5 +30,5 @@ urlpatterns = [
         name='user-status-update'),
     url(r'^export_csv$',
         ExportCsvView.as_view(),
-        name='export-csv-users')
+        name='export-csv-users'),
 ]

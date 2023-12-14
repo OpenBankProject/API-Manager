@@ -50,7 +50,7 @@ class IndexView(LoginRequiredMixin, FormView):
                 else:
                     method_routings[i]['parameters'] = json.dumps(method_routings[i]['parameters'], sort_keys=False)
 
-            if(str(settings.API_ROOT).find("127.0.0.1") == -1):
+            if(str(settings.API_VERSION).find("127.0.0.1") == -1):
                 method_Swagger_Url = '{}/message-docs?connector=stored_procedure_vDec2019#'.format(settings.API_HOST.replace(".openbankproject.", "-explorer.openbankproject."))
             else:
                 method_Swagger_Url = "http://127.0.0.1:8082/message-docs?connector=stored_procedure_vDec2019#"

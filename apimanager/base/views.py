@@ -4,7 +4,7 @@ Views for base app
 """
 from django.contrib import messages
 from django.conf import settings
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.shortcuts import render
 from obp.forms import DirectLoginForm, GatewayLoginForm
 from obp.api import API, APIError
@@ -21,18 +21,6 @@ def get_banks(request):
     except APIError as err:
         messages.error(request, err)
         return []
-def get_consumers(request):
-    api = API(request.session.get('obp'))
-    try:
-        urlpath = '/management/consumers'
-        result = api.get(urlpath)
-        if 'consumers' in result:
-            return [consumer['consumer_id'] for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id'])]
-        else:
-            return []
-    except APIError as err:
-        messages.error(self.request, err)
-        return []
 
 def get_api_versions(request):
     api = API(request.session.get('obp'))
@@ -44,7 +32,7 @@ def get_api_versions(request):
         else:
             return []
     except APIError as err:
-        messages.error(self.request, err)
+        messages.error(request, err)
         return []
 
 class HomeView(TemplateView):

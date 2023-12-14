@@ -1,4 +1,5 @@
 $(document).ready(function($) {
+	const BarchartData = $.parseJSON($('#barchart_data_div').attr("value"));
 	let barChart = new Chart($("#barchart"), {
 		type: 'horizontalBar',
 		data: {

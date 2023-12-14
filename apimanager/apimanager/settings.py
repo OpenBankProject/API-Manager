@@ -117,7 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'base.context_processors.api_root',
+                'base.context_processors.api_version_processor',
                 'base.context_processors.api_username',
                 'base.context_processors.api_user_id',
                 'base.context_processors.api_tester_url',
@@ -251,6 +251,9 @@ API_DATE_FORMAT_WITH_SECONDS  = '%Y-%m-%dT%H:%M:%SZ'
 #Map Java: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 API_DATE_FORMAT_WITH_MILLISECONDS = '%Y-%m-%dT%H:%M:%S.%fZ'
 
+# the API_Manager the web form datetime format, eg: 2023-11-28 10:49:27
+API_DATE_FORMAT_WITH_DAY_DATE_TIME = '%Y-%m-%d %H:%M:%S'
+
 # the API_Manager the web form date format, eg: 2020-10-11
 API_DATE_FORMAT_WITH_DAY = '%Y-%m-%d'
 API_FIELD_TIME_FORMAT = '%H-%M-%S'
@@ -319,8 +322,6 @@ CALLBACK_BASE_URL = ""
 # Global
 UNDEFINED = "<undefined>"
 
-API_ROOT_KEY = "v500"
-
 # Local settings can replace any value ABOVE
 try:
     from apimanager.local_settings import *     # noqa
@@ -331,8 +332,8 @@ except ImportError:
 OBPv500 = API_HOST + '/obp/v5.0.0'
 OBPv510 = API_HOST + '/obp/v5.1.0'
 
-# Settings here might use parts overwritten in local settings
-API_ROOT = {
+# API Versions
+API_VERSION = {
     "v500": OBPv500,
     "v510": OBPv510
 }
@@ -354,8 +355,8 @@ if not OAUTH_CONSUMER_SECRET:
 
 CSP_IMG_SRC = ("'self' data:", 'https://static.openbankproject.com')
 CSP_STYLE_SRC = ("'self' 'sha256-z2a+NIknPDE7NIEqE1lfrnG39eWOhJXWsXHYGGNb5oU=' 'sha256-Dn0vMZLidJplZ4cSlBMg/F5aa7Vol9dBMHzBF4fGEtk=' 'sha256-sA0hymKbXmMTpnYi15KmDw4u6uRdLXqHyoYIaORFtjU=' 'sha256-jUuiwf3ITuJc/jfynxWHLwTZifHIlhddD8NPmmVBztk=' 'sha256-RqzjtXRBqP4i+ruV3IRuHFq6eGIACITqGbu05VSVXsI='", 'https://cdnjs.cloudflare.com', )
-CSP_SCRIPT_SRC = ("'self' 'unsafe-eval' 'sha256-4Hr8ttnXaUA4A6o0hGi3NUGNP2Is3Ep0W+rvm+W7BAk=' 'sha256-GgQWQ4Ejk4g9XpAZJ4YxIgZDgp7CdQCmqjMOMh9hD2g=' 'sha256-05NIAwVBHkAzKcXTfkYqTnBPtkpX+AmQvM/raql3qo0='", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
+CSP_SCRIPT_SRC = ("'self' 'unsafe-eval' 'sha256-CAykt4V7LQN6lEkjV8hZQx0GV6LTZZGUvQDqamuUq2Q=' 'sha256-4Hr8ttnXaUA4A6o0hGi3NUGNP2Is3Ep0W+rvm+W7BAk=' 'sha256-GgQWQ4Ejk4g9XpAZJ4YxIgZDgp7CdQCmqjMOMh9hD2g=' 'sha256-05NIAwVBHkAzKcXTfkYqTnBPtkpX+AmQvM/raql3qo0='", 'http://code.jquery.com', 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/', 'https://cdnjs.cloudflare.com')
 CSP_FONT_SRC = ("'self'", 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/') 
 CSP_FRAME_ANCESTORS = ("'self'")
 CSP_FORM_ACTION = ("'self'")
-CSP_CONNECT_SRC = (API_HOST)
+CSP_CONNECT_SRC = ("'self'", API_HOST)

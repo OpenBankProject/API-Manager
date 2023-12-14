@@ -81,7 +81,7 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
     template_name = "banks/update.html"
     form_class = CreateBankForm
     success_url = '/banks/list'
-    v510 = settings.API_ROOT['v510']
+    v510 = settings.API_VERSION['v510']
 
     def dispatch(self, request, *args, **kwargs):
         self.api = API(request.session.get('obp'))
@@ -111,8 +111,6 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
            fields['bank_routings_scheme'].initial = result['bank_routings'][0]["scheme"]
            fields['bank_routings_address'].initial = result['bank_routings'][0]["address"]
         except Exception as err:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, "Unknown Error {}".format(err))
         return form
 
@@ -138,13 +136,9 @@ class UpdateBanksView(LoginRequiredMixin, FormView):
                 messages.error(self.request, result['message'])
                 return super(UpdateBanksView, self).form_invalid(form)
         except APIError as err:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, err)
             return super(UpdateBanksView, self).form_invalid(form)
         except Exception as e:
-            if DEBUG:
-                raise(err)
             messages.error(self.request, e)
             return super(UpdateBanksView, self).form_invalid(form)
         msg = 'Bank {} has been updated successfully!'.format(  # noqa
@@ -183,7 +177,7 @@ def bank_attribute_save(request):
         'value': request.POST.get('value').strip(),
         'is_active': True
     }
-    result = api.post(urlpath_save, payload = payload, version=settings.API_ROOT['v510'])
+    result = api.post(urlpath_save, payload = payload, version=settings.API_VERSION['v510'])
     return result
 
 
@@ -201,7 +195,7 @@ def bank_attribute_update(request):
         'value': request.POST.get('value').strip(),
         'is_active': True
     }
-    result = api.put(urlpath_update, payload=payload, version=settings.API_ROOT['v510'])
+    result = api.put(urlpath_update, payload=payload, version=settings.API_VERSION['v510'])
     return result
 
 
@@ -212,6 +206,6 @@ def bank_attribute_delete(request):
     bank_attribute_id = request.POST.get('bank_attribute_id').strip()
     api = API(request.session.get('obp'))
     urlpath_delete = '/banks/{}/attributes/{}'.format(bank_id, bank_attribute_id)
-    result = api.delete(urlpath_delete, version=settings.API_ROOT['v510'])
+    result = api.delete(urlpath_delete, version=settings.API_VERSION['v510'])
     return result
 

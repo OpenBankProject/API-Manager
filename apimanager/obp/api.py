@@ -43,7 +43,7 @@ class API(object):
             self.start_session(session_data)
         self.session_data = session_data
 
-    def call(self, method='GET', url='', payload=None, version=settings.API_ROOT['v500']):
+    def call(self, method='GET', url='', payload=None, version=settings.API_VERSION['v500']):
         """Workhorse which actually calls the API"""
         log(logging.INFO, '{} {}'.format(method, url))
         if payload:
@@ -64,11 +64,11 @@ class API(object):
         response.execution_time = elapsed
         return response
 
-    def get(self, urlpath='', version=settings.API_ROOT['v500']):
+    def get(self, urlpath='', version=settings.API_VERSION['v500']):
         """
         Gets data from the API
 
-        Convenience call which uses API_ROOT from settings
+        Convenience call which uses API_VERSION from settings
         """
         url = version + urlpath
         response = self.handle_response(self.call('GET', url))
@@ -77,31 +77,31 @@ class API(object):
         else:
             return response
 
-    def delete(self, urlpath, version=settings.API_ROOT['v500']):
+    def delete(self, urlpath, version=settings.API_VERSION['v500']):
         """
         Deletes data from the API
 
-        Convenience call which uses API_ROOT from settings
+        Convenience call which uses API_VERSION from settings
         """
         url = version + urlpath
         response = self.call('DELETE', url)
         return self.handle_response(response)
 
-    def post(self, urlpath, payload, version=settings.API_ROOT['v500']):
+    def post(self, urlpath, payload, version=settings.API_VERSION['v500']):
         """
         Posts data to given urlpath with given payload
 
-        Convenience call which uses API_ROOT from settings
+        Convenience call which uses API_VERSION from settings
         """
         url = version + urlpath
         response = self.call('POST', url, payload)
         return self.handle_response(response)
 
-    def put(self, urlpath, payload, version=settings.API_ROOT['v500']):
+    def put(self, urlpath, payload, version=settings.API_VERSION['v500']):
         """
         Puts data on given urlpath with given payload
 
-        Convenience call which uses API_ROOT from settings
+        Convenience call which uses API_VERSION from settings
         """
         url = version + urlpath
         response = self.call('PUT', url, payload)
@@ -159,13 +159,6 @@ class API(object):
         result = self.get('/banks')
         for bank in sorted(result['banks'], key=lambda d: d['id']) :
             choices.append((bank['id'], bank['id']))
-        return choices
-    def get_consumer_id_choices(self):
-        """Gets a list of Consumer ids and consumer ids as used by form choices"""
-        choices = [('', _('Choose ...'))]
-        result = self.get('/management/consumers')
-        for consumer in sorted(result['consumers'], key=lambda d: d['consumer_id']) :
-            choices.append((consumer['consumer_id'], consumer['consumer_id']))
         return choices
 
     def get_api_version_choices(self):

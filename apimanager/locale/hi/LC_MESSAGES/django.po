@@ -1054,12 +1054,12 @@ msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NE
 #: metrics/templates/metrics/quarterly_summary.html:108
 #: metrics/templates/metrics/weekly_summary.html:106
 #: metrics/templates/metrics/yearly_summary.html:106
-msgid "Apps with distinct names"
+msgid "New apps with distinct names"
 msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  00 HOURS 04 MINUTES 16 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
 
 #: metrics/templates/metrics/custom_summary.html:115
 #: metrics/templates/metrics/monthly_summary.html:118
-msgid "Distinct developer email addresses"
+msgid "New distinct developer email addresses"
 msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  00 HOURS 04 MINUTES 16 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
 
 #: metrics/templates/metrics/custom_summary.html:120
@@ -1069,7 +1069,7 @@ msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NE
 #: metrics/templates/metrics/quarterly_summary.html:117
 #: metrics/templates/metrics/weekly_summary.html:115
 #: metrics/templates/metrics/yearly_summary.html:115
-msgid "Active Apps (at least one API call in the period)"
+msgid "Top 100 Active Apps (at least one API call in the period)"
 msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  00 HOURS 04 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
 
 #: metrics/templates/metrics/custom_summary.html:124
@@ -1171,7 +1171,7 @@ msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NE
 #: metrics/templates/metrics/hourly_summary.html:110
 #: metrics/templates/metrics/quarterly_summary.html:112
 #: metrics/templates/metrics/weekly_summary.html:110
-msgid "Apps with distinct developer email addresses"
+msgid "Apps with New distinct developer email addresses"
 msgstr "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  00 HOURS 04 MINUTES 02 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE"
 
 #: metrics/templates/metrics/hourly_summary.html:20

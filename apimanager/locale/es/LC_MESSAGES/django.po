@@ -1412,12 +1412,12 @@ msgstr ""
 #: metrics/templates/metrics/quarterly_summary.html:115
 #: metrics/templates/metrics/weekly_summary.html:111
 #: metrics/templates/metrics/yearly_summary.html:113
-msgid "Apps with distinct names"
+msgid "New apps with distinct names"
 msgstr "Aplicaciones con nombres distintos"
 
 #: metrics/templates/metrics/custom_summary.html:113
 #: metrics/templates/metrics/monthly_summary.html:110
-msgid "Distinct developer email addresses"
+msgid "New distinct developer email addresses"
 msgstr "Distintas direcciones de correo electrónico para desarrolladores"
 
 #: metrics/templates/metrics/custom_summary.html:118
@@ -1427,8 +1427,8 @@ msgstr "Distintas direcciones de correo electrónico para desarrolladores"
 #: metrics/templates/metrics/quarterly_summary.html:124
 #: metrics/templates/metrics/weekly_summary.html:120
 #: metrics/templates/metrics/yearly_summary.html:122
-msgid "Active Apps (at least one API call in the period)"
-msgstr "Aplicaciones activas (al menos una llamada API en el periodo)"
+msgid "Top 100 Active Apps (at least one API call in the period)"
+msgstr "Top 100 Aplicaciones activas (al menos una llamada API en el periodo)"
 
 #: metrics/templates/metrics/custom_summary.html:122
 #: metrics/templates/metrics/daily_summary.html:125
@@ -1502,7 +1502,7 @@ msgstr "Número promedio de llamadas"
 #: metrics/templates/metrics/hourly_summary.html:117
 #: metrics/templates/metrics/quarterly_summary.html:119
 #: metrics/templates/metrics/weekly_summary.html:115
-msgid "Apps with distinct developer email addresses"
+msgid "Apps with New distinct developer email addresses"
 msgstr ""
 "Aplicaciones con distintas direcciones de correo electrónico de los "
 "desarrolladores"

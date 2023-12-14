@@ -36,7 +36,6 @@
 			{% endif %}
 
 			<div class="row">
-
 				<div class="col-xs-6 col-sm-3">
 					{% if form.to_date.errors %}<div class="alert alert-danger">{{ form.to_date.errors }}</div>{% endif %}
 					<div class="form-group">
@@ -44,14 +43,6 @@
 						{{ form.to_date }}
 					</div>
 				</div>
-				<!--<div class="col-xs-4 col-sm-3">
-					{% if form.to_date_time.errors %}<div class="alert alert-danger">{{ form.to_date_time.errors }}</div>{% endif %}
-					<div class="form-group">
-						{{ form.to_date_time.label_tag }}
-						{{ form.to_date_time }}
-					</div>
-				</div>-->
-
 				<div class="col-xs-4 col-sm-3">
 					{% if form.include_app_names.errors %}<div class="alert alert-danger">{{ form.include_app_names.errors }}</div>{% endif %}
 					<div class="form-group">
@@ -96,22 +87,22 @@
 				<td>{% trans "Average response time (ms)" %}:</td>
 				<td>{{ average_response_time }}</td>
 			</tr>
-			<tr>
-				<td>{% trans "Median time from consumer registration to first API call" %}:</td>
-				<td>{{ median_time_to_first_api_call }}</td>
-			</tr>
+			{#			<tr>#}
+{#				<td>{% trans "Median time from consumer registration to first API call" %}:</td>#}
+{#				<td>{{ median_time_to_first_api_call }}</td>#}
+{#			</tr>#}
 
 			<tr>
-				<td>{% trans "Apps with distinct names" %}:</td>
+				<td>{% trans "New apps with distinct names" %}:</td>
 				<td>{{ number_of_apps_with_unique_app_name }}</td>
 			</tr>
 			<tr>
-				<td>{% trans "Distinct developer email addresses" %}:</td>
+				<td>{% trans "New distinct developer email addresses" %}:</td>
 				<td>{{ number_of_apps_with_unique_developer_email }}</td>
 			</tr>
 
 			<tr>
-				<td>{% trans "Active Apps (at least one API call in the period)" %}:</td>
+				<td>{% trans "Top 100 Active Apps (at least one API call in the period)" %}:</td>
 				<td>{%for item in active_apps_list%} <p>{{item.app_name}} ({{ item.developer_email }})</p> {% endfor %}</td>
 			</tr>
 			<tr>

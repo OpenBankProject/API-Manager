@@ -15,13 +15,17 @@ from .views import (
     WeeklySummaryView,
     DailySummaryView,
     HourlySummaryView,
-    CustomSummaryView
+    CustomSummaryView,
+    get_metric_last_endpoint
 )
 
 urlpatterns = [
     url(r'^api/$',
         APIMetricsView.as_view(),
         name='api-metrics'),
+    url(r'^api/last-endpoint/$',
+        get_metric_last_endpoint,
+        name='api-metrics-last-endpoint'),
     url(r'^api/summary-partial-function$',
         APISummaryPartialFunctionView.as_view(),
         name='api-metrics-summary-partial-function'),

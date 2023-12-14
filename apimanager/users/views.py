@@ -5,7 +5,7 @@ Views of users app
 import datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, View
 
@@ -23,7 +23,6 @@ class FilterRoleName(BaseFilter):
             e['role_name'] for e in x['entitlements']['list']
         ]]
         return filtered
-
 
 class FilterEmail(BaseFilter):
     """Filter users by email address"""
@@ -439,3 +438,22 @@ class ExportCsvView(LoginRequiredMixin, View):
             writer.writerow([user['username'], user['user_id'], user['email'], user['provider_id'], user['provider'],
                              user['last_marketing_agreement_signed_date']])
         return response
+
+# This below code is not yet working, it is intended to provide a json list of results to feed to jquery-ui autocomplete feature
+
+class AutocompleteFieldView(View):
+    """Autocompletes a Field Form based on what endpoint the field is filtering"""
+    def autocomplete_form_field(self, request, *args, **kwargs):
+        api = API(self.request.session.get('obp'))
+        term = self.request.GET.get('term', '')
+        try:
+            urlpath = '/roles'
+            response = api.get(urlpath)
+            if 'code' in response and response['code'] >= 400:
+                messages.error(self.request, response['message'])
+            else:
+                suggestions = response.json()
+                return JsonResponse(suggestions, safe=False)
+        except APIError as err:
+            messages.error(self.request, err)
+            return [], []

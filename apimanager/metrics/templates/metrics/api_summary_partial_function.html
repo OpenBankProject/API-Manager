@@ -3,20 +3,20 @@
 {% load i18n %}
 
 {% block nav_tabs %}
+    <ul>
 	<li><a href="{% url 'api-metrics' %}?{{ request.GET.urlencode }}">{% trans "List" %}</a></li>
 	<li><a href="{% url 'api-metrics-summary-partial-function' %}?{{ request.GET.urlencode }}">{% trans "Summary by Partial Function" %}</a></li>
+    </ul>
 {% endblock nav_tabs %}
 
 {% block tab_content %}
   <div class="tab-pane active">
 	<canvas id="barchart" width="100%" height="50%"></canvas>
   </div>
+  <span id="barchart_data_div" style="display:none;visibility: hidden;opacity: 0" value= '{{ barchart_data|safe }}'></span>
 {% endblock tab_content %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="{% static 'metrics/js/Chart.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'metrics/js/metrics.js' %}"></script>
-	<script type="text/javascript">
-		const BarchartData = {{ barchart_data|safe }};
-	</script>
 {% endblock extrajs %}

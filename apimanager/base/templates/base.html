@@ -14,6 +14,7 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/jsoneditor.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/obpjsoneditor.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet">
     {% block extracss %}{% endblock extracss %}
 </head>
 
@@ -47,7 +48,7 @@
                                 <li {% ifequal request.path my_user_invitation %} class="active" {% endifequal %}><a href="{{ my_user_invitation }}">{% trans "Invite User" %}</a></li>
                             </ul>
                         </li>
-                        {% url "api-metrics" as api_metrics_url %} {% url "connector-metrics" as connector_metrics_url %} {% url "metrics-summary" as metrics_summary_url %}
+                        {% url "api-metrics" as api_metrics_url %} {% url "connector-metrics" as connector_metrics_url %} {% url "weekly-summary" as metrics_summary_url %}
                         <li class="dropdown{% if api_metrics_url in request.path or connector_metrics_url in request.path or metrics_summary_url in request.path %} active{% endif %}">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans "Metrics" %}</a>
                             <ul class="dropdown-menu">
@@ -148,6 +149,7 @@
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jsoneditor.min.js' %}"></script>
     <script type="module" defer src="{% static 'js/inactivity.js' %}"></script>
