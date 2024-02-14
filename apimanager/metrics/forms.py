@@ -75,7 +75,7 @@ class APIMetricsForm(MetricsForm):
         ('PUT', 'PUT'),
     )
 
-    consumer_id = forms.ChoiceField(
+    consumer_id = forms.CharField(
         label=_('Consumer ID'),
         widget=forms.TextInput(
             attrs={
