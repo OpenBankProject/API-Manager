@@ -320,21 +320,17 @@ class MonthlyMetricsSummaryView(LoginRequiredMixin, TemplateView):
         only_show_api_explorer_metrics has the default value False, because it is just used for app = API_Explorer.
         """
         try:
-            api_calls_total = 0
-            average_response_time = 0
             url_path =  '/management/aggregate-metrics?from_date={}&to_date={}&include_app_names={}'.format(from_date, to_date, self.get_app_name_parameters(include_app_names))
             api = API(self.request.session.get('obp'))
             metrics = api.get(url_path)
-            api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(
-                api_calls_total, average_response_time, from_date, metrics, to_date, url_path)
+            api_calls_total, average_calls_per_day, average_response_time = self.get_internal_api_call_metrics(from_date, metrics, to_date)
             return api_calls_total, average_response_time, int(average_calls_per_day)
         except APIError as err:
             error_once_only(self.request, err)
         except Exception as err:
             error_once_only(self.request, err)
 
-    def get_internal_api_call_metrics(self, api_calls_total, average_response_time,  from_date, metrics,
-                                      to_date, urlpath):
+    def get_internal_api_call_metrics(self,from_date, metrics,to_date):
         api_calls_total = metrics[0]["count"]
         average_response_time = metrics[0]["average_response_time"]
         to_date = datetime.datetime.strptime(to_date, API_DATE_FORMAT_WITH_MILLISECONDS)
