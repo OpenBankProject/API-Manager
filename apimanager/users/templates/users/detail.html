@@ -118,6 +118,40 @@
 				</tbody>
 			</table>
 		</div>
+
+		<h2>{% trans "Non Personal User Attributes" %}</h2>
+		<div class="table-responsive">
+			<table class="table table-striped" aria-describedby="uses table">
+				<thead>
+					<th scope="col">{% trans "Name" %}</th>
+					<th scope="col">{% trans "Type" %}</th>
+					<th scope="col">{% trans "Value" %}</th>
+					<th scope="col">{% trans "Insert Date" %}</th>
+					<th scope="col">{% trans "Action" %}</th>
+				</thead>
+				<tbody>
+				{% for attribute in attributes.user_attributes %}
+					<tr>
+						<td>{{ attribute.name }}</td>
+						<td>{{ attribute.type }}</td>
+						<td>{{ attribute.value }}</td>
+						<td>{{ attribute.insert_date }}</td>
+						<td>
+						{# SuperAdmin has no entitlement_id! #}
+						{% if attribute.user_attribute_id %}
+							<form action="{% url 'users-delete-attribute' apiuser.user_id attribute.user_attribute_id %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="next" value="{{ request.path }}" />
+								<input type="hidden" name="attribute_name" value="{{ attribute.name }}" />
+								<button type="submit" class="btn btn-primary btn-red">{% trans "Delete" %}</button>
+							</form>
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {% endif %}
 </div>
