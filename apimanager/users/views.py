@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, View
+from django.conf import settings
 
 from base.filters import BaseFilter
 from obp.api import API, APIError
@@ -184,8 +185,22 @@ class DetailView(LoginRequiredMixin, FormView):
         except Exception as err:
             messages.error(self.request, err)
 
+        non_personal_user_attributes = {}
+        try:
+            urlpath = '/users/{}/non-personal/attributes'.format(self.kwargs['user_id'])
+            non_personal_user_attributes = self.api.get(urlpath, settings.API_VERSION["v510"])
+            if 'code' in user and user['code']>=400:
+                messages.error(self.request, user['message'])
+            else:
+                context['form'].fields['user_id'].initial = user['user_id']
+        except APIError as err:
+            messages.error(self.request, err)
+        except Exception as err:
+            messages.error(self.request, err)
+
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
+            'attributes': non_personal_user_attributes,
         })
         return context
 
@@ -348,6 +363,40 @@ class DeleteEntitlementView(LoginRequiredMixin, View):
              redirect_url = reverse('users-index')
         return HttpResponseRedirect(redirect_url)
 
+
+class DeleteAttributeView(LoginRequiredMixin, View):
+    """View to delete an attribute"""
+
+    def post(self, request, *args, **kwargs):
+        """Deletes non-personal attributes from a user"""
+        print(request)
+        api = API(self.request.session.get('obp'))
+        try:
+            urlpath = '/users/{}/non-personal/attributes/{}'.format(
+                kwargs['user_id'], kwargs['user_attribute_id'])
+            result = api.delete(urlpath, settings.API_VERSION["v510"])
+            if result is not None and 'code' in result and result['code']>=400:
+                messages.error(request, result['message'])
+            else:
+                msg = 'Attribute "{}" has been deleted.'.format(
+                    request.POST.get('attribute_name', '<undefined>'))
+                messages.success(request, msg)
+        except APIError as err:
+            print("apierror")
+            messages.error(request, err)
+        except Exception as err:
+            print("other error")
+            messages.error(self.request, err)
+
+        # from sonarcloud: Change this code to not perform redirects based on user-controlled data.
+        redirect_url_from_gui = request.POST.get('next', reverse('users-index'))
+        if "/users/all/user_id/" in str(redirect_url_from_gui):
+            redirect_url = reverse('users-detail',kwargs={"user_id":kwargs['user_id']})
+        elif ("/users/myuser/user_id/" in str(redirect_url_from_gui)):
+            redirect_url = reverse('my-user-detail',kwargs={"user_id":kwargs['user_id']})
+        else:
+             redirect_url = reverse('users-index')
+        return HttpResponseRedirect(redirect_url)
 
 class UserStatusUpdateView(LoginRequiredMixin, View):
     """View to delete a user"""
