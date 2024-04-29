@@ -119,6 +119,7 @@
 			</table>
 		</div>
 
+		
 		<h2>{% trans "Non Personal User Attributes" %}</h2>
 		<div class="table-responsive">
 			<table class="table table-striped" aria-describedby="uses table">
@@ -137,7 +138,6 @@
 						<td>{{ attribute.value }}</td>
 						<td>{{ attribute.insert_date }}</td>
 						<td>
-						{# SuperAdmin has no entitlement_id! #}
 						{% if attribute.user_attribute_id %}
 							<form action="{% url 'users-delete-attribute' apiuser.user_id attribute.user_attribute_id %}" method="post">
 								{% csrf_token %}
@@ -147,6 +147,26 @@
 							</form>
 						{% endif %}
 						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<h2>{% trans "Accounts Access" %}</h2>
+		<div class="table-responsive">
+			<table class="table table-striped" aria-describedby="uses table">
+				<thead>
+					<th scope="col">{% trans "Bank ID" %}</th>
+					<th scope="col">{% trans "Account ID" %}</th>
+					<th scope="col">{% trans "View ID" %}</th>
+				</thead>
+				<tbody>
+				{% for account in accounts_access.accounts %}
+					<tr>
+						<td>{{ account.bank_id }}</td>
+						<td>{{ account.account_id }}</td>
+						<td>{{ account.view_id }}</td>
 					</tr>
 				{% endfor %}
 				</tbody>
