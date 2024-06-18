@@ -15,5 +15,6 @@
 }
 
 .jsoneditor_div{
+  display: none;
   height: 400px;
 }
