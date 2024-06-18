@@ -41,9 +41,9 @@ $(document).ready(function($) {
 		let json_editor_number = jsoneditor_id.replace("jsoneditor","");
 		//if the user do not click the `parameters` box, then there is no json_editors here,so we use the parameters directly.
 		if (typeof json_editors[json_editor_number] === 'undefined') {
-			let parameters_Json_editor = parameters;
+			parameters_Json_editor = parameters;
 		} else {
-			let parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
+			parameters_Json_editor = JSON.stringify(json_editors[json_editor_number].get());
 		}
 		$('.runner button.forSave').attr("disabled","disabled");
 		$('.runner button.forDelete').attr("disabled","disabled");
