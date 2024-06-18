@@ -189,10 +189,20 @@ class DetailView(LoginRequiredMixin, FormView):
         try:
             urlpath = '/users/{}/non-personal/attributes'.format(self.kwargs['user_id'])
             non_personal_user_attributes = self.api.get(urlpath, settings.API_VERSION["v510"])
-            if 'code' in user and user['code']>=400:
-                messages.error(self.request, user['message'])
-            else:
-                context['form'].fields['user_id'].initial = user['user_id']
+            if 'code' in non_personal_user_attributes and non_personal_user_attributes['code']>=400:
+                messages.error(self.request, non_personal_user_attributes['message'])
+        except APIError as err:
+            messages.error(self.request, err)
+        except Exception as err:
+            messages.error(self.request, err)
+
+        accounts_access = {}
+        try:
+            urlpath = '/users/{}/account-access'.format(self.kwargs['user_id'])
+            accounts_access = self.api.get(urlpath, settings.API_VERSION["v510"])
+            print(accounts_access)
+            if 'code' in accounts_access and accounts_access['code']>=400:
+                messages.error(self.request, accounts_access['message'])
         except APIError as err:
             messages.error(self.request, err)
         except Exception as err:
@@ -201,6 +211,7 @@ class DetailView(LoginRequiredMixin, FormView):
         context.update({
             'apiuser': user,  # 'user' is logged-in user in template context
             'attributes': non_personal_user_attributes,
+            'accounts_access': accounts_access,
         })
         return context
 
