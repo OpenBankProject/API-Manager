@@ -1,22 +1,12 @@
 FROM python:3.10 AS builder
-USER 0
 COPY . /app
 RUN cp /app/.github/local_settings_container.py /app/apimanager/apimanager/local_settings.py
 RUN pip install -r /app/requirements.txt
-RUN chown  501 /
-RUN chown -R 501 /app
-RUN chgrp -R 0 /app && chmod -R g+rwX /app
-USER 1001
 WORKDIR /app
 RUN python ./apimanager/manage.py collectstatic --noinput
-
-FROM nginx:mainline-alpine
-USER 0
-#RUN dnf update -y
-ADD .github/apimanager.conf "${NGINX_DEFAULT_CONF_PATH}"
-COPY --from=builder /app/apimanager/static /opt/app-root/src
-RUN chgrp -R 0 /opt/app-root/src/ && chmod -R g+rwX /opt/app-root/src/
-USER 1001
+FROM nginxinc/nginx-unprivileged:stable
+COPY .github/apimanager.conf /etc/nginx/conf.d/
+COPY --from=builder /app/apimanager/static /usr/share/nginx/html
 CMD nginx -g "daemon off;"
 
 
