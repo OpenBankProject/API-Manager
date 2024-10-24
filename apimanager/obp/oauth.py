@@ -13,9 +13,15 @@ from requests_oauthlib.oauth1_session import TokenRequestDenied
 
 from .authenticator import Authenticator, AuthenticatorError
 
+# Set up logging
+LOGGER = logging.getLogger("requests_oauthlib")
+LOGGER.setLevel(logging.DEBUG)  # Enable detailed logging for requests-oauthlib
 
-LOGGER = logging.getLogger(__name__)
+# Enable logging for oauthlib to capture signature creation
+logging.getLogger("oauthlib").setLevel(logging.DEBUG)
 
+# Optionally, format logging output
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 class OAuthAuthenticator(Authenticator):
     """Implements an OAuth authenticator to the API"""
@@ -35,6 +41,7 @@ class OAuthAuthenticator(Authenticator):
         )
         try:
             url = settings.API_HOST + settings.OAUTH_TOKEN_PATH
+            # Fetch the request token, logging the signature details
             response = session.fetch_request_token(url, verify=settings.VERIFY)
         except (ValueError, TokenRequestDenied, ConnectionError) as err:
             raise AuthenticatorError(err)
