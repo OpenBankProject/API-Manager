@@ -5,8 +5,6 @@ RUN pip install -r /app/requirements.txt
 WORKDIR /app
 RUN python ./apimanager/manage.py collectstatic --noinput
 FROM nginxinc/nginx-unprivileged:stable
-COPY .github/apimanager.conf /etc/nginx/conf.d/
+COPY nginx.apimanager.conf /etc/nginx/conf.d/apimanager.conf
 COPY --from=builder /app/apimanager/static /usr/share/nginx/html
 CMD nginx -g "daemon off;"
-
-
