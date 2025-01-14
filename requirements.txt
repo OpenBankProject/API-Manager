@@ -1,6 +1,6 @@
 psycopg
 #Django==1.11.7
-Django==4.2.16
+Django==4.2.18
 oauthlib==3.2.2
 requests==2.32.3
 requests-oauthlib==1.3.1
