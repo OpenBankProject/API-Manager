@@ -40,69 +40,39 @@
                         {% if method_routing.connector_name == "mapped" %}
                             <option value="mapped">{% trans "mapped" %}</option> # This will be selected
                             <option value="internal">{% trans "internal" %}</option>
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
                         {% elif method_routing.connector_name == "internal" %}
                             <option value="internal">{% trans "internal" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
-                            <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
-                        {% elif method_routing.connector_name == "kafka_vSept2018" %}
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option> # This will be selected
-                            <option value="mapped">{% trans "mapped" %}</option>
-                            <option value="internal">{% trans "internal" %}</option>
-                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
-                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
-                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
                         {% elif method_routing.connector_name == "akka_vDec2018" %}
-                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option> # This will be selected
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
                         {% elif method_routing.connector_name == "rest_vMar2019" %}
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option> # This will be selected
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
-                        {% elif method_routing.connector_name == "kafka_vMay2019" %}
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option> # This will be selected
-                            <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
-                            <option value="mapped">{% trans "mapped" %}</option>
-                            <option value="internal">{% trans "internal" %}</option>
-                            <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
-                            <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option>
                         {% elif method_routing.connector_name == "stored_procedure_vDec2019" %}
                             <option value="stored_procedure_vDec2019">{% trans "stored_procedure_vDec2019" %}</option> # This will be selected
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="internal">{% trans "internal" %}</option>
                             <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option>
                         {% elif method_routing.connector_name == "rabbitmq_vOct2024" %}
                             <option value="rabbitmq_vOct2024">{% trans "rabbitmq_vOct2024" %}</option> # This will be selected
-                            <option value="kafka_vMay2019">{% trans "kafka_vMay2019" %}</option>
                             <option value="rest_vMar2019">{% trans "rest_vMar2019" %}</option>
-                            <option value="kafka_vSept2018">{% trans "kafka_vSept2018" %}</option>
                             <option value="mapped">{% trans "mapped" %}</option>
                             <option value="internal">{% trans "internal" %}</option>
                             <option value="akka_vDec2018">{% trans "akka_vDec2018" %}</option>
