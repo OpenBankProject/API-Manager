@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap',
+    'bootstrap4',
     'bootstrap_datepicker_plus',
     'mathfilters',
     'base',
@@ -301,7 +301,6 @@ ALLOW_DIRECT_LOGIN = True
 GATEWAYLOGIN_HAS_CBS = False
 ALLOW_GATEWAY_LOGIN = True
 
-# Use BOOTSTRAP3 if you are using Bootstrap 3
 BOOTSTRAP4 = {
     'include_jquery': True,
 }

@@ -9,5 +9,5 @@ gunicorn==22.0.0
 matplotlib
 django-bootstrap-datepicker-plus
 django-mathfilters
-django-bootstrap
+django-bootstrap4
 django-csp
