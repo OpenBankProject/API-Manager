@@ -38,6 +38,7 @@ urlpatterns += i18n_patterns(
     re_path(r'^account/list', include('accountlist.urls')),
     re_path(r'^consumers/', include('consumers.urls')),
     re_path(r'^entitlementrequests/', include('entitlementrequests.urls')),
+    re_path(r'^consents', include('consents.urls')),
     re_path(r'^users/', include('users.urls')),
     re_path(r'^branches/', include('branches.urls')),
     re_path(r'^atms/', include('atms.urls')),

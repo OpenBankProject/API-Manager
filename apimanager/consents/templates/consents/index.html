@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load humanize static %}
+{% load i18n %}
+{% block page_title %}{{ block.super }} / Consents {% endblock page_title %}
+
+{% block content %}
+<div id="consents">
+	<h2>Consents</h2>
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Consent Reference_id</th>
+			<th>Created User Id</th>
+			<th>Consumer Id</th>
+			<th>Jwt Payload</th>
+			<th>Status</th>
+			<th>Api Standard</th>
+			<th scope="col">{% trans "Revoke" %}</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for consent in consents %}
+		<tr>
+			<td>{{ consent.consent_id }}</td>
+			<td>{{ consent.created_by_user_id }}</td>
+			<td>{{ consent.consumer_id }}</td>
+			<td>{{ consent.jwt_payload }}</td>
+			<td>{{ consent.status }}</td>
+			<td>{{ consent.api_standard }}</td>
+			<td>
+				<form action="{% url 'consent-revoke' consent.consent_id %}" method="post">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-primary btn-sm btn-red">{% trans "Revoke" %}</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+
+</div>
+{% endblock content %}
+
+
+
+{% block extrajs %}
+{% comment %}
+	<script type="text/javascript" src="{% static 'consents/js/consents.js' %}"></script>
+	<script type="text/javascript">
+	</script>
+{% endcomment %}
+
+{% endblock extrajs %}
+
+
+{% block extracss %}
+		<link href="{% static 'consents/css/consents.css' %}" rel="stylesheet">
+{% endblock extracss %}

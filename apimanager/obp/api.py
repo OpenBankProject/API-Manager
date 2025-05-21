@@ -43,7 +43,7 @@ class API(object):
             self.start_session(session_data)
         self.session_data = session_data
 
-    def call(self, method='GET', url='', payload=None, version=settings.API_VERSION['v500']):
+    def call(self, method='GET', url='', payload=None, headers = None):
         """Workhorse which actually calls the API"""
         log(logging.INFO, '{} {}'.format(method, url))
         if payload:
@@ -53,9 +53,9 @@ class API(object):
         time_start = time.time()
         try:
             if payload:
-                response = session.request(method, url, json=payload, verify=settings.VERIFY)
+                response = session.request(method, url, json=payload, verify=settings.VERIFY, headers=headers)
             else:
-                response = session.request(method, url, json={}, verify=settings.VERIFY)
+                response = session.request(method, url, json={}, verify=settings.VERIFY, headers=headers)
         except ConnectionError as err:
             raise APIError(err)
         time_end = time.time()
@@ -77,14 +77,14 @@ class API(object):
         else:
             return response
 
-    def delete(self, urlpath, version=settings.API_VERSION['v500']):
+    def delete(self, urlpath, version=settings.API_VERSION['v500'], headers=None):
         """
         Deletes data from the API
 
         Convenience call which uses API_VERSION from settings
         """
         url = version + urlpath
-        response = self.call('DELETE', url)
+        response = self.call('DELETE', url, headers=headers)
         return self.handle_response(response)
 
     def post(self, urlpath, payload, version=settings.API_VERSION['v500']):

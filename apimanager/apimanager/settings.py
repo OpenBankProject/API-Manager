@@ -71,7 +71,8 @@ INSTALLED_APPS = [
     'connectormethod',
     'dynamicendpoints',
     'apicollections',
-    'apicollectionlist'
+    'apicollectionlist',
+    'consents',
 ]
 
 MIDDLEWARE = [
