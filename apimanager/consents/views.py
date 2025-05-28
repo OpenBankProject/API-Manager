@@ -49,10 +49,9 @@ class RevokeConsents(LoginRequiredMixin, View):
         """Deletes consent from API"""
         api = API(self.request.session.get('obp'))
         try:
-            urlpath = '/my/consent/current'
             consent_id= kwargs['consent_id']
-            headers = {'Consent-Id': consent_id}
-            response = api.delete(urlpath, settings.API_VERSION['v510'], headers=headers)
+            urlpath = '/my/consents/{}'.format(consent_id)
+            response = api.delete(urlpath, settings.API_VERSION['v510'])
             if 'code' in response and response['code'] >= 400:
                 messages.error(self.request, response['message'])
             else:
