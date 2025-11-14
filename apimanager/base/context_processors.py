@@ -13,7 +13,7 @@ USER_CURRENT = "/users/current"
 
 def api_version_processor(request):
     """Returns the configured API_VERSION"""
-    return {'API_VERSION': settings.API_VERSION['v500']}
+    return {'API_VERSION': settings.API_VERSION['v510']}
 
 
 def portal_page(request):
@@ -82,7 +82,7 @@ def api_user_id(request):
     """Returns the API user id of the logged-in user"""
     user_id = 'not authenticated'
     get_current_user_api_url = USER_CURRENT
-    #Here we can not get the user from obp-api side, so we use the django auth user id here. 
+    #Here we can not get the user from obp-api side, so we use the django auth user id here.
     cache_key_django_user_id = request.session._session.get('_auth_user_id')
     cache_key = '{},{},{}'.format('api_user_id',get_current_user_api_url, cache_key_django_user_id)
     apicaches=None
@@ -112,4 +112,3 @@ def api_tester_url(request):
     """Returns the URL to the API Tester for the API instance"""
     url = getattr(settings, 'API_TESTER_URL', None)
     return {'API_TESTER_URL': url}
-

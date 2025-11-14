@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize static %}
 {% load i18n %}
+{% load consumer_extras %}
 
 {% block page_title %}{{ block.super }} / Consumer {{ consumer.app_name }}{% endblock page_title %}
 
@@ -12,57 +13,222 @@
     <div class="row">
         <div class="col-xs-12">
 
-            <h2>{% trans "Params" %}</h2>
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form.consumer_id }}
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
-                    </div>
-                {% endif %}
+            <h2>{% trans "Rate Limiting Configuration" %}</h2>
 
-                <div class="row">
-                    <div class="col-xs-2 col-sm-2">
-                        {% if form.per_minute_call_limit.errors %}<div class="alert alert-danger">{{ form.per_minute_call_limit.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.per_minute_call_limit.label_tag }}
-                            {{ form.per_minute_call_limit }}
-                        </div>
+            <!-- Add New Rate Limit Button -->
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-success" id="addRateLimitBtn" onclick="showAddRateLimitForm()">
+                        <span class="glyphicon glyphicon-plus"></span> {% trans "Add New Rate Limit" %}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Add/Edit Rate Limit Form (Initially Hidden) -->
+            <div id="rateLimitForm" style="display: none; margin-bottom: 30px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" id="formTitle">{% trans "Add New Rate Limit" %}</h4>
                     </div>
-                    <div class="col-xs-2 col-sm-2">
-                        {% if form.per_hour_call_limit.errors %}<div class="alert alert-danger">{{ form.per_hour_call_limit.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.per_hour_call_limit.label_tag }}
-                            {{ form.per_hour_call_limit }}
-                        </div>
+                    <div class="panel-body">
+                        <form id="rateLimitFormElement" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" id="rateLimitId" name="rate_limit_id" value="">
+                            <input type="hidden" name="action" id="formAction" value="create">
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="from_date">{% trans "From Date" %}</label>
+                                        <input type="datetime-local" class="form-control" id="from_date" name="from_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="to_date">{% trans "To Date" %}</label>
+                                        <input type="datetime-local" class="form-control" id="to_date" name="to_date" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_second_call_limit">{% trans "Per Second" %}</label>
+                                        <input type="number" class="form-control" id="per_second_call_limit" name="per_second_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_minute_call_limit">{% trans "Per Minute" %}</label>
+                                        <input type="number" class="form-control" id="per_minute_call_limit" name="per_minute_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_hour_call_limit">{% trans "Per Hour" %}</label>
+                                        <input type="number" class="form-control" id="per_hour_call_limit" name="per_hour_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_day_call_limit">{% trans "Per Day" %}</label>
+                                        <input type="number" class="form-control" id="per_day_call_limit" name="per_day_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_week_call_limit">{% trans "Per Week" %}</label>
+                                        <input type="number" class="form-control" id="per_week_call_limit" name="per_week_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-2">
+                                    <div class="form-group">
+                                        <label for="per_month_call_limit">{% trans "Per Month" %}</label>
+                                        <input type="number" class="form-control" id="per_month_call_limit" name="per_month_call_limit" value="-1" min="-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">{% trans "Save Rate Limit" %}</button>
+                                    <button type="button" class="btn btn-default" onclick="hideRateLimitForm()">{% trans "Cancel" %}</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-xs-2 col-sm-2">
-                        {% if form.per_day_call_limit.errors %}<div class="alert alert-danger">{{ form.per_day_call_limit.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.per_day_call_limit.label_tag }}
-                            {{ form.per_day_call_limit }}
+                </div>
+            </div>
+
+            <!-- Rate Limits List -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{% trans "Existing Rate Limits" %}</h4>
                         </div>
-                    </div>
-                    <div class="col-xs-2 col-sm-2">
-                        {% if form.per_week_call_limit.errors %}<div class="alert alert-danger">{{ form.per_week_call_limit.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.per_week_call_limit.label_tag }}
-                            {{ form.per_week_call_limit }}
-                        </div>
-                    </div>
-                    <div class="col-xs-2 col-sm-2">
-                        {% if form.per_month_call_limit.errors %}<div class="alert alert-danger">{{ form.per_month_call_limit.errors }}</div>{% endif %}
-                        <div class="form-group">
-                            {{ form.per_month_call_limit.label_tag }}
-                            {{ form.per_month_call_limit }}
+                        <div class="panel-body">
+                            <div id="rateLimitsList">
+                                {% if call_limits and call_limits.limits %}
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{% trans "Rate Limiting ID" %}</th>
+                                                    <th>{% trans "From Date" %}</th>
+                                                    <th>{% trans "To Date" %}</th>
+                                                    <th>{% trans "Per Second" %}</th>
+                                                    <th>{% trans "Per Minute" %}</th>
+                                                    <th>{% trans "Per Hour" %}</th>
+                                                    <th>{% trans "Per Day" %}</th>
+                                                    <th>{% trans "Per Week" %}</th>
+                                                    <th>{% trans "Per Month" %}</th>
+                                                    <th>{% trans "Created" %}</th>
+                                                    <th>{% trans "Updated" %}</th>
+                                                    <th>{% trans "Actions" %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for limit in call_limits.limits %}
+                                                <tr>
+                                                    <td><code>{{ limit.rate_limiting_id|default:"N/A" }}</code></td>
+                                                    <td>{{ limit.from_date|parse_iso_date:"Y-m-d H:i" }}</td>
+                                                    <td>{{ limit.to_date|parse_iso_date:"Y-m-d H:i" }}</td>
+                                                    <td>{{ limit.per_second_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.per_minute_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.per_hour_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.per_day_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.per_week_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.per_month_call_limit|default:"-1" }}</td>
+                                                    <td>{{ limit.created_at|parse_iso_date:"Y-m-d H:i" }}</td>
+                                                    <td>{{ limit.updated_at|parse_iso_date:"Y-m-d H:i" }}</td>
+                                                    <td>
+                                                        {% if limit.rate_limiting_id %}
+                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                                onclick="editRateLimit('{{ limit.rate_limiting_id }}', '{{ limit.from_date|escapejs }}', '{{ limit.to_date|escapejs }}', '{{ limit.per_second_call_limit|default:"-1" }}', '{{ limit.per_minute_call_limit|default:"-1" }}', '{{ limit.per_hour_call_limit|default:"-1" }}', '{{ limit.per_day_call_limit|default:"-1" }}', '{{ limit.per_week_call_limit|default:"-1" }}', '{{ limit.per_month_call_limit|default:"-1" }}')">
+                                                            <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                                onclick="deleteRateLimit('{{ limit.rate_limiting_id|escapejs }}')">
+                                                            <span class="glyphicon glyphicon-trash"></span> {% trans "Delete" %}
+                                                        </button>
+                                                        {% else %}
+                                                        <span class="text-muted">{% trans "No ID" %}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <span class="glyphicon glyphicon-info-sign"></span>
+                                        {% trans "No rate limits configured for this consumer. Click 'Add New Rate Limit' to create one." %}
+                                        <!-- Debug: Show raw API response for troubleshooting -->
+                                        {% if call_limits %}
+                                            <br><small><strong>Debug - Raw call_limits data:</strong><br>
+                                            <pre style="font-size: 10px; background: #f5f5f5; padding: 10px; margin-top: 10px;">{{ call_limits }}</pre>
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>{% trans "Current Usage" %}
+                <button type="button" id="refreshUsageBtn" class="btn btn-sm btn-info pull-right" onclick="refreshUsageStats()">
+                    <span class="glyphicon glyphicon-refresh"></span> {% trans "Auto Refresh (5s)" %}
+                </button>
+            </h2>
+            <div class="panel panel-info" id="usageStatsPanel">
+                <div class="panel-body" id="usageStatsContent">
+                    <div class="row" id="usageStatsRow">
+                        <div class="col-xs-6 col-sm-2" data-period="per_second">
+                            <strong>{% trans "Per Second" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_second %}Unlimited{% elif current_usage.per_second.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_second.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_second %}<small class="text-muted usage-reset">{% if current_usage.per_second.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_second.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                        <div class="col-xs-6 col-sm-2" data-period="per_minute">
+                            <strong>{% trans "Per Minute" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_minute %}Unlimited{% elif current_usage.per_minute.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_minute.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_minute %}<small class="text-muted usage-reset">{% if current_usage.per_minute.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_minute.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                        <div class="col-xs-6 col-sm-2" data-period="per_hour">
+                            <strong>{% trans "Per Hour" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_hour %}Unlimited{% elif current_usage.per_hour.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_hour.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_hour %}<small class="text-muted usage-reset">{% if current_usage.per_hour.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_hour.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                        <div class="col-xs-6 col-sm-2" data-period="per_day">
+                            <strong>{% trans "Per Day" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_day %}Unlimited{% elif current_usage.per_day.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_day.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_day %}<small class="text-muted usage-reset">{% if current_usage.per_day.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_day.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                        <div class="col-xs-6 col-sm-2" data-period="per_week">
+                            <strong>{% trans "Per Week" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_week %}Unlimited{% elif current_usage.per_week.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_week.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_week %}<small class="text-muted usage-reset">{% if current_usage.per_week.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_week.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                        <div class="col-xs-6 col-sm-2" data-period="per_month">
+                            <strong>{% trans "Per Month" %}</strong><br>
+                            <span class="text-info usage-calls">{% if not current_usage.per_month %}Unlimited{% elif current_usage.per_month.calls_made|add:"0" == -1 %}Not tracked{% else %}{{ current_usage.per_month.calls_made }} calls made{% endif %}</span><br>
+                            {% if current_usage.per_month %}<small class="text-muted usage-reset">{% if current_usage.per_month.reset_in_seconds|add:"0" == -1 %}Not tracked{% else %}Resets in {{ current_usage.per_month.reset_in_seconds }} seconds{% endif %}</small>{% endif %}
+                        </div>
+                    </div>
+                    <div id="refreshProgress" class="progress" style="display: none; margin-top: 15px;">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" id="progressBar" style="width: 0%"></div>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">{% trans "Update Consumer" %}</button>
-            </form>
+                </div>
+            </div>
         </div>
     </div>
 	<div class="row">
@@ -122,51 +288,16 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-xs-6 col-sm-6">
-			<div id="consumers-detail-redirect_url">
-				<strong>{% trans "Redirect URL" %}</strong><br />
-				<span>{{ consumer.redirect_url }}</span>
-			</div>
-		</div>
-        <div class="col-xs-6 col-sm-6">
-            <div id="consumers-per_minute_call_limit ">
-                <strong>{% trans "Per minute call limit" %}</strong><br />
-                <span>{{ consumer.per_minute_call_limit }}</span>
-            </div>
-        </div>
-	</div>
-
-    <div class="row">
-        <div class="col-xs-6 col-sm-6">
-            <div id="consumers-per_hour_call_limit ">
-                <strong>{% trans "Per hour call limit" %} </strong><br />
-                <span>{{ consumer.per_hour_call_limit }}</span>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-6">
-            <div id="consumers-per_day_call_limit">
-                <strong>{% trans "Per day call limit" %}</strong><br />
-                <span>{{ consumer.per_day_call_limit }}</span>
-            </div>
-        </div>
-    </div>
+	    <div class="row">
+	        <div class="col-xs-12">
+	            <div id="consumers-detail-redirect_url">
+	                <strong>{% trans "Redirect URL" %}</strong><br />
+	                <span>{{ consumer.redirect_url }}</span>
+	            </div>
+	        </div>
+	    </div>
 
 
-    <div class="row">
-        <div class="col-xs-6 col-sm-6">
-            <div id="consumers-per_week_call_limit">
-                <strong>{% trans "Per week call limit" %}</strong><br />
-                <span>{{ consumer.per_week_call_limit }}</span>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-6">
-            <div id="consumers-per_month_call_limit">
-                <strong>{% trans "Per month call limit" %}</strong><br />
-                <span>{{ consumer.per_month_call_limit }}</span>
-            </div>
-        </div>
-    </div>
 
 
 	<div class="row">
@@ -204,11 +335,409 @@
 {% endblock %}
 
 {% block extrajs %}
-{% comment %}
 	<script type="text/javascript" src="{% static 'consumers/js/consumers.js' %}"></script>
 	<script type="text/javascript">
+		// Add data attributes for existing datetime values
+		$(document).ready(function() {
+			{% if consumer.from_date %}
+			$('body').attr('data-from-date', '{{ consumer.from_date }}');
+			{% endif %}
+			{% if consumer.to_date %}
+			$('body').attr('data-to-date', '{{ consumer.to_date }}');
+			{% endif %}
+
+			// Debug: Log basic debugging info
+			console.log('Current usage data available:', {% if current_usage %}true{% else %}false{% endif %});
+			
+			// Load rate limits data into JavaScript
+			window.rateLimits = [
+				{% if call_limits and call_limits.limits %}
+					{% for limit in call_limits.limits %}
+					{
+						per_second_call_limit: {{ limit.per_second_call_limit|default:"-1" }},
+						per_minute_call_limit: {{ limit.per_minute_call_limit|default:"-1" }},
+						per_hour_call_limit: {{ limit.per_hour_call_limit|default:"-1" }},
+						per_day_call_limit: {{ limit.per_day_call_limit|default:"-1" }},
+						per_week_call_limit: {{ limit.per_week_call_limit|default:"-1" }},
+						per_month_call_limit: {{ limit.per_month_call_limit|default:"-1" }}
+					}{% if not forloop.last %},{% endif %}
+					{% endfor %}
+				{% endif %}
+			];
+			
+			// Initial load and display of usage data
+			setTimeout(function() {
+				console.log('Rate limits loaded:', window.rateLimits);
+				updateUsageDisplayWithLimits();
+				fetchUsageData();
+			}, 100);
+		});
+
+		// Function to calculate effective limit for a period by summing all active limits
+		function getEffectiveLimit(period) {
+			if (!window.rateLimits || window.rateLimits.length === 0) {
+				return null;
+			}
+			
+			let total = 0;
+			let hasLimits = false;
+			
+			window.rateLimits.forEach(function(limit) {
+				let limitValue;
+				switch(period) {
+					case 'per_second': limitValue = limit.per_second_call_limit; break;
+					case 'per_minute': limitValue = limit.per_minute_call_limit; break;
+					case 'per_hour': limitValue = limit.per_hour_call_limit; break;
+					case 'per_day': limitValue = limit.per_day_call_limit; break;
+					case 'per_week': limitValue = limit.per_week_call_limit; break;
+					case 'per_month': limitValue = limit.per_month_call_limit; break;
+					default: limitValue = -1;
+				}
+				
+				// Convert to integer and check if it's a valid positive limit
+				let parsedValue = parseInt(limitValue);
+				if (!isNaN(parsedValue) && parsedValue > 0) {
+					total += parsedValue;
+					hasLimits = true;
+				}
+			});
+			
+			console.log('Effective limit for', period, ':', hasLimits ? total : 'unlimited');
+			return hasLimits ? total : null;
+		}
+
+		// Function to update usage display with rate limits
+		function updateUsageDisplayWithLimits() {
+			$('#usageStatsRow .usage-calls').each(function() {
+				let $this = $(this);
+				let period = $this.closest('[data-period]').data('period');
+				let text = $this.text().trim();
+				
+				// Only update if it shows "X calls made" format (not "Unlimited" or "Not tracked")
+				let match = text.match(/^(\d+) calls made$/);
+				if (match) {
+					let calls = match[1];
+					let effectiveLimit = getEffectiveLimit(period);
+					if (effectiveLimit && effectiveLimit > 0) {
+						$this.text(calls + ' of ' + effectiveLimit + ' calls made');
+					}
+				}
+			});
+		}
+
+		// Global functions for CRUD operations - attached to window for global access
+		window.showAddRateLimitForm = function() {
+			// Reset form for new entry
+			$("#rateLimitForm").show();
+			$("#formTitle").text("Add New Rate Limit");
+			$("#formAction").val("create");
+			$("#rateLimitId").val("");
+
+			// Set default values
+			$("#from_date").val("2024-01-01T00:00");
+			$("#to_date").val("2026-01-01T00:00");
+			$("#per_second_call_limit").val("-1");
+			$("#per_minute_call_limit").val("-1");
+			$("#per_hour_call_limit").val("-1");
+			$("#per_day_call_limit").val("-1");
+			$("#per_week_call_limit").val("-1");
+			$("#per_month_call_limit").val("-1");
+
+			$("#submitBtn").text("Create Rate Limit");
+
+			// Scroll to form
+			$("html, body").animate({
+				scrollTop: $("#rateLimitForm").offset().top - 20
+			}, 500);
+		};
+
+		window.hideRateLimitForm = function() {
+			$("#rateLimitForm").hide();
+		};
+
+		window.editRateLimit = function(rateLimitingId, fromDate, toDate, perSecond, perMinute, perHour, perDay, perWeek, perMonth) {
+			// Show form for editing
+			$("#rateLimitForm").show();
+			$("#formTitle").text("Edit Rate Limit");
+			$("#formAction").val("update");
+			$("#rateLimitId").val(rateLimitingId);
+
+			// Convert ISO dates to datetime-local format
+			function convertISOToLocal(isoString) {
+				if (!isoString || isoString === "1099-12-31T23:00:00Z") return "2024-01-01T00:00";
+				try {
+					var date = new Date(isoString);
+					var year = date.getFullYear();
+					var month = String(date.getMonth() + 1).padStart(2, "0");
+					var day = String(date.getDate()).padStart(2, "0");
+					var hours = String(date.getHours()).padStart(2, "0");
+					var minutes = String(date.getMinutes()).padStart(2, "0");
+					return year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+				} catch (e) {
+					return "2024-01-01T00:00";
+				}
+			}
+
+			// Populate form fields
+			$("#from_date").val(convertISOToLocal(fromDate));
+			$("#to_date").val(convertISOToLocal(toDate));
+			$("#per_second_call_limit").val(perSecond);
+			$("#per_minute_call_limit").val(perMinute);
+			$("#per_hour_call_limit").val(perHour);
+			$("#per_day_call_limit").val(perDay);
+			$("#per_week_call_limit").val(perWeek);
+			$("#per_month_call_limit").val(perMonth);
+
+			$("#submitBtn").text("Update Rate Limit");
+
+			// Scroll to form
+			$("html, body").animate({
+				scrollTop: $("#rateLimitForm").offset().top - 20
+			}, 500);
+		};
+
+		window.deleteRateLimit = function(rateLimitingId) {
+			console.log("Deleting rate limit with ID:", rateLimitingId);
+			if (!confirm("Are you sure you want to delete this rate limit? This action cannot be undone.")) {
+				return;
+			}
+
+			// Create form data for delete request
+			var formData = new FormData();
+			formData.append("action", "delete");
+			formData.append("rate_limiting_id", rateLimitingId);
+			formData.append("csrfmiddlewaretoken", $("[name=csrfmiddlewaretoken]").val());
+
+			$.ajax({
+				url: window.location.pathname,
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				success: function(response) {
+					console.log("Delete response:", response);
+					if (response.success) {
+						// Reload page to show updated data
+						window.location.reload();
+					} else {
+						alert("Error: " + (response.error || "Unknown error occurred"));
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error("Delete error:", xhr, status, error);
+					var errorMessage = "Error deleting rate limit";
+					if (xhr.responseJSON && xhr.responseJSON.error) {
+						errorMessage = xhr.responseJSON.error;
+					}
+					alert(errorMessage);
+				}
+			});
+		};
+
+		// Global variables for refresh functionality
+		let refreshInterval = null;
+		let refreshCount = 0;
+		const MAX_REFRESH_COUNT = 5;
+
+		// Function to refresh usage statistics
+		window.refreshUsageStats = function() {
+			const button = document.getElementById('refreshUsageBtn');
+			const progressDiv = document.getElementById('refreshProgress');
+			const progressBar = document.getElementById('progressBar');
+
+			// Disable button and show progress
+			button.disabled = true;
+			button.innerHTML = '<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> Auto Refreshing...';
+			progressDiv.style.display = 'block';
+
+			// Reset counters
+			refreshCount = 0;
+
+			// Start refresh cycle
+			refreshInterval = setInterval(fetchUsageData, 1000);
+			fetchUsageData(); // Initial fetch
+		};
+
+		// Function to fetch usage data via AJAX
+		function fetchUsageData() {
+			const consumerId = '{{ consumer.consumer_id }}';
+			const panel = document.getElementById('usageStatsPanel');
+
+			console.log('Fetching usage data for consumer:', consumerId);
+
+			// Add refreshing effect to panel
+			panel.classList.add('panel-refreshing');
+
+			$.ajax({
+				url: '{% url "consumers-usage-data" consumer.consumer_id %}',
+				method: 'GET',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest',
+					'Accept': 'application/json'
+				},
+				timeout: 5000, // 5 second timeout
+				success: function(data) {
+					console.log('Usage data received:', data);
+					updateUsageDisplay(data);
+					refreshCount++;
+
+					// Update progress bar
+					const progress = (refreshCount / MAX_REFRESH_COUNT) * 100;
+					const progressBar = document.getElementById('progressBar');
+					progressBar.style.width = progress + '%';
+					progressBar.textContent = refreshCount + '/' + MAX_REFRESH_COUNT;
+
+					// Stop after 5 seconds
+					if (refreshCount >= MAX_REFRESH_COUNT) {
+						clearInterval(refreshInterval);
+						resetRefreshButton();
+						panel.classList.remove('panel-refreshing');
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error('Error fetching usage data:', error, xhr.responseText);
+					showRefreshError(error);
+
+					refreshCount++;
+					const progress = (refreshCount / MAX_REFRESH_COUNT) * 100;
+					document.getElementById('progressBar').style.width = progress + '%';
+
+					if (refreshCount >= MAX_REFRESH_COUNT) {
+						clearInterval(refreshInterval);
+						resetRefreshButton();
+						panel.classList.remove('panel-refreshing');
+					}
+				}
+			});
+		}
+
+		// Function to show refresh error
+		function showRefreshError(error) {
+			const errorDiv = document.getElementById('refreshError');
+			if (!errorDiv) {
+				const newErrorDiv = document.createElement('div');
+				newErrorDiv.id = 'refreshError';
+				newErrorDiv.className = 'alert alert-warning alert-dismissible';
+				newErrorDiv.style.marginTop = '10px';
+				newErrorDiv.innerHTML = '<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Warning:</strong> Failed to fetch latest data. Continuing...';
+				document.getElementById('usageStatsContent').appendChild(newErrorDiv);
+
+				// Auto-hide after 3 seconds
+				setTimeout(function() {
+					if (newErrorDiv.parentNode) {
+						newErrorDiv.parentNode.removeChild(newErrorDiv);
+					}
+				}, 3000);
+			}
+		}
+
+		// Function to update usage display with new data
+		function updateUsageDisplay(data) {
+			console.log('Updating display with data:', data);
+			if (data) {
+				const periods = ['per_second', 'per_minute', 'per_hour', 'per_day', 'per_week', 'per_month'];
+
+				periods.forEach(function(period) {
+					const periodData = data[period];
+					const periodDiv = document.querySelector('[data-period="' + period + '"]');
+					if (periodDiv) {
+						const callsSpan = periodDiv.querySelector('.usage-calls');
+						const resetSpan = periodDiv.querySelector('.usage-reset');
+
+						if (callsSpan) {
+							const oldCalls = callsSpan.textContent.match(/-?\d+/);
+							const newCalls = periodData ? periodData.calls_made : null;
+							const effectiveLimit = getEffectiveLimit(period);
+							const limitText = effectiveLimit ? ' of ' + effectiveLimit : '';
+							const displayCalls = !periodData ? 'Unlimited' : (newCalls === -1 ? 'Not tracked' : newCalls + limitText + ' calls made');
+
+							// Check if calls increased (only if periodData exists)
+							const callsIncreased = periodData && oldCalls && parseInt(oldCalls[0]) < newCalls && newCalls !== -1;
+
+							callsSpan.textContent = displayCalls;
+
+							// Add visual feedback only if data is tracked
+							if (periodData) {
+								callsSpan.classList.add('updating');
+								if (callsIncreased) {
+									periodDiv.classList.add('data-updated');
+									// Flash effect for increased calls
+									callsSpan.style.backgroundColor = '#28a745';
+									callsSpan.style.color = 'white';
+									setTimeout(function() {
+										callsSpan.style.backgroundColor = '#d4edda';
+										callsSpan.style.color = '';
+									}, 200);
+								}
+
+								setTimeout(function() {
+									callsSpan.classList.remove('updating');
+									periodDiv.classList.remove('data-updated');
+									callsSpan.style.backgroundColor = '';
+								}, 1000);
+							}
+						}
+
+						if (resetSpan) {
+							if (periodData) {
+								const resetText = periodData.reset_in_seconds === -1 ? 'Not tracked' : 'Resets in ' + periodData.reset_in_seconds + ' seconds';
+								resetSpan.textContent = resetText;
+								resetSpan.style.display = 'block';
+								// Add subtle animation to reset timer
+								resetSpan.style.opacity = '0.7';
+								setTimeout(function() {
+									resetSpan.style.opacity = '1';
+								}, 300);
+							} else {
+								resetSpan.style.display = 'none';
+							}
+						}
+					}
+				});
+
+				// Show last updated time
+				updateLastRefreshTime();
+			}
+		}
+
+		// Function to update last refresh time
+		window.updateLastRefreshTime = function() {
+			let timeDiv = document.getElementById('lastRefreshTime');
+			if (!timeDiv) {
+				timeDiv = document.createElement('small');
+				timeDiv.id = 'lastRefreshTime';
+				timeDiv.className = 'text-muted';
+				timeDiv.style.display = 'block';
+				timeDiv.style.textAlign = 'center';
+				timeDiv.style.marginTop = '10px';
+				document.getElementById('usageStatsContent').appendChild(timeDiv);
+			}
+
+			const now = new Date();
+			timeDiv.textContent = 'Last updated: ' + now.toLocaleTimeString();
+		}
+
+		// Function to reset refresh button
+		window.resetRefreshButton = function() {
+			const button = document.getElementById('refreshUsageBtn');
+			const progressDiv = document.getElementById('refreshProgress');
+
+			button.disabled = false;
+			button.innerHTML = '<span class="glyphicon glyphicon-refresh"></span> Auto Refresh (5s)';
+			progressDiv.style.display = 'none';
+			document.getElementById('progressBar').style.width = '0%';
+			document.getElementById('progressBar').textContent = '';
+
+			// Remove any error messages
+			const errorDiv = document.getElementById('refreshError');
+			if (errorDiv && errorDiv.parentNode) {
+				errorDiv.parentNode.removeChild(errorDiv);
+			}
+		};
 	</script>
-{% endcomment %}
 {% endblock extrajs %}
 
 

@@ -332,11 +332,13 @@ except ImportError:
 # DO NOT TRY TO DO SO YOU WILL BE IGNORED!
 OBPv500 = API_HOST + '/obp/v5.0.0'
 OBPv510 = API_HOST + '/obp/v5.1.0'
+OBPv600 = API_HOST + '/obp/v6.0.0'
 
 # API Versions
 API_VERSION = {
     "v500": OBPv500,
-    "v510": OBPv510
+    "v510": OBPv510,
+    "v600": OBPv600
 }
 # For some reason, swagger is not available at the latest API version
 #API_URL_SWAGGER = API_HOST + '/obp/v1.4.0/resource-docs/v' + 5.1.0 + '/swagger'  # noqa

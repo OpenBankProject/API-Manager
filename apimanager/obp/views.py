@@ -92,7 +92,15 @@ class OAuthAuthorizeView(RedirectView, LoginToDjangoMixin):
 
     def get_redirect_url(self, *args, **kwargs):
         session_data = self.request.session.get('obp')
+        if session_data is None:
+            messages.error(self.request, 'OAuth session expired. Please try logging in again.')
+            return reverse('home')
+
         authenticator_kwargs = session_data.get('authenticator_kwargs')
+        if authenticator_kwargs is None:
+            messages.error(self.request, 'OAuth session data missing. Please try logging in again.')
+            return reverse('home')
+
         authenticator = OAuthAuthenticator(**authenticator_kwargs)
         authorization_url = self.request.build_absolute_uri()
         try:

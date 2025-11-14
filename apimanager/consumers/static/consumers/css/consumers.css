@@ -1,20 +1,350 @@
-.consumers #consumer-list  {
-	margin-top: 20px;
+.consumers #consumer-list {
+    margin-top: 20px;
 }
 
 #consumers .btn-group-vertical.filter-enabled,
 #consumers .btn-group-vertical.filter-apptype {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 #consumers-detail div {
-	margin: 5px 0;
+    margin: 5px 0;
 }
 
 #consumers .filter a {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 #consumers .actions .btn {
-	margin-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+/* Rate Limiting Styles */
+#consumers-detail h2 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#consumers-detail .panel-info {
+    border-color: #bee5eb;
+    background-color: #d1ecf1;
+}
+
+#consumers-detail .panel-info .panel-body {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+#consumers-detail .text-info {
+    color: #0c5460 !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#consumers-detail .text-muted {
+    color: #6c757d !important;
+    font-size: 12px;
+}
+
+#consumers-detail .form-group label {
+    font-weight: bold;
+    color: #495057;
+}
+
+#consumers-detail .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+#consumers-detail .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Usage statistics 6-column layout */
+#consumers-detail .panel-info .col-sm-2 {
+    min-height: 80px;
+    padding: 10px 5px;
+    transition: all 0.3s ease;
+}
+
+/* Readonly fields styling */
+#consumers-detail input[readonly] {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    border: 1px solid #dee2e6;
+}
+
+/* Refresh button styling */
+#refreshUsageBtn {
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+#refreshUsageBtn:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+#refreshUsageBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Progress bar styling */
+#refreshProgress {
+    height: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#refreshProgress .progress-bar {
+    transition: width 0.3s ease;
+    background-color: #17a2b8;
+}
+
+/* Usage update animation */
+.usage-calls {
+    transition: background-color 0.5s ease;
+}
+
+.usage-calls.updating {
+    background-color: #d4edda !important;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Spinning animation for refresh icon */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.glyphicon-spin {
+    animation: spin 1s infinite linear;
+}
+
+/* Panel pulse effect during refresh */
+.panel-refreshing {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(23, 162, 184, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(23, 162, 184, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(23, 162, 184, 0);
+    }
+}
+
+/* Updated data highlight */
+.data-updated {
+    background-color: #d4edda;
+    border-left: 3px solid #28a745;
+    padding-left: 10px;
+    transition: all 0.5s ease;
+}
+
+/* Responsive adjustments for usage stats */
+@media (max-width: 768px) {
+    #consumers-detail .panel-info .col-xs-6 {
+        margin-bottom: 15px;
+    }
+
+    #consumers-detail .panel-info .col-sm-2 {
+        min-height: auto;
+    }
+
+    #refreshUsageBtn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+/* Timestamp fields in configuration section */
+#consumers-detail .form-group input[readonly] {
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+/* Rate Limiting CRUD Interface Styles */
+#rateLimitForm {
+    margin-bottom: 30px;
+}
+
+#rateLimitForm .panel-heading {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#rateLimitForm .panel-title {
+    color: #495057;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#addRateLimitBtn {
+    background-color: #28a745;
+    border-color: #28a745;
+    font-weight: bold;
+}
+
+#addRateLimitBtn:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Rate limits table styling */
+#rateLimitsList .table {
+    margin-bottom: 0;
+}
+
+#rateLimitsList .table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: none;
+    border-top: none;
+}
+
+#rateLimitsList .table td {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* Action buttons styling */
+#rateLimitsList .btn-sm {
+    font-size: 11px;
+    padding: 4px 8px;
+    margin-right: 5px;
+}
+
+#rateLimitsList .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#rateLimitsList .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+#rateLimitsList .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#rateLimitsList .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Form styling */
+#rateLimitFormElement .form-group label {
+    font-weight: bold;
+    color: #495057;
+    font-size: 13px;
+}
+
+#rateLimitFormElement .form-control {
+    font-size: 13px;
+    border-radius: 3px;
+}
+
+#rateLimitFormElement .btn {
+    margin-right: 10px;
+}
+
+/* Empty state styling */
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.alert-info .glyphicon {
+    margin-right: 8px;
+}
+
+/* Responsive table */
+@media (max-width: 1200px) {
+    #rateLimitsList .table-responsive {
+        font-size: 12px;
+    }
+
+    #rateLimitsList .table th,
+    #rateLimitsList .table td {
+        padding: 8px 4px;
+    }
+
+    #rateLimitsList .btn-sm {
+        font-size: 10px;
+        padding: 3px 6px;
+        margin: 1px;
+        display: block;
+        width: 100%;
+        margin-bottom: 2px;
+    }
+}
+
+@media (max-width: 768px) {
+    #rateLimitForm .col-xs-6 {
+        margin-bottom: 10px;
+    }
+
+    #rateLimitsList .table {
+        font-size: 11px;
+    }
+
+    #addRateLimitBtn {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Animation for form show/hide */
+#rateLimitForm {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Highlight new/updated rows */
+.table tr.highlight {
+    background-color: #d4edda;
+    transition: background-color 2s ease-out;
+}
+
+/* Loading states */
+.btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Panel improvements */
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: #f8f9fa;
+}
+
+.panel-default {
+    border-color: #dee2e6;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
 }
